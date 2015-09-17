@@ -126,7 +126,7 @@ class theme_custom_follow{
 			);
 		}
 	}
-	public static function frontend_seajs_alias($alias){
+	public static function frontend_seajs_alias(array $alias = []){
 		if(theme_cache::is_user_logged_in() || !theme_cache::is_page(self::$page_slug)) return $alias;
 
 		$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);

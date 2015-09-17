@@ -2666,17 +2666,24 @@ label.error{
  */
 .back-to-top{
 	position: fixed;
+	background: #fff;
 	bottom: 0;
-	right: 5px;
-	opacity: .5;
-	text-shadow: 0 1px 3px rgba(0,0,0,.3);
+	right: 0;
+	opacity: .7;
+	padding: 10px;
+	box-shadow: 0 1px 5px rgba(0,0,0,.3);
 	z-index: 1;
-	color: #fff !important;
+	color: #ccc;
+	border-radius: 2px;
 }
 	.back-to-top:hover{
 		opacity: 1;
+		color: #666;
 	}
-	
+	.back-to-top:active,
+	.back-to-top:focus{
+		color: #ccc;
+	}
 /**
  * .pager
  */

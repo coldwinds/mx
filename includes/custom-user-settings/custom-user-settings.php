@@ -440,7 +440,7 @@ class theme_custom_user_settings{
 			wp_enqueue_script('jquery-core');
 		}
 	}
-	public static function frontend_seajs_alias($alias){
+	public static function frontend_seajs_alias(array $alias = []){
 		if(!self::is_page()) 
 			return $alias;
 			

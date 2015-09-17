@@ -581,7 +581,7 @@ class theme_custom_sign{
 		
 		return $datas;
 	}
-	public static function frontend_seajs_alias($alias){
+	public static function frontend_seajs_alias(array $alias = []){
 		if(theme_cache::is_user_logged_in() || !self::is_page())
 			return $alias;
 

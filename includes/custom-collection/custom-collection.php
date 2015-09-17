@@ -550,7 +550,7 @@ class theme_custom_collection{
 
 		return '<div class="collection-list list-group">' . html_minify($tpl) . '</div>';
 	}
-	public static function frontend_seajs_alias($alias){
+	public static function frontend_seajs_alias(array $alias = []){
 		if(self::is_page()){
 			$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
 		}

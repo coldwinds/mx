@@ -10,7 +10,6 @@ add_filter('theme_includes',function($fns){
 });
 class theme_page_tags{
 	
-	public static $iden = 'theme_page_tags';
 	public static $page_slug = 'tags-index';
 
 	private static $user_query;
@@ -442,7 +441,7 @@ class theme_page_tags{
 		<div class="page-tip"><?= status_tip('info',$msg);?></div>
 		<?php
 	}
-	public static function backend_seajs_alias($alias){
+	public static function backend_seajs_alias(array $alias = []){
 		$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__,'backend');
 		return $alias;
 	}

@@ -42,7 +42,7 @@ class theme_min_rebuild{
 							}
 							?>
 							<p>
-								<a href="<?= esc_url($process_url);?>" class="button" onclick="javascript:this.innerHTML='<?= ___('Rebuilding, please wait...');?>'"><?= ___('Start rebuild');?></a>
+								<a href="<?= $process_url;?>" class="button button-primary" onclick="javascript:this.innerHTML='<?= ___('Rebuilding, please wait...');?>'"><?= ___('Start rebuild');?></a>
 								<span class="description"><i class="fa fa-exclamation-circle"></i> <?= ___('Save your settings before rebuild');?></span>
 							</p>
 						</td>

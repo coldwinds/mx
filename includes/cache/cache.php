@@ -466,20 +466,13 @@ class theme_cache{
 		return $cache;
 	}
 	public static function get_author_posts_url($user_id,$author_nicename = ''){
-		static $caches = [];
-		$cache_id = $user_id . $author_nicename;
 		$group_id = 'author_posts_urls';
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-
-		$caches[$cache_id] = wp_cache_get($cache_id,$group_id);
-		
-		if(!$caches[$cache_id]){
-			$caches[$cache_id] = get_author_posts_url($user_id,$author_nicename);
-			wp_cache_set($group_id,$caches[$cache_id],$group_id,2505600);
+		$cache = wp_cache_get($user_id,$group_id);
+		if(!$cache){
+			$cache = esc_url(get_author_posts_url($user_id,$author_nicename));
+			wp_cache_set($user_id,$cache,$group_id);
 		}
-		
-		return $caches[$cache_id];
+		return $cache;
 	}
 	/**
 	 * add cache for get_page_by_path()

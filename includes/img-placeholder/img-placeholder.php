@@ -25,8 +25,8 @@ class theme_img_placeholder{
 	}
 	public static function options_default(array $opts = []){
 		$opts[__CLASS__] = [
-			'thumbnail' => '//ww4.sinaimg.cn/large/686ee05djw1ew56itdn2nj208w05k0sp.jpg',
-			'avatar' => '//ww2.sinaimg.cn/large/686ee05djw1ew5767l9voj2074074dfn.jpg',
+			'thumbnail' => 'http://ww4.sinaimg.cn/large/686ee05djw1ew56itdn2nj208w05k0sp.jpg',
+			'avatar' => 'http://ww2.sinaimg.cn/large/686ee05djw1ew5767l9voj2074074dfn.jpg',
 		];
 		return $opts;
 	}

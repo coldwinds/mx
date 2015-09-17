@@ -216,7 +216,7 @@ class theme_clean_up{
 		
 		die(theme_features::json_format($output));
 	}
-	public static function backend_seajs_alias($alias){
+	public static function backend_seajs_alias(array $alias = []){
 		$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);
 		return $alias;
 	}

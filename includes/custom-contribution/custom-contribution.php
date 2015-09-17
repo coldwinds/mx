@@ -583,7 +583,7 @@ class theme_custom_contribution{
 			'posts_per_page' => -1,
 		]);
 	}
-	public static function frontend_seajs_alias($alias){
+	public static function frontend_seajs_alias(array $alias = []){
 		if(self::is_page()){
 			$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
 		}
