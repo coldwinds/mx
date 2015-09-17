@@ -2,7 +2,7 @@
 /**
  * theme_page_cats
  *
- * @version 1.0.1
+ * @version 1.0.2
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_page_cats::init';
@@ -10,15 +10,15 @@ add_filter('theme_includes',function($fns){
 });
 class theme_page_cats{
 	
-	public static $iden = 'theme_page_cats';
 	public static $page_slug = 'cats-index';
 	
 	public static function init(){
+		
 		add_action('init',__CLASS__ . '::page_create');
 
 		add_action('page_settings', 		__CLASS__ . '::display_backend');
 
-		add_action('wp_ajax_' . self::$iden, __CLASS__ . '::process');
+		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 		
 		add_filter('theme_options_save', 	__CLASS__ . '::options_save');
 
@@ -26,24 +26,19 @@ class theme_page_cats{
 
 		add_action('after_backend_tab_init',__CLASS__ . '::backend_seajs_use'); 
 
-
 		
 	}
 	public static function get_options($key = null){
-		static $caches = [];
-		if(!isset($caches[self::$iden]))
-			$caches[self::$iden] = theme_options::get_options(self::$iden);
-		
-		if(empty($key)){
-			return $caches[self::$iden];
-		}else{
-			return isset($caches[self::$iden][$key]) ? $caches[self::$iden][$key] : null;
-		}
+		static $caches = null;
+		if($caches === null)
+			$caches = theme_options::get_options(__CLASS__);
+		if($key)
+			return isset($caches[$key]) ? $caches[$key] : false;
+		return $caches;
 	}
 	public static function options_save($opts){
-		if(isset($_POST[self::$iden])){
-			$opts[self::$iden] = $_POST[self::$iden];
-		}
+		if(isset($_POST[__CLASS__]))
+			$opts[__CLASS__] = $_POST[__CLASS__];
 		return $opts;
 	}
 	public static function display_backend(){
@@ -57,15 +52,15 @@ class theme_page_cats{
 					<tr>
 						<th><?= ___('Index Categories');?></th>
 						<td>
-							<?= theme_features::cat_checkbox_list(self::$iden,'cats');?>
+							<?= theme_features::cat_checkbox_list(__CLASS__,'cats');?>
 						</td>
 					</tr>
 					<tr>
 						<th><?= ___('Control');?></th>
 						<td>
-							<div id="<?= self::$iden;?>-tip-clean-cache"></div>
+							<div id="<?= __CLASS__;?>-tip-clean-cache"></div>
 							<p>
-							<a href="javascript:;" class="button" id="<?= self::$iden;?>-clean-cache" data-tip-target="<?= self::$iden;?>-tip-clean-cache"><i class="fa fa-refresh"></i> <?= ___('Flush cache');?></a>
+							<a href="javascript:;" class="button" id="<?= __CLASS__;?>-clean-cache" data-tip-target="<?= __CLASS__;?>-tip-clean-cache"><i class="fa fa-refresh"></i> <?= ___('Flush cache');?></a>
 							</p>
 						</td>
 					</tr>
@@ -76,8 +71,10 @@ class theme_page_cats{
 	}
 	public static function process(){
 		theme_features::check_referer();
+		if(!theme_cache::current_user_can('manage_options')) 
+			die;
 		$output = [];
-		wp_cache_delete(self::$iden);
+		wp_cache_delete(__CLASS__);
 		$output['status'] = 'success';
 		$output['msg'] = ___('Cache has been cleaned.');
 		die(theme_features::json_format($output));
@@ -136,6 +133,7 @@ class theme_page_cats{
 				}
 			}
 			wp_reset_postdata();
+			unset($query);
 		}else{
 			return false;
 		}
@@ -143,12 +141,11 @@ class theme_page_cats{
 		return $new_tags;
 	}
 	public static function display_frontend(){
-		if(!theme_dev_mode::is_enabled()){
-			$cache = wp_cache_get(self::$iden);
-			if(!empty($cache)){
-				echo $cache;
-				return;
-			}
+		$cache = theme_cache::get(__CLASS__);
+		if(!empty($cache)){
+			echo $cache;
+			unset($cache);
+			return;
 		}
 		ob_start();
 		$slugs = self::get_slugs();
@@ -190,17 +187,18 @@ class theme_page_cats{
 		}
 		$cache = ob_get_contents();
 		ob_end_clean();
-		wp_cache_set(self::$iden,$cache,null,86400);/** 24 hours */
+		wp_cache_set(__CLASS__,$cache,null,86400);/** 24 hours */
 		echo $cache;
+		unset($cache);
 	}
 	public static function backend_seajs_alias($alias){
-		$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__,'backend');
+		$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__,'backend');
 		return $alias;
 	}
 	public static function backend_seajs_use(){
 		?>
-		seajs.use('<?= self::$iden;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action'=>self::$iden));?>';
+		seajs.use('<?= __CLASS__;?>',function(m){
+			m.config.process_url = '<?= theme_features::get_process_url(array('action'=>__CLASS__));?>';
 			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
 			m.init();
 		});

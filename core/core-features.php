@@ -1685,14 +1685,16 @@ class theme_features{
 	 * @param string $cat_id
 	 * @param bool $child
 	 * @return string
-	 * @version 1.1.0
+	 * @version 1.1.1
 	 */
 	public static function cat_option_list($group_id,$cat_id,$child = false){
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));
 
-		if(isset($caches[$cache_id]))
+		if(isset($caches[$cache_id])){
 			echo $caches[$cache_id];
+			return;
+		}
 			
 		$opt = (array)theme_options::get_options($group_id);
 		if($child !== false){
@@ -1719,14 +1721,16 @@ class theme_features{
 	 * @param string $group_id
 	 * @param string $ids_name
 	 * @return string
-	 * @version 1.1.2
+	 * @version 1.1.3
 	 */
 	public static function cat_checkbox_list($group_id,$ids_name){
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));
 
-		if(isset($caches[$cache_id]))
+		if(isset($caches[$cache_id])){
 			echo $caches[$cache_id];
+			return;
+		}
 			
 		$opt = (array)theme_options::get_options($group_id);
 		$cats = get_categories(array(
@@ -1755,23 +1759,16 @@ class theme_features{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-					<?= esc_html($cat->name);?> 
-					
-					<a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank">
-						<small>
-							<?= esc_html(sprintf(___('(%s)'),urldecode($cat->slug)));?>
-						</small>
-					</a>
+				<?= esc_html($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank"><?= urldecode($cat->slug);?></a>
 			</label>
 			<?php 
 			}
 		}else{ ?>
-			<p><?= esc_html(___('No category, pleass go to add some categories.'));?></p>
+			<p><?= ___('No category, pleass go to add some categories.');?></p>
 		<?php }
 		$caches[$cache_id] = ob_get_contents();
 		ob_end_clean();
 		echo $caches[$cache_id];
-
 	}
 	/**
 	 * Display page list on select tag
@@ -1779,14 +1776,16 @@ class theme_features{
 	 * @param string $group_id
 	 * @param string $page_slug
 	 * @return
-	 * @version 1.1.0
+	 * @version 1.1.1
 	 */
 	public static function page_option_list($group_id,$page_slug){
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));
 
-		if(isset($caches[$cache_id]))
+		if(isset($caches[$cache_id])){
 			echo $caches[$cache_id];
+			return;
+		}
 			
 		$opt = theme_options::get_options($group_id);
 		$page_id = isset($opt[$page_slug]) ? (int)$opt[$page_slug] : null;

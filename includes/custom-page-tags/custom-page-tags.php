@@ -60,6 +60,14 @@ class theme_page_tags{
 					<td>
 						<textarea name="<?= __CLASS__;?>[whitelist][user-ids]" id="<?= __CLASS__;?>-whitelist-user-ids" rows="3" class="widefat code"><?= isset($opt['whitelist']['user-ids']) ? esc_textarea($opt['whitelist']['user-ids']) : null;?></textarea>
 						<p class="description"><?= ___('User ID, multiple users separated by ,(commas). E.g. 1,2,3,4');?></p>
+						<?php
+						if(isset($opt['whitelist']['user-ids']) && !empty($opt['whitelist']['user-ids'])){
+							$user_display_names = [];
+							foreach(explode(',',$opt['whitelist']['user-ids']) as $id){
+								$user_display_names[] = '<a href="' . theme_cache::get_author_posts_url($id) . '" target="_blank">' . $id . '-' . theme_cache::get_the_author_meta('display_name',$id) . '</a>';
+							}
+							echo sprintf(___('User list: %s'),implode('&nbsp;&nbsp;',$user_display_names));?>
+						<?php } ?>
 					</td>
 				</tr>
 				<tr>

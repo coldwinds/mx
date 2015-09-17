@@ -132,7 +132,7 @@ class theme_custom_slidebox{
 		$title = isset($boxes[$placeholder]['title']) ? $boxes[$placeholder]['title'] : null;
 		$subtitle = isset($boxes[$placeholder]['subtitle']) ? $boxes[$placeholder]['subtitle'] : null;
 		$link_url = isset($boxes[$placeholder]['link-url']) ? $boxes[$placeholder]['link-url'] : null;
-		$img_url = isset($boxes[$placeholder]['img-url']) ? $boxes[$placeholder]['img-url'] : null;
+		$img_url = isset($boxes[$placeholder]['img-url']) ? esc_url($boxes[$placeholder]['img-url']) : null;
 		$checked_rel_nofollow = isset($boxes[$placeholder]['rel']['nofollow']) ? ' checked ' : null;
 		$checked_target_blank = isset($boxes[$placeholder]['target']['blank']) ? ' checked ' : null;
 		
@@ -169,10 +169,18 @@ class theme_custom_slidebox{
 			<td><input type="url" id="slidebox-link-url-<?= $placeholder;?>" name="slidebox[<?= $placeholder;?>][link-url]" class="widefat" placeholder="<?= ___('Url address');?>" value="<?= esc_attr($link_url);?>"/></td>
 		</tr>
 		<tr>
-			<th><label for="slidebox-img-url-<?= $placeholder;?>"><?= ___('Image url');?></label></th>
+			<th>
+				<label for="slidebox-img-url-<?= $placeholder;?>"><?= ___('Image url');?></label>
+				<?php if($img_url){ ?>
+					<br>
+					<a href="<?= $img_url;?>" target="_blank">
+						<img src="<?= $img_url;?>" alt="preview" width="100" height="60">
+					</a>
+				<?php } ?>
+			</th>
 			<td>
 				<div class="slidebox-upload-area">
-					<input type="url" id="slidebox-img-url-<?= $placeholder;?>" name="slidebox[<?= $placeholder;?>][img-url]" class="slidebox-img-url" placeholder="<?= ___('Image address');?>" value="<?= esc_attr($img_url);?>"/>
+					<input type="url" id="slidebox-img-url-<?= $placeholder;?>" name="slidebox[<?= $placeholder;?>][img-url]" class="slidebox-img-url" placeholder="<?= ___('Image address');?>" value="<?= $img_url;?>"/>
 					<a href="javascript:;" class="button-primary slidebox-upload" id="slidebox-upload-<?= $placeholder;?>"><?= ___('Upload image');?><input type="file" id="slidebox-file-<?= $placeholder;?>" class="slidebox-file"/></a>
 				</div>
 				<div class="slidebox-upload-tip hide"></div>

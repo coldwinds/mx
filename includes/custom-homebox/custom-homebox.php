@@ -74,9 +74,7 @@ class theme_custom_homebox{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-				<?= $cat->name;?> - <?= urldecode($cat->slug);?>
-				-
-				<a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank"><?= ___('link');?></a>
+				<?= esc_html($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank"><?= urldecode($cat->slug);?></a>
 			</label>
 			<?php
 		}
