@@ -29,6 +29,7 @@
 		#main.expand .content-reset > p > a{
 			display: block;
 		}
+		#main.expand .content-reset > p > img,
 		#main.expand .content-reset > p > a > img{
 			width: 100%;
 		}

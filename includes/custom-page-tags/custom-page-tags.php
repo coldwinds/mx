@@ -2,7 +2,7 @@
 /**
  * theme_page_tags
  *
- * @version 1.0.0
+ * @version 1.0.1
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_page_tags::init';
@@ -232,6 +232,8 @@ class theme_page_tags{
 		foreach($tags as $v){
 			self::save_tags($v['tag_id'],$v['tag_name'],$v['post_id']);
 		}
+		
+		unset($tags);
 		/**
 		 * 提取 tags 拼音首字母
 		 */
@@ -299,6 +301,7 @@ class theme_page_tags{
 		
 		ksort($new_tags);
 
+	
 		return $new_tags;
 	}
 
@@ -373,7 +376,7 @@ class theme_page_tags{
 				'permalink' => theme_cache::home_url() . str_replace('%post_id%',$v['ID'],$wp_rewrite->permalink_structure)
 			];
 		}
-		
+		unset($query_posts);
 		$sql_post_ids = implode(',',$post_ids);
 
 		$pinyin_tags = self::get_tags($sql_post_ids);
@@ -392,7 +395,7 @@ class theme_page_tags{
 			<div class="panel-tags-index mod">
 				<div class="mod-heading">
 					<h4 class="mod-title">
-						<span class="tx"><?= $initial;?></span>
+						<span class="tx"><?= strtoupper($initial);?></span>
 						<small> - <?= ___('Pinyin initial');?></small>
 					</h4>
 				</div>

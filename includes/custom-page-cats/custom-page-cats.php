@@ -25,7 +25,6 @@ class theme_page_cats{
 		add_action('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
 
 		add_action('after_backend_tab_init',__CLASS__ . '::backend_seajs_use'); 
-
 		
 	}
 	public static function get_options($key = null){
@@ -116,6 +115,7 @@ class theme_page_cats{
 		$query = new WP_Query(array(
 			'nopaging' => 1,
 			'category__in' => $cats,
+			'ignore_sticky_posts' => true,
 		));
 		if($query->have_posts()){
 			/** load pinyin */
@@ -133,11 +133,11 @@ class theme_page_cats{
 				}
 			}
 			wp_reset_postdata();
-			unset($query);
 		}else{
 			return false;
 		}
-		//wp_reset_query();
+		unset($query);
+		wp_reset_query();
 		return $new_tags;
 	}
 	public static function display_frontend(){
@@ -149,19 +149,18 @@ class theme_page_cats{
 		}
 		ob_start();
 		$slugs = self::get_slugs();
-		if(is_null_array($slugs)){
+		if(empty($slugs)){
 			?><div class="page-tip"><?= status_tip('info',___('No cagtegory yet.'));?></div><?php
 			return false;
 		}
 		global $post;
-		//var_dump($tags);
-		arsort($slugs);
+		ksort($slugs);
 		foreach($slugs as $k => $post_ids){
 		?>
 			<div class="panel-tags-index mod">
 				<div class="mod-heading">
 					<h4 class="mod-title">
-						<span class="tx"><?= $k;?></span>
+						<span class="tx"><?= strtoupper($k);?></span>
 						<small> - <?= ___('Initial');?></small>
 					</h4>
 				</div>
@@ -171,6 +170,7 @@ class theme_page_cats{
 						$query = new WP_Query(array(
 							'nopaging' => true,
 							'post__in' => $post_ids,
+							'ignore_sticky_posts' => true,
 						));
 						foreach($query->posts as $post){
 							setup_postdata($post);
@@ -178,6 +178,7 @@ class theme_page_cats{
 								'classes' => array('col-xs-6 col-sm-4 col-md-3 col-lg-2'),
 							));
 						}
+						unset($query);
 						wp_reset_postdata();
 						?>
 					</ul>
@@ -189,7 +190,7 @@ class theme_page_cats{
 		ob_end_clean();
 		wp_cache_set(__CLASS__,$cache,null,86400);/** 24 hours */
 		echo $cache;
-		unset($cache);
+		unset($cache,$slugs);
 	}
 	public static function backend_seajs_alias(array $alias = []){
 		$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__,'backend');
