@@ -21,7 +21,7 @@ class theme_img_lazyload{
 					++$i;
 					return $matches[0];
 				}
-				return $matches[1] . 'src="' . theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder) . '" data-src=';
+				return $matches[1] . 'src="' . theme_functions::$thumbnail_placeholde . '" data-src=';
 			},
 			$content
 		);

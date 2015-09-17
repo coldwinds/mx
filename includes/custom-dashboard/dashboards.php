@@ -89,11 +89,11 @@ class theme_dashboards extends theme_custom_dashboard{
 					href="<?= esc_url($comment_author_url);?>"
 					<?= (int)$comment->user_id === 0 ? 'target="_blank"' : null;?>
 				>
-					<?= get_avatar($comment,50);?>
+					<?= theme_cache::get_avatar($comment,50);?>
 				</a>
 				<?php 
 			}else{
-				echo get_avatar($comment,50);
+				echo theme_cache::get_avatar($comment,50);
 			} 
 			?>
 		</div>

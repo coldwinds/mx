@@ -7,14 +7,13 @@
  */
 add_action('widgets_init','theme_widget_author::register_widget' );
 class theme_widget_author extends WP_Widget{
-	public static $iden = 'theme_widget_author';
 	function __construct(){
-		$this->alt_option_name = self::$iden;
+		$this->alt_option_name = __CLASS__;
 		parent::__construct(
-			self::$iden,
+			__CLASS__,
 			___('Author card <small>(custom)</small>'),
 			array(
-				'classname' => self::$iden,
+				'classname' => __CLASS__,
 				'description'=> ___('Show the author information.'),
 			)
 		);
@@ -44,7 +43,7 @@ class theme_widget_author extends WP_Widget{
 		<div id="widget-author-card" class="widget-container panel-body">
 			<a href="<?= esc_url($author_url);?>" class="media" title="<?= ___('Views the author information detail');?>">
 				<div class="media-left">
-					<?= get_avatar($author_id,'100');?>
+					<?= theme_cache::get_avatar($author_id,'100');?>
 				</div>
 				<div class="media-body">
 					<h4 class="media-heading author-card-name">
@@ -106,6 +105,6 @@ class theme_widget_author extends WP_Widget{
 	}
 
 	public static function register_widget(){
-		register_widget(self::$iden);
+		register_widget(__CLASS__);
 	}
 }

@@ -64,7 +64,7 @@ class widget_comments extends WP_Widget{
 						
 					/** avatar placeholder */
 					if(!isset($caches['avatar_placeholder']))
-						$caches['avatar_placeholder'] = esc_url(theme_features::get_theme_images_url(theme_functions::$avatar_placeholder));
+						$caches['avatar_placeholder'] = theme_functions::$avatar_placeholder;
 
 					/** comment text */
 					$comment_text = str_sub(strip_tags(preg_replace('/<img[^>]+>/i','[' . ___('Image') . ']',get_comment_text($comment->comment_ID))),35);

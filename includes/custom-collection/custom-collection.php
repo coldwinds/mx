@@ -7,7 +7,6 @@ add_filter('theme_includes',function($fns){
 	return $fns;
 });
 class theme_custom_collection{
-	public static $iden = 'theme_custom_collection';
 	public static $page_slug = 'account';
 	public static $file_exts = array('png','jpg','gif');
 	public static $thumbnail_size = 'large';
@@ -22,7 +21,7 @@ class theme_custom_collection{
 		add_filter('theme_options_default', 	__CLASS__ . '::options_default');
 		
 		
-		add_action('wp_ajax_' . self::$iden, __CLASS__ . '::process');
+		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 
 		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
 
@@ -68,31 +67,31 @@ class theme_custom_collection{
 				<tr>
 					<th><?= ___('Which categories will be added after submit?');?></th>
 					<td>
-						<?php theme_features::cat_checkbox_list(self::$iden,'cats');?>
+						<?php theme_features::cat_checkbox_list(__CLASS__,'cats');?>
 					</td>
 				</tr>
 				<tr>
-					<th><label for="<?= self::$iden;?>-tags-number"><?= ___('Shows tags number');?></label></th>
+					<th><label for="<?= __CLASS__;?>-tags-number"><?= ___('Shows tags number');?></label></th>
 					<td>
-						<input class="short-text" type="number" name="<?= self::$iden;?>[tags-number]" id="<?= self::$iden;?>-tags-number" value="<?= isset($opt['tags-number']) ?  (int)$opt['tags-number'] : 6;?>">
+						<input class="short-text" type="number" name="<?= __CLASS__;?>[tags-number]" id="<?= __CLASS__;?>-tags-number" value="<?= isset($opt['tags-number']) ?  (int)$opt['tags-number'] : 6;?>">
 					</td>
 				</tr>
 				<tr>
-					<th><label for="<?= self::$iden;?>-posts-min-number"><?= ___('Post boxes min number');?></label></th>
+					<th><label for="<?= __CLASS__;?>-posts-min-number"><?= ___('Post boxes min number');?></label></th>
 					<td>
-						<input class="short-text" type="number" name="<?= self::$iden;?>[posts-min-number]" id="<?= self::$iden;?>-posts-min-number" value="<?= isset($opt['posts-min-number']) ?  (int)$opt['posts-min-number'] : 5;?>">
+						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-min-number]" id="<?= __CLASS__;?>-posts-min-number" value="<?= isset($opt['posts-min-number']) ?  (int)$opt['posts-min-number'] : 5;?>">
 					</td>
 				</tr>
 				<tr>
-					<th><label for="<?= self::$iden;?>-posts-max-number"><?= ___('Post boxes max number');?></label></th>
+					<th><label for="<?= __CLASS__;?>-posts-max-number"><?= ___('Post boxes max number');?></label></th>
 					<td>
-						<input class="short-text" type="number" name="<?= self::$iden;?>[posts-max-number]" id="<?= self::$iden;?>-posts-max-number" value="<?= isset($opt['posts-max-number']) ?  (int)$opt['posts-max-number'] : 10;?>">
+						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-max-number]" id="<?= __CLASS__;?>-posts-max-number" value="<?= isset($opt['posts-max-number']) ?  (int)$opt['posts-max-number'] : 10;?>">
 					</td>
 				</tr>
 				<tr>
-					<th><label for="<?= self::$iden;?>-description"><?=esc_html(___('You can write some description for collection page header. Please use tag <p> to wrap your HTML codes.'));?></label></th>
+					<th><label for="<?= __CLASS__;?>-description"><?=esc_html(___('You can write some description for collection page header. Please use tag <p> to wrap your HTML codes.'));?></label></th>
 					<td>
-						<textarea name="<?= self::$iden;?>[description]" id="<?= self::$iden;?>-description" class="widefat" rows="5"><?= self::get_des();?></textarea>
+						<textarea name="<?= __CLASS__;?>[description]" id="<?= __CLASS__;?>-description" class="widefat" rows="5"><?= self::get_des();?></textarea>
 					</td>
 				</tr>
 			</table>
@@ -128,7 +127,7 @@ class theme_custom_collection{
 		<span class="row">
 			<span class="col-xs-12 col-sm-12 col-md-4 col-lg-3" >
 				<span class="collection-list-thumbnail-container" >
-					<img src="<?= theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);?>" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>" alt="<?= $args['title'];?>" class="placeholder">
+					<img src="<?= theme_functions::$thumbnail_placeholder;?>" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>" alt="<?= $args['title'];?>" class="placeholder">
 					<img src="<?= $args['thumbnail'];?>" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>" alt="<?= $args['title'];?>" class="collection-list-thumbnail">
 				</span>
 			</span>
@@ -145,16 +144,15 @@ class theme_custom_collection{
 		return $content;
 	}
 	public static function get_input_tpl($placeholder){
-		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
 		ob_start();
 		?>
 <div class="clt-list row" id="clt-list-<?= $placeholder; ?>" data-id="<?= $placeholder;?>">
 	<div class="col-xs-12 col-sm-5 col-md-3 col-lg-2">
 		<div class="clt-list-thumbnail-container">
-			<img src="<?= $thumbnail_placeholder;?>" alt="Placeholder" class="media-object placeholder">
+			<img src="<?= theme_functions::$thumbnail_placeholder;?>" alt="Placeholder" class="media-object placeholder">
 			<div id="clt-list-thumbnail-preview-container-<?= $placeholder;?>" class="clt-list-thumbnail-preview-container">
-				<img id="clt-list-thumbnail-<?= $placeholder;?>" src="<?= $thumbnail_placeholder;?>" title="<?= ___('Post preview');?>" alt="" class="clt-list-thumbnail-preview">
-				<input type="hidden" id="clt-list-thumbnail-url-<?= $placeholder ;?>" name="clt[posts][<?= $placeholder;?>][thumbnail-url]" value="<?= $thumbnail_placeholder;?>">
+				<img id="clt-list-thumbnail-<?= $placeholder;?>" src="<?= theme_functions::$thumbnail_placeholder;?>" title="<?= ___('Post preview');?>" alt="" class="clt-list-thumbnail-preview">
+				<input type="hidden" id="clt-list-thumbnail-url-<?= $placeholder ;?>" name="clt[posts][<?= $placeholder;?>][thumbnail-url]" value="<?= theme_functions::$thumbnail_placeholder;?>">
 			</div>
 		</div>
 		<a href="javascript:;" id="clt-list-del-<?= $placeholder;?>" class="clt-list-del btn btn-xs btn-danger btn-block"><i class="fa fa-trash"></i> <?= ___('Delete this item');?></a>
@@ -179,23 +177,23 @@ class theme_custom_collection{
 		return $content;
 	}
 	public static function options_save($opts){
-		if(!isset($_POST[self::$iden]))
+		if(!isset($_POST[__CLASS__]))
 			return $opts;
 
-		$opts[self::$iden] = $_POST[self::$iden];
+		$opts[__CLASS__] = $_POST[__CLASS__];
 		return $opts;
 	}
 	public static function options_default(array $opts = []){
-		$opts[self::$iden]['posts-min-number'] = 5;
-		$opts[self::$iden]['posts-max-number'] = 10;
-		$opts[self::$iden]['tags-number'] = 10;
-		$opts[self::$iden]['description'] = '<p>' . ___('Welcome to collection page, you can fill in the post ID and make them as a collection to share you favorite posts.') . '</p>';
+		$opts[__CLASS__]['posts-min-number'] = 5;
+		$opts[__CLASS__]['posts-max-number'] = 10;
+		$opts[__CLASS__]['tags-number'] = 10;
+		$opts[__CLASS__]['description'] = '<p>' . ___('Welcome to collection page, you can fill in the post ID and make them as a collection to share you favorite posts.') . '</p>';
 		return $opts;
 	}
 	public static function get_options($key = null){
 		static $caches = [];
 		if(empty($caches))
-			$caches = theme_options::get_options(self::$iden);
+			$caches = theme_options::get_options(__CLASS__);
 			
 		if(empty($key)){
 			return $caches;
@@ -554,7 +552,7 @@ class theme_custom_collection{
 	}
 	public static function frontend_seajs_alias($alias){
 		if(self::is_page()){
-			$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);
+			$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
 		}
 		return $alias;
 	}
@@ -562,8 +560,8 @@ class theme_custom_collection{
 		if(!self::is_page()) 
 			return false;
 		?>
-		seajs.use('<?= self::$iden;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action' => self::$iden));?>';
+		seajs.use('<?= __CLASS__;?>',function(m){
+			m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
 			m.config.min_posts = <?= self::get_posts_number('min');?>;
 			m.config.max_posts = <?= self::get_posts_number('max');?>;
 			m.config.tpl_input = <?= json_encode(self::get_input_tpl('%placeholder%'));?>;
@@ -587,7 +585,7 @@ class theme_custom_collection{
 			return false;
 			
 		wp_enqueue_style(
-			self::$iden,
+			__CLASS__,
 			theme_features::get_theme_includes_css(__DIR__),
 			'frontend',
 			theme_file_timestamp::get_timestamp()

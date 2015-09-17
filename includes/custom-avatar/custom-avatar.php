@@ -2,14 +2,13 @@
 /**
  * theme-custom-avatar
  *
- * @version 1.0.0
+ * @version 1.0.1
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_custom_avatar::init';
 	return $fns;
 });
 class theme_custom_avatar{
-	public static $iden = 'theme_custom_avatar';
 	public static $user_meta_key = array(
 		'avatar' => 'avatar',
 	);

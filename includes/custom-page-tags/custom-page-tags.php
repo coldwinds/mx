@@ -26,8 +26,8 @@ class theme_page_tags{
 		add_filter('frontend_seajs_alias' , __CLASS__ . '::frontend_seajs_alias');
 		add_action('frontend_seajs_use' , __CLASS__ . '::frontend_seajs_use');
 
-		add_action('wp_ajax_' . self::$iden, __CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . self::$iden, __CLASS__ . '::process');
+		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
 
 		add_action('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
 
@@ -36,14 +36,14 @@ class theme_page_tags{
 	public static function get_options($key = null){
 		static $caches = null;
 		if($caches === null)
-			$caches = theme_options::get_options(self::$iden);
+			$caches = theme_options::get_options(__CLASS__);
 		if($key)
 			return isset($caches[$key]) ? $caches[$key] : false;
 		return $caches;
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[self::$iden])){
-			$opts[self::$iden] = $_POST[self::$iden];
+		if(isset($_POST[__CLASS__])){
+			$opts[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $opts;
 	}
@@ -58,15 +58,15 @@ class theme_page_tags{
 				<tr>
 					<th><?= ___('Whitelist - users ');?></th>
 					<td>
-						<textarea name="<?= self::$iden;?>[whitelist][user-ids]" id="<?= self::$iden;?>-whitelist-user-ids" rows="3" class="widefat code"><?= isset($opt['whitelist']['user-ids']) ? esc_textarea($opt['whitelist']['user-ids']) : null;?></textarea>
+						<textarea name="<?= __CLASS__;?>[whitelist][user-ids]" id="<?= __CLASS__;?>-whitelist-user-ids" rows="3" class="widefat code"><?= isset($opt['whitelist']['user-ids']) ? esc_textarea($opt['whitelist']['user-ids']) : null;?></textarea>
 						<p class="description"><?= ___('User ID, multiple users separated by ,(commas). E.g. 1,2,3,4');?></p>
 					</td>
 				</tr>
 				<tr>
 					<th><?= ___('Control');?></th>
 					<td>
-						<div id="<?= self::$iden;?>-tip-clean-cache"></div>
-						<p><a href="javascript:;" class="button" id="<?= self::$iden;?>-clean-cache" data-tip-target="<?= self::$iden;?>-tip-clean-cache"><i class="fa fa-refresh"></i> <?= ___('Flush cache');?></a></p>
+						<div id="<?= __CLASS__;?>-tip-clean-cache"></div>
+						<p><a href="javascript:;" class="button" id="<?= __CLASS__;?>-clean-cache" data-tip-target="<?= __CLASS__;?>-tip-clean-cache"><i class="fa fa-refresh"></i> <?= ___('Flush cache');?></a></p>
 					</td>
 				</tr>
 				</tbody>
@@ -82,7 +82,7 @@ class theme_page_tags{
 		
 		switch($type){
 			case 'clean-cache':
-				wp_cache_delete('display-frontend',self::$iden);
+				wp_cache_delete('display-frontend',__CLASS__);
 				$output['status'] = 'success';
 				$output['msg'] = ___('Cache has been cleaned.');
 				break;
@@ -189,6 +189,7 @@ class theme_page_tags{
 				$thumbnails[$attach_post_ids[$v['post_id']]] = self::get_unserialize_thumbnail_url($v['meta']);
 			}
 		}
+		unset($attach_post_ids,$thumbnails_results);
 		return $thumbnails;
 	}
 	public static function get_tags($sql_post_ids){
@@ -312,10 +313,11 @@ class theme_page_tags{
 		set_time_limit(0);
 		
 		$cache_id = 'display-frontend';
-		$cache = theme_dev_mode::is_enabled() ? false : wp_cache_get($cache_id,self::$iden);
+		$cache = theme_cache::get($cache_id,__CLASS__);
 		//$cache = false;
 		if(!empty($cache)){
 			echo $cache;
+			unset($cache);
 			return;
 		}
 		ob_start();
@@ -400,7 +402,7 @@ class theme_page_tags{
 								if(isset($thumbnail_urls[$post_id])){
 									$thumbnail_url = $thumbnail_urls[$post_id];
 								}else{
-									$thumbnail_url = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
+									$thumbnail_url = theme_functions::$thumbnail_placeholder;
 								}
 							?>
 								<li class="col-sm-6 tag-list">
@@ -423,8 +425,9 @@ class theme_page_tags{
 		}
 		$cache = html_minify(ob_get_contents());
 		ob_end_clean();
-		wp_cache_set($cache_id,$cache,self::$iden,86400*7);/** 7days */
+		wp_cache_set($cache_id,$cache,__CLASS__,86400*7);/** 7days */
 		echo $cache;
+		unset($cache);
 	}
 	private static function no_content($msg){
 		?>
@@ -432,14 +435,14 @@ class theme_page_tags{
 		<?php
 	}
 	public static function backend_seajs_alias($alias){
-		$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__,'backend');
+		$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__,'backend');
 		return $alias;
 	}
 	public static function backend_seajs_use(){
 		?>
-		seajs.use('<?= self::$iden;?>',function(m){
+		seajs.use('<?= __CLASS__;?>',function(m){
 			m.config.process_url = '<?= theme_features::get_process_url(array(
-				'action'=>self::$iden,
+				'action'=>__CLASS__,
 				'type' => 'clean-cache',
 			));?>';
 			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
@@ -456,7 +459,7 @@ class theme_page_tags{
 	}
 	public static function frontend_seajs_alias(array $alias = []){
 		if(self::is_page()){
-			$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);
+			$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
 		}
 		return $alias;
 	}
@@ -465,9 +468,9 @@ class theme_page_tags{
 			return false;
 
 		?>
-		seajs.use(['<?= self::$iden;?>'],function(m){
+		seajs.use(['<?= __CLASS__;?>'],function(m){
 			m.config.process_url = '<?= theme_features::get_process_url([
-				'action' => self::$iden,
+				'action' => __CLASS__,
 				'type' => 'get-thumbnail-url',
 			]);?>';
 			m.config.lang.M00001 = '<?= ___('Preview image is loading...');?>';
@@ -481,7 +484,7 @@ class theme_page_tags{
 			return false;
 
 		wp_enqueue_style(
-			self::$iden,
+			__CLASS__,
 			theme_features::get_theme_includes_css(__DIR__),
 			'frontend',
 			theme_file_timestamp::get_timestamp()

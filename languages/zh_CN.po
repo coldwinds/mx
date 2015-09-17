@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-15 16:44+0800\n"
-"PO-Revision-Date: 2015-09-15 16:47+0800\n"
+"POT-Creation-Date: 2015-09-17 17:47+0800\n"
+"PO-Revision-Date: 2015-09-17 17:49+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -26,7 +26,7 @@ msgstr "《%s》的附件"
 msgid "No content yet."
 msgstr "暂无资料"
 
-#: comments.php:14 functions.php:1845
+#: comments.php:14 functions.php:1747
 #: includes/custom-author-profile/custom-author-profile.php:123
 #: tpl/author-profile.php:75
 msgid "Comments"
@@ -36,7 +36,7 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:26 core/core-options.php:170 functions.php:2034
+#: comments.php:26 core/core-options.php:170 functions.php:1922
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:472
 #: includes/custom-collection/custom-collection.php:573
@@ -67,40 +67,40 @@ msgstr "抱歉，无效的来路。"
 msgid "Sorry, security code is invalid."
 msgstr "抱歉，无效的安全码。"
 
-#: core/core-features.php:1336 core/core-features.php:1401
+#: core/core-features.php:1305 core/core-features.php:1370
 msgid "&lsaquo; Previous"
 msgstr "&lsaquo;  上一页"
 
-#: core/core-features.php:1371 core/core-features.php:1402
+#: core/core-features.php:1340 core/core-features.php:1371
 msgid "Next &rsaquo;"
 msgstr "下一页 &rsaquo;"
 
-#: core/core-features.php:1400
+#: core/core-features.php:1369
 msgid "&laquo; First"
 msgstr "&laquo; 首页"
 
-#: core/core-features.php:1403
+#: core/core-features.php:1372
 msgid "Last &raquo;"
 msgstr "尾页 &raquo;"
 
-#: core/core-features.php:1737
+#: core/core-features.php:1706
 #: includes/custom-colorful-cats/custom-colorful-cats.php:101
 #: tpl/page-account-post.php:259
 msgid "Select category"
 msgstr "选择目录"
 
-#: core/core-features.php:1793
+#: core/core-features.php:1762
 #, php-format
 msgid "(%s)"
 msgstr "（%s）"
 
-#: core/core-features.php:1800 includes/custom-slidebox/custom-slidebox.php:69
+#: core/core-features.php:1769 includes/custom-slidebox/custom-slidebox.php:69
 #: includes/widget-author-posts/widget-author-posts.php:221
 #: includes/widget-rank/widget-rank.php:252
 msgid "No category, pleass go to add some categories."
 msgstr "暂无分类目录，请去添加一些分类。"
 
-#: core/core-features.php:1828
+#: core/core-features.php:1797
 msgid "Select page"
 msgstr "选择页面"
 
@@ -128,7 +128,7 @@ msgstr "%d天前"
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:662 functions.php:607 functions.php:1901
+#: core/core-functions.php:662 functions.php:556 functions.php:1789
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
@@ -243,255 +243,229 @@ msgstr "首页小工具区域"
 msgid "Appears on home in the sidebar."
 msgstr "显示在首页的边栏中。"
 
-#: functions.php:123
+#: functions.php:122
 msgid "Archive page widget area"
 msgstr "归档页面小工具区域"
 
-#: functions.php:125
+#: functions.php:124
 msgid "Appears on archive page in the sidebar."
 msgstr "显示在归档页面的边栏中。"
 
-#: functions.php:129
+#: functions.php:126
 msgid "Footer widget area"
 msgstr "底部 小工具区域"
 
-#: functions.php:131
+#: functions.php:128
 msgid "Appears on all page in the footer."
 msgstr "显示在每个页面的底部。"
 
-#: functions.php:136
+#: functions.php:132
 msgid "Singular post widget area"
 msgstr "单文章小工具区域"
 
-#: functions.php:138
+#: functions.php:134
 msgid "Appears on post in the sidebar."
 msgstr "显示在文章页面的边栏中。"
 
-#: functions.php:141
+#: functions.php:136
 msgid "Singular page widget area"
 msgstr "单页 小工具区域"
 
-#: functions.php:143
+#: functions.php:138
 msgid "Appears on page in the sidebar."
 msgstr "显示在单页的边栏中。"
 
-#: functions.php:146
+#: functions.php:140
 msgid "Sign page widget area"
 msgstr "登录页面 小工具区域"
 
-#: functions.php:148
+#: functions.php:142
 msgid "Appears on sign page in the sidebar."
 msgstr "显示在登录页面的边栏中。"
 
-#: functions.php:151
+#: functions.php:144
 msgid "404 page widget area"
 msgstr "404 页面小工具区域"
 
-#: functions.php:153
+#: functions.php:146
 msgid "Appears on 404 no found page in the sidebar."
 msgstr "显示在 404 页面的边栏中。"
 
-#: functions.php:185
-msgid "Lastest"
-msgstr "最新"
-
-#: functions.php:189 includes/custom-page-rank/custom-page-rank.php:145
-msgid "Popular"
-msgstr "最赞"
-
-#: functions.php:193 includes/widget-author-posts/widget-author-posts.php:171
-#: includes/widget-rank/widget-rank.php:191
-msgid "Random"
-msgstr "随机"
-
-#: functions.php:383 includes/widget-author-posts/widget-author-posts.php:159
+#: functions.php:334 includes/widget-author-posts/widget-author-posts.php:159
 #: includes/widget-rank/widget-rank.php:179
 msgid "Thumb up"
 msgstr "顶/赞"
 
-#: functions.php:390
+#: functions.php:341
 msgid "Comment count"
 msgstr "评论统计"
 
-#: functions.php:398 functions.php:619 functions.php:1841
+#: functions.php:349 functions.php:568 functions.php:1743
 #: includes/post-views/post-views.php:190 tpl/page-account-edit.php:18
 msgid "Views"
 msgstr "查看数"
 
-#: functions.php:585 functions.php:612
+#: functions.php:534 functions.php:561
 #, php-format
 msgid "Views all post by %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:586
+#: functions.php:535
 msgid "Author avatar"
 msgstr "作者头像"
 
-#: functions.php:600 tpl/page-account-post.php:239
+#: functions.php:549 tpl/page-account-post.php:239
 msgid "Category"
 msgstr "分类"
 
-#: functions.php:647
-msgid "Excerpt:"
-msgstr "摘要："
-
-#: functions.php:723
+#: functions.php:671
 msgid "comment"
 msgstr "评论"
 
-#: functions.php:723
+#: functions.php:671
 msgid "comments"
 msgstr "评论"
 
-#: functions.php:755
-msgid ", "
-msgstr "、"
-
-#: functions.php:764 functions.php:778
-#, php-format
-msgid "Views all posts by %s tag"
-msgstr "查看 %s 标签下的所有文章"
-
-#: functions.php:856 functions.php:866
+#: functions.php:760 functions.php:770
 msgid "No more post found"
 msgstr "暂无更多文章"
 
-#: functions.php:858 functions.php:1388
+#: functions.php:762 functions.php:1289
 #, php-format
 msgid "Previous post: %s"
 msgstr "上一篇：%s"
 
-#: functions.php:859 functions.php:1010
+#: functions.php:763 functions.php:913
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:868 functions.php:1404
+#: functions.php:772 functions.php:1305
 #, php-format
 msgid "Next post: %s"
 msgstr "下一篇：%s"
 
-#: functions.php:870 functions.php:1011
+#: functions.php:774 functions.php:914
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:902 functions.php:904
+#: functions.php:805 functions.php:807
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:917
+#: functions.php:820
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:924
+#: functions.php:827
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:942
+#: functions.php:845
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:946
+#: functions.php:849
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:952 includes/widget-author-posts/widget-author-posts.php:23
+#: functions.php:855 includes/widget-author-posts/widget-author-posts.php:23
 #: includes/widget-author-posts/widget-author-posts.php:79
 msgid "Author posts"
 msgstr "作者文章"
 
-#: functions.php:956
+#: functions.php:859
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:975
+#: functions.php:878
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:982
+#: functions.php:885
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:1026
+#: functions.php:929
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:1057 functions.php:1308 functions.php:1310 functions.php:1317
-#: functions.php:1319 functions.php:1705
+#: functions.php:959 functions.php:1209 functions.php:1211 functions.php:1218
+#: functions.php:1220 functions.php:1609
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:1076 functions.php:1082 functions.php:1090
+#: functions.php:978 functions.php:984 functions.php:992
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:1205
+#: functions.php:1107
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1329 functions.php:1330 functions.php:1337 functions.php:1338
-#: functions.php:1702
-#: includes/custom-attachment-page/custom-attachment-page.php:63
+#: functions.php:1228 functions.php:1229 functions.php:1236 functions.php:1237
+#: functions.php:1606
+#: includes/custom-attachment-page/custom-attachment-page.php:71
 msgid "Next page"
 msgstr "下一页"
 
-#: functions.php:1385 functions.php:1401
+#: functions.php:1286 functions.php:1302
 msgid "Placeholder"
 msgstr "占位符"
 
-#: functions.php:1493
+#: functions.php:1396
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1519
+#: functions.php:1422
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1601 includes/related-post/related-post.php:54
+#: functions.php:1505 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1634
+#: functions.php:1538
 msgid "No data."
 msgstr "暂无资料"
 
-#: functions.php:1680
+#: functions.php:1584
 msgid "No data yet"
 msgstr "此类别暂无资料"
 
-#: functions.php:1722
+#: functions.php:1626
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1747 includes/custom-page-rank/custom-page-rank.php:137
+#: functions.php:1651 includes/custom-page-rank/custom-page-rank.php:137
 msgid "Recommend"
 msgstr "推荐"
 
-#: functions.php:1753
+#: functions.php:1657
 msgid "more &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1771
+#: functions.php:1675
 msgid "Readmore..."
 msgstr "查看更多……"
 
-#: functions.php:1932
+#: functions.php:1820
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1950
+#: functions.php:1838
 msgid "More"
 msgstr "更多"
 
-#: functions.php:1959 includes/widget-rank/widget-rank.php:36
+#: functions.php:1847 includes/widget-rank/widget-rank.php:36
 msgid "More &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1991 includes/custom-dashboard/dashboards.php:36
+#: functions.php:1879 includes/custom-dashboard/dashboards.php:36
 #: includes/widget-author-posts/widget-author-posts.php:65
 #: includes/widget-rank/widget-rank.php:72
 #: includes/widget-tags/widget-tags.php:88 tpl/page-account-edit.php:80
@@ -499,50 +473,50 @@ msgstr "更多 &raquo;"
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
-#: functions.php:2027
+#: functions.php:1915
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:2030
+#: functions.php:1918
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:2040
+#: functions.php:1928
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:2041 includes/custom-point-bomb/custom-point-bomb.php:228
+#: functions.php:1929 includes/custom-point-bomb/custom-point-bomb.php:228
 #: includes/custom-point-lottery/custom-point-lottery.php:370
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:2073 tpl/author-profile.php:21
+#: functions.php:1961 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:84
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:2075
+#: functions.php:1963
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:2086
+#: functions.php:1974
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:2088
+#: functions.php:1976
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:2099
+#: functions.php:1987
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:2100
+#: functions.php:1988
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:2120 functions.php:2122
+#: functions.php:2008 functions.php:2010
 msgid "Post comment"
 msgstr "发表评论"
 
@@ -666,47 +640,47 @@ msgstr "%1$s 回复了您在 %2$s 的评论。"
 msgid "%s is following you."
 msgstr "%s 正在关注您。"
 
-#: includes/cache/cache.php:111
+#: includes/cache/cache.php:109
 msgid "Theme cache"
 msgstr "主题缓存"
 
-#: includes/cache/cache.php:112
+#: includes/cache/cache.php:110
 msgid ""
 "Maybe the theme used cache for improve performance, you can clean it when "
 "you modify some site contents if you want."
 msgstr ""
 "或许主题使用了缓存提高了性能，当您改变了站点内容时候，您可以选择清空缓存。"
 
-#: includes/cache/cache.php:117
+#: includes/cache/cache.php:115
 msgid "Memcache cache"
 msgstr "Memcache 缓存"
 
-#: includes/cache/cache.php:121
+#: includes/cache/cache.php:119
 msgid "Are you sure DELETE object-cache.php to disable theme object cache?"
 msgstr "你确定删除 object-cache.php 来禁用主题对象缓存吗？"
 
-#: includes/cache/cache.php:122
+#: includes/cache/cache.php:120
 msgid "Disable theme object cache"
 msgstr "禁用主题对象缓存"
 
-#: includes/cache/cache.php:125
+#: includes/cache/cache.php:123
 msgid ""
 "Are you sure RE-CREATE object-cache.php to re-enable theme object cache?"
 msgstr "你确定重建 object-cache.php 来重新启用主题对象缓存吗？"
 
-#: includes/cache/cache.php:126
+#: includes/cache/cache.php:124
 msgid "Re-enable theme object cache"
 msgstr "重新启用的主题对象缓存"
 
-#: includes/cache/cache.php:131
+#: includes/cache/cache.php:129
 msgid "Enable theme object cache"
 msgstr "启用主题对象缓存"
 
-#: includes/cache/cache.php:134
+#: includes/cache/cache.php:132
 msgid "Save your settings before click."
 msgstr "点击之前保存设置。"
 
-#: includes/cache/cache.php:140
+#: includes/cache/cache.php:138
 #: includes/custom-page-cats/custom-page-cats.php:64
 #: includes/custom-page-rank/custom-page-rank.php:66
 #: includes/custom-page-tags/custom-page-tags.php:66
@@ -719,38 +693,38 @@ msgstr "点击之前保存设置。"
 msgid "Control"
 msgstr "操作"
 
-#: includes/cache/cache.php:144
+#: includes/cache/cache.php:142
 msgid "Theme cache has been cleaned or rebuilt."
 msgstr "主题缓存已被清空或重建。"
 
-#: includes/cache/cache.php:148 includes/cache/cache.php:150
-#: includes/cache/cache.php:152 includes/setting-import/setting-import.php:153
+#: includes/cache/cache.php:146 includes/cache/cache.php:148
+#: includes/cache/cache.php:150 includes/setting-import/setting-import.php:153
 #: page-sign.php:76
 msgid "Processing, please wait..."
 msgstr "处理中，请稍候…"
 
-#: includes/cache/cache.php:148
+#: includes/cache/cache.php:146
 msgid "Clean all cache"
 msgstr "清空全部缓存"
 
-#: includes/cache/cache.php:150
+#: includes/cache/cache.php:148
 msgid "Clean widget cache"
 msgstr "清空小工具缓存"
 
-#: includes/cache/cache.php:152
+#: includes/cache/cache.php:150
 msgid "Clean menu cache"
 msgstr "清空菜单缓存"
 
-#: includes/cache/cache.php:155
+#: includes/cache/cache.php:153
 msgid "Save your settings before clean"
 msgstr "在清空前请保存您的设置"
 
-#: includes/cache/cache.php:168
+#: includes/cache/cache.php:166
 #, php-format
 msgid "Can not delete the %s file, please make sure the folder can be written."
 msgstr "无法删除 %s 文件，请确保该文件夹可写。"
 
-#: includes/cache/cache.php:173
+#: includes/cache/cache.php:171
 #, php-format
 msgid "Can not create the %s file, please make sure the folder can be written."
 msgstr "无法创建 %s 文件，请确定文件夹是否可写。"
@@ -982,7 +956,7 @@ msgstr "抱歉，文章不存在。"
 msgid "Sorry, the type param is invaild."
 msgstr "抱歉，缺少类型参数。"
 
-#: includes/custom-attachment-page/custom-attachment-page.php:66
+#: includes/custom-attachment-page/custom-attachment-page.php:68
 msgid "Already last page"
 msgstr "已是最后一页"
 
@@ -1539,6 +1513,10 @@ msgstr "首字"
 msgid "Rank"
 msgstr "排行榜"
 
+#: includes/custom-page-rank/custom-page-rank.php:145
+msgid "Popular"
+msgstr "最赞"
+
 #: includes/custom-page-rank/custom-page-rank.php:152
 msgid "Daily popular"
 msgstr "每日最赞"
@@ -1600,7 +1578,7 @@ msgid "ERROR: can not load the preview image."
 msgstr "错误: 无法加载预览图。"
 
 #: includes/custom-pm/custom-pm.php:109
-#: includes/widget-author/widget-author.php:98 tpl/header-topbar-tools.php:93
+#: includes/widget-author/widget-author.php:97 tpl/header-topbar-tools.php:93
 msgid "P.M."
 msgstr "私信"
 
@@ -2912,31 +2890,6 @@ msgstr "你修改了你的设置。"
 msgid "You modified your avatar."
 msgstr "你修改了你的头像。"
 
-#: includes/default-gravatar/default-gravatar.php:26
-msgid "Custom default gravatar"
-msgstr "自定义默认头像"
-
-#: includes/default-gravatar/default-gravatar.php:49
-msgid "Custom default gravatar settings"
-msgstr "自定义默认头像设置"
-
-#: includes/default-gravatar/default-gravatar.php:50
-#, php-format
-msgid ""
-"You can change the default gravatar image using custom avatar url address. "
-"After save settings please click here to %s select the custom gravatar."
-msgstr ""
-"您可以使用自定义图片 URL 来更改 Gravatar 默认头像。保存设置后，请点击 %s 选择"
-"自定义 Gravatar 头像。"
-
-#: includes/default-gravatar/default-gravatar.php:50
-msgid "here"
-msgstr "这里"
-
-#: includes/default-gravatar/default-gravatar.php:54
-msgid "Custom avatar URL"
-msgstr "自定义头像地址 URL"
-
 #: includes/dev-mode/dev-mode.php:68
 msgid "Related Options"
 msgstr "相关选项"
@@ -3154,6 +3107,35 @@ msgstr "JPG 图片压缩等级"
 #: includes/img-compress/img-compress.php:72
 msgid "It will compress image When user upload image file."
 msgstr "此功能将会在用户上传图片时候自动压缩图片质量。"
+
+#: includes/img-placeholder/img-placeholder.php:45
+msgid "Default image placeholder settings"
+msgstr "默认占位图片设置"
+
+#: includes/img-placeholder/img-placeholder.php:46
+msgid "You can custom the image placeholder here."
+msgstr "您可以在这里自定义占位图片。"
+
+#: includes/img-placeholder/img-placeholder.php:50
+msgid "Thumbnail image URL"
+msgstr "特色图（文章封面）URL"
+
+#: includes/img-placeholder/img-placeholder.php:57
+msgid "Your custom thumbnail image URL address"
+msgstr "您的自定义特色图 URL 地址"
+
+#: includes/img-placeholder/img-placeholder.php:58
+#: includes/img-placeholder/img-placeholder.php:71
+msgid "Default"
+msgstr "默认"
+
+#: includes/img-placeholder/img-placeholder.php:63
+msgid "Avatar image URL"
+msgstr "头像图片 URL"
+
+#: includes/img-placeholder/img-placeholder.php:70
+msgid "Your custom avatar image URL address"
+msgstr "您的自定义头像图片的 URL 地址"
 
 #: includes/link-manager/link-manager.php:23
 msgid "Link manager"
@@ -4009,35 +3991,40 @@ msgstr "最多查看"
 msgid "Recommended"
 msgstr "推荐文章"
 
-#: includes/widget-author/widget-author.php:15
+#: includes/widget-author-posts/widget-author-posts.php:171
+#: includes/widget-rank/widget-rank.php:191
+msgid "Random"
+msgstr "随机"
+
+#: includes/widget-author/widget-author.php:14
 msgid "Author card <small>(custom)</small>"
 msgstr "作者名片 <small>（定制）</small>"
 
-#: includes/widget-author/widget-author.php:18
+#: includes/widget-author/widget-author.php:17
 msgid "Show the author information."
 msgstr "显示作者信息。"
 
-#: includes/widget-author/widget-author.php:45
+#: includes/widget-author/widget-author.php:44
 msgid "Views the author information detail"
 msgstr "查看作者资料"
 
-#: includes/widget-author/widget-author.php:59
+#: includes/widget-author/widget-author.php:58
 msgid "The author is lazy, nothing writes here."
 msgstr "作者很懒，啥都没写。"
 
-#: includes/widget-author/widget-author.php:70
+#: includes/widget-author/widget-author.php:69
 msgid "Views author posts"
 msgstr "查看作者的文章"
 
-#: includes/widget-author/widget-author.php:75
+#: includes/widget-author/widget-author.php:74
 msgid "Views author comments"
 msgstr "查看作者的评论"
 
-#: includes/widget-author/widget-author.php:89 tpl/page-account-bomb.php:82
+#: includes/widget-author/widget-author.php:88 tpl/page-account-bomb.php:82
 msgid "Bomb!"
 msgstr "丢雷！"
 
-#: includes/widget-author/widget-author.php:97
+#: includes/widget-author/widget-author.php:96
 msgid "Send a private message."
 msgstr "发送私信"
 
@@ -4688,6 +4675,38 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:117
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#~ msgid "Lastest"
+#~ msgstr "最新"
+
+#~ msgid "Excerpt:"
+#~ msgstr "摘要："
+
+#~ msgid ", "
+#~ msgstr "、"
+
+#~ msgid "Views all posts by %s tag"
+#~ msgstr "查看 %s 标签下的所有文章"
+
+#~ msgid "Custom default gravatar"
+#~ msgstr "自定义默认头像"
+
+#~ msgid "Custom default gravatar settings"
+#~ msgstr "自定义默认头像设置"
+
+#~ msgid ""
+#~ "You can change the default gravatar image using custom avatar url "
+#~ "address. After save settings please click here to %s select the custom "
+#~ "gravatar."
+#~ msgstr ""
+#~ "您可以使用自定义图片 URL 来更改 Gravatar 默认头像。保存设置后，请点击 %s "
+#~ "选择自定义 Gravatar 头像。"
+
+#~ msgid "here"
+#~ msgstr "这里"
+
+#~ msgid "Custom avatar URL"
+#~ msgstr "自定义头像地址 URL"
 
 #~ msgid "Insert"
 #~ msgstr "插入"

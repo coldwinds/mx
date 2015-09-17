@@ -56,7 +56,7 @@ get_currentuserinfo();
 		</div>
 		<div class="col-sm-10">
 			<div class="current-avatar">
-				<?= get_avatar($current_user->ID,100);?>
+				<?= theme_cache::get_avatar($current_user->ID,100);?>
 			</div>
 		</div>
 	</div>

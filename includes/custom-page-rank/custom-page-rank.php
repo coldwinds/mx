@@ -10,79 +10,28 @@ add_filter('theme_includes',function($fns){
 });
 class theme_page_rank{
 	
-	public static $iden = 'theme_page_rank';
 	public static $page_slug = 'rank';
 	
 	public static function init(){
-		add_action('init',__CLASS__ . '::page_create');
+		add_action('init', __CLASS__ . '::page_create');
 
-		//add_action('page_settings', 		__CLASS__ . '::display_backend');
+		add_action('wp_enqueue_scripts', __CLASS__  . '::frontend_enqueue_css');
 
-		//add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		
-		//add_filter('theme_options_save', 	__CLASS__ . '::options_save');
-
-		//add_action('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
-
-		//add_action('after_backend_tab_init',__CLASS__ . '::backend_seajs_use'); 
-
-		add_action( 'wp_enqueue_scripts', __CLASS__  . '::frontend_enqueue_css');
-
-		add_filter('query_vars',			__CLASS__ . '::filter_query_vars');
+		add_filter('query_vars', __CLASS__ . '::filter_query_vars');
 		
 	}
 	public static function get_options($key = null){
 		static $caches = null;
 		if($caches === null)
 			$caches = (array)theme_options::get_options(__CLASS__);
-		
-		if(empty($key)){
-			return $caches;
-		}else{
+		if($key)
 			return isset($caches[$key]) ? $caches[$key] : false;
-		}
+		return $caches;
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[__CLASS__])){
+		if(isset($_POST[__CLASS__]))
 			$opts[__CLASS__] = $_POST[__CLASS__];
-		}
 		return $opts;
-	}
-	public static function display_backend(){
-		$opt = self::get_options();
-		?>
-		<fieldset>
-			<legend><?= ___('Categories index settings');?></legend>
-			<p class="description"><?= ___('Display posts number or alphabet slug index on categories index page.')?></p>
-			<table class="form-table">
-				<tbody>
-					<tr>
-						<th><?= ___('Index Categories');?></th>
-						<td>
-							<?= theme_features::cat_checkbox_list(__CLASS__,'cats');?>
-						</td>
-					</tr>
-					<tr>
-						<th><?= ___('Control');?></th>
-						<td>
-							<div id="<?= __CLASS__;?>-tip-clean-cache"></div>
-							<p>
-							<a href="javascript:;" class="button" id="<?= __CLASS__;?>-clean-cache" data-tip-target="<?= __CLASS__;?>-tip-clean-cache"><i class="fa fa-refresh"></i> <?= ___('Flush cache');?></a>
-							</p>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</fieldset>
-		<?php
-	}
-	public static function process(){
-		theme_features::check_referer();
-		$output = [];
-		wp_cache_delete(__CLASS__);
-		$output['status'] = 'success';
-		$output['msg'] = ___('Cache has been cleaned.');
-		die(theme_features::json_format($output));
 	}
 	public static function page_create(){
 		if(!theme_cache::current_user_can('manage_options')) 
@@ -210,15 +159,15 @@ class theme_page_rank{
 		$cache = theme_cache::get('latest','page-rank');
 		if(!empty($cache)){
 			echo $cache;
-			return $cache;
+			unset($cache);
+			return;
 		}
 		global $post;
-		$defaults = [
+		$args = array_merge([
 			'posts_per_page ' => 100,
 			'paged' => 1,
 			'ignore_sticky_posts' => true,
-		];
-		$args = array_merge($defaults,$args);
+		],$args);
 
 		$query = new WP_Query($args);
 		
@@ -247,7 +196,7 @@ class theme_page_rank{
 
 		theme_cache::set('latest',$cache,'page-rank',3600);
 		echo $cache;
-		return $cache;
+		unset($cache);
 	}
 	public static function get_popular_posts(array $args = []){
 		$active_filter_tab = get_query_var('filter');
@@ -262,7 +211,7 @@ class theme_page_rank{
 			return $cache;
 		}
 		global $post;
-		$defaults = [
+		$args = array_merge([
 			'posts_per_page ' => 30,
 			'paged' => 1,
 			'date_query' => [
@@ -272,8 +221,7 @@ class theme_page_rank{
 				]
 			],
 			'ignore_sticky_posts' => true,
-		];
-		$args = array_merge($defaults,$args);
+		],$args);
 		/**
 		 * orderby points
 		 */
@@ -328,13 +276,12 @@ class theme_page_rank{
 			return $cache;
 		}
 		global $post;
-		$defaults = [
+		$args = array_merge([
 			'posts_per_page ' => 100,
 			'paged' => 1,
 			'orderby' => 'rand',
 			'post__in' => theme_recommended_post::get_ids(),
-		];
-		$args = array_merge($defaults,$args);
+		],$args);
 
 		$query = new WP_Query($args);
 		
@@ -369,13 +316,12 @@ class theme_page_rank{
 	public static function rank_img_content($args = []){
 		global $post;
 		
-		$defaults = array(
+		$args = array_merge([
 			'classes' => '',
 			'lazyload' => true,
 			'excerpt' => true,
 			'index' => false,
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 
 		$post_title = theme_cache::get_the_title($post->ID);
 
@@ -383,17 +329,16 @@ class theme_page_rank{
 		if(!empty($excerpt))
 			$excerpt = esc_html($excerpt);
 
-		$thumbnail_real_src = esc_url(theme_functions::get_thumbnail_src($post->ID));
+		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
-		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
 		?>
 		<a class="list-group-item <?= $args['classes'];?>" href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
 					<div class="thumbnail-container">
-						<img src="<?= $thumbnail_placeholder;?>" alt="<?= $post_title;?>" class="media-object placeholder">
+						<img src="<?= theme_functions::$thumbnail_placeholder;?>" alt="<?= $post_title;?>" class="media-object placeholder">
 						<?php if($args['lazyload'] === true){ ?>
-							<img class="post-list-img" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>"/>
+							<img class="post-list-img" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>"/>
 						<?php }else{ ?>
 							<img class="post-list-img" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>"/>
 						<?php } ?>
@@ -404,7 +349,6 @@ class theme_page_rank{
 					<?php
 					/**
 					 * output excerpt
-					 
 					 */
 					if($args['excerpt'] === true){
 						?>
@@ -469,9 +413,6 @@ class theme_page_rank{
 		</a>
 		<?php
 	}
-	public static function display_frontend(){
-		
-	}
 	public static function frontend_enqueue_css(){
 		if(!self::is_page())
 			return false;
@@ -482,18 +423,5 @@ class theme_page_rank{
 			'frontend',
 			theme_file_timestamp::get_timestamp()
 		);
-	}
-	public static function backend_seajs_alias($alias){
-		$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__,'backend');
-		return $alias;
-	}
-	public static function backend_seajs_use(){
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action'=>__CLASS__));?>';
-			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-			m.init();
-		});
-		<?php
 	}
 }

@@ -1,5 +1,8 @@
 <?php get_header();?>
 <?php 
+/**
+ * slidebox
+ */
 if(!wp_is_mobile() && class_exists('theme_custom_slidebox')){
 	theme_custom_slidebox::display_frontend();
 } 
@@ -7,8 +10,11 @@ if(!wp_is_mobile() && class_exists('theme_custom_slidebox')){
 <div class="container">
 
 	<?php if(!wp_is_mobile()){ ?>
-		<div class="recomm-container">
+		<div class="recomm-container hidden-sm">
 			<?php
+			/**
+			 * recommended box
+			 */
 			if(method_exists('theme_functions','the_recommended')){
 				theme_functions::the_recommended();
 			}
@@ -19,7 +25,12 @@ if(!wp_is_mobile() && class_exists('theme_custom_slidebox')){
 	<div class="row">
 		<div id="main" class="col-md-9 col-sm-12">
 			
-			<?php theme_functions::the_homebox();?>
+			<?php 
+			/**
+			 * homebox 
+			 */
+			theme_functions::the_homebox();
+			?>
 			
 		</div><!-- /#main -->
 		<?php get_sidebar() ;?>

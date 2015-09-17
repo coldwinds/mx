@@ -778,37 +778,6 @@ class theme_features{
 		}
 	}
 	/**
-	 * Get user avatar
-	 *
-	 * @param int|object $user The user stdClass object or user ID
-	 * @return string
-	 * @version 1.0.2
-	 */
-	public static function get_avatar($user,$size = 80,$default = null,$alt = null){
-		
-		static $caches = [];
-		
-		$cache_id = md5(json_encode(func_get_args()));
-		
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-			
-		if(is_object($user)){
-			$user_id = $user->ID;
-		}else{
-			$user_id = (int)$user;
-			$user = get_user_by('id',$user);
-		}
-
-		/** check avatar from user meta */
-		$caches[$cache_id] = get_user_meta($user_id,'avatar',true);
-		/** check avatar from  */
-		if(!$caches[$cache_id]){
-			$caches[$cache_id] = get_avatar($user->user_email,$size, $default, $alt);
-		}
-		return $caches[$cache_id];
-	}
-	/**
 	 * theme_features::get_theme_url
 	 * 
 	 * @param 

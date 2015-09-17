@@ -2015,18 +2015,36 @@ label.error{
 		.singular-post .post-meta:last-child{
 			margin-right: 0;
 		}
+
 	.singular-post .post-excerpt{
-		border-bottom: 2px solid #eee;
+		position: relative;
 		margin: -20px -20px 20px;
-		padding: 20px;
-		line-height: 1.5;
+		padding: 20px 40px;
+		line-height: 1.8;
+		border: none;
+		border-bottom: 2px dashed #ccc;
 		
+	}
+	.singular-post .post-excerpt::first-letter{
+		float: left;
+		font-size: 3em;
+		margin-right: 5px;
+	}
+	.singular-post .post-excerpt:after{
+		position: absolute;
+		left: -1px;
+		top: -1px;
+		content: '';
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 20px 20px 0 0;
+		border-color: #ccc transparent transparent transparent ;
 	}
 		.singular-post .post-excerpt .qoe{
 			font-weight: bold;
-			font-size: 2em;
+			font-size: 1.5em;
 		}
-	
 	.singular-post .post-content{
 		padding-top: 0;
 		margin-bottom: 20px;

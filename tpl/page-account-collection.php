@@ -71,7 +71,7 @@ if(class_exists('theme_custom_collection')){
 				</label>
 				<div class="col-sm-10">
 					<div id="clt-file-area">
-						<img src="<?= theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);?>" alt="<?= ___('Cover');?>" title="<?= ___('Cover');?>" class="clt-cover" id="clt-cover" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>">
+						<img src="<?= theme_functions::$thumbnail_placeholder;?>" alt="<?= ___('Cover');?>" title="<?= ___('Cover');?>" class="clt-cover" id="clt-cover" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>">
 						
 						<div id="clt-file-btn">
 							<i class="fa fa-plus"></i>

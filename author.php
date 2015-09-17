@@ -11,7 +11,7 @@ if(empty($tab_active) || !isset($tabs[$tab_active]))
 ?>
 <div class="container">
 	<h3 class="crumb-title">
-		<?= get_avatar($author);?>
+		<?= theme_cache::get_avatar($author);?>
 		<?= theme_cache::get_the_author_meta('display_name',$author);?> - <?= $tabs[$tab_active]['text'];?>
 	</h3>
 	<ul class="nav nav-pills nav-justified">

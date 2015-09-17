@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme-cache
 Feature URI:	http://inn-studio.com
-Version:		2.1.10
+Version:		2.2.0
 Description:	theme-cache
 Author:			INN STUDIO
 Author URI:		http://inn-studio.com
@@ -13,8 +13,6 @@ add_filter('theme_includes',function($fns){
 	return $fns;
 });
 class theme_cache{
-	public static $iden = 'theme_cache';
-	
 	public static $cache;
 	public static $cache_key;
 	
@@ -145,6 +143,15 @@ class theme_cache{
 							}
 							?>
 							<p>
+								<?php
+								/**
+								 * poicache - wp advanced cache
+								 */
+								if(class_exists('innstudio\advanced_cache')){
+									?>
+									<a href="<?= self::get_process_url('flush-poicache');?>" class="button" onclick="javascript:this.innerHTML='<?= ___('Processing, please wait...');?>'"><?= ___('Clean PoiCache cache');?></a>
+								<?php } ?>
+								
 								<a href="<?= self::get_process_url('flush');?>" class="button" onclick="javascript:this.innerHTML='<?= ___('Processing, please wait...');?>'"><?= ___('Clean all cache');?></a>
 								
 								<a href="<?= self::get_process_url('widget-sidebars');?>" class="button" onclick="javascript:this.innerHTML='<?= ___('Processing, please wait...');?>'"><?= ___('Clean widget cache');?></a>
@@ -181,6 +188,10 @@ class theme_cache{
 			die();
 			
 		switch($type){
+			/** poicache */
+			case 'flush-poicache':
+				self::cleanup_poicache();
+				break;
 			case 'flush':
 				self::cleanup();
 			break;
@@ -207,10 +218,28 @@ class theme_cache{
 
 		die();
 	}
-	public static function cleanup(){
-		if(wp_using_ext_object_cache()){
-			return wp_cache_flush();
+	public static function cleanup_poicache(){
+		if(!class_exists('innstudio\advanced_cache'))
+			return false;
+		$dir = WP_CONTENT_DIR . '/poicache/';
+		$dh = opendir($dir);
+		while(($file = readdir($dh)) !== false){
+			if($file === '.' || $file === '..')
+				continue;
+			unlink($dir . $file);
 		}
+		closedir($dh);
+	}
+	public static function cleanup(){
+		if(wp_using_ext_object_cache())
+			return wp_cache_flush();
+	}
+	public static function get_avatar($id_or_email, $size = 96, $default = '', $alt = '', $args = null){
+		static $caches = [];
+		$cache_id = md5(json_encode(func_get_args()));
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = get_avatar($id_or_email, $size, $default , $alt, $args);
+		return $caches[$cache_id];
 	}
 	public static function get_avatar_url($id_or_email){
 		static $caches = [];
@@ -269,14 +298,15 @@ class theme_cache{
 			$cache = get_current_user_id();
 		return $cache;
 	}
-	public static function current_user_can($key){
+	public static function current_user_can($capability){
 		if(!self::is_user_logged_in())
 			return false;
 		static $caches = [];
-		if(isset($caches[$key]))
-			return $caches[$key];
-		$caches[$key] = current_user_can($key);
-		return $caches[$key];
+		$cache_id = md5(json_encode($capability));
+		if(isset($caches[$cache_id]))
+			return $caches[$cache_id];
+		$caches[$cache_id] = current_user_can($capability);
+		return $caches[$cache_id];
 	}
 	public static function wp_title($sep = '&raquo;', $display = true, $seplocation = ''){
 		static $caches = [];

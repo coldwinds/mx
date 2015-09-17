@@ -475,8 +475,12 @@ class theme_point_lottery{
 				$history_data = $box;
 				$history_data['lottery-type'] = $box['type'];
 				$history_data['win'] = $win;
-				$history_data['points'] = (int)$box['award'] - (int)$box['consume'];
+				$history_data['points'] = $win ? (int)$box['award'] : 0 - (int)$box['consume'];
+				if($win && $box['type'] === 'redeem')
+					$history_data['points'] = 0 - (int)$box['consume'];
+					
 				$history_data['name'] = $box['name'];
+
 
 				$history_data = self::add_history($current_user_id,$history_data);
 				

@@ -54,7 +54,7 @@ get_currentuserinfo();
 	<div class="form-group">
 		<div class="control-label col-sm-2">
 			<?php 
-			$avatar = get_avatar($current_user->ID,100);
+			$avatar = theme_cache::get_avatar($current_user->ID,100);
 			?>
 			<a href="<?= theme_cache::get_avatar_url($current_user->ID);?>" target="_blank" title="<?= ___('Views source image');?>"><?= $avatar;?></a>
 		</div>

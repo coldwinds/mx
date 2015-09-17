@@ -198,7 +198,7 @@ class theme_custom_point_views_per_hundred{
 		?>
 		<div class="media">
 			<div class="media-left">
-				<img src="<?= theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);?>" alt="<?= ___('Preview image');?>" data-src="<?= theme_functions::get_thumbnail_src($post->ID);?>" width="60" height="60" class="post-thumbnail media-object avatar">
+				<img src="<?= theme_functions::$thumbnail_placeholder;?>" alt="<?= ___('Preview image');?>" data-src="<?= theme_functions::get_thumbnail_src($post->ID);?>" width="60" height="60" class="post-thumbnail media-object avatar">
 			</div>
 			<div class="media-body">
 				<h4 class="media-heading">

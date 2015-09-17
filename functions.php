@@ -23,35 +23,35 @@ class theme_functions{
 	public static $medium_size = ['medium',600,600,false];
 	public static $large_size = ['large',1024,1024,false];
 	public static $comment_avatar_size = 60;
-	public static $thumbnail_placeholder = 'frontend/thumbnail.png';
-	public static $avatar_placeholder = 'frontend/avatar.jpg';
+	public static $thumbnail_placeholder;
+	public static $avatar_placeholder;
 	public static $cache_expire = 3600;
-	public static $colors = array(
+	public static $colors = [
 		'61b4ca',	'e1b32a',	'ee916f',	'a89d84',
 		'86b767',	'6170ca',	'c461ca',	'ca6161',
 		'ca8661',	'333333',	'84a89e',	'a584a8'
-	);
+	];
 	/** 
 	 * theme_meta_translate(
 	 */
 	public static function theme_meta_translate(){
-		return array(
+		return [
 			'name' => ___('MX'),
 			'theme_url' => ___('http://inn-studio.com/mx'),
 			'author_url' => ___('http://inn-studio.com'),
 			'author' => ___('INN STUDIO'),
-			'qq' => array(
+			'qq' => [
 				'number' => '272778765',
 				'link' => 'http://wpa.qq.com/msgrd?v=3&amp;uin=272778765&amp;site=qq&amp;menu=yes',
-			),
-			'qq_group' => array(
+			],
+			'qq_group' => [
 				'number' => '170306005',
 				'link' => 'http://wp.qq.com/wpa/qunwpa?idkey=d8c2be0e6c2e4b7dd2c0ff08d6198b618156d2357d12ab5dfbf6e5872f34a499',
-			),
+			],
 			'email' => 'kmvan.com@gmail.com',
 			'edition' => ___('Professional edition'),
 			'des' => ___('MX - Dream starts'),
-		);
+		];
 	}
 	/** 
 	 * init
@@ -61,11 +61,11 @@ class theme_functions{
 		 * register menu
 		 */
 		register_nav_menus(
-			array(
+			[
 				'menu-header' 			=> ___('Header menu'),
 				'menu-mobile' 			=> ___('Mobile menu'),
 				'menu-top-bar' 			=> ___('Top bar menu'),
-			)
+			]
 		);	
 		/** 
 		 * frontend_seajs_use
@@ -88,13 +88,13 @@ class theme_functions{
 		/** 
 		 * bg
 		 */
-		add_theme_support('custom-background',array(
+		add_theme_support('custom-background',[
 			'default-color'			=> 'eeeeee',
 			'default-image'			=> '',
 			'default-position-x'	=> 'center',
 			'default-attachment'	=> 'fixed',
 			'wp-head-callback'		=> 'theme_features::_fix_custom_background_cb',
-		));
+		]);
 
 		/**
 		 * filter filter_get_comment_text
@@ -113,48 +113,41 @@ class theme_functions{
 	 * widget_init
 	 */
 	public static function widget_init(){
-		$sidebar = array(
-			array(
+		$sidebar = [
+			[
 				'name' 			=> ___('Home widget area'),
 				'id'			=> 'widget-area-home',
 				'description' 	=> ___('Appears on home in the sidebar.')
-			),
-			array(
+			],[
 				'name' 			=> ___('Archive page widget area'),
 				'id'			=> 'widget-area-archive',
 				'description' 	=> ___('Appears on archive page in the sidebar.')
-			),
-
-			array(
+			],[
 				'name' 			=> ___('Footer widget area'),
 				'id'			=> 'widget-area-footer',
 				'description' 	=> ___('Appears on all page in the footer.'),
 				'before_widget' => '<div class="col-xs-12 col-sm-6 col-md-3"><aside id="%1$s"><div class="panel panel-default widget %2$s">',
 				'after_widget'		=> '</div></aside></div>',
-			),
-			array(
+			],[
 				'name' 			=> ___('Singular post widget area'),
 				'id'			=> 'widget-area-post',
 				'description' 	=> ___('Appears on post in the sidebar.')
-			),
-			array(
+			],[
 				'name' 			=> ___('Singular page widget area'),
 				'id'			=> 'widget-area-page',
 				'description' 	=> ___('Appears on page in the sidebar.')
-			),
-			array(
+			],[
 				'name' 			=> ___('Sign page widget area'),
 				'id'			=> 'widget-area-sign',
 				'description' 	=> ___('Appears on sign page in the sidebar.')
-			),
-			array(
+			],[
 				'name' 			=> ___('404 page widget area'),
 				'id'			=> 'widget-area-404',
 				'description' 	=> ___('Appears on 404 no found page in the sidebar.')
-			)
-		);
+			]
+		];
 		foreach($sidebar as $v){
-			register_sidebar(array(
+			register_sidebar([
 				'name'				=> $v['name'],
 				'id'				=> $v['id'],
 				'description'		=> $v['description'],
@@ -162,41 +155,7 @@ class theme_functions{
 				'after_widget'		=> isset($v['after_widget']) ? $v['after_widget'] : '</div></aside>',
 				'before_title'		=> isset($v['before_title']) ? $v['before_title'] : '<div class="panel-heading panel-heading-default"><h3 class="widget-title panel-title">',
 				'after_title'		=> isset($v['after_title']) ? $v['after_widget'] : '</h3></div>',
-			));
-		}
-	}
-	public static function filter_query_vars($vars){
-		//if(!in_array('paged',$vars)) $vars[] = 'paged';
-		//if(!in_array('tab',$vars)) $vars[] = 'tab';
-		// if(!in_array('orderby',$vars)) $vars[] = 'orderby'; /** = type */
-		return $vars;
-	}
-	/**
-	 * tab type
-	 *
-	 * @param string
-	 * @return array|string|false
-	 * @version 1.0.0
-	 */
-	public static function get_tab_type($key = null){
-		$typies = array(
-			'lastest' => array(
-				'icon' => 'gauge',
-				'text' => ___('Lastest')
-			),
-			'pop' => array(
-				'icon' => 'happy',
-				'text' => ___('Popular')
-			),
-			'rand' => array(
-				'icon' => 'shuffle',
-				'text' => ___('Random')
-			),
-		);
-		if($key){
-			return isset($typies[$key]) ? $typies[$key] : false;
-		}else{
-			return $typies;
+			]);
 		}
 	}
 	/**
@@ -239,7 +198,7 @@ class theme_functions{
 	
 	public static function get_posts_query($args,array $query_args = []){
 		global $paged;
-		$defaults = array(
+		$r = array_merge([
 			'orderby' => 'views',
 			'order' => 'desc',
 			'posts_per_page' => get_option('posts_per_page'),
@@ -247,8 +206,7 @@ class theme_functions{
 			'category__in' => [],
 			'date' => 'all',
 			
-		);
-		$r = array_merge($defaults,$args);
+		],$args);
 		extract($r);
 		$query_args = array_merge([
 			'posts_per_page' => $posts_per_page,
@@ -334,21 +292,20 @@ class theme_functions{
 
 		$args['classes'][] = 'post-list post-img-list';
 			
-		$thumbnail_real_src = esc_url(theme_functions::get_thumbnail_src($post->ID));
+		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
-		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
 		?>
 		<li class="<?= implode(' ',$args['classes']);?>">
 			<a class="post-list-bg" href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= theme_cache::get_the_title($post->ID);?>">
 				<div class="thumbnail-container">
-					<img class="placeholder" alt="Placeholder" src="<?= $thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
+					<img class="placeholder" alt="Placeholder" src="<?= theme_functions::$thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					<?php
 					/**
 					 * lazyload img
 					 */
 					if($args['lazyload']){
 						?>
-						<img class="post-list-img" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= theme_cache::get_the_title($post->ID);?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
+						<img class="post-list-img" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= theme_cache::get_the_title($post->ID);?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php }else{ ?>
 						<img class="post-list-img" src="<?= $thumbnail_real_src;?>" alt="<?= theme_cache::get_the_title($post->ID);?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php } ?>
@@ -399,11 +356,10 @@ class theme_functions{
 	}
 	public static function archive_tx_content($args = []){
 		global $post;
-		$defaults = array(
+		$args = array_merge([
 			'classes'			=> [],
 			'meta_type'			=> 'views',
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 		/** 
 		 * classes
 		 */
@@ -448,15 +404,14 @@ class theme_functions{
 		if(!empty($excerpt))
 			$excerpt = esc_html($excerpt);
 
-		$thumbnail_real_src = esc_url(theme_functions::get_thumbnail_src($post->ID));
+		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
-		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
 		?>
 		<li class="list-group-item <?= $args['classes'];?>">
 			<a class="post-list-bg media" href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= theme_cache::get_the_title($post->ID);?>">
 				<div class="media-left">
-					<img src="<?= $thumbnail_placeholder;?>" alt="<?= theme_cache::get_the_title($post->ID);?>" class="media-object placeholder">
-					<img class="post-list-img" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= theme_cache::get_the_title($post->ID);?>"/>
+					<img src="<?= theme_functions::$thumbnail_placeholder;?>" alt="<?= theme_cache::get_the_title($post->ID);?>" class="media-object placeholder">
+					<img class="post-list-img" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= theme_cache::get_the_title($post->ID);?>"/>
 				</div>
 				<div class="media-body">
 					<h4 class="media-heading"><?= theme_cache::get_the_title($post->ID);?></h4>
@@ -637,8 +592,7 @@ class theme_functions{
 				$excerpt = $post->post_excerpt;
 				if($excerpt !== ''){ 
 					?>
-					<blockquote class="post-excerpt well">
-						<span class="qoe"><?= ___('Excerpt:');?></span>
+					<blockquote class="post-excerpt">
 						<?= $excerpt;?>
 					</blockquote>
 				<?php } ?>
@@ -738,59 +692,15 @@ class theme_functions{
 		</article>
 		<?php
 	}
-	public static function the_post_tags(){
-		global $post;
-		$tags = get_the_tags();
-		
-		if(empty($tags)) 
-			return false;
-			
-		$first_tag = array_shift($tags);
-		$split_str = '<span class="split">' . ___(', ') . '</span>';
-		?>
-		<div class="post-tags">
-			<?php
-			/** 
-			 * first tag html
-			 */
-			ob_start();
-			?>
-			<a href="<?= get_tag_link($first_tag->term_id);?>" class="tag" title="<?= sprintf(___('Views all posts by %s tag'),esc_attr($first_tag->name));?>">
-				<span class="icon-tags"></span><span class="after-icon"><?= esc_html($first_tag->name);?></span>
-			</a>
-			<?php
-			$tags_str = array(ob_get_contents());
-			ob_end_clean();
-			// $i = 0;
-			foreach($tags as $tag){
-				// if($i === 0){
-					// ++$i;
-					// continue;
-				// }
-				ob_start();
-				?>
-				<a href="<?= get_tag_link($tag->term_id);?>" class="tag" title="<?= sprintf(___('Views all posts by %s tag'),esc_attr($tag->name));?>">
-					<?= esc_html($tag->name);?>
-				</a>
-				<?php
-				$tags_str[] = ob_get_contents();
-				ob_end_clean();
-			} 
-			echo implode($split_str,$tags_str);
-			?>
-			
-		</div>
-		<?php
-	}
 	/**
 	 * get_thumbnail_src
 	 *
 	 * @return 
-	 * @version 1.0.2
+	 * @version 1.0.3
 	 */
 	public static function get_thumbnail_src($post_id = null,$size = 'thumbnail',$placeholder = null){
 		global $post;
-		
+
 		if(!$placeholder)
 			$placeholder = self::$thumbnail_placeholder;
 			
@@ -805,10 +715,10 @@ class theme_functions{
 		if(has_post_thumbnail($post_id)){
 			$src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id),$size)[0];
 		}
+
+		if(!$src)
+			$src = $placeholder;
 		
-		if(!$src){
-			$src = theme_features::get_theme_images_url($placeholder);
-		}
 		return esc_url($src);
 	}
 	/**
@@ -882,11 +792,10 @@ class theme_functions{
 	 * 
 	 */
 	public static function get_crumb(array $args = []){
-		$defaults = array(
+		$args = array_merge([
 			'header' => null,
 			'footer' => null,
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 		
 		$links = [];
 		
@@ -1013,14 +922,13 @@ class theme_functions{
 	}
 	public static function pagination( array $args = [] ) {
 		
-		$defaults = array(
+		$args = array_merge([
 			'custom_query'		=> false,
 			'previous_string' 	=> '<i class="fa fa-arrow-left"></i>',
 			'next_string'	 	=> '<i class="fa fa-arrow-right"></i>',
 			'before_output'   	=> '<div class="posts-nav btn-group btn-group-justified" role="group" aria-label="' . ___('Posts pagination navigation') . '">',
 			'after_output'		=> '</div>'
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 
 		$rand_id = rand(1000,9999);
 		
@@ -1212,14 +1120,12 @@ class theme_functions{
 			
 		global $post,$page,$numpages;
 
-		//$cache = wp_cache_
 		$output = [];
 	
-		$defaults = array(
+		$args = array_merge([
 			'add_fragment' => 'post-' . $post->ID,
 			'same_category' => false,
-		);
-		$args = array_merge($defaults,$args);
+		],$args);
 		
 		$output['numpages'] = $numpages;
 		$output['page'] = $page;
@@ -1279,6 +1185,7 @@ class theme_functions{
 		$cache = theme_cache::get($cache_id,$cache_group);
 		if(!empty($cache)){
 			echo $cache;
+			unset($cache);
 			return;
 		}
 		$page_pagination = self::smart_page_pagination([
@@ -1314,8 +1221,6 @@ class theme_functions{
 				<?php
 			}
 			if(isset($page_pagination['next_page'])){
-				//$page_attr_str = $page_pagination['page'] . '/' . $page_pagination['numpages'];
-				//$page_str = '<span class="current-page">' . $page_pagination['page'] . '</span>' . '/' . $page_pagination['numpages'];
 				?>
 				<a 
 					href="<?= $page_pagination['next_page']['url'];?>" 
@@ -1340,6 +1245,7 @@ class theme_functions{
 
 		theme_cache::set($cache_id,$cache,$cache_group,3600);
 		echo $cache;	
+		unset($cache);
 	}
 	public static function the_post_pagination(){
 		global $post,$page;
@@ -1349,6 +1255,7 @@ class theme_functions{
 		$cache = theme_cache::get($cache_id,$cache_group);
 		if(!empty($cache)){
 			echo $cache;
+			unset($cache);
 			return;
 		}
 			
@@ -1407,7 +1314,9 @@ class theme_functions{
 
 		theme_cache::set($cache_id,$cache,$cache_group,3600);
 		echo $cache;
+		unset($cache);
 	}
+
 	/**
 	 * Theme comment
 	 * 
@@ -1471,10 +1380,10 @@ class theme_functions{
 			<div class="media-left">
 				<?php if($author_url){ ?>
 					<a href="<?= esc_url($author_url);?>" class="avatar-link" target="_blank" <?= $author_nofollow;?> >
-						<?= get_avatar($comment,50);?>
+						<?= theme_cache::get_avatar($comment,50);?>
 					</a>
 				<?php }else{
-					echo get_avatar($comment,50);
+					echo theme_cache::get_avatar($comment,50);
 				} ?>
 			</div><!-- /.media-left -->
 		<?php } ?>
@@ -1492,7 +1401,7 @@ class theme_functions{
 				<span class="comment-meta-data author">
 					<?php
 					if($comment->comment_parent != 0){
-						echo get_avatar($comment,50);
+						echo theme_cache::get_avatar($comment,50);
 						echo '&nbsp;';
 					}
 					comment_author_link();
@@ -1571,7 +1480,8 @@ class theme_functions{
 		$cache = theme_dev_mode::is_enabled() ? false : wp_cache_get($post->ID,$cache_group_id);
 		if($cache){
 			echo $cache;
-			return $cache;
+			unset($cache);
+			return;
 		}
 		
 		$defaults = array(
@@ -1638,7 +1548,7 @@ class theme_functions{
 		ob_end_clean();
 		wp_cache_set($post->ID,$cache,$cache_group_id,3600);
 		echo $cache;
-		return $cache;
+		unset($cache);
 	}
 	/** 
 	 * the_related_posts
@@ -1786,21 +1696,19 @@ class theme_functions{
 		
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
-		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
-
 		$post_title = theme_cache::get_the_title($post->ID);
 		?>
 		<li class="<?= implode(' ',$args['classes']);?>">
 			<div class="post-list-bg" >
 				<a href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title;?>" class="thumbnail-container" >
-					<img class="placeholder" alt="Placeholder" src="<?= $thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
+					<img class="placeholder" alt="Placeholder" src="<?= theme_functions::$thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					<?php
 					/**
 					 * lazyload img
 					 */
 					if($args['lazyload']){
 						?>
-						<img class="post-list-img" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
+						<img class="post-list-img" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php }else{ ?>
 						<img class="post-list-img" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php } ?>
@@ -1825,7 +1733,7 @@ class theme_functions{
 				</h3>
 				<div class="post-list-meta">
 					<a href="<?= theme_cache::get_author_posts_url($post->post_author);?>" class="meta author" title="<?= theme_cache::get_the_author_meta('display_name',$post->post_author);?>">
-						<img width="32" height="32" src="<?= theme_features::get_theme_images_url(self::$avatar_placeholder);?>" data-src="<?= theme_cache::get_avatar_url($post->post_author);?>" alt="<?= theme_cache::get_the_author_meta('display_name',$post->post_author);?>" class="avatar"> <span class="tx"><?= theme_cache::get_the_author_meta('display_name',$post->post_author);?></span>
+						<img width="32" height="32" src="<?= theme_functions::$avatar_placeholder;?>" data-src="<?= theme_cache::get_avatar_url($post->post_author);?>" alt="<?= theme_cache::get_the_author_meta('display_name',$post->post_author);?>" class="avatar"> <span class="tx"><?= theme_cache::get_the_author_meta('display_name',$post->post_author);?></span>
 					</a>
 					<?php
 					/**
@@ -1855,19 +1763,18 @@ class theme_functions{
 		
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
-		$thumbnail_placeholder = theme_features::get_theme_images_url(theme_functions::$thumbnail_placeholder);
 		?>
 		<li <?php post_class($args['classes']);?>>
 			<a class="post-list-bg" href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= theme_cache::get_the_title($post->ID);?>">
 				<div class="thumbnail-container">
-					<img class="placeholder" alt="Placeholder" src="<?= $thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
+					<img class="placeholder" alt="Placeholder" src="<?= theme_functions::$thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					<?php
 					/**
 					 * lazyload img
 					 */
 					if($args['lazyload']){
 						?>
-						<img class="post-list-img" src="<?= $thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= theme_cache::get_the_title($post->ID);?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
+						<img class="post-list-img" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= theme_cache::get_the_title($post->ID);?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php }else{ ?>
 						<img class="post-list-img" src="<?= $thumbnail_real_src;?>" alt="<?= theme_cache::get_the_title($post->ID);?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>"/>
 					<?php } ?>
@@ -1877,7 +1784,7 @@ class theme_functions{
 				
 				<div class="post-list-meta">
 					<span class="meta author" title="<?= theme_cache::get_the_author_meta('display_name',$post->post_author);?>">
-						<img width="32" height="32" src="<?= theme_features::get_theme_images_url(self::$avatar_placeholder);?>" data-src="<?= theme_cache::get_avatar_url($post->post_author);?>" alt="<?= theme_cache::get_the_author_meta('display_name',$post->post_author);?>" class="avatar"> <span class="tx"><?= theme_cache::get_the_author_meta('display_name',$post->post_author);?></span>
+						<img width="32" height="32" src="<?= theme_functions::$avatar_placeholder;?>" data-src="<?= theme_cache::get_avatar_url($post->post_author);?>" alt="<?= theme_cache::get_the_author_meta('display_name',$post->post_author);?>" class="avatar"> <span class="tx"><?= theme_cache::get_the_author_meta('display_name',$post->post_author);?></span>
 					</span>
 					<time class="meta time" datetime="<?= get_the_time('Y-m-d H:i:s',$post->ID);?>" title="<?= get_the_time(___('M j, Y'),$post->ID);?>">
 						<?= friendly_date(get_the_time('U',$post->ID));?>
@@ -2034,7 +1941,7 @@ class theme_functions{
 			<input type="hidden" name="comment_parent" id="comment_parent" value="0">
 			
 			<div class="media-left media-top hidden-xs">
-				<img id="respond-avatar" src="<?= theme_features::get_theme_images_url(self::$avatar_placeholder);?>" alt="Avatar" class="media-object avatar" width="80" height="80">
+				<img id="respond-avatar" src="<?= theme_functions::$avatar_placeholder;?>" alt="Avatar" class="media-object avatar" width="80" height="80">
 			</div>
 			<div class="media-body">
 				<?php
@@ -2119,13 +2026,12 @@ class theme_functions{
 	 * @version 1.0.1
 	 */
 	public static function the_user_list(array $args = []){
-		$defaults = [
+		$args = array_merge([
 			'classes' => 'col-xs-4',
 			'user' => null,
-			'extra_title' => '', /** eg. You have % points */
+			'extra_title' => '', /** e.g. You have % points */
 			'extra' => 'point',
-		];
-		$args = array_merge($defaults,$args);
+		],$args);
 		
 		$user = $args['user'];
 		
@@ -2176,7 +2082,7 @@ class theme_functions{
 		
 		$display_name = theme_cache::get_the_author_meta('display_name',$user->ID);
 
-		$avatar_placeholder = theme_features::get_theme_images_url(self::$avatar_placeholder);
+		$avatar_placeholder = theme_functions::$avatar_placeholder;
 
 		$avatar_url = theme_cache::get_avatar_url($user->ID);
 		?>

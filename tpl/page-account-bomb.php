@@ -50,7 +50,7 @@ if(theme_custom_point::get_point_img_url()){
 				<div class="col-sm-5">
 					<div class="bomb-area bomb-area-target">
 						<p>
-							<img id="bomb-target-avatar" src="<?= theme_features::get_theme_images_url(theme_functions::$avatar_placeholder);?>" alt="<?= ___('Avatar');?>" class="avatar" width="100" height="100" >
+							<img id="bomb-target-avatar" src="<?= theme_functions::$avatar_placeholder;?>" alt="<?= ___('Avatar');?>" class="avatar" width="100" height="100" >
 						</p>
 						<p class="bomb-area-meta">
 							<?= $point_icon;?>
