@@ -2,7 +2,7 @@
 /**
  * theme_page_tags
  *
- * @version 1.0.1
+ * @version 1.1.0
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_page_tags::init';
@@ -129,179 +129,85 @@ class theme_page_tags{
 		}
 
 	}
-	private static function get_unserialize_thumbnail_url($meta){
-		static $baseurl = null;
-		if($baseurl === null)
-			$baseurl = wp_upload_dir()['baseurl'];
+	private static function get_tag_name_pinyin($tag){
+		$cache_group_id = 'tag-name-pinyin';
+		$cache = wp_cache_get($tag['term_id'],$cache_group_id);
+		
+		if($cache)
+			return $cache;
 			
-		$meta = unserialize($meta);
-
-		if(!$meta)
-			return false;
-
-		if(!isset($meta['sizes']['post-thumbnail']['file']))
-			return false;
-			
-		$prefix = explode('/',$meta['file']);
-		$prefix_url = '';
-		for($i = 0, $len = count($prefix); $i<=$len; ++$i){
-			if($i >= $len - 1)
-				break;
-
-			$prefix_url .= $prefix[$i] . '/';
-		}
-		return $baseurl . '/' . $prefix_url . $meta['sizes']['post-thumbnail']['file'];
-	}
-	public static function get_thumbnails($sql_post_ids){
+		/** 提取首字母 */
+		$first_letter_pattern = '/^[a-z]/i';
+		$first_letter = strtolower(mb_substr($tag['name'],0,1));
+		preg_match($first_letter_pattern,$first_letter,$matches);
 		/**
-		 * get thumbnail src from db
+		 * 存在字母开头的标签
 		 */
-		global $wpdb;
+		if(!empty($matches[0])){
+			wp_cache_set($tag['term_id'],$first_letter,$cache_group_id);
+			return $first_letter;
+		}
 		
 		/**
-		 * 获取附件的 post id
+		 * 标签是中文开头
 		 */
-		$tmp_post_attach_ids = $wpdb->get_results(
-			"
-			SELECT `post_id`,`meta_value` as attach_id
-			FROM $wpdb->postmeta
-			WHERE `meta_key` = '_thumbnail_id'
-			AND `post_id` IN ($sql_post_ids)
-			",ARRAY_A
-		);
-		$attach_ids = [];
-		$attach_post_ids = [];
-		foreach($tmp_post_attach_ids as $v){
-			$attach_ids[$v['post_id']] = $v['attach_id'];
-			$attach_post_ids[$v['attach_id']] = $v['post_id'];
-		}
-			
-		$sql_attach_ids = implode(',',$attach_ids);
-		$thumbnails_results = $wpdb->get_results(
-			"
-			SELECT `post_id`,`meta_value` as meta
-			FROM $wpdb->postmeta
-			WHERE `meta_key` = '_wp_attachment_metadata'
-			AND `post_id` IN ($sql_attach_ids)
-			",ARRAY_A
-		);
-		if(empty($thumbnails_results[0]))
-			return false;
+		$utf8_tagname = mb_convert_encoding($tag['name'],'utf-8','ascii,gb2312,gbk,utf-8');
+		preg_match("/^[\x{4e00}-\x{9fa5}]/u",$utf8_tagname,$matches);
 		/**
-		 * get thumbnails for loop
+		 * 不是中文，跳到下一个
 		 */
-		$thumbnails = [];
-		foreach($thumbnails_results as $v){
-			if(isset($attach_post_ids[$v['post_id']])){
-				$thumbnails[$attach_post_ids[$v['post_id']]] = self::get_unserialize_thumbnail_url($v['meta']);
+		if(empty($matches[0])){
+			wp_cache_set($tag['term_id'],false,$cache_group_id);
+			return $first_letter;
+		}
+		if(!class_exists('Overtrue\Pinyin\Pinyin'))
+			include __DIR__ . '/inc/Pinyin/Pinyin.php';
+		$double_pinyins = ['zh','ch','sh','ou','ai','ang','an'];
+		$tag_pinyin = Overtrue\Pinyin\Pinyin::pinyin($tag['name']);
+		$tag_two_pinyin = strtolower(substr($tag_pinyin,0,2));
+		/**
+		 * 判断巧舌音
+		 */
+		if(in_array($tag_two_pinyin,$double_pinyins)){
+			wp_cache_set($tag['term_id'],$tag_two_pinyin,$cache_group_id);
+			return $tag_two_pinyin;
+		/**
+		 * 单音
+		 */
+		}else{
+			$tag_one_pinyin = mb_substr($tag_pinyin,0,1);
+			wp_cache_set($tag['term_id'],$tag_one_pinyin,$cache_group_id);
+			return $tag_one_pinyin;
+		}
+	}
+	public static function get_tags($posts){
+		if(!$posts)
+			return false;
+		foreach($posts as $post){
+			$tags = get_the_tags($post->ID);
+			if(!$tags)
+				continue;
+			foreach($tags as $tag){
+				self::save_tags($tag->term_id,$tag->name,$post->ID);
 			}
 		}
-		unset($attach_post_ids,$thumbnails_results);
-		return $thumbnails;
-	}
-	public static function get_tags($sql_post_ids){
-		global $wpdb;
-		$where = empty($sql_post_ids) ? '' : "AND tr.object_id IN ($sql_post_ids)";
-
-		$tags = $wpdb->get_results(
-			"
-			SELECT 
-				t.name tag_name,
-				t.term_id tag_id,
-				tr.object_id post_id
-			FROM 
-				$wpdb->term_relationships AS tr
-			
-			INNER JOIN $wpdb->term_taxonomy AS tt
-				ON tt.term_taxonomy_id = tr.term_taxonomy_id
-				
-			INNER JOIN $wpdb->terms AS t
-				ON t.term_id = tt.term_id
-				
-			WHERE
-				tr.object_id IN ($sql_post_ids) AND
-				tt.taxonomy = 'post_tag'
-			",ARRAY_A
-		);
-		//self::sprint_r($wpdb);
-
-		if(empty($tags)){
-			return false;
-		}
-		/** 保存所有唯一的tags */
-		foreach($tags as $v){
-			self::save_tags($v['tag_id'],$v['tag_name'],$v['post_id']);
-		}
-		
-		unset($tags);
-		/**
-		 * 提取 tags 拼音首字母
-		 */
-		include __DIR__ . '/inc/Pinyin/Pinyin.php';
-		$double_pinyins = ['zh','ch','sh','ou','ai','ang','an'];
+		unset($posts);
 		$new_tags = [];
 		foreach(self::$tags as $tag_id => $tag){
-			/**
-			 * 标签是字母开头
-			 */
-			$first_letter_pattern = '/^[a-z]/i';
-			$first_letter = strtolower(mb_substr($tag['name'],0,1));
-			preg_match($first_letter_pattern,$first_letter,$matches);
-			/**
-			 * 存在字母开头的标签
-			 */
-			if(!empty($matches[0])){
-				/**
-				 * 如果是新标签，进行记录
-				 */
-				if(!isset($new_tags[$first_letter][$tag_id]))
-					$new_tags[$first_letter][$tag_id] = $tag;
-				
-				/**
-				 * 完成匹配，跳到下一个标签
-				 */
-				continue;
-			}
-			/**
-			 * 标签是中文开头
-			 */
-			$utf8_tagname = mb_convert_encoding($tag['name'],'utf-8','ascii,gb2312,gbk,utf-8');
-			preg_match("/^[\x{4e00}-\x{9fa5}]/u",$utf8_tagname,$matches);
-			/**
-			 * 不是中文，跳到下一个
-			 */
-			if(empty($matches[0]))
-				continue;
-				
-			$tag_pinyin = Overtrue\Pinyin\Pinyin::pinyin($tag['name']);
-			$tag_two_pinyin = strtolower(substr($tag_pinyin,0,2));
-			/**
-			 * 判断巧舌音
-			 */
-			if(in_array($tag_two_pinyin,$double_pinyins)){
-				/**
-				 * 如果是新标签，进行记录
-				 */
-				if(!isset($new_tags[$tag_two_pinyin][$tag_id]))
-					$new_tags[$tag_two_pinyin][$tag_id] = $tag;
-			/**
-			 * 单音
-			 */
+			$initial = self::get_tag_name_pinyin([
+				'term_id' => $tag_id,
+				'name' => $tag['name'],
+			]);
+			if(!$new_tags[$initial]){
+				$new_tags[$initial] = [
+					$tag_id => self::$tags[$tag_id]
+				];
 			}else{
-				$tag_one_pinyin = mb_substr($tag_pinyin,0,1);
-				/**
-				 * 如果是新标签，进行记录
-				 */
-				if(!isset($new_tags[$tag_one_pinyin][$tag_id]))
-					$new_tags[$tag_one_pinyin][$tag_id] = $tag;
+				$new_tags[$initial][$tag_id] = self::$tags[$tag_id];
 			}
-			continue;
 		}
-		
-		
 		ksort($new_tags);
-
-	
+		self::$tags = null;
 		return $new_tags;
 	}
 
@@ -317,7 +223,6 @@ class theme_page_tags{
 		echo '<pre>';
 		print_r($data);
 		echo '</pre>';die;
-		
 	}
 	public static function display_frontend(){
 		set_time_limit(0);
@@ -332,65 +237,35 @@ class theme_page_tags{
 		}
 		ob_start();
 
-
-
-		global $wp_rewrite;
-
-		$whitelist = (array)self::get_options('whitelist');
-		if(empty($whitelist)){
-			$whitelist_sql = null;
+		$whitelist =(array)self::get_options('whitelist');
+		if(isset($whitelist['user-ids']) && !empty($whitelist['user-ids'])){
+			$whitelist =  explode(',',$whitelist['user-ids']);
 		}else{
-			$whitelist_sql = explode(',',$whitelist['user-ids']);
+			$whitelist = null;
 		}
-
-
-		$where = !empty($whitelist_sql[0]) ? " AND `post_author` IN (${whitelist['user-ids']})" : '';
-
-		
-		global $wpdb;
-		$query_posts = $wpdb->get_results(
-			"
-			SELECT post_title,ID 
-			FROM `$wpdb->posts` 
-			WHERE 1=1 
-				AND post_status = 'publish'
-				AND post_type = 'post'
-				$where
-			ORDER BY post_title
-			",ARRAY_A
-		);
-//		echo '<pre>';
-//print_r($query_posts);
-//echo '</pre>';die;
-		if(!isset($query_posts[0])){
+		global $post;
+		$query = new WP_Query([
+			'author__in' => $whitelist,
+			'ignore_sticky_posts' => true,
+			'nopaging' => true,
+			'post_type' => 'post',
+		]);
+		if(!$query->have_posts()){
 			self::no_content(__('No posts found.'));
 			return false;
 		}
+		//var_dump(count($query->posts));die;
 		
-		$posts = [];
-		$post_ids = [];
-		foreach($query_posts as $v){
-			$post_ids[] = $v['ID'];
-			$posts[$v['ID']] = [
-				'title' => $v['post_title'],
-				'permalink' => theme_cache::home_url() . str_replace('%post_id%',$v['ID'],$wp_rewrite->permalink_structure)
-			];
-		}
-		unset($query_posts);
-		$sql_post_ids = implode(',',$post_ids);
-
-		$pinyin_tags = self::get_tags($sql_post_ids);
-		$thumbnail_urls = self::get_thumbnails($sql_post_ids);
-
+		$pinyin_tags = self::get_tags($query->posts);
+		unset($query);
 		
-
-
-		if(empty($pinyin_tags)){
+//var_dump($pinyin_tags);die;
+		if(!$pinyin_tags){
 			self::no_content(__('No tags found.'));
 			return false;
 		}
-
 		foreach($pinyin_tags as $initial => $tags){
+			//var_dump($tags);die;
 			?>
 			<div class="panel-tags-index mod">
 				<div class="mod-heading">
@@ -400,39 +275,21 @@ class theme_page_tags{
 					</h4>
 				</div>
 				<div class="panel-body">
-					<?php foreach($tags as $tag_id => $tag){ ?>
-						<h3 class="tags-title"><a href="<?= esc_url(get_tag_link($tag_id));?>">
-							<?= $tag['name'];?>
-							<small>(<?= count($tag['post_ids']);?>)</small>
-						</a></h3>
-						<ul class="row">
-							<?php 
-							foreach($tag['post_ids'] as $post_id){
-								/** get thumbnail */
-								if(isset($thumbnail_urls[$post_id])){
-									$thumbnail_url = $thumbnail_urls[$post_id];
-								}else{
-									$thumbnail_url = theme_functions::$thumbnail_placeholder;
-								}
-							?>
-								<li class="col-sm-6 tag-list">
-									<a 
-										class="tag-link" 
-										href="<?= $posts[$post_id]['permalink'];?>" 
-										title="<?= $posts[$post_id]['title'];?>" 
-										target="_blank" 
-										data-thumbnail-url="<?= $thumbnail_url;?>"
-									><?= $posts[$post_id]['title'];?></a>
-									<div class="extra-thumbnail"></div>
-								</li>
-							<?php } ?>
-						</ul>
-					<?php } ?>
+					<div class="row">
+						<?php foreach($tags as $tag_id => $tag){ ?>
+							<div class="col-xs-6 col-sm-4 col-md-3">
+								<a href="<?= esc_url(get_tag_link($tag_id));?>" class="tags-title">
+									<?= $tag['name'];?>
+								</a> 
+								<small>(<?= count($tag['post_ids']);?>)</small>
+							</div>
+						<?php } ?>
+					</div>
 				</div> <!-- /.panel-bbody -->
 			</div>
-
 			<?php
 		}
+		unset($pinyin_tags);
 		$cache = html_minify(ob_get_contents());
 		ob_end_clean();
 		wp_cache_set($cache_id,$cache,__CLASS__,86400*7);/** 7days */
