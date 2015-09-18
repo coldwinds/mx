@@ -16,14 +16,9 @@
 			</div>
 		<?php } ?>
 		<p class="footer-meta copyright text-center">
-			<?php
-			if(class_exists('theme_user_code')){
-				echo theme_user_code::get_frontend_footer_code();
-			}
-			?>
+			<?= class_exists('theme_user_code') ? theme_user_code::get_frontend_footer_code() : null;?>
 		</p>
 	</div>
 </footer>
 <a href="#" class="fa fa-arrow-up fa-2x back-to-top" title="<?= ___('Back to top');?>"></a>
-<?php wp_footer();?>
-</body></html>
+<?php wp_footer();?></body></html>
