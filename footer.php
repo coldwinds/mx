@@ -24,6 +24,6 @@
 		</p>
 	</div>
 </footer>
-<a href="#" class="fa fa-arrow-up fa-2x back-to-top" title="<?= ___('Back to top');?>""></a>
+<a href="#" class="fa fa-arrow-up fa-2x back-to-top" title="<?= ___('Back to top');?>"></a>
 <?php wp_footer();?>
 </body></html>

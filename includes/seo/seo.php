@@ -13,7 +13,7 @@ class theme_seo_plus{
 	private static $keywords_split = ',';
 	public static function init(){
 		add_action('base_settings', __CLASS__ . '::display_backend',5);
-		add_action('wp_head', __CLASS__ . '::wp_head');
+		add_action('wp_head', __CLASS__ . '::wp_head',1);
 		add_filter('theme_options_save', __CLASS__ . '::options_save');
 		add_filter('wp_title', __CLASS__ . '::wp_title',999,2);
 	}
@@ -103,7 +103,7 @@ class theme_seo_plus{
 		$descriptions = array_filter(apply_filters('meta_descriptions',$descriptions));
 		if(!empty($descriptions)){
 			if($echo !== false){
-				echo '<meta name="description" content="' . esc_attr(strip_tags(implode(',',$descriptions))) .'"/>';
+				echo '<meta name="description" content="' . esc_attr(strip_tags(implode(',',$descriptions))) .'">';
 			}else{
 				return $descriptions;
 			}
@@ -151,7 +151,7 @@ class theme_seo_plus{
 		 */
 		$all_tags = array_filter(apply_filters('meta_keywords',$all_tags));
 		if(!empty($all_tags)){
-			echo  '<meta name="keywords" content="' . esc_attr(strip_tags(implode(',',$all_tags))) .'"/>';
+			echo  '<meta name="keywords" content="' . esc_attr(strip_tags(implode(',',$all_tags))) .'">';
 		}
 	}
 }
