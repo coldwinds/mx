@@ -2,7 +2,7 @@
 /*
 Feature Name:	SEO PLUS
 Feature URI:	http://www.inn-studio.com
-Version:		1.4.4
+Version:		1.4.5
 Description:	Improve the seo friendly
 */
 add_filter('theme_includes',function($fns){
@@ -10,18 +10,20 @@ add_filter('theme_includes',function($fns){
 	return $fns;
 });
 class theme_seo_plus{
-	private static $iden = 'theme_seo_plus';
 	private static $keywords_split = ',';
 	public static function init(){
-		add_action('base_settings',__CLASS__ . '::display_backend',5);
-		add_action('wp_head',__CLASS__ . '::get_site_keywords');
-		add_action('wp_head',__CLASS__ . '::get_site_description');
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
-		add_filter('wp_title',__CLASS__ . '::wp_title',999,2);
+		add_action('base_settings', __CLASS__ . '::display_backend',5);
+		add_action('wp_head', __CLASS__ . '::wp_head');
+		add_filter('theme_options_save', __CLASS__ . '::options_save');
+		add_filter('wp_title', __CLASS__ . '::wp_title',999,2);
 	}
 	public static function wp_title($title, $sep){
 		$sep = ' - ';
 		return str_replace('|',$sep,$title);
+	}
+	public static function wp_head(){
+		self::get_site_keywords();
+		self::get_site_description();
 	}
 	public static function get_options($key = null){
 		static $cache = null;
@@ -33,7 +35,6 @@ class theme_seo_plus{
 	}
 	public static function display_backend(){
 		?>
-		<!-- SEO meta -->
 		<fieldset>
 			<legend><?= ___('SEO settings');?></legend>
 			<p class="description"><?= sprintf(___('Fill in the appropriate keywords, can improve search engine friendliness. Use different key words in English comma (%s) to separate.'),self::$keywords_split);?></p>
@@ -60,9 +61,8 @@ class theme_seo_plus{
 	}
 	
 	public static function options_save(array $opts = []){
-		if(isset($_POST[__CLASS__])){
+		if(isset($_POST[__CLASS__]))
 			$opts[__CLASS__] = $_POST[__CLASS__];
-		}
 		return $opts;
 	}
 	public static function get_site_description($echo = true){
@@ -70,8 +70,8 @@ class theme_seo_plus{
 		/** 
 		 * in home page
 		 */
-		if(is_home()){
-			if(!self::get_options('description')){
+		if(theme_cache::is_home()){
+			if(self::get_options('description') != ''){
 				$descriptions[] = apply_filters('meta_description_home',self::get_options('description'));
 			}else{
 				$descriptions[] = apply_filters('meta_description_home',theme_cache::get_bloginfo('description'));

@@ -1870,7 +1870,7 @@ class theme_functions{
 				setup_postdata($post);
 				self::archive_mixed_content(array(
 					'classes' => $i <= 2 ? ['col-xs-12 col-sm-4'] : ['col-xs-12 col-sm-3'],
-					'lazyload' => wp_is_mobile() && $lazyload_i < 1 ? true : false,
+					'lazyload' => wp_is_mobile() && $lazyload_i < 1 ? false : true,
 				));
 				++$i;
 			}

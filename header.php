@@ -2,12 +2,56 @@
 <meta charset="<?= theme_cache::get_bloginfo( 'charset' ); ?>">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta http-equiv="Cache-Control" content="no-transform"><![endif]-->
 <meta name="renderer" content="webkit">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <meta name="author" content="INN STUDIO">
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?= theme_cache::get_bloginfo('pingback_url'); ?>">
 <?php wp_head();?></head>
 <body <?php body_class(); ?>>
+<?php
+/** 
+ * menu menu-mobile
+ */
+if(wp_is_mobile()){
+	theme_cache::wp_nav_menu([
+		'theme_location'    => 'menu-mobile',
+		'container'         => 'nav',
+		'container_class'   => 'slide-menu menu-mobile',
+		'menu_class'        => 'menu',
+		'menu_id' 			=> 'menu-mobile',
+		'fallback_cb'       => 'custom_navwalker::fallback',
+		'walker'            => new custom_navwalker
+	]);
+}
+/**
+ * account menu
+ */
+if(wp_is_mobile() && theme_cache::is_user_logged_in()){
+	$active_tab = get_query_var('tab');
+	if(!$active_tab)
+		$active_tab = 'dashboard';
+	?>
+	<div class="slide-menu header-nav-account-menu">
+		<a href="<?= theme_cache::get_author_posts_url(theme_cache::get_current_user_id());?>" class="slide-menu-header">
+			<img src="<?= theme_cache::get_avatar_url(theme_cache::get_current_user_id());?>" width="32" height="32" alt="avatar" class="avatar">
+			<span class="author-name"><?= theme_cache::get_the_author_meta('display_name',theme_cache::get_current_user_id());?></span>
+		</a>
+		<ul class="menu">
+			<?php
+			$account_navs = apply_filters('account_navs',[]);
+			if(!empty($account_navs)){
+				foreach($account_navs as $k => $v){
+					$active_class = $k === $active_tab ? ' active ' : null;
+					?>
+					<li class="<?= theme_custom_account::is_page() ? $active_class : null;?>"><?= $v;?></li>
+					<?php
+				}
+			}
+			?>
+			<li><a href="<?= wp_login_url(get_current_url());?>"><i class="fa fa-sign-out fa-fw"></i> <?= ___('Log-out');?></a></li>
+		</ul>
+	</div>
+<?php } ?>
 
 <?php if(!wp_is_mobile()){ ?>
 	<div class="top-bar navbar navbar-inverse navbar-fixed-top hidden-xs">	
@@ -33,13 +77,9 @@
 	</div><!-- /.top-bar -->	
 <?php } ?>
 
-
-
-
-
 <div class="main-nav">
 	<div class="container">
-		<a href="javascript:;" class="navicon toggle visible-xs-block fa fa-navicon fa-2x fa-fw" data-target=".menu-mobile" data-icon-active="fa-times" data-icon-original="fa-navicon"></a>
+		<a href="javascript:;" class="navicon toggle visible-xs-block fa fa-navicon fa-2x fa-fw" data-mobile-target=".menu-mobile" data-icon-active="fa-arrow-left" data-icon-original="fa-navicon"></a>
 
 		<?php
 		/** 
@@ -78,7 +118,7 @@
 			<?php if(wp_is_mobile()){ ?>
 				<!-- account btn -->
 				<?php if(theme_cache::is_user_logged_in()){ ?>
-					<a class="tool mx-account-btn fa fa-user fa-fw fa-2x" href="javascript:;" data-target=".header-nav-account-menu" data-icon-active="fa-times" data-icon-original="fa-user"></a>
+					<a class="tool mx-account-btn fa fa-user fa-fw fa-2x" href="javascript:;" data-mobile-target=".header-nav-account-menu" data-icon-active="fa-arrow-left" data-icon-original="fa-user"></a>
 				<?php }else{ ?>
 					<a class="tool mx-account-btn toggle" href="<?= esc_url(wp_login_url(get_current_url()));?>">
 						<?= ___('Login');?>
@@ -86,54 +126,15 @@
 				<?php } ?>
 			<?php } ?>
 			<!-- search btn -->
-			<a class="tool search fa fa-search fa-fw fa-2x" href="javascript:;" data-target="#fm-search" data-focus-target="#fm-search-s" data-icon-active="fa-times" data-icon-original="fa-search"></a>
+			<a class="tool search fa fa-search fa-fw fa-2x" href="javascript:;" data-toggle-target="#fm-search" data-focus-target="#fm-search-s" data-icon-active="fa-arrow-down" data-icon-original="fa-search"></a>
 
 		</div><!-- /.tools -->
 	</div><!-- /.container -->
 	<div class="container">
-		<?php
-		
-	   	if(wp_is_mobile()){
-			/** 
-			 * menu menu-mobile
-			 */
-			theme_cache::wp_nav_menu([
-				'theme_location'    => 'menu-mobile',
-				'container'         => 'nav',
-				'container_class'   => 'menu-mobile',
-				'menu_class'        => 'menu',
-				'menu_id' 			=> 'menu-mobile',
-				'fallback_cb'       => 'custom_navwalker::fallback',
-				'walker'            => new custom_navwalker
-			]);
-	   	}
-		?>
+
 
 		
-		<?php
-		/**
-		 * account menu
-		 */
-		if(theme_cache::is_user_logged_in() && wp_is_mobile()){
-			$active_tab = get_query_var('tab');
-			if(!$active_tab)
-				$active_tab = 'dashboard';
-			?>
-			<ul class="header-nav-account-menu">
-				<?php
-				$account_navs = apply_filters('account_navs',[]);
-				if(!empty($account_navs)){
-					foreach($account_navs as $k => $v){
-						$active_class = $k === $active_tab ? ' active ' : null;
-						?>
-						<li class="<?= theme_custom_account::is_page() ? $active_class : null;?>"><?= $v;?></li>
-						<?php
-					}
-				}
-				?>
-				<li><a href="<?= wp_login_url(get_current_url());?>"><i class="fa fa-sign-out fa-fw"></i> <?= ___('Log-out');?></a></li>
-			</ul>
-		<?php } ?>
+		
 	 </div><!-- /.container -->
 	 
 	<!-- search form -->
