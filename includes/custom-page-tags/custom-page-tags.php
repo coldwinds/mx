@@ -22,9 +22,6 @@ class theme_page_tags{
 		
 		add_filter('theme_options_save', 	__CLASS__ . '::options_save');
 
-		add_filter('frontend_seajs_alias' , __CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use' , __CLASS__ . '::frontend_seajs_use');
-
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
 
@@ -278,9 +275,7 @@ class theme_page_tags{
 					<div class="row">
 						<?php foreach($tags as $tag_id => $tag){ ?>
 							<div class="col-xs-6 col-sm-4 col-md-3">
-								<a href="<?= esc_url(get_tag_link($tag_id));?>" class="tags-title">
-									<?= $tag['name'];?>
-								</a> 
+								<a href="<?= esc_url(get_tag_link($tag_id));?>" class="tags-title" target="_blank"><?= $tag['name'];?></a> 
 								<small>(<?= count($tag['post_ids']);?>)</small>
 							</div>
 						<?php } ?>
@@ -324,28 +319,7 @@ class theme_page_tags{
 
 		return $cache;
 	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(self::is_page()){
-			$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
-		}
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
-		if(!self::is_page())
-			return false;
-
-		?>
-		seajs.use(['<?= __CLASS__;?>'],function(m){
-			m.config.process_url = '<?= theme_features::get_process_url([
-				'action' => __CLASS__,
-				'type' => 'get-thumbnail-url',
-			]);?>';
-			m.config.lang.M00001 = '<?= ___('Preview image is loading...');?>';
-			m.config.lang.E00001 = '<?= ___('ERROR: can not load the preview image.');?>';
-			m.init();
-		});
-		<?php
-	}
+	
 	public static function frontend_css(){
 		if(!self::is_page()) 
 			return false;
