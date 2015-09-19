@@ -312,7 +312,7 @@ class theme_custom_slidebox{
 
 					<?php
 					/** colorful cat */
-					if(isset($v['catids']) && !is_null_array($v['catids']) && class_exists('theme_colorful_cats')){
+					if(isset($v['catids']) && !empty($v['catids']) && class_exists('theme_colorful_cats')){
 						?>
 						<span class="cats">
 							<?php
@@ -320,7 +320,7 @@ class theme_custom_slidebox{
 								$cat = theme_cache::get_category($cat_id);
 								$color = theme_colorful_cats::get_cat_color($cat_id,true);
 								?>
-								<span style="background-color:rgba(<?= $color['r'];?>,<?= $color['g'];?>,<?= $color['b'];?>,.8);"><?= $cat->name;?></span>
+								<span style="background-color:rgba(<?= $color['r'];?>,<?= $color['g'];?>,<?= $color['b'];?>,.8);"><?= esc_html($cat->name);?></span>
 							<?php } ?>
 						</span>
 					<?php } ?>
