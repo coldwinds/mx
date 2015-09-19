@@ -1,19 +1,17 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
 theme_dashboards::init();
-class theme_dashboards extends theme_custom_dashboard{
+class theme_dashboards{
 
 	public static function init(){
-		
 		
 		add_action('account_dashboard_left',__CLASS__ . '::my_statistics');
 		add_action('account_dashboard_left',__CLASS__ . '::my_point');
 		
 		add_action('account_dashboard_right',__CLASS__ . '::recent_comments_4_my_posts');
 		add_action('account_dashboard_right',__CLASS__ . '::recent_posts');
-		
 		
 	}
 	public static function my_point(){

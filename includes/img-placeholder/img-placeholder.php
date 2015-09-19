@@ -2,7 +2,7 @@
 /**
  * img placeholder
  *
- * @version 1.0.0
+ * @version 1.0.1
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_img_placeholder::init';
@@ -25,8 +25,8 @@ class theme_img_placeholder{
 	}
 	public static function options_default(array $opts = []){
 		$opts[__CLASS__] = [
-			'thumbnail' => 'http://ww4.sinaimg.cn/large/686ee05djw1ew56itdn2nj208w05k0sp.jpg',
-			'avatar' => 'http://ww2.sinaimg.cn/large/686ee05djw1ew5767l9voj2074074dfn.jpg',
+			'thumbnail' => theme_functions::$thumbnail_placeholder,
+			'avatar' => theme_functions::$avatar_placeholder,
 		];
 		return $opts;
 	}
@@ -76,4 +76,3 @@ class theme_img_placeholder{
 		<?php
 	}
 }
-

@@ -23,8 +23,8 @@ class theme_functions{
 	public static $medium_size = ['medium',600,600,false];
 	public static $large_size = ['large',1024,1024,false];
 	public static $comment_avatar_size = 60;
-	public static $thumbnail_placeholder;
-	public static $avatar_placeholder;
+	public static $thumbnail_placeholder = 'http://ww4.sinaimg.cn/large/686ee05djw1ew56itdn2nj208w05k0sp.jpg';
+	public static $avatar_placeholder = 'http://ww2.sinaimg.cn/large/686ee05djw1ew5767l9voj2074074dfn.jpg';
 	public static $cache_expire = 3600;
 	public static $colors = [
 		'61b4ca',	'e1b32a',	'ee916f',	'a89d84',
@@ -137,10 +137,6 @@ class theme_functions{
 				'id'			=> 'widget-area-page',
 				'description' 	=> ___('Appears on page in the sidebar.')
 			],[
-				'name' 			=> ___('Sign page widget area'),
-				'id'			=> 'widget-area-sign',
-				'description' 	=> ___('Appears on sign page in the sidebar.')
-			],[
 				'name' 			=> ___('404 page widget area'),
 				'id'			=> 'widget-area-404',
 				'description' 	=> ___('Appears on 404 no found page in the sidebar.')
@@ -158,44 +154,6 @@ class theme_functions{
 			]);
 		}
 	}
-	/**
-	 * Output orderby nav in Neck position
-	 *
-	 * @return 
-	 * @version 1.0.0
-	 */
-	public static function the_order_nav($args = null){
-		$current_tab = get_query_var('tab');
-		$current_tab = !empty($current_tab) ? $current_tab : 'lastest';
-		$typies = self::get_tab_type();
-		if(is_home()){
-			$current_url = theme_cache::home_url();
-		}else if(is_category()){
-			$cat_id = theme_features::get_current_cat_id();
-			$current_url = get_category_link($cat_id);
-		}else if(is_tag()){
-			$tag_id = theme_features::get_current_tag_id();
-			$current_url = get_tag_link($tag_id);
-		}else{
-			$current_url = get_current_url();
-		}
-		?>
-		<nav class="page-nav">
-			<?php
-			foreach($typies as $k => $v){
-				$current_class = $current_tab === $k ? 'current' : null;
-				$url = add_query_arg('tab',$k,$current_url);
-				?>
-				<a href="<?= esc_url($url);?>" class="item <?= $current_class;?>">
-					<span class="icon-<?= $v['icon'];?>"></span><span class="after-icon"><?= esc_html($v['text']);?></span>
-				</a>
-				<?php
-			}
-			?>
-		</nav>
-		<?php
-	}
-	
 	public static function get_posts_query($args,array $query_args = []){
 		global $paged;
 		$r = array_merge([
@@ -720,68 +678,6 @@ class theme_functions{
 			$src = $placeholder;
 		
 		return esc_url($src);
-	}
-	/**
-	 * get_content
-	 *
-	 * @return string
-	 * @version 1.0.0
-	 */
-	private static function get_content(){
-		global $post;
-		$content = str_replace(']]>', ']]&raquo;', $post->post_content);				
-		return $content;
-	}
-
- 	/**
-	 * get_adjacent_posts
-	 *
-	 * @param string
-	 * @return string
-	 * @version 1.0.0
-	 */
-	public static function get_adjacent_posts($class = 'adjacent-posts'){
-		global $post;
-		$next_post = get_adjacent_post(true,null,false);
-		$next_post = $next_post ? $next_post : get_adjacent_post(false,null,false);
-		
-		
-		$prev_post = get_adjacent_post(true,null);
-		$prev_post = $prev_post ? $prev_post : get_adjacent_post(false,null);
-		
-		if(!$next_post && ! $prev_post) return;
-		
-		ob_start();
-		?>
-		<nav class="grid-100 grid-parent <?= $class;?>">
-			<ul>
-				<li class="adjacent-post-prev ">
-					<?php if(!$prev_post){ ?>
-						<span class="adjacent-post-not-found button"><?= ___('No more post found');?></span>
-					<?php }else{ ?>
-						<a href="<?= theme_cache::get_permalink($prev_post->ID);?>" title="<?= sprintf(___('Previous post: %s'),theme_cache::get_the_title($prev_post->ID));?>" class="button">
-							<span class="aquo"><?= ___('&laquo;');?></span>
-							<?= theme_cache::get_the_title($prev_post->ID);?>
-						</a>
-					<?php } ?>
-				</li>
-				<li class="adjacent-post-next ">
-					<?php if(!$next_post){ ?>
-						<span class="adjacent-post-not-found button"><?= ___('No more post found');?></span>
-					<?php }else{ ?>
-						<a href="<?= theme_cache::get_permalink($next_post->ID);?>" title="<?= sprintf(___('Next post: %s'),theme_cache::get_the_title($next_post->ID));?>"  class="button">
-							<?= theme_cache::get_the_title($next_post->ID);?>
-							<span class="aquo"><?= ___('&raquo;');?></span>
-						</a>
-					<?php } ?>
-				</li>
-			</ul>
-		</nav>
-		<?php
-		$content = ob_get_contents();
-		ob_end_clean();
-		return $content;
-
 	}
    /**
 	 * get_crumb
