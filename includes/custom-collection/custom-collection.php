@@ -125,13 +125,13 @@ class theme_custom_collection{
 <p class="list-group-item">
 	<a href="<?= $href;?>" title="<?= $attr_title;?>">
 		<span class="row">
-			<span class="col-xs-12 col-sm-12 col-md-4 col-lg-3" >
+			<span class="col-sm-12 col-md-4 col-lg-3" >
 				<span class="collection-list-thumbnail-container" >
 					<img src="<?= theme_functions::$thumbnail_placeholder;?>" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>" alt="<?= $args['title'];?>" class="placeholder">
 					<img src="<?= $args['thumbnail'];?>" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>" alt="<?= $args['title'];?>" class="collection-list-thumbnail">
 				</span>
 			</span>
-			<span class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+			<span class="col-sm-12 col-md-8 col-lg-9">
 				<span class="list-group-item-heading"><?= $args['title'];?></span>
 				<span class="list-group-item-text"><?= $args['content'];?></span>
 			</span>
@@ -147,7 +147,7 @@ class theme_custom_collection{
 		ob_start();
 		?>
 <div class="clt-list row" id="clt-list-<?= $placeholder; ?>" data-id="<?= $placeholder;?>">
-	<div class="col-xs-12 col-sm-5 col-md-3 col-lg-2">
+	<div class="col-sm-5 col-md-3 col-lg-2">
 		<div class="clt-list-thumbnail-container">
 			<img src="<?= theme_functions::$thumbnail_placeholder;?>" alt="Placeholder" class="media-object placeholder">
 			<div id="clt-list-thumbnail-preview-container-<?= $placeholder;?>" class="clt-list-thumbnail-preview-container">
@@ -157,7 +157,7 @@ class theme_custom_collection{
 		</div>
 		<a href="javascript:;" id="clt-list-del-<?= $placeholder;?>" class="clt-list-del btn btn-xs btn-danger btn-block"><i class="fa fa-trash"></i> <?= ___('Delete this item');?></a>
 	</div>
-	<div class="col-xs-12 col-sm-7 col-md-9 col-lg-10 clt-list-area-tx">
+	<div class="col-sm-7 col-md-9 col-lg-10 clt-list-area-tx">
 		<div class="row">
 			<div class="col-xs-2">
 				<input type="number" class="form-control clt-list-post-id" id="clt-list-post-id-<?= $placeholder ;?>" name="clt[posts][<?= $placeholder;?>][post-id]" placeholder="<?= ___('Post ID');?>" title="<?= ___('Please write the post ID number, e.g. 4015.');?>" min="1" required >

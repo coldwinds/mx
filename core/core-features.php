@@ -1041,7 +1041,7 @@ class theme_features{
 	 * 
 	 */
 	public static function get_current_cat_name(){
-		$cat_obj = get_category(self::get_current_cat_id());
+		$cat_obj = theme_cache::get_category(self::get_current_cat_id());
 		$cat_name = $cat_obj->name;
 		return $cat_name;
 	}
@@ -1054,7 +1054,7 @@ class theme_features{
 	 * 
 	 */
 	public static function get_current_cat_slug(){
-		$cat_obj = get_category(self::get_current_cat_id());
+		$cat_obj = theme_cache::get_category(self::get_current_cat_id());
 		$cat_slug = $cat_obj->slug;
 		return $cat_slug;
 	}
@@ -1073,7 +1073,7 @@ class theme_features{
 			
 		global $cat,$post;
 		if($cat){
-			$cat_obj = get_category($cat);
+			$cat_obj = theme_cache::get_category($cat);
 			$cache = $cat_obj->term_id;
 		}else if($post){
 			$cat_obj = get_the_category($post->ID);
@@ -1093,7 +1093,7 @@ class theme_features{
 		/* 如果无参数，进行备选方案 */
 		$current_cat_id = $current_cat_id ? $current_cat_id : self::get_current_cat_id();
 		/* 获取目录对象 */
-		$current_cat_parent_obj = get_category($current_cat_id);
+		$current_cat_parent_obj = theme_cache::get_category($current_cat_id);
 		/* 获取父目录ID */
 		$current_cat_parent_id = $current_cat_parent_obj->category_parent;
 		/* 获取当前目录ID */
@@ -1118,7 +1118,7 @@ class theme_features{
 	 * 
 	 */
 	public static function get_cat_root_slug($current_cat_id = null){
-		$current_cat_obj = get_category(self::get_cat_root_id($current_cat_id));
+		$current_cat_obj = theme_cache::get_category(self::get_cat_root_id($current_cat_id));
 		$current_cat_slug = $current_cat_obj->slug;
 		return $current_cat_slug;
 	}
@@ -1148,7 +1148,7 @@ class theme_features{
 	 */
 	public static function get_cat_slug_by_id($cat_id = null){
 		if(!$cat_id) return false;
-		$cat_obj = get_category($cat_id,false); 
+		$cat_obj = theme_cache::get_category($cat_id,false); 
 		$cat_slug = $cat_obj->slug;
 		$output = $cat_slug;
 		return $output;
@@ -1864,7 +1864,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_all_cats_by_child($cat_id, array & $all_cat_id){
-		$cat = get_category($cat_id);
+		$cat = theme_cache::get_category($cat_id);
 		if(!$cat){
 			return false;
 		}

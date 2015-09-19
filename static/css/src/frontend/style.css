@@ -50,6 +50,9 @@
 .media-left img{
 	max-width: none;
 }
+.container{
+	max-width: 1499px;
+}
 .container,
 .container-fluid,
 .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{
@@ -593,8 +596,9 @@ img{
 		font-size: 12px;
 	}
 		.post-stick-list .post-list-cat span{
-			display: inline-block;
+			float: left;
 			padding: 0 5px;
+			margin-right: 5px;
 			border-radius: 2px 2px 0 0;
 		}
 	.post-stick-list .post-list-title{
@@ -655,6 +659,20 @@ img{
 	padding-bottom: 30px;
 	font-size: 12px;
 }
+	.post-mixed-list .post-list-cat{
+		position: absolute;
+		top: 0;
+		left: 10px;
+		color: #fff;
+		font-size: 12px;
+		z-index: 1;
+	}
+		.post-mixed-list .post-list-cat span{
+			float: left;
+			padding: 0 5px;
+			margin-right: 5px;
+			border-radius: 0 0 2px 2px;
+		}
 
 	.post-mixed-list .post-list-title{
 		position: absolute;
@@ -667,8 +685,7 @@ img{
 		color: #fff;
 		font-weight: bold;
 		text-shadow: 0 1px 3px #000;
-		padding: 10px 2px 2px 60px;
-		border-radius: 2px -2px 0 0;
+		padding: 10px 2px 5px 60px;
 		font-size: 12px;
 	}
 	.post-mixed-list .post-list-meta{
@@ -2038,6 +2055,7 @@ body.menu-on #mobile-on-layer{
 		font-size: 20px;
 		font-weight: bold;
 		border: none;
+		line-height: 1.5;
 	}
 		.singular-post .entry-title:after{
 			display: none;
@@ -2076,14 +2094,10 @@ body.menu-on #mobile-on-layer{
 		margin: -20px -20px 20px;
 		padding: 20px 40px;
 		line-height: 1.8;
+		font-size: 1.3em;
 		border: none;
 		border-bottom: 2px dashed #ccc;
-		
-	}
-	.singular-post .post-excerpt::first-letter{
-		float: left;
-		font-size: 3em;
-		margin-right: 5px;
+		color: #333;
 	}
 	.singular-post .post-excerpt:after{
 		position: absolute;

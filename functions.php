@@ -126,7 +126,7 @@ class theme_functions{
 				'name' 			=> ___('Footer widget area'),
 				'id'			=> 'widget-area-footer',
 				'description' 	=> ___('Appears on all page in the footer.'),
-				'before_widget' => '<div class="col-xs-12 col-sm-6 col-md-3"><aside id="%1$s"><div class="panel panel-default widget %2$s">',
+				'before_widget' => '<div class="col-sm-6 col-md-3"><aside id="%1$s"><div class="panel panel-default widget %2$s">',
 				'after_widget'		=> '</div></aside></div>',
 			],[
 				'name' 			=> ___('Singular post widget area'),
@@ -573,7 +573,7 @@ class theme_functions{
 				<?php self::the_page_pagination();?>
 				
 				<div class="row">
-					<div class="col-xs-12 col-lg-5">
+					<div class="col-lg-5">
 						<?php
 						/**
 						 * post point
@@ -588,7 +588,7 @@ class theme_functions{
 						}
 						?>						
 					</div>
-					<div class="col-xs-12 col-lg-7">
+					<div class="col-lg-7">
 						<!-- theme_custom_storage -->
 						<?php if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 							theme_custom_storage::display_frontend($post->ID);
@@ -764,7 +764,7 @@ class theme_functions{
 			 * post / page
 			 */
 			if(theme_features::get_current_cat_id() > 1){
-				$categories = get_the_category();
+				$categories = get_the_category($post->ID);
 				foreach ($categories as $key => $row) {
 					$parent_id[$key] = $row->category_parent;
 				}
@@ -1411,7 +1411,7 @@ class theme_functions{
 				if(!get_the_tags()){
 					$same_tag_query['category__in'] = array_map(function($term){
 						return $term->term_id;
-					},get_the_category());
+					},get_the_category($post->ID));
 					$same_tag_args['orderby'] = 'random';
 				}else{
 					$same_tag_query['tag__in'] = array_map(function($term){
@@ -1584,7 +1584,7 @@ class theme_functions{
 	public static function archive_stick_content(array $args = []){
 		global $post;
 		$args = array_merge([
-			'classes' => ['col-xs-12 col-md-3'],
+			'classes' => ['col-md-3'],
 			'lazyload' => true,
 		],$args);
 
@@ -1651,8 +1651,9 @@ class theme_functions{
 	public static function archive_mixed_content(array $args = []){
 		global $post;
 		$args = array_merge([
-			'classes' => ['col-xs-12 col-md-3'],
+			'classes' => ['col-md-3'],
 			'lazyload' => true,
+			'category' => true,
 		],$args);
 		
 		$args['classes'][] = 'post-list post-mixed-list ';
@@ -1662,6 +1663,19 @@ class theme_functions{
 		?>
 		<li <?php post_class($args['classes']);?>>
 			<a class="post-list-bg" href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= theme_cache::get_the_title($post->ID);?>">
+				<?php if(class_exists('theme_colorful_cats') && $args['category']){ ?>
+					<div class="post-list-cat">
+						<?php
+						/**
+						 * cats
+						 */
+						foreach(get_the_category($post->ID) as $cat){
+							$color = theme_colorful_cats::get_cat_color($cat->term_id,true);
+							?>
+							<span style="background-color:rgba(<?= $color['r'];?>,<?= $color['g'];?>,<?= $color['b'];?>,.8);"><?= $cat->name;?></span>
+						<?php } ?>
+					</div>
+				<?php } ?>
 				<div class="thumbnail-container">
 					<img class="placeholder" alt="Placeholder" src="<?= theme_functions::$thumbnail_placeholder;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					<?php
@@ -1709,7 +1723,7 @@ class theme_functions{
 
 		ob_start();
 		
-		if(is_null_array($opt)){
+		if(empty($opt)){
 			?>
 			<div class="panel panel-primary">
 				<div class="panel-body">
@@ -1764,10 +1778,11 @@ class theme_functions{
 			$i = 0;
 			foreach($query->posts as $post){
 				setup_postdata($post);
-				self::archive_mixed_content(array(
-					'classes' => $i <= 2 ? ['col-xs-12 col-sm-4'] : ['col-xs-12 col-sm-3'],
+				self::archive_mixed_content([
+					'classes' => $i <= 2 ? ['col-sm-4'] : ['col-sm-3'],
 					'lazyload' => wp_is_mobile() && $lazyload_i < 1 ? false : true,
-				));
+					'category' => false,
+				]);
 				++$i;
 			}
 			wp_reset_postdata();

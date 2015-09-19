@@ -309,6 +309,21 @@ class theme_custom_slidebox{
 					<?php if($subtitle !== ''){ ?>
 						<span class="sub-title"><?= $subtitle;?></span>
 					<?php } ?>
+
+					<?php
+					/** colorful cat */
+					if(isset($v['catids']) && !is_null_array($v['catids']) && class_exists('theme_colorful_cats')){
+						?>
+						<span class="cats">
+							<?php
+							foreach($v['catids'] as $cat_id){
+								$cat = theme_cache::get_category($cat_id);
+								$color = theme_colorful_cats::get_cat_color($cat_id,true);
+								?>
+								<span style="background-color:rgba(<?= $color['r'];?>,<?= $color['g'];?>,<?= $color['b'];?>,.8);"><?= $cat->name;?></span>
+							<?php } ?>
+						</span>
+					<?php } ?>
 					<span class="more"><?= ___('Detail &raquo;');?></span>
 				</a>
 			</div>

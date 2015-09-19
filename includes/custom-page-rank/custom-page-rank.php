@@ -334,7 +334,7 @@ class theme_page_rank{
 		?>
 		<a class="list-group-item <?= $args['classes'];?>" href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
 			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+				<div class="col-sm-12 col-md-4 col-lg-3">
 					<div class="thumbnail-container">
 						<img src="<?= theme_functions::$thumbnail_placeholder;?>" alt="<?= $post_title;?>" class="media-object placeholder">
 						<?php if($args['lazyload'] === true){ ?>
@@ -344,7 +344,7 @@ class theme_page_rank{
 						<?php } ?>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+				<div class="col-sm-12 col-md-8 col-lg-9">
 					<h4 class="media-heading"><?= $post_title;?></h4>
 					<?php
 					/**

@@ -37,7 +37,7 @@ function post_form($post_id = null){
 		 * check post category in collection category
 		 */
 		if(class_exists('theme_custom_collection') && !empty(theme_custom_collection::get_cat_ids())){
-			foreach(get_the_category() as $v){
+			foreach(get_the_category($post_id) as $v){
 				if(in_array($v->term_id,theme_custom_collection::get_cat_ids())){
 					?>
 					<div class="page-tip"><?= status_tip('error',___('Sorry, collection edits feature is not supported currently.'));?></div>

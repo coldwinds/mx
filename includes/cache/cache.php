@@ -234,6 +234,27 @@ class theme_cache{
 		if(wp_using_ext_object_cache())
 			return wp_cache_flush();
 	}
+	
+	public static function get_category($category, $output = OBJECT, $filter = 'raw'){
+		static $caches = [];
+		$cache_id = md5(json_encode(func_get_args()));
+		
+		if(isset($caches[$cache_id]))
+			return $caches[$cache_id];
+			
+		$category = get_term( $category, 'category', $output, $filter );
+
+		if ( is_wp_error( $category ) ){
+			$caches[$cache_id] = $category;
+			return $category;
+		}
+
+		_make_cat_compat( $category );
+
+		$caches[$cache_id] = $category;
+		
+		return $category;
+	}
 	public static function get_avatar($id_or_email, $size = 96, $default = '', $alt = '', $args = null){
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));

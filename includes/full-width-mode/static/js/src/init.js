@@ -26,18 +26,25 @@ define(function(require, exports, module){
 			expand();
 		}
 	}
-	function expand(){
+	function reset_media(){
+		if(jQuery)
+			jQuery(window).resize();
+	}
+	function expand(set){
 		cache.$btn.classList.remove('fa-angle-right');
 		cache.$btn.classList.add('fa-angle-left');
 		cache.$main.classList.add('expand');
 		cache.$side.classList.add('expand');
-		localStorage.setItem(config.key,1);
+		reset_media();
+		if(set)
+			localStorage.setItem(config.key,1);
 	}
 	function reset(){
 		cache.$btn.classList.remove('fa-angle-left');
 		cache.$btn.classList.add('fa-angle-right');
 		cache.$main.classList.remove('expand');
 		cache.$side.classList.remove('expand');
+		reset_media();
 		localStorage.removeItem(config.key);
 	}
 	function is_expanded(){
@@ -47,7 +54,7 @@ define(function(require, exports, module){
 		if(is_expanded()){
 			reset();
 		}else{
-			expand();
+			expand(true);
 		}
 	}
 	function create_btn(){

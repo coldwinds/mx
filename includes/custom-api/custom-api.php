@@ -193,7 +193,7 @@ class theme_api{
 		$output['post_excerpt'] = get_the_excerpt();
 		$output['post_categories'] = array_map(function($cat){
 			return self::get_cat_data($cat);
-		}, get_the_category() );
+		}, get_the_category($post->ID) );
 		/**
 		 * post url
 		 */

@@ -9,7 +9,6 @@ Author URI:		http://www.inn-studio.com
 */
 theme_colorful_cats::init();
 class theme_colorful_cats{
-	public static $iden = 'theme_colorful_cats';
 	public static $colors = array(
 		'61b4ca',	'e1b32a',	'ee916f',	'a89d84',
 		'86b767',	'6170ca',	'c461ca',	'ca6161',
