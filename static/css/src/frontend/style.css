@@ -1075,8 +1075,9 @@ label.error{
 		.comment-list .comment-meta-data:after{
 			padding-left: 5px;
 			padding-right: 5px;
-			content:'·';
+			content:'*';
 			font-weight: normal;
+			font-size: 5px;
 		}
 		.comment-list .comment-meta-data:last-child:after{
 			display: none;
