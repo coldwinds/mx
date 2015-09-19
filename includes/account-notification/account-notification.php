@@ -307,12 +307,11 @@ class theme_notification{
 			return false;
 			
 		$comment = theme_notification::get_comment($noti['comment-id']);
-		//$parent_comment = theme_notification::get_comment($comment->comment_parent);
 		?>
 		<div class="media">
 			<div class="media-left">
 				<a href="<?= comment_author_url($noti['comment-id']);?>">
-					<img src="<?= theme_features::get_theme_images_url('frontend/avatar.jpg');?>" data-src="<?= theme_cache::get_avatar_url($comment->user_id);?>" class="avatar media-object" alt="avatar" width="60" height="60">
+					<img src="<?= theme_functions::$avatar_placeholder;?>" data-src="<?= theme_cache::get_avatar_url($comment->user_id);?>" class="avatar media-object" alt="avatar" width="60" height="60">
 				</a>
 			</div>
 			<div class="media-body">
@@ -375,12 +374,10 @@ class theme_notification{
 		if($rand)
 			return current_time('timestamp') . '' . rand(100,999);
 		
-		if($cache){
+		if($cache)
 			return $cache;
-		}else{
-			$cache = current_time('timestamp');
-			return $cache;
-		}
+		$cache = current_time('timestamp');
+		return $cache;
 	}
 	/**
 	 * Add special event

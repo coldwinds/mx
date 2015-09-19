@@ -755,7 +755,7 @@ class theme_functions{
 		?>
 		<nav class="grid-100 grid-parent <?= $class;?>">
 			<ul>
-				<li class="adjacent-post-prev grid-50 tablet-grid-50 mobile-grid-100">
+				<li class="adjacent-post-prev ">
 					<?php if(!$prev_post){ ?>
 						<span class="adjacent-post-not-found button"><?= ___('No more post found');?></span>
 					<?php }else{ ?>
@@ -765,7 +765,7 @@ class theme_functions{
 						</a>
 					<?php } ?>
 				</li>
-				<li class="adjacent-post-next grid-50 tablet-grid-50 mobile-grid-100">
+				<li class="adjacent-post-next ">
 					<?php if(!$next_post){ ?>
 						<span class="adjacent-post-not-found button"><?= ___('No more post found');?></span>
 					<?php }else{ ?>
@@ -1283,8 +1283,8 @@ class theme_functions{
 				?>
 				<a href="<?= $prev_url;?>#post-<?= $prev_next_pagination['next_post']->ID;?>" class="left next-post" title="<?= $prev_title;?>">
 					<div class="post-thumbnail-area">
-						<img class="post-thumbnail-placeholder" src="<?= theme_features::get_theme_images_url(self::$thumbnail_placeholder);?>" alt="<?= ___('Placeholder');?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
-						<img class="post-thumbnail" src="<?= theme_features::get_theme_images_url(self::$thumbnail_placeholder);?>" data-src="<?= self::get_thumbnail_src($prev_next_pagination['next_post']->ID);?>" alt="<?= $prev_title ;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
+						<img class="post-thumbnail-placeholder" src="<?= self::$thumbnail_placeholder;?>" alt="<?= ___('Placeholder');?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
+						<img class="post-thumbnail" src="<?= self::$thumbnail_placeholder;?>" data-src="<?= self::get_thumbnail_src($prev_next_pagination['next_post']->ID);?>" alt="<?= $prev_title ;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					</div>
 					<span class="tx"><i class="fa fa-arrow-circle-left"></i> <?= sprintf(___('Previous post: %s'),$prev_title);?></span>
 				</a>
@@ -1299,8 +1299,8 @@ class theme_functions{
 				?>
 				<a href="<?= $next_url;?>#post-<?= $prev_next_pagination['prev_post']->ID;?>" class="right prev-post" title="<?= $next_title;?>">
 					<div class="post-thumbnail-area">
-						<img class="post-thumbnail-placeholder" src="<?= theme_features::get_theme_images_url(self::$thumbnail_placeholder);?>" alt="<?= ___('Placeholder');?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
-						<img class="post-thumbnail" src="<?= theme_features::get_theme_images_url(self::$thumbnail_placeholder);?>" data-src="<?= self::get_thumbnail_src($prev_next_pagination['prev_post']->ID);?>" alt="<?= $next_title ;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
+						<img class="post-thumbnail-placeholder" src="<?= self::$thumbnail_placeholder;?>" alt="<?= ___('Placeholder');?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
+						<img class="post-thumbnail" src="<?= self::$thumbnail_placeholder;?>" data-src="<?= self::get_thumbnail_src($prev_next_pagination['prev_post']->ID);?>" alt="<?= $next_title ;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>">
 					</div>
 					<span class="tx"><i class="fa fa-arrow-circle-right"></i> <?= sprintf(___('Next post: %s'),$next_title);?></span>
 				</a>
