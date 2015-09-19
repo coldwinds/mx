@@ -2,7 +2,7 @@
 /**
  * img placeholder
  *
- * @version 1.0.1
+ * @version 1.0.2
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_img_placeholder::init';
@@ -15,7 +15,10 @@ class theme_img_placeholder{
 
 		add_action('base_settings', __CLASS__ . '::display_backend');
 
-		theme_functions::$thumbnail_placeholder = self::get_options('thumbnail');
+		if(self::get_options('thumbnail') !== '' && theme_functions::$thumbnail_placeholder !== self::get_options('thumbnail'))
+			theme_functions::$thumbnail_placeholder = self::get_options('thumbnail');
+			
+		if(self::get_options('avatar') !== '' && theme_functions::$avatar_placeholder !== self::get_options('avatar'))
 		theme_functions::$avatar_placeholder = self::get_options('avatar');
 	}
 	public static function options_save(array $opts = []){
@@ -55,7 +58,6 @@ class theme_img_placeholder{
 					</th>
 					<td>
 						<input class="widefat" type="url" name="<?= __CLASS__;?>[thumbnail]" id="<?= __CLASS__;?>-thumbnail-url" value="<?= self::get_options('thumbnail');?>" placeholder="<?= ___('Your custom thumbnail image URL address');?>">
-						<p class="description"><?= ___('Default');?> <input type="url" value="<?= self::options_default()[__CLASS__]['thumbnail'];?>" readonly class="text-select"></p>
 					</td>
 				</tr>
 					<tr>
@@ -68,7 +70,6 @@ class theme_img_placeholder{
 					</th>
 					<td>
 						<input class="widefat" type="url" name="<?= __CLASS__;?>[avatar]" id="<?= __CLASS__;?>-avatar-url" value="<?= self::get_options('avatar');?>" placeholder="<?= ___('Your custom avatar image URL address');?>">
-						<p class="description"><?= ___('Default');?> <input type="url" value="<?= self::options_default()[__CLASS__]['avatar'];?>" readonly class="text-select"></p>
 				</td>
 				</tr>
 			</table>
