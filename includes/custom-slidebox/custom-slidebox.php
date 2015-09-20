@@ -310,29 +310,54 @@ class theme_custom_slidebox{
 			return false;
 
 		$small = 2;
-
-		$i = 0;
-		
 		?>
 <div class="<?= __CLASS__;?>-container">
-	<?php 
-	foreach($boxes as $box){ 
-		$rel_nofollow = isset($box['rel']['nofollow']) ? 'rel="nofollow"' : null;
-		$target_blank = isset($box['target']['blank']) ? 'target="blank"' : null;
-		$title = $box['title'];
-		$subtitle = $box['subtitle'];
-		$img_url = $box['img-url'];
-		$link_url = $box['link-url'];
-		?><a 
-			class="<?= $class;?>" 
-			href="<?= $box['link-url'];?>" 
-			<?= $rel_nofollow;?> 
-			<?= $target_blank;l?> 
-			title="<?= $title;?>" 
-		>
-			<img src="<?= $img_url;?>" alt="<?= $title;?>">
-			<h2><?= $title;?></h2>
-		</a><?php } ?>
+	<div class="area-blur">
+		<?php 
+		$i = 0;
+		foreach($boxes as $box){ 
+		++$i;
+		?>
+			<div class="item <?= $i === 1 ? 'active' : null;?>" style="background-image:url(<?= $box['img-url'];?>)"></div>
+		<?php } ?>
+	</div>
+	<div id="<?= __CLASS__;?>">
+		<?php 
+		$i = 0;
+		foreach($boxes as $box){ 
+			++$i;
+			$rel_nofollow = isset($box['rel']['nofollow']) ? 'rel="nofollow"' : null;
+			$target_blank = isset($box['target']['blank']) ? 'target="blank"' : null;
+			$title = $box['title'];
+			$subtitle = $box['subtitle'];
+			$img_url = $box['img-url'];
+			$link_url = $box['link-url'];
+			
+			$mod = $i % ($small + 1);
+			$large = $mod === 0 ? 'large' : null;
+			$is_bombine_start = $mod === $small - 1;
+			$is_bombine_end = $mod === $small;
+			if($is_bombine_start){
+				?><div class="item"><?php
+			}else if($large){
+				?><div class="item <?= $large;?>"><?php
+			}
+			?><a 
+					href="<?= $box['link-url'];?>" 
+					<?= $rel_nofollow;?> 
+					<?= $target_blank;l?> 
+					title="<?= $title;?>" 
+				>
+				<img src="<?= $img_url;?>" alt="<?= $title;?>">
+				<h2><?= $title;?></h2>
+			</a>
+			<?php
+			if($is_bombine_end || $large || $i === count($boxes)){
+				?></div><?php
+			}
+		} /** end foreach */
+		?>
+	</div>
 </div>
 		<?php
 		unset($boxes);

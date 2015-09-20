@@ -10,7 +10,7 @@ define(function(require,exports,module){
 	var cache = {},
 		config = exports.config;
 	exports.bind = function(){
-		cache.$slide = document.querySelector('.theme_custom_slidebox-container');
+		cache.$slide = document.getElementById('theme_custom_slidebox');
 		if(!cache.$slide)
 			return;
 		eval(config.type + '();');

@@ -1646,13 +1646,13 @@ body.menu-on #mobile-on-layer{
 	#fm-search input{
 		border: 3px solid #2196F3;
 		text-align: center;
-		box-shadow: none;
 		margin-bottom: 10px;
-		background: rgba(255,255,255,.8);
+		background: rgba(255,255,255,.95);
 		font-size: 1.5em;
 		line-height: 2em;
 		height: 2em;
 		border-radius: 2px;
+		box-shadow: 0 0 20px #fff;
 	}
 	
 /**
