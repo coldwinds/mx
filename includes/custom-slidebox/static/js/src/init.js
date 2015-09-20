@@ -1,14 +1,51 @@
 define(function(require,exports,module){
 	'use strict';
 	var tools = require('modules/tools');
+	exports.config = {
+		type : 'candy'
+	};
 	exports.init = function(){
 		tools.ready(exports.bind);
-	}
-	var cache = {};
+	};
+	var cache = {},
+		config = exports.config;
 	exports.bind = function(){
-		cache.$slide = document.querySelector('.slidebox-container');
+		cache.$slide = document.querySelector('.theme_custom_slidebox-container');
 		if(!cache.$slide)
 			return;
+		eval(config.type + '();');
+	}
+	function scroller(){
+		var moving = false,
+			last_x;
+
+
+		function mousemove(e){
+			if(!moving)
+				moving = true;
+				
+			if(!last_x)
+				last_x = e.clientX;
+
+			if(cache.$slide.scrollLeft >= 0)
+				cache.$slide.scrollLeft = cache.$slide.scrollLeft - (last_x - e.clientX);
+			
+			last_x = e.clientX;
+
+		}
+		function mouseout(e){
+			if(moving)
+				moving = false;
+
+			if(!e.target.width)
+				last_x = 0;
+				
+		}
+
+		cache.$slide.addEventListener('mouseout', mouseout);
+		cache.$slide.addEventListener('mousemove', mousemove);
+	}
+	function candy(){
 		cache.$blurs = cache.$slide.querySelectorAll('.area-blur .item');
 		cache.$mains = cache.$slide.querySelectorAll('.area-main .item');
 		cache.$thumbnails = cache.$slide.querySelectorAll('.area-thumbnail .item');

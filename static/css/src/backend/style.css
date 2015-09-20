@@ -18,6 +18,14 @@
 #settings-updated{
 	margin-top:10px;
 }
+fieldset h3{
+	padding:10px;
+	background:rgb(250,251,253);
+	border:1px solid #DDD;
+	color:rgb(33, 117, 155);
+	text-shadow:0 1px 0 white;
+	border-radius:3px;
+}
 
 /** 
  * .tip-status
@@ -72,6 +80,8 @@ fieldset{
 	border-radius:4px;
 	background:rgb(245,245,245);
 	box-shadow:0 0 0 1px white inset;
+	background:-webkit-linear-gradient(rgb(250,251,253),rgb(245,245,245));
+	background:linear-gradient(rgb(250,251,253),rgb(245,245,245));
 }
 	fieldset legend{
 		margin: 5px 0 0;
@@ -87,23 +97,11 @@ fieldset{
 	}
 @media screen and (-webkit-min-device-pixel-ratio:0){fieldset legend{border-top-width:2px;}}
 
-fieldset.active,
-fieldset:hover{
-	background:rgb(248,248,248);
-}
 	fieldset:hover > legend,
 	fieldset.active > legend{
 		color:#D54E21;
 		background:rgb(248,248,248);
 	}
-h3{
-	padding:10px;
-	background:rgb(250,251,253);
-	border:1px solid #DDD;
-	color:rgb(33, 117, 155);
-	text-shadow:0 1px 0 white;
-	border-radius:3px;
-}
 
 /* kandyTabs custom */
 #backend-tab{
@@ -128,21 +126,15 @@ h3{
 		}
 		#backend-tab .tabtitle .tabbtn:hover{
 			background:rgb(245,245,245);
-			background:linear-gradient(rgb(245,245,245),rgb(250,251,253));
-			background:-moz-linear-gradient(rgb(245,245,245),rgb(250,251,253));
 			background:-webkit-linear-gradient(rgb(245,245,245), rgb(250,251,253));
-			background:-o-linear-gradient(rgb(245,245,245), rgb(250,251,253));
-			background:-webkit-gradient(linear,from(rgb(245,245,245)),to(rgb(250,251,253)));
+			background:linear-gradient(rgb(245,245,245),rgb(250,251,253));
 			color:#D54E21;
 		}
 		/* tab 当前按钮*/
 		#backend-tab .tabtitle .tabcur{
 			background:rgb(250,251,253);
-			background:linear-gradient(rgb(245,245,245),rgb(250,251,253));
-			background:-moz-linear-gradient(rgb(245,245,245),rgb(250,251,253));
 			background:-webkit-linear-gradient(rgb(245,245,245),rgb(250,251,253));
-			background:-o-linear-gradient(rgb(245,245,245), rgb(250,251,253));
-			background:-webkit-gradient(linear,from(rgb(245,245,245)),to(rgb(250,251,253)));
+			background:linear-gradient(rgb(245,245,245),rgb(250,251,253));
 			border-bottom:1px solid rgb(250,251,253);
 			color:#21759B;
 			cursor:default;
@@ -188,7 +180,6 @@ h3{
 	left: 0;
 	width: 120px;
 	height: 100%;
-	
 }
 .tab-title{
 	display: none;
@@ -202,11 +193,14 @@ h3{
 .tabnav{
 	width: 120px;
 	overflow: hidden;
+	max-height: 80%;
+	overflow-y: auto;
 	padding-top: 20px;
 	text-align: center;
 }
 	.tabnav:after{clear: both;content:'.';display: block;overflow:hidden;visibility:hidden;font-size:0;line-height:0;width:0;height:0;}
-	.tabnav li{
+	.tabnav a{
+		display: block;
 		padding: 3px 10px;
 		text-decoration: none;
 		text-overflow: ellipsis;
@@ -215,11 +209,14 @@ h3{
 		cursor: pointer;
 		margin: 0;
 		font-size: 12px;
+		color: #666;
 	}
-			.tabnav li.active,
-			.tabnav li:hover{
+			.tabnav a:hover,
+			.tabnav a.active,
+			.tabnav a:focus{
 				font-weight: bold;
-				color:#D54E21
+				color:#D54E21;
+				box-shadow: none;
 			}
 
 .none,

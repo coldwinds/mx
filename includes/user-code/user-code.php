@@ -37,7 +37,7 @@ class theme_user_code{
 						<th><label for="<?= __CLASS__;?>-header"><?= ___('Header code');?></label></th>
 						<td>
 							<textarea name="<?= __CLASS__;?>[header]" id="<?= __CLASS__;?>-header" class="widefat code" rows="10"><?= self::get_frontend_header_code();?></textarea>
-							<p class="description"><?= ___('This code will be put between <header> and </header>.');?></p>
+							<p class="description"><?= htmlspecialchars(___('This codes will be put between <head> and </head>.'));?></p>
 						</td>
 					</tr>
 					<tr>
@@ -45,7 +45,7 @@ class theme_user_code{
 						<td>
 							<textarea title="<?= ___('Default codes');?>" name="<?= __CLASS__;?>[footer]" id="<?= __CLASS__;?>-footer" class="widefat code" rows="10"><?= self::get_frontend_footer_code();?></textarea>
 							<p class="description"><?= ___('This code will be display on frontend page footer. You can put some statistics code in here.');?></p>
-							<p><textarea rows="2" class="widefat code" readonly ><?= stripslashes(self::get_footer_default());?></textarea></p>
+							<p><textarea title="<?= ___('Default codes');?>" rows="2" class="widefat code" readonly ><?= stripslashes(self::get_footer_default());?></textarea></p>
 						</td>
 					</tr>
 				</tbody>

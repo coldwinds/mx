@@ -1,7 +1,7 @@
-.slidebox-item{
+.theme_custom_slidebox-item{
 	border-bottom:1px solid rgb(200,200,200);
 }
-	.slidebox-upload{
+	.theme_custom_slidebox-upload{
 		position:relative;
 		float:right;
 		width:19%;
@@ -9,7 +9,7 @@
 		overflow:hidden;
 	}
 
-	.slidebox-file{
+	.theme_custom_slidebox-file{
 		position:absolute;
 		font-size:30px;
 		right:-10px;
@@ -17,10 +17,10 @@
 		opacity:0;
 		cursor:pointer;
 	}
-	.slidebox-del{
+	.theme_custom_slidebox-del{
 		float:right;
 		color:red !important;
 	}
-	.slidebox-img-url{
+	.theme_custom_slidebox-img-url{
 		width:80%;
 	}

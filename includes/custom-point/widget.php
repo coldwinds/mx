@@ -2,18 +2,17 @@
 /**
  * User rank widget
  * 
- * @version 1.0.0
+ * @version 1.0.1
  */
 add_action('widgets_init','widget_point_rank::register_widget');
 class widget_point_rank extends WP_Widget{
-	public static $iden = 'widget_point_rank';
 	function __construct(){
-		$this->alt_option_name = self::$iden;
+		$this->alt_option_name = __CLASS__;
 		parent::__construct(
-			self::$iden,
+			__CLASS__,
 			___('User point rank <small>(custom)</small>'),
 			array(
-				'classname' => self::$iden,
+				'classname' => __CLASS__,
 				'description'=> ___('Display user point rank list'),
 			)
 		);
@@ -36,7 +35,7 @@ class widget_point_rank extends WP_Widget{
 		<?php 
 		echo $args['after_title'];
 
-		$users = wp_cache_get('widget',self::$iden);
+		$users = wp_cache_get('widget',__CLASS__);
 		if(!$users){
 			$user_query = new WP_User_Query([
 				'meta_key' => theme_custom_point::$user_meta_key['point'],
@@ -53,7 +52,7 @@ class widget_point_rank extends WP_Widget{
 			</div>
 			<?php
 		}else{
-			wp_cache_set('widget',$users,self::$iden,3600);
+			wp_cache_set('widget',$users,__CLASS__,3600);
 			/**
 			 * rand
 			 */
@@ -65,7 +64,6 @@ class widget_point_rank extends WP_Widget{
 					<?php
 					$user = null;
 					foreach($rand_users as $k){ 
-						//$user = $users[$k];
 						theme_functions::the_user_list([
 							'user' => $users[$k],
 							'extra' => 'point',
@@ -111,7 +109,7 @@ class widget_point_rank extends WP_Widget{
 				class="widefat"
 				name="<?= self::get_field_name('total_number');?>" 
 				type="number" 
-				value="<?= esc_attr($instance['total_number']);?>" 
+				value="<?= (int)$instance['total_number'];?>" 
 				placeholder="<?= ___('Total number');?>"
 			/>
 		</p>
@@ -122,7 +120,7 @@ class widget_point_rank extends WP_Widget{
 				class="widefat"
 				name="<?= self::get_field_name('rand_number');?>" 
 				type="number" 
-				value="<?= esc_attr($instance['rand_number']);?>" 
+				value="<?= (int)$instance['rand_number'];?>" 
 				placeholder="<?= ___('Random number');?>"
 			/>
 		</p>
@@ -132,12 +130,12 @@ class widget_point_rank extends WP_Widget{
 	function update($new_instance,$old_instance){
 		if(isset($old_instance['total_number']) && 
 			isset($old_instance['rand_number']) && 
-			(int)$old_instance['total_number'] < $old_instance['rand_number']){
+			(int)$old_instance['total_number'] < (int)$old_instance['rand_number']){
 			$old_instance['rand_number'] = (int)$old_instance['total_number'];
 		}
 		return array_merge($old_instance,$new_instance);
 	}
 	public static function register_widget(){
-		register_widget(self::$iden);
+		register_widget(__CLASS__);
 	}
 }

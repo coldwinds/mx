@@ -64,12 +64,13 @@ define(function(require, exports, module){
 			for(var i = 0, len = $legends.length; i < len; i++){
 				var $this = $legends[i],
 					tx = $this.textContent;
-				nav_links += '<li title="' + tx + '" data-target-index="' + i +'">' + tx + '</li>';
+				$this.id = tx;
+				nav_links += '<a href="#' + tx + '" title="' + tx + '" data-target-index="' + i +'">' + tx + '</a>';
 				legends_ot.push(parseInt($this.offsetTop));
 			}
 			
 			return {
-				nav_html : '<nav class="tabnav-container"><ul class="tabnav">'+nav_links+'</ul></nav>',
+				nav_html : '<nav class="tabnav-container"><div class="tabnav">'+nav_links+'</div></nav>',
 				$legends : $legends,
 				legends_ot : legends_ot
 			}
@@ -128,7 +129,8 @@ define(function(require, exports, module){
 		function scroll_to_item($nav_links,$legends){
 			var placeholder_t = 20,
 				helper = function(i){
-					$nav_links[i].addEventListener('click',function(){
+					$nav_links[i].addEventListener('click',function(e){
+						e.preventDefault();
 						for(var j = 0; j < len; j++){
 							$nav_links[j].classList.remove('active');
 						}
@@ -137,10 +139,12 @@ define(function(require, exports, module){
 						window.scrollTo(0,i === 0 ? 0 : jQuery($legends[i]).offset().top - admin_bar_height - placeholder_t);
 						/** flash */
 						flash_legend($legends[i]);
+						/** fake hash */
+						history.pushState(null, null, '#' + this.innerHTML);
 					});
 				};
 			for(var i = 0, len = $nav_links.length; i < len; i++){
-				$nav_links[i].addEventListener('click',helper(i),false);
+				$nav_links[i].addEventListener('click',helper(i));
 			}
 			
 		}
@@ -186,14 +190,13 @@ define(function(require, exports, module){
 					
 				if(cache.navtab[i] === true)
 					return false;
-
 				cache.navtab[i] = true;
 				
-				var $cont = jQuery(c[i])[0],
+				var $cont = c[i],
 					data = get_data($cont),
 					$nav_container = jQuery(data.nav_html)[0],
-					$nav = $nav_container.querySelector('ul'),
-					$nav_links = $nav_container.querySelectorAll('li'),
+					$nav = $nav_container.querySelector('.tabnav'),
+					$nav_links = $nav_container.querySelectorAll('a'),
 					legends_ot = data.legends_ot;
 
 				$cont.insertBefore($nav_container,$cont.firstChild);

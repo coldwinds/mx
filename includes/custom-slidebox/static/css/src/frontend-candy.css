@@ -1,11 +1,11 @@
 /**
  * img height is 800*400
  */
-.slidebox-container{
+.theme_custom_slidebox-container{
 	position: relative;
 	padding: 0 0 40px;
 }
-#slidebox:after{
+#theme_custom_slidebox:after{
 	display: block;
 	clear: both;
 	content: '';
@@ -13,7 +13,7 @@
 	/**
 	 * ..area-blur
 	 */
-	.slidebox-container .area-blur{
+	.theme_custom_slidebox-container .area-blur{
 		position: absolute;
 		top: -40px;
 		left: 0;
@@ -24,7 +24,7 @@
 		filter: blur(15px);
 		z-index: 0;
 	}
-		.slidebox-container .area-blur .item{
+		.theme_custom_slidebox-container .area-blur .item{
 			position: absolute;
 			-webkit-background-size: cover;
 			background-size: cover;
@@ -37,38 +37,38 @@
 			height: 100%;
 		}
 
-		.slidebox-container .area-blur .active{
+		.theme_custom_slidebox-container .area-blur .active{
 			opacity: 1;
 			z-index: 1;
 		}
 	/**
 	 * .area-main
 	 */
-	#slidebox .area-main{
+	#theme_custom_slidebox .area-main{
 		position: relative;
 		margin-bottom: 20px;
 		z-index: 1;
 	}
-		#slidebox .area-main .item{
+		#theme_custom_slidebox .area-main .item{
 			display: none;
 			vertical-align: middle;
 			margin: 0 auto;
 		}
-			#slidebox .area-main .item:after{
+			#theme_custom_slidebox .area-main .item:after{
 				display: block;
 				clear: both;
 				content: '';
 			}
-			#slidebox .area-main a{
+			#theme_custom_slidebox .area-main a{
 				float: left;
 				width: 60%;
 			}
-		#slidebox .area-main .item.active{
+		#theme_custom_slidebox .area-main .item.active{
 			display: block;
 		}
-			#slidebox .area-main .item.active a{
+			#theme_custom_slidebox .area-main .item.active a{
 			}
-		#slidebox .area-main img{
+		#theme_custom_slidebox .area-main img{
 			display: block;
 			max-width: 90%;
 			width: auto;
@@ -79,10 +79,10 @@
 			-ms-transition: all .3s;
 			transition: all .3s;
 		}
-			#slidebox .area-main img:hover{
+			#theme_custom_slidebox .area-main img:hover{
 				box-shadow: 0 2px 20px rgba(0,0,0,.5);
 			}
-		#slidebox .area-main .des{
+		#theme_custom_slidebox .area-main .des{
 			width: 40%;
 			color: #fff;
 			font-size: 30px;
@@ -90,19 +90,19 @@
 			text-shadow: 0 1px 10px #000;
 			line-height: 1.2;
 		}
-			#slidebox .area-main .des span{
+			#theme_custom_slidebox .area-main .des span{
 				display: block;
 			}
-			#slidebox .area-main .sub-title{
+			#theme_custom_slidebox .area-main .sub-title{
 				font-size: 20px;
 				margin: 5px 0 10px;
 				opacity: .9;
 			}
 			/** cats */
-			#slidebox .area-main .cats{
+			#theme_custom_slidebox .area-main .cats{
 				overflow: hidden;
 			}
-			#slidebox .area-main .cats span{
+			#theme_custom_slidebox .area-main .cats span{
 				float: left;
 				padding: 2px 5px;
 				margin-right: 5px;
@@ -110,7 +110,7 @@
 				font-size: 13px;
 				opacity: ;
 			}
-			#slidebox .area-main .des .more{
+			#theme_custom_slidebox .area-main .des .more{
 				border: 1px solid #fff;
 				border-radius: 2px;
 				padding: 5px 10px;
@@ -118,7 +118,7 @@
 				text-transition: uppercase;
 				display: inline-block;
 			}
-			#slidebox .area-main .more:hover{
+			#theme_custom_slidebox .area-main .more:hover{
 				background: #FF4081;
 				border-color: #FF4081;
 				text-shadow: none;
@@ -126,10 +126,10 @@
 	/**
 	 * .area-thumbnail
 	 */
-	#slidebox .area-thumbnail{
+	#theme_custom_slidebox .area-thumbnail{
 		display: table;
 	}
-		#slidebox .area-thumbnail a{
+		#theme_custom_slidebox .area-thumbnail a{
 			position: relative;
 			display: table-cell;
 			width: 1%;
@@ -138,13 +138,13 @@
 			-moz-box-sizing: border-box;
 			box-sizing: border-box;
 		}
-		#slidebox .area-thumbnail img{
+		#theme_custom_slidebox .area-thumbnail img{
 			display: block;
 			width: 100%;
 			margin: 0 auto;
 			box-shadow: 0 2px 10px rgba(0,0,0,.5);
 		}
-		#slidebox .area-thumbnail h2{
+		#theme_custom_slidebox .area-thumbnail h2{
 			position: absolute;
 			background: linear-gradient(transparent,rgba(0,0,0,.3));
 			bottom: 0;
@@ -157,7 +157,7 @@
 			text-shadow: 0 0 3px #000;
 			font-weight: bold;
 		}
-		#slidebox .area-thumbnail .active h2:after{
+		#theme_custom_slidebox .area-thumbnail .active h2:after{
 			display: block;
 			position: absolute;
 			bottom: 0;
@@ -168,7 +168,7 @@
 			background: #00FFFF;
 		}
 @media(min-width: 768px){
-	#slidebox .area-main{
+	#theme_custom_slidebox .area-main{
 	}
 	
 }

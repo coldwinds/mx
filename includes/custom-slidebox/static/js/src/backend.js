@@ -3,19 +3,20 @@ define(function(require, exports, module){
 	var uploader = require('modules/uploader'),
 		tools = require('modules/tools');
 	exports.init = function(){
-		jQuery(document).ready(function(){
+		tools.ready(function(){
 			exports.bind();
 		});
 	}
 	
 	
 	exports.config = {
-		items_id : '.slidebox-item',
-		items_prefix_id : '#slidebox-item-',
-		add_btn_id : '#slidebox-add',
-		control_box_id : '#slidebox-control',
-		del_btn_id : '.slidebox-del',
-		file_btn_id : '.slidebox-file',
+		items_id : '.theme_custom_slidebox-item',
+		items_prefix_id : '#theme_custom_slidebox-item-',
+		add_btn_id : '#theme_custom_slidebox-add',
+		control_box_id : '#theme_custom_slidebox-control',
+		del_btn_id : '.theme_custom_slidebox-del',
+		file_btn_id : '.theme_custom_slidebox-file',
+		container_id : '.theme_custom_slidebox-container',
 		placeholder_pattern : /\%placeholder\%/ig,
 		tpl : '',
 		process_url : '',
@@ -32,6 +33,7 @@ define(function(require, exports, module){
 		exports.cache.$control_box = jQuery(exports.config.control_box_id);
 		exports.cache.$del_btns = jQuery(exports.config.del_btn_id);
 		exports.cache.$file_btns = jQuery(exports.config.file_btn_id);
+		exports.cache.$container = jQuery(exports.config.container_id);
 		/** 
 		 * bind del event for first init
 		 */
@@ -54,10 +56,10 @@ define(function(require, exports, module){
 	exports.file = function(args){
 		var that = this,
 			$item = args.$item,
-			$file = $item.find('.slidebox-file'),
-			$area = $item.find('.slidebox-upload-area'),
-			$tip = $item.find('.slidebox-upload-tip'),
-			$url = $item.find('.slidebox-img-url');
+			$file = $item.find('.theme_custom_slidebox-file'),
+			$area = $item.find('.theme_custom_slidebox-upload-area'),
+			$tip = $item.find('.theme_custom_slidebox-upload-tip'),
+			$url = $item.find('.theme_custom_slidebox-img-url');
 		var upload = new uploader.init({
 			url : exports.config.process_url,
 			$file : $file,
@@ -84,7 +86,7 @@ define(function(require, exports, module){
 		$add.on('click',function(){
 			var tpl = exports.config.tpl.replace(exports.config.placeholder_pattern,exports.get_next_id_number()),
 				$new_item = jQuery(tpl).hide();
-			exports.event_del($new_item.find('.slidebox-del'));
+			exports.event_del($new_item.find('.theme_custom_slidebox-del'));
 			/** 
 			 * bind upload event
 			 */
@@ -92,7 +94,7 @@ define(function(require, exports, module){
 				$item : $new_item
 			});
 			
-			exports.cache.$control_box.before($new_item);
+			exports.cache.$container.append($new_item);
 			$new_item.fadeIn().find('input').eq(0).focus();
 			
 		});
@@ -109,20 +111,6 @@ define(function(require, exports, module){
 		});
 	}
 	exports.get_next_id_number = function(){
-		exports.cache.$items = jQuery(exports.config.items_id);
-		if(!exports.cache.$items[0]) return 1;
-		return exports.cache.$items.eq(exports.cache.$items.length - 1).data('placeholder') + 1;
-	}
-
-	exports.color_tpl = function(curr_color){
-		var tpl = '';
-		for(var i in exports.config.preset_colors){
-			var color = exports.config.preset_colors[i],
-				curr_class = curr_color == color ? ' class="current" ' : '';
-			tpl += '<a href="javascript:;" style="background-color:#' + color + '" data-color="' + color + '" ' + curr_class +'></a>';
-		}
-		tpl = '<div id="colorful-selector">' + tpl + '</div>';
-		return tpl;
-		
+		return new Date().getTime();
 	}
 });
