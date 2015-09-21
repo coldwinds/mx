@@ -113,7 +113,7 @@ class maintenance_mode{
 		$url = self::has_url();
 		if(!theme_cache::current_user_can('manage_options') && $url){
 			header("Location: $url");
-			die();
+			die;
 		}
 	}
 }

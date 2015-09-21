@@ -143,7 +143,7 @@ class theme_open_sign{
 		}else if(isset($_GET['qq']) && $_GET['qq'] === 'set-auth'){
 			self::open_sign_qq();
 		}
-		die();
+		die;
 	}
 	public static function open_sign_sina(){
 		$access_token = isset($_GET['access_token']) && is_string($_GET['access_token']) ? $_GET['access_token'] : null;

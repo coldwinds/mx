@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme-cache
 Feature URI:	http://inn-studio.com
-Version:		2.2.0
+Version:		3.0.0
 Description:	theme-cache
 Author:			INN STUDIO
 Author URI:		http://inn-studio.com
@@ -14,40 +14,26 @@ add_filter('theme_includes',function($fns){
 });
 class theme_cache{
 	public static $cache;
-	public static $cache_key;
+	public static $cache_base_key;
 	
 	public static function init(){
-		self::$cache_key = md5(AUTH_KEY . theme_functions::$iden);
+		self::$cache_base_key = theme_functions::$iden;
 		
-		add_action('advanced_settings',__CLASS__ . '::display_backend');
+		add_action('advanced_settings', __CLASS__ . '::display_backend');
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 		/**
-		 * When delete menu
+		 * When update menu
 		 */
 		add_filter('pre_set_theme_mod_nav_menu_locations',function($return){
-			$caches = (array)self::get(self::$cache_key);
-			if(!isset($caches['nav-menus'])) return $return;
-			unset($caches['nav-menus']);
-			self::set(self::$cache_key,$caches);
+			self::delete_keys('nav-menu');
 			return $return;
 		});
-		/**
-		 * When delete menu
-		 */
-		add_action('wp_delete_nav_menu',function(){
-			$caches = (array)self::get(self::$cache_key);
-			if(!isset($caches['nav-menus'])) return;
-			unset($caches['nav-menus']);
-			self::set(self::$cache_key,$caches);
-		});
+	
 		/**
 		 * When update widget
 		 */
 		add_filter('widget_update_callback',function($instance){
-			$caches = (array)self::get(self::$cache_key);
-			if(!isset($caches['widget-sidebars'])) return $instance;
-			unset($caches['widget-sidebars']);
-			self::set(self::$cache_key,$caches);
+			self::delete_keys('dynamic-sidebar');
 			return $instance;
 		});
 		
@@ -55,25 +41,16 @@ class theme_cache{
 		 * When update option for widget
 		 */
 		add_action('update_option_sidebars_widgets',function(){
-			$caches = (array)self::get(self::$cache_key);
-			if(!isset($caches['widget-sidebars'])) return;
-			unset($caches['widget-sidebars']);
-			self::set(self::$cache_key,$caches);
+			self::delete_keys('dynamic-sidebar');
 		});
-		/**
-		 * When delete post
-		 */
-		add_action('delete_post',function(){
-			$caches = (array)self::get(self::$cache_key);
-			if(!isset($caches['queries'])) return;
-			unset($caches['queries']);
-			self::set(self::$cache_key,$caches);
-		});
+		
 		/**
 		 * when post delete
 		 */
 		add_action('delete_post', function($post_id){
 			$post = self::get_post($post_id);
+			if($post->type !== 'page')
+				return;
 			$caches = (array)wp_cache_get('pages_by_path');
 			if(isset($caches[$post->post_name])){
 				unset($caches[$post->post_name]);
@@ -85,6 +62,8 @@ class theme_cache{
 		 */
 		add_action('save_post', function($post_id){
 			$post = self::get_post($post_id);
+			if($post->type !== 'page')
+				return;
 			$caches = (array)wp_cache_get('pages_by_path');
 			if(!isset($caches[$post->post_name])){
 				$caches[$post->post_name] = $post_id;
@@ -154,9 +133,9 @@ class theme_cache{
 								
 								<a href="<?= self::get_process_url('flush');?>" class="button" onclick="javascript:this.innerHTML='<?= ___('Processing, please wait...');?>'"><?= ___('Clean all cache');?></a>
 								
-								<a href="<?= self::get_process_url('widget-sidebars');?>" class="button" onclick="javascript:this.innerHTML='<?= ___('Processing, please wait...');?>'"><?= ___('Clean widget cache');?></a>
+								<a href="<?= self::get_process_url('dynamic-sidebar');?>" class="button" onclick="javascript:this.innerHTML='<?= ___('Processing, please wait...');?>'"><?= ___('Clean widget cache');?></a>
 								
-								<a href="<?= self::get_process_url('nav-menus');?>" class="button" onclick="javascript:this.innerHTML='<?= ___('Processing, please wait...');?>'"><?= ___('Clean menu cache');?></a>
+								<a href="<?= self::get_process_url('nav-menu');?>" class="button" onclick="javascript:this.innerHTML='<?= ___('Processing, please wait...');?>'"><?= ___('Clean menu cache');?></a>
 								
 								
 								<span class="description"><i class="fa fa-exclamation-circle"></i> <?= ___('Save your settings before clean');?></span>
@@ -185,7 +164,7 @@ class theme_cache{
 	public static function process(){
 		$type = isset($_GET['type']) ? $_GET['type'] : null;
 		if(!self::current_user_can('manage_options'))
-			die();
+			die;
 			
 		switch($type){
 			/** poicache */
@@ -208,15 +187,11 @@ class theme_cache{
 				self::enable_cache();
 			break;
 			default:
-				$caches = (array)self::get(self::$cache_key);
-				if(isset($caches[$type])){
-					unset($caches[$type]);
-					self::set(self::$cache_key,$caches);
-				}
+				self::delete_keys($type);
 		}
 		wp_redirect(admin_url('themes.php?page=core-options&' . __CLASS__ . '=1'));
 
-		die();
+		die;
 	}
 	public static function cleanup_poicache(){
 		if(!class_exists('innstudio\advanced_cache'))
@@ -269,11 +244,11 @@ class theme_cache{
 			$caches[$cache_id] = get_avatar_url($id_or_email);
 		return $caches[$cache_id];
 	}
-	public static function get_post($post_id, $output = OBJECT, $filter = 'raw'){
+	public static function get_post($post, $output = OBJECT, $filter = 'raw'){
 		static $caches = [];
-		$cache_id = $post_id . $output . $filter;
+		$cache_id = md5(json_encode(func_get_args()));
 		if(!isset($caches[$cache_id]))
-			$caches[$cache_id] = get_post($post_id, $output, $filter);
+			$caches[$cache_id] = get_post($post, $output, $filter);
 		return $caches[$cache_id];
 	}
 	public static function get_the_title($post_id){
@@ -498,25 +473,22 @@ class theme_cache{
 	/**
 	 * add cache for get_page_by_path()
 	 * 
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	public static function get_page_by_path($page_path, $output = OBJECT, $post_type = 'page'){
 		$cache_id = 'pages_by_path';
 		$caches = (array)wp_cache_get($cache_id);
 		/** get post id from cache */
 		if(isset($caches[$page_path])){
-			$post_id = $caches[$page_path];
-			return self::get_post($post_id,$output);
+			return self::get_post($caches[$page_path],$output);
 		/** get post id from db */
 		}else{
-			$post = call_user_func_array('get_page_by_path',func_get_args());
-			if(!empty($post)){
-				$post_id = $post->ID;
-				$caches[$page_path] = $post_id;
-				wp_cache_set($cache_id,$caches,null,2505600);
-				return $post;
-			}
-			return null;
+			$post = get_page_by_path($page_path,$output,$post_type);
+			if(!$post)
+				return false;
+			$caches[$page_path] = $post->ID;
+			wp_cache_set($cache_id,$caches);
+			return $post;
 		}
 	}
 
@@ -526,12 +498,11 @@ class theme_cache{
 	 * @param string $key Cache key
 	 * @param string $group Cache group
 	 * @return bool
-	 * @version 2.1
+	 * @version 2.1.1
 	 */
 	public static function delete($key,$group = null){
-		if(!$group)
-			$group = 'default';
 		if(wp_using_ext_object_cache()){
+			$group = self::$cache_base_key . '-' . $group;
 			return wp_cache_delete($key,$group);
 		}
 	}
@@ -542,13 +513,14 @@ class theme_cache{
 	 * @param mixed $data Cache contents
 	 * @param string $group Cache group
 	 * @return int $expire Cache expire time (s)
-	 * @version 2.0.4
+	 * @version 2.0.5
 	 */
 	public static function set($key,$data,$group = null,$expire = 0){
 		if(theme_dev_mode::is_enabled())
 			return false;
 			
 		if(wp_using_ext_object_cache()){
+			$group = self::$cache_base_key . '-' . $group;
 			return wp_cache_set($key,$data,$group,$expire);
 		}
 		return false;
@@ -570,52 +542,42 @@ class theme_cache{
 			return false;
 		
 		if(wp_using_ext_object_cache()){
+			$group = self::$cache_base_key . '-' . $group;
 			return wp_cache_get($key,$group,$force);
 		}
 		return false;
 	}
-	/**
-	 * Get comments 
-	 *
-	 * @param string $id The cache id
-	 * @param int $expire Cache expire time
-	 * @return mixed
-	 * @version 2.0.2
-	 */
-	public static function get_comments($args,$expire = 3600){
-		$cache_group_id = 'comments';
-		$id = md5(json_encode(func_get_args()));
-		$caches = (array)self::get(self::$cache_key);
-		$cache = isset($caches[$cache_group_id][$cache_id]) ? $caches[$cache_group_id][$cache_id] : null;
-		if(empty($cache)){
-			$cache = get_comments($args);
-			$caches[$cache_group_id][$cache_id] = $cache;
-			self::set(self::$cache_key,$caches,null,$expire);
-		}
-		return $cache;
+	private static function get_keys($key = null,$group_key){
+		$group_key = 'keys-' . $group_key;
+		$keys = array_filter((array)self::get($group_key));
+		if($key)
+			return in_array($key,$keys);
+		return $keys;
 	}
-	/**
-	 * Get queries 
-	 *
-	 * @param string $id The cache id
-	 * @param int $expire Cache expire time
-	 * @return mixed
-	 * @version 2.0.1
-	 */
-	public static function get_queries($args,$expire = 3600){
-		$cache_group_id = 'queries';
-		$cache_id = md5(json_encode(func_get_args()));
-		$caches = (array)self::get(self::$cache_key);
-		$cache = isset($caches[$cache_group_id][$cache_id]) ? $caches[$cache_group_id][$cache_id] : null;
-		if(empty($cache)){
-			$cache = new WP_Query($args);
-			$caches[$cache_group_id][$cache_id] = $cache;
-			self::set(self::$cache_key,$caches,null,$expire);
-			//wp_reset_postdata();
-		}
-		return $cache;
+	private static function set_key($key,$group_key){
+		$group_key = 'keys-' . $group_key;
+		$keys = array_filter((array)self::get($group_key));
+		$keys[] = $key;
+		self::set($group_key,$keys);
+		return $keys;
+	}
+	private static function delete_keys($group_id){
+		if(!$group_id)
+			return false;
+		$group_key = 'keys-' . $group_id;
+		$keys = array_filter((array)self::get($group_key));
+		if(!$keys)
+			return false;
+		/** delete content */
+		foreach($keys as $key)
+			self::delete($key,$group_id);
+		self::delete($group_key);
 	}
 	private static function get_page_prefix(){
+		static $cache_id_prefix = null;
+		if($cache_id_prefix !== null)
+			return $cache_id_prefix;
+			
 		if(self::is_singular()){
 			global $post;
 			$cache_id_prefix = 'post-' . $post->ID;
@@ -639,9 +601,8 @@ class theme_cache{
 		}else if(self::is_archive()){
 			$cache_id_prefix = 'archive';
 		}else{
-			$cache_id_prefix = 'unknow';
+			$cache_id_prefix = get_current_url();
 		}
-
 	 	return $cache_id_prefix;
 	}
 	/**
@@ -650,24 +611,34 @@ class theme_cache{
 	 * @param string The widget sidebar name/id
 	 * @param int Cache expire time
 	 * @return string
-	 * @version 2.0.2
+	 * @version 3.0.0
 	 */
 	public static function dynamic_sidebar($id,$expire = 3600){
+		$cache_group_id = 'dynamic-sidebar';
+		$cache_id = md5(self::get_page_prefix() . wp_is_mobile() . $id);
+
+		$cache = self::get($cache_id,$cache_group_id);
+
+		$exists_key = self::get_keys($cache_id,$cache_group_id);
 		
-		$cache_group_id = 'widget-sidebars';
-		$cache_id = self::get_page_prefix() . $id;
-		$caches = (array)self::get(self::$cache_key);
-		$cache = isset($caches[$cache_group_id][$cache_id]) ? $caches[$cache_group_id][$cache_id] : null;
-		if(empty($cache)){
+		if($exists_key && $cache){
+			echo $cache;
+			return $cache;
+		}
+
+		if(!$cache){
 			ob_start();
 			dynamic_sidebar($id);
 			$cache = html_minify(ob_get_contents());
 			ob_end_clean();
-			$caches[$cache_group_id][$cache_id] = $cache;
-			self::set(self::$cache_key,$caches,null,$expire);
+			self::set($cache_id,$cache,$cache_group_id,$expire);
 		}
+		if(!$exists_key){
+			$a = self::set_key($cache_id,$cache_group_id);
+		}
+		
 		echo $cache;
-		return empty($cache) ? false : true;
+		return $cache;
 	}
 	/**
 	 * wp nav menu from cache
@@ -675,26 +646,31 @@ class theme_cache{
 	 * @param string The widget sidebar name/id
 	 * @param int Cache expire time
 	 * @return string
-	 * @version 2.0.1
+	 * @version 2.1.0
 	 */
-	public static function wp_nav_menu($args,$expire = 0){
-		$cache_group_id = 'nav-menus';
+	public static function wp_nav_menu($args,$expire = 3600){
+		$cache_group_id = 'nav-menu';
+		$cache_id = md5(self::get_page_prefix() . json_encode($args));
 
-		$cache_id = self::get_page_prefix() . $args['theme_location'];
-		$caches = (array)self::get(self::$cache_key);
-		$cache = isset($caches[$cache_group_id][$cache_id]) ? $caches[$cache_group_id][$cache_id] : null;
+		$cache = self::get($cache_id,$cache_group_id);
 
-		if(empty($cache)){
+		$exists_key = self::get_keys($cache_id,$cache_group_id);
+		
+		if($exists_key && $cache)
+			return $cache;
+
+		if(!$cache){
 			ob_start();
 			wp_nav_menu($args);
 			$cache = html_minify(ob_get_contents());
 			ob_end_clean();
-			$caches[$cache_group_id][$cache_id] = $cache;
-			self::set(self::$cache_key,$caches,null,$expire);
+			self::set($cache_id,$cache,$cache_group_id,$expire);
 		}
-		echo $cache;
-		unset($cache);
+		if(!$exists_key){
+			self::set_key($cache_id,$cache_group_id);
+		}
+		
+		return $cache;
 	}
-	
 }
 ?>

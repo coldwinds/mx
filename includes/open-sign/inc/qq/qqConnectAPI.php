@@ -533,7 +533,7 @@ class Oauth{
         $login_url =  $this->urlUtils->combineURL(self::GET_AUTH_CODE_URL, $keysArr);
 
         header("Location:$login_url");
-        die();
+        die;
     }
 
     public function qq_callback(){
@@ -631,7 +631,7 @@ class ErrorCase{
     public function showError($code, $description = '$'){
         $recorder = new Recorder();
         if(! $recorder->readInc("errorReport")){
-            die();//die quietly
+            die;//die quietly
         }
 
 

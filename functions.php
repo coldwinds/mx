@@ -154,9 +154,9 @@ class theme_functions{
 			]);
 		}
 	}
-	public static function get_posts_query($args,array $query_args = []){
+	public static function get_posts_query(array $args = [],array $query_args = []){
 		global $paged;
-		$r = array_merge([
+		$args = array_merge([
 			'orderby' => 'views',
 			'order' => 'desc',
 			'posts_per_page' => get_option('posts_per_page'),
@@ -165,12 +165,12 @@ class theme_functions{
 			'date' => 'all',
 			
 		],$args);
-		extract($r);
+		
 		$query_args = array_merge([
-			'posts_per_page' => $posts_per_page,
-			'paged' => $paged,
-			'ignore_sticky_posts' => 1,
-			'category__in' => $category__in,
+			'posts_per_page' => $args['posts_per_page'],
+			'paged' => $args['paged'],
+			'ignore_sticky_posts' => true,
+			'category__in' => $args['category__in'],
 			'post_status' => 'publish',
 			'post_type' => 'post',
 			'has_password' => false,
@@ -226,14 +226,12 @@ class theme_functions{
 				default:
 					$after = 'day';
 			}
-			$query_args['date_query'] = array(
-				array(
-					'column' => 'post_date_gmt',
-					'after'  => '1 ' . $after . ' ago',
-				)
-			);
+			$query_args['date_query'] = [[
+				'column' => 'post_date_gmt',
+				'after'  => '1 ' . $after . ' ago',
+			]];
 		}
-		return theme_cache::get_queries($query_args);
+		return new WP_Query($query_args);
 	}
 	/**
 	 * archive_img_content

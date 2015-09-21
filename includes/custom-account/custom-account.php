@@ -40,7 +40,7 @@ class theme_custom_account{
 			
 		}else{
 			wp_redirect(theme_custom_sign::get_tabs('login',get_current_url())['url']);
-			die();
+			die;
 		}
 
 	}

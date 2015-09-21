@@ -103,7 +103,7 @@ class custom_post_point{
 					}
 				}
 				header('location: ' . theme_options::get_url() . '&' . __CLASS__);
-				die();
+				die;
 				
 				break;
 			default:

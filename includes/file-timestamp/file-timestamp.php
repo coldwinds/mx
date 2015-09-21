@@ -22,7 +22,7 @@ class theme_file_timestamp{
 		theme_options::set_options(self::$iden,$_SERVER['REQUEST_TIME']);
 
 		header('location: ' . theme_options::get_url() . '&' . self::$iden);
-		die();
+		die;
 	}
 
 	public static function options_save(array $opts = []){

@@ -27,7 +27,7 @@ define(function(require, exports, module){
 		}
 	}
 	function reset_media(){
-		if(jQuery)
+		if(window.jQuery)
 			jQuery(window).resize();
 	}
 	function expand(set){

@@ -133,7 +133,7 @@ class theme_custom_storage{
 
 		$post_id = isset($_GET['post-id']) ? (int)$_GET['post-id'] : null;
 		if(!$post_id)
-			die();
+			die;
 		
 		die(theme_features::json_format($output));
 	}

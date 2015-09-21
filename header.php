@@ -13,7 +13,7 @@
  * menu menu-mobile
  */
 if(wp_is_mobile()){
-	theme_cache::wp_nav_menu([
+	echo theme_cache::wp_nav_menu([
 		'theme_location'    => 'menu-mobile',
 		'container'         => 'nav',
 		'container_class'   => 'slide-menu menu-mobile',
@@ -60,7 +60,7 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 			/** 
 			 * menu top-bar
 			 */
-           theme_cache::wp_nav_menu([
+            echo theme_cache::wp_nav_menu([
                 'theme_location'    => 'menu-top-bar',
                 'container'         => 'nav',
                 'container_class'   => 'top-bar-nav',
@@ -102,7 +102,7 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 		 * menu-header
 		 */
 		if(!wp_is_mobile()){
-			theme_cache::wp_nav_menu([
+			echo theme_cache::wp_nav_menu([
 				'theme_location'    => 'menu-header',
 				'container'         => 'nav',
 				'container_class'   => 'menu-header',

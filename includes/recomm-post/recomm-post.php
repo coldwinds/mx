@@ -2,7 +2,7 @@
 /**
  * theme recommended post
  *
- * @version 2.0.6
+ * @version 2.1.0
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_recommended_post::init';
@@ -20,12 +20,12 @@ class theme_recommended_post{
 		add_action('delete_post',__CLASS__ . '::delete_post');
 	}
 	public static function add_meta_boxes(){
-		$screens = array('post');
+		$screens = ['post','page'];
 
 		foreach ( $screens as $screen ) {
 			add_meta_box(
 				__CLASS__,
-				___( 'Recommended post' ),
+				___('Recommended post'),
 				__CLASS__ . '::box_display',
 				$screen,
 				'side'
@@ -65,23 +65,26 @@ class theme_recommended_post{
 		
 		if($k !== false){
 			unset($opt['ids'][$k]);
-			sort($opt['ids']);
+			arsort($opt['ids']);
+			$opt['ids'] = array_slice($opt['ids'],0,50);
 			theme_options::set_options(__CLASS__,$opt);
 			self::clear_cache();
 		}
 	}
 	public static function opttions_default(array $opts = []){
-		$opts[__CLASS__]['enabled'] = 1;
+		$opts[__CLASS__] = [
+			'enabled' => 1,
+		];
 		return $opts;
 	}
 	public static function save_post($post_id){
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return false;
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
+			return false;
 
 		if(!isset($_POST[__CLASS__ . '-nonce']) || !wp_verify_nonce($_POST[__CLASS__ . '-nonce'], __CLASS__)) 
 			return false;
 
 		$opt = self::get_options();
-
 		
 		if(!isset($opt['ids']))
 			$opt['ids'] = [];
@@ -90,8 +93,10 @@ class theme_recommended_post{
 		 * set to recomm
 		 */
 		if(isset($_POST[__CLASS__])){
-			if(!in_array($post_id,$opts['ids'])){
+			if(!in_array($post_id,$opt['ids'])){
 				$opt['ids'][] = $post_id;
+				arsort($opt['ids']);
+				$opt['ids'] = array_slice($opt['ids'],0,50);
 				theme_options::set_options(__CLASS__,$opt);
 				self::clear_cache();
 			}
@@ -99,22 +104,23 @@ class theme_recommended_post{
 			$key = array_search($post_id,$opt['ids']);
 			if($key !== false){
 				unset($opt['ids'][$key]);
+				$opt['ids'] = array_slice($opt['ids'],0,50);
 				theme_options::set_options(__CLASS__,$opt);
 				self::clear_cache();
 			}
 		}
 	}
 	public static function get_ids(){
-		return (array)self::get_options('ids');
+		return array_filter((array)self::get_options('ids'));
 	}
 	public static function is_enabled(){
-		return self::get_options('enabled') == 1 ? true : false;
+		return self::get_options('enabled') == 1;
 	}
 	public static function clear_cache(){
 		theme_cache::delete(__CLASS__);
 	}
 	public static function set_cache($data){
-		theme_cache::set(__CLASS__,$data,null,3600);
+		theme_cache::set(__CLASS__,$data,null);
 	}
 	public static function get_cache(){
 		return theme_cache::get(__CLASS__);
@@ -145,7 +151,8 @@ class theme_recommended_post{
 								global $post;
 								$query = new WP_Query([
 									'posts_per_page' => -1,
-									'post__in' => $recomm_posts
+									'post__in' => $recomm_posts,
+									'ignore_sticky_posts' => true,
 								]);
 								if($query->have_posts()){
 									foreach($query->posts as $post){

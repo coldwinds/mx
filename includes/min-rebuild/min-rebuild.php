@@ -74,7 +74,7 @@ class theme_min_rebuild{
 		
 		wp_redirect(add_query_arg(self::$iden,1,theme_options::get_url()));
 		
-		die();
+		die;
 	}
 }
 ?>

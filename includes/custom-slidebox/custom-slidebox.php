@@ -231,6 +231,10 @@ class theme_custom_slidebox{
 	public static function get_type(){
 		return self::get_options('type') ? self::get_options('type') : self::options_default()[__CLASS__]['type'];
 	}
+	public static function get_ad($type){
+		$ads = self::get_options('ads');
+		return isset($ads[$type]) ? stripslashes($ads[$type]) : null;
+	}
 	public static function display_backend(){
 		$boxes = self::get_boxes();
 		?>
@@ -268,6 +272,7 @@ class theme_custom_slidebox{
 				}
 				?>
 			</div>
+
 			<table class="form-table" id="<?= __CLASS__;?>-control">
 			<tbody>
 			<tr>
@@ -275,6 +280,17 @@ class theme_custom_slidebox{
 			<td>
 				<a id="<?= __CLASS__;?>-add" href="javascript:;" class="button-primary"><?= ___('Add a new item');?></a>
 			</td>
+			</tr>
+			</tbody>
+			</table>
+			<hr>
+			<table class="form-table">
+			<tbody>
+			<tr>
+				<th><label for="<?= __CLASS__;?>-ads-below"><?= ___('AD HTML codes - below');?></label></th>
+				<td>
+					<textarea name="<?= __CLASS__;?>[ads][below]" id="<?= __CLASS__;?>-ads-below" rows="3" class="widefat" placeholder="<?= ___('You can write AD HTML codes here, it will display below the slide-box.');?>"><?= self::get_ad('below');?></textarea>
+				</td>
 			</tr>
 			</tbody>
 			</table>
@@ -309,7 +325,7 @@ class theme_custom_slidebox{
 		if(!$boxes)
 			return false;
 
-		$small = 2;
+		$small = 5;
 		?>
 <div class="<?= __CLASS__;?>-container">
 	<div class="area-blur">
@@ -332,22 +348,28 @@ class theme_custom_slidebox{
 			$subtitle = $box['subtitle'];
 			$img_url = $box['img-url'];
 			$link_url = $box['link-url'];
-			
-			$mod = $i % ($small + 1);
+
+			$mod = $i % $small;
 			$large = $mod === 0 ? 'large' : null;
-			$is_bombine_start = $mod === $small - 1;
-			$is_bombine_end = $mod === $small;
+			
+			if($i === 1){
+				$is_bombine_start = true;
+			}else{
+				$is_bombine_start = $i % ($small + 1) === 0;
+			}
+			$is_bombine_end = $i % ($small - 1) === 0;
+			
 			if($is_bombine_start){
 				?><div class="item"><?php
 			}else if($large){
 				?><div class="item <?= $large;?>"><?php
 			}
 			?><a 
-					href="<?= $box['link-url'];?>" 
-					<?= $rel_nofollow;?> 
-					<?= $target_blank;l?> 
-					title="<?= $title;?>" 
-				>
+				href="<?= $box['link-url'];?>" 
+				<?= $rel_nofollow;?> 
+				<?= $target_blank;l?> 
+				title="<?= $title;?>" 
+			>
 				<img src="<?= $img_url;?>" alt="<?= $title;?>">
 				<h2><?= $title;?></h2>
 			</a>
@@ -359,6 +381,7 @@ class theme_custom_slidebox{
 		?>
 	</div>
 </div>
+<div class="container <?= __CLASS__;?>-ad-below"><?= self::get_ad('below');?></div>
 		<?php
 		unset($boxes);
 	}
@@ -480,6 +503,7 @@ class theme_custom_slidebox{
 	</div>
 </div><!-- /#slidebox -->
 </div><!-- /.slidebox-container -->
+<div class="container <?= __CLASS__;?>-ad-below"><?= self::get_ad('below');?></div>
 		<?php
 	}
 	public static function backend_css(){
@@ -522,10 +546,8 @@ class theme_custom_slidebox{
 			m.config.lang.E00001 = '<?= ___('Server error or network is disconnected.');?>';
 			m.init();
 		});
-
 		<?php
 	}
-
 }
 
 ?>

@@ -9,9 +9,11 @@ define(function(require,exports,module){
 	};
 	var cache = {},
 		config = exports.config;
+		
 	exports.bind = function(){
 		cache.$slide = document.getElementById('theme_custom_slidebox');
-		if(!cache.$slide)
+		cache.$container = document.querySelector('.theme_custom_slidebox-container');
+		if(!cache.$slide || !cache.$container)
 			return;
 		eval(config.type + '();');
 	}
@@ -19,7 +21,7 @@ define(function(require,exports,module){
 		var moving = false,
 			last_x;
 
-
+		
 		function mousemove(e){
 			if(!moving)
 				moving = true;
@@ -42,8 +44,43 @@ define(function(require,exports,module){
 				
 		}
 
+		setInterval(function(){
+			if(!moving){
+				cache.$slide.scrollLeft += 1;
+			}
+		},100);
+		
 		cache.$slide.addEventListener('mouseout', mouseout);
 		cache.$slide.addEventListener('mousemove', mousemove);
+		
+		/**
+		 * blur
+		 */
+		blur();
+		function blur(){
+			cache.$blurs = cache.$container.querySelectorAll('.area-blur .item');
+			cache.$as = cache.$slide.querySelectorAll('#theme_custom_slidebox a');
+			cache.current_i = 0;
+			cache.len = cache.$as.length;
+			function event_hover(e){
+				var current_i = this.getAttribute('data-i');
+				if(cache.current_i == current_i)
+					return false;
+				cache.current_i = current_i;
+				for(var i = 0; i < cache.len; i++){
+					//console.log(i);
+					cache.$blurs[i].classList.contains('active') && cache.$blurs[i].classList.remove('active');
+					
+					cache.$as[i].classList.contains('active') && cache.$as[i].classList.remove('active');
+				}
+				this.classList.add('active');
+				cache.$blurs[current_i].classList.add('active');
+			}
+			for(var i = 0; i < cache.len; i++){
+				cache.$as[i].setAttribute('data-i',i);
+				cache.$as[i].addEventListener('mouseover', event_hover);
+			}
+		}
 	}
 	function candy(){
 		cache.$blurs = cache.$slide.querySelectorAll('.area-blur .item');
