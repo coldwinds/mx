@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-22 10:48+0800\n"
-"PO-Revision-Date: 2015-09-22 10:49+0800\n"
+"POT-Creation-Date: 2015-09-22 13:20+0800\n"
+"PO-Revision-Date: 2015-09-22 13:29+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -49,7 +49,7 @@ msgstr "添加评论"
 #: includes/custom-post-point/custom-post-point.php:855
 #: includes/custom-post-point/custom-post-point.php:877
 #: includes/custom-sign/custom-sign.php:599
-#: includes/custom-slidebox/custom-slidebox.php:566
+#: includes/custom-slidebox/custom-slidebox.php:565
 #: includes/custom-user-settings/custom-user-settings.php:468
 #: includes/custom-user-settings/custom-user-settings.php:479
 #: includes/mailer/mailer.php:216
@@ -457,8 +457,8 @@ msgstr "此类别暂无资料"
 
 #: functions.php:1802
 #, php-format
-msgid "Look more about %s"
-msgstr "查看更多%s"
+msgid "More about %s"
+msgstr "更多%s"
 
 #: functions.php:1834
 msgid "Leave a comment"
@@ -645,15 +645,15 @@ msgstr "文章标题之下（文章页面）"
 msgid "Below the adjacent post (singular post page)"
 msgstr "相邻文章之下（文章页面）"
 
-#: includes/adbox/adbox.php:70 includes/custom-slidebox/custom-slidebox.php:298
+#: includes/adbox/adbox.php:70 includes/custom-slidebox/custom-slidebox.php:297
 msgid "Desktop codes"
 msgstr "桌面版代码"
 
-#: includes/adbox/adbox.php:71 includes/custom-slidebox/custom-slidebox.php:299
+#: includes/adbox/adbox.php:71 includes/custom-slidebox/custom-slidebox.php:298
 msgid "Mobile codes"
 msgstr "手机版代码"
 
-#: includes/adbox/adbox.php:79 includes/custom-slidebox/custom-slidebox.php:307
+#: includes/adbox/adbox.php:79 includes/custom-slidebox/custom-slidebox.php:306
 msgid "You can write AD HTML codes here."
 msgstr "您可以在此处填写广告 HTML 代码"
 
@@ -744,7 +744,7 @@ msgstr "点击之前保存设置。"
 #: includes/custom-pm/custom-pm.php:160
 #: includes/custom-point-lottery/custom-point-lottery.php:234
 #: includes/custom-point/custom-point.php:142
-#: includes/custom-slidebox/custom-slidebox.php:283
+#: includes/custom-slidebox/custom-slidebox.php:282
 #: includes/file-timestamp/file-timestamp.php:58
 #: includes/min-rebuild/min-rebuild.php:37
 msgid "Control"
@@ -858,7 +858,7 @@ msgstr "数据库已在 %s 秒内更新。"
 
 #: includes/clean-up/clean-up.php:228
 #: includes/custom-point/custom-point.php:1049
-#: includes/custom-slidebox/custom-slidebox.php:567
+#: includes/custom-slidebox/custom-slidebox.php:566
 #: includes/mailer/mailer.php:217
 msgid "Server error or network is disconnected."
 msgstr "服务器错误或网络未连接。"
@@ -1087,7 +1087,7 @@ msgid "Post preview"
 msgstr "文章预览图"
 
 #: includes/custom-collection/custom-collection.php:158
-#: includes/custom-homebox/custom-homebox.php:188
+#: includes/custom-homebox/custom-homebox.php:190
 #: includes/custom-point-lottery/custom-point-lottery.php:170
 #: includes/custom-slidebox/custom-slidebox.php:205
 msgid "Delete this item"
@@ -1466,64 +1466,64 @@ msgstr "位置参数。"
 msgid "Theme home box settings"
 msgstr "首页盒子设置"
 
-#: includes/custom-homebox/custom-homebox.php:99
+#: includes/custom-homebox/custom-homebox.php:101
 msgid "Home box control"
 msgstr "盒子操作"
 
-#: includes/custom-homebox/custom-homebox.php:101
+#: includes/custom-homebox/custom-homebox.php:103
 msgid "Add a new home box"
 msgstr "添加一个新的盒子"
 
-#: includes/custom-homebox/custom-homebox.php:136
-#: includes/custom-homebox/custom-homebox.php:144
+#: includes/custom-homebox/custom-homebox.php:138
+#: includes/custom-homebox/custom-homebox.php:146
 msgid "Box title"
 msgstr "盒子标题"
 
-#: includes/custom-homebox/custom-homebox.php:149
+#: includes/custom-homebox/custom-homebox.php:151
 msgid "Box link"
 msgstr "盒子链接"
 
-#: includes/custom-homebox/custom-homebox.php:157
+#: includes/custom-homebox/custom-homebox.php:159
 msgid "Box link (include http://)"
 msgstr "盒子地址（包括 http://）"
 
-#: includes/custom-homebox/custom-homebox.php:162
+#: includes/custom-homebox/custom-homebox.php:164
 msgid "Show posts"
 msgstr "显示文章数量"
 
-#: includes/custom-homebox/custom-homebox.php:170
+#: includes/custom-homebox/custom-homebox.php:172
 msgid "Posts number."
 msgstr "文章数量"
 
-#: includes/custom-homebox/custom-homebox.php:178 tpl/page-account-edit.php:13
+#: includes/custom-homebox/custom-homebox.php:180 tpl/page-account-edit.php:13
 msgid "Categories"
 msgstr "分类"
 
-#: includes/custom-homebox/custom-homebox.php:184
+#: includes/custom-homebox/custom-homebox.php:186
 msgid "Keywords and links"
 msgstr "关键词与链接"
 
-#: includes/custom-homebox/custom-homebox.php:186
+#: includes/custom-homebox/custom-homebox.php:188
 msgid "Eg. Tag1 = http://inn-studio.com"
 msgstr "例如 标签1 = http://inn-studio.com"
 
-#: includes/custom-homebox/custom-homebox.php:187
+#: includes/custom-homebox/custom-homebox.php:189
 msgid "Per keyword/line"
 msgstr "一行一个关键词"
 
-#: includes/custom-homebox/custom-homebox.php:193
+#: includes/custom-homebox/custom-homebox.php:195
 msgid "AD code"
 msgstr "广告代码"
 
-#: includes/custom-homebox/custom-homebox.php:195
+#: includes/custom-homebox/custom-homebox.php:197
 msgid "HTML code will display below this box."
 msgstr "HTML 代码将显示此盒子下面。"
 
-#: includes/custom-navwalker/custom-navwalker.php:383
+#: includes/custom-navwalker/custom-navwalker.php:385
 msgid "Awesome icon"
 msgstr "Awesome 图标"
 
-#: includes/custom-navwalker/custom-navwalker.php:397
+#: includes/custom-navwalker/custom-navwalker.php:399
 msgid "Hide navigation label"
 msgstr "隐藏导航标签"
 
@@ -2001,7 +2001,7 @@ msgid "Max times daily"
 msgstr "每日最大抽奖次数"
 
 #: includes/custom-point-lottery/custom-point-lottery.php:236
-#: includes/custom-slidebox/custom-slidebox.php:285
+#: includes/custom-slidebox/custom-slidebox.php:284
 msgid "Add a new item"
 msgstr "添加新条目"
 
@@ -2831,19 +2831,19 @@ msgstr "附加选项"
 msgid "Nofollow link"
 msgstr "Nofollow 链接"
 
-#: includes/custom-slidebox/custom-slidebox.php:218
+#: includes/custom-slidebox/custom-slidebox.php:217
 msgid "Candy"
 msgstr "糖果"
 
-#: includes/custom-slidebox/custom-slidebox.php:219
+#: includes/custom-slidebox/custom-slidebox.php:218
 msgid "Scroller"
 msgstr "滑轮"
 
-#: includes/custom-slidebox/custom-slidebox.php:246
+#: includes/custom-slidebox/custom-slidebox.php:245
 msgid "Slide-box settings"
 msgstr "幻灯片设置"
 
-#: includes/custom-slidebox/custom-slidebox.php:248
+#: includes/custom-slidebox/custom-slidebox.php:247
 #, php-format
 msgid ""
 "Slide-box will display on homepage. You can select style type and set images "
@@ -2853,19 +2853,19 @@ msgstr ""
 "您可以设置图片和链接在首页的幻灯片中。图像尺寸为 %s&times;%s px。记得完成设置"
 "后保存哦。"
 
-#: includes/custom-slidebox/custom-slidebox.php:248
+#: includes/custom-slidebox/custom-slidebox.php:247
 msgid "unlimited"
 msgstr "不限制"
 
-#: includes/custom-slidebox/custom-slidebox.php:254
+#: includes/custom-slidebox/custom-slidebox.php:253
 msgid "Style type"
 msgstr "风格类型"
 
-#: includes/custom-slidebox/custom-slidebox.php:295
+#: includes/custom-slidebox/custom-slidebox.php:294
 msgid "AD HTML codes (below the slide-box)"
 msgstr "广告 HTML 代码（幻灯片之下）"
 
-#: includes/custom-slidebox/custom-slidebox.php:498
+#: includes/custom-slidebox/custom-slidebox.php:497
 msgid "Detail &raquo;"
 msgstr "详细 &raquo;"
 
@@ -4717,6 +4717,9 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:117
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#~ msgid "Look more about %s"
+#~ msgstr "查看更多%s"
 
 #~ msgid "AD HTML codes - below"
 #~ msgstr "广告代码 - 下方"

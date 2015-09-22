@@ -44,11 +44,11 @@ define(function(require,exports,module){
 				
 		}
 
-		setInterval(function(){
-			if(!moving){
-				cache.$slide.scrollLeft += 1;
-			}
-		},100);
+		//setInterval(function(){
+		//	if(!moving){
+		//		cache.$slide.scrollLeft += 1;
+		//	}
+		//},100);
 		
 		cache.$slide.addEventListener('mouseout', mouseout);
 		cache.$slide.addEventListener('mousemove', mousemove);

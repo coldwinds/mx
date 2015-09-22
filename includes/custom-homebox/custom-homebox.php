@@ -84,15 +84,17 @@ class theme_custom_homebox{
 		?>
 		<fieldset>
 			<legend><?= ___('Theme home box settings');?></legend>
-			<?php
-			if(is_null_array($opt)){
-				echo self::get_home_box_tpl('1');
-			}else{
-				foreach($opt as $k => $v){
-					echo self::get_home_box_tpl($k);
+			<div id="<?= __CLASS__;?>-container">
+				<?php
+				if(is_null_array($opt)){
+					echo self::get_home_box_tpl('1');
+				}else{
+					foreach($opt as $k => $v){
+						echo self::get_home_box_tpl($k);
+					}
 				}
-			}
-			?>
+				?>
+			</div>
 			<table class="form-table" id="<?= __CLASS__;?>-control">
 				<tbody>
 					<tr>
@@ -195,6 +197,8 @@ class theme_custom_homebox{
 				<textarea name="<?= __CLASS__;?>[<?= $placeholder;?>][ad]" id="<?= __CLASS__;?>-<?= $placeholder;?>-ad" cols="30" rows="5" class="widefat" placeholder="<?= ___('HTML code will display below this box.');?>"><?= $ad;?></textarea>
 			</td>
 		</tr>
+		</tbody>
+		</table>
 		<?php
 		$content = ob_get_contents();
 		ob_end_clean();

@@ -164,7 +164,7 @@ class theme_custom_slidebox{
 			<td>
 				<?php
 				$selected_cat_ids = isset($boxes[$placeholder]['catids']) ? (array)$boxes[$placeholder]['catids'] : [];
-				echo self::get_cat_checkbox_list(__CLASS__ . "[$placeholder][catids]",__CLASS__ . "-catids-$placeholder",$selected_cat_ids);
+				echo self::get_cat_checkbox_list(__CLASS__ . "[boxes][$placeholder][catids]",__CLASS__ . "-catids-$placeholder",$selected_cat_ids);
 				?>
 			</td>
 		</tr>
@@ -205,7 +205,6 @@ class theme_custom_slidebox{
 				<a href="javascript:;" class="<?= __CLASS__;?>-del delete" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-id="<?= $placeholder;?>" data-target="#<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= ___('Delete this item');?></a>
 			</td>
 		</tr>
-		
 		</tbody>
 		</table>
 		<?php
@@ -408,9 +407,9 @@ class theme_custom_slidebox{
 		unset($boxes);
 	}
 	private static function get_boxes(){
-		$boxes = self::get_options('boxes');
+		$boxes = array_filter((array)self::get_options('boxes'));
 
-		if(!is_array($boxes) || count($boxes) < 1)
+		if(!$boxes)
 			return false;
 
 		$new_boxes = [];
@@ -431,7 +430,7 @@ class theme_custom_slidebox{
 	 */
 	public static function display_frontend_candy(){
 		$boxes = self::get_boxes();
-		if(!$boxes)
+		if(!$boxes || count($boxes) < 2)
 			return false;
 
 		krsort($boxes);

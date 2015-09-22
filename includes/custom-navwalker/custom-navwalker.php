@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class Name: custom_navwalker
  * GitHub URI: https://github.com/twittem/wp-bootstrap-navwalker
@@ -10,7 +9,10 @@
  * @twittem License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
-custom_navwalker::custom_nav_menu_hook();
+add_filter('theme_includes',function($fns){
+	$fns[] = 'custom_navwalker::custom_nav_menu_hook';
+	return $fns;
+});
 class custom_navwalker extends Walker_Nav_Menu{
 	/**
 	 * Starts the list before the elements are added.

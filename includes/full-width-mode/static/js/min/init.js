@@ -2,7 +2,8 @@
 define(function(require,exports,module){'use strict';var tools=require('modules/tools');exports.config={key:'full-width-mode',lang:{M01:'Full width mode'}};exports.init=function(){tools.ready(exports.bind);}
 var cache={},config=exports.config;exports.bind=function(){if(!create_btn())
 return false;cache.$main=I('main');cache.$side=I('sidebar-container');cache.$btn.addEventListener('click',event_click);if(localStorage.getItem(config.key)==1){expand();}}
-function reset_media(){if(window.jQuery){jQuery(window).resize();}else{try{require.async(['theme_page_nagination_ajax'],function(m){m.page_nagi.reset_nagi_style();});}catch(e){}}}
+function reset_media(){if(window.jQuery){jQuery(window).resize();}
+try{require.async(['theme_page_nagination_ajax'],function(m){m.page_nagi.reset_nagi_style();});}catch(e){}}
 function expand(set){cache.$btn.classList.remove('fa-angle-right');cache.$btn.classList.add('fa-angle-left');cache.$main.classList.add('expand');cache.$side.classList.add('expand');reset_media();if(set)
 localStorage.setItem(config.key,1);}
 function reset(){cache.$btn.classList.remove('fa-angle-left');cache.$btn.classList.add('fa-angle-right');cache.$main.classList.remove('expand');cache.$side.classList.remove('expand');reset_media();localStorage.removeItem(config.key);}

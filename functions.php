@@ -534,7 +534,7 @@ class theme_functions{
 							?>
 							<a href="#comments" class="post-meta quick-comment comment-count" data-post-id="<?= $post->ID;?>">
 								<i class="fa fa-comment"></i>
-								<span class="comment-count-number"><?= $comment_count;?></span></span>
+								<span class="comment-count-number"><?= $comment_count;?></span>
 							</a>
 						</header>
 					</div><!-- /.media-body -->
@@ -1799,7 +1799,7 @@ class theme_functions{
 		unset($query);
 		?>
 	</ul>
-	<a href="<?= $link;?>" class="below-more"><?= sprintf(___('Look more about %s'),trim(strip_tags($v['title'])));?>... <i class="fa fa-caret-right"></i></a>
+	<a href="<?= $link;?>" class="below-more"><?= sprintf(___('More about %s'),trim(strip_tags($v['title'])));?> <i class="fa fa-caret-right"></i></a>
 	<?php
 	/**
 	 * ad

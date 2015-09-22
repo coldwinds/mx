@@ -43,8 +43,10 @@
 		position: relative;
 		display: inline-block;
 		width: 640px;
-		height: 400px;
+		height: 402px;
 		overflow: hidden;
+		border-top: 1px solid rgba(0,0,0,.8);
+		border-bottom: 1px solid rgba(0,0,0,.8);
 	}
 		#theme_custom_slidebox .item a{
 			float: left;
@@ -80,7 +82,7 @@
 			width: 320px;
 			height: 200px;
 			border-radius: 0;
-			border: 1px solid rgba(0,0,0,.9);
+			border: 1px solid rgba(0,0,0,.8);
 		}
 		#theme_custom_slidebox .item img:hover{
 			/*border-color: #FF4081;*/
