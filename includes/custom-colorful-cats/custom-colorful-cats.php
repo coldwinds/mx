@@ -2,15 +2,18 @@
 /*
 Feature Name:	theme_colorful_cats
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.0
+Version:		2.0.1
 Description:	theme_colorful_cats
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-theme_colorful_cats::init();
+add_filter('theme_includes',function($fns){
+	$fns[] = 'theme_colorful_cats::init';
+	return $fns;
+});
 class theme_colorful_cats{
 	public static $colors = array(
-		'61b4ca',	'e1b32a',	'ee916f',	'a89d84',
+		'61b4ca',	'1eb32a',	'ee916f',	'a89d84',
 		'86b767',	'6170ca',	'c461ca',	'ca6161',
 		'ca8661',	'333333',	'84a89e',	'a584a8'
 	);

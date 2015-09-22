@@ -530,9 +530,6 @@ img{
 		position: relative;
 		overflow: hidden;
 	}
-		.post-img-list:hover .thumbnail-container{
-			overflow: unset;
-		}
 	.post-img-list .post-list-img{
 		position: absolute;
 		left: 0;

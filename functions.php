@@ -681,6 +681,10 @@ class theme_functions{
 			$src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id),$size)[0];
 		}
 
+		/** get img src from post content */
+		if(!$src)
+			$src = get_img_source($post->post_content);
+
 		if(!$src)
 			$src = $placeholder;
 		
