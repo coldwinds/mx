@@ -146,7 +146,7 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
  */
 if(!theme_cache::is_home() && class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('below-header-menu'))){
 	?>
-	<div class="container ad-container ad-below-header-menu"><?= theme_adbox::display_frontend('below-header-menu');?></div>
+	<div class="container"><div class="ad-container ad-below-header-menu"><?= theme_adbox::display_frontend('below-header-menu');?></div></div>
 	<?php
 }
 ?>

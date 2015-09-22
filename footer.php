@@ -4,7 +4,7 @@
  */
 if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('above-footer'))){
 	?>
-	<div class="container ad-container ad-above-footer"><?= theme_adbox::display_frontend('above-footer');?></div>
+	<div class="container"><div class="ad-container ad-above-footer"><?= theme_adbox::display_frontend('above-footer');?></div></div>
 	<?php
 }
 ?>

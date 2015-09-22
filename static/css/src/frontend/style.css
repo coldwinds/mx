@@ -489,8 +489,12 @@ img{
 		margin: 0 0 20px;
 	}
 		.mod .below-more:hover{
+			background: #f8f8f8;
 			color: #666;
 			border-bottom-color: #FF4081;
+		}
+		.mod .below-more:active{
+			background: #eee;
 		}
 /**
  * .post-img-list
@@ -2390,7 +2394,7 @@ body.menu-on #mobile-on-layer{
 .widget_comments a:hover:before{
 	position: absolute;
 	content: '';
-	top: 4px;
+	top: 0;
 	left: 35px;
 	width: 0;
 	height: 0;
@@ -2400,14 +2404,15 @@ body.menu-on #mobile-on-layer{
 }
 .widget_comments a:hover:after{
 	position: absolute;
-	background: rgba(0,0,0,.5);
+	background: rgba(0,0,0,.7);
 	color: #fff;
-	top: -20px;
+	bottom: 100%;
 	left: 10px;
 	content: attr(title);
 	padding: 1px 5px;
 	font-size: 12px;
 	border-radius: 2px;
+	z-index: 1;
 }
 	.widget_comments p{
 		margin-bottom: 0;

@@ -101,26 +101,14 @@ class theme_features{
 		 */
 		}else{
 			$file = $file_or_dir;
-			$pi = pathinfo($file);
-			$ext = strtolower($pi['extension']);
+			$ext = new SplFileInfo($file);
+			$ext = strtolower($ext->getExtension());
 			/** 
 			 * not js or css ,return
 			 */
-			if($ext !== 'js' && $ext !== 'css') return;
-			/** 
-			 * replace // to /,\ to /,\\ to /
-			 */
-			$file = str_replace(
-				[
-					'//',
-					'\\',
-					'\\\\',
-					'/\\',
-					'\\/'
-				],
-				'/',
-				$file
-			);
+			if($ext !== 'js' && $ext !== 'css') 
+				return;
+		
 			/** 
 			 * check has /src/ keyword and minify
 			 */
@@ -233,17 +221,17 @@ class theme_features{
 	 * @param string 
 	 * @param string 
 	 * @return n/a
-	 * @version 1.0.1
+	 * @version 1.0.2
 	 */
-	public static function minify($file_path = null,$file_path_min){
+	public static function minify($file_path,$file_path_min){
 		if(!is_file($file_path)) 
 			return false;
 			
-		$file_path_info = pathinfo($file_path);
 		/**
 		 * minify
 		 */
-		switch(strtolower($file_path_info['extension'])){
+		$ext = new SplFileInfo($file_path);
+		switch(strtolower($ext->getExtension())){
 			/**
 			 * JS file
 			 */
@@ -1656,7 +1644,7 @@ class theme_features{
 	 * auto_minify
 	 *
 	 * @return 
-	 * @version 1.0.3
+	 * @version 1.0.4
 	 */
 	public static function auto_minify(){
 		/** 

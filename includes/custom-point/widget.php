@@ -35,27 +35,30 @@ class widget_point_rank extends WP_Widget{
 		<?php 
 		echo $args['after_title'];
 
-		$users = wp_cache_get('widget',__CLASS__);
+		$users = theme_cache::get('widget',__CLASS__);
 		if(!$users){
 			$user_query = new WP_User_Query([
 				'meta_key' => theme_custom_point::$user_meta_key['point'],
 				'orderby' => 'meta_value_num',
 				'order' => 'desc',
-				'number' => $instance['total_number'],
+				'number' => (int)$instance['total_number'],
 			]);
 			$users = $user_query->results;
 		}
-		if(!$users){
+		if(!isset($user_query->total_users) || $user_query->total_users < 2){
 			?>
 			<div class="panel-body">
 				<div class="page-tip"><?= status_tip('info',___('No matched user yet.'));?></div>
 			</div>
 			<?php
 		}else{
-			wp_cache_set('widget',$users,__CLASS__,3600);
+			theme_cache::set('widget',$users,__CLASS__,3600);
 			/**
 			 * rand
 			 */
+			if($instance['rand_number'] > $user_query->total_users){
+				$instance['rand_number'] = $user_query->total_users;
+			}
 			$rand_users = array_rand($users,$instance['rand_number']);
 			
 			?>
@@ -79,9 +82,7 @@ class widget_point_rank extends WP_Widget{
 			</div>
 			<?php
 		}
-		?>
-
-		<?php
+		unset($users,$rand_users);
 		echo $args['after_widget'];
 	}
 	function form($instance = []){
