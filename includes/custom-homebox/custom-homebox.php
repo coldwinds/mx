@@ -59,8 +59,7 @@ class theme_custom_homebox{
 	private static function cat_checkbox_tpl($placeholder){
 		$opt = self::get_options();
 		$exists_cats = isset($opt[$placeholder]['cats']) ? (array)$opt[$placeholder]['cats'] : [];
-		$cats = get_categories(array(
-			'orderby' => 'id',
+		$cats = theme_cache::get_categories(array(
 			'hide_empty' => false,
 		));
 		foreach($cats as $cat){
@@ -78,15 +77,16 @@ class theme_custom_homebox{
 			</label>
 			<?php
 		}
+		unset($cats);
 	}
 	public static function display_backend(){
-		$opt = self::get_options();
+		$opt = array_filter((array)self::get_options());
 		?>
 		<fieldset>
 			<legend><?= ___('Theme home box settings');?></legend>
 			<div id="<?= __CLASS__;?>-container">
 				<?php
-				if(is_null_array($opt)){
+				if(!$opt){
 					echo self::get_home_box_tpl('1');
 				}else{
 					foreach($opt as $k => $v){

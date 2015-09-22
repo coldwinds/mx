@@ -78,7 +78,7 @@ class theme_colorful_cats{
 		/** 
 		 * get all categories
 		 */
-		$cats = get_categories(array(
+		$cats = theme_cache::get_categories(array(
 			'orderby' => 'id',
 			'hide_empty' => false,
 		));

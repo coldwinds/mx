@@ -468,7 +468,7 @@ class theme_custom_contribution{
 	public static function get_cats($array = false){
 		static $cache = null;
 		if($cache === null)
-			$cache = get_categories([
+			$cache = theme_cache::get_categories([
 				'include' => self::get_cat_ids(),
 				'hide_empty' => false,
 			]);

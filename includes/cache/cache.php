@@ -209,7 +209,14 @@ class theme_cache{
 		if(wp_using_ext_object_cache())
 			return wp_cache_flush();
 	}
-	
+	public static function get_categories($args = ''){
+		static $caches = [];
+		$cache_id = md5(json_encode($args));
+		if(isset($caches[$cache_id]))
+			return $caches[$cache_id];
+		$caches[$cache_id] = get_categories($args);
+		return $caches[$cache_id];
+	}
 	public static function get_category($category, $output = OBJECT, $filter = 'raw'){
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));

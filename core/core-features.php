@@ -1723,7 +1723,6 @@ class theme_features{
 		$opt = (array)theme_options::get_options($group_id);
 		$cats = get_categories(array(
 			'hide_empty' => false,
-			'exclude' => 1
 		));
 		$cat_ids = isset($opt[$ids_name]) ? (array)$opt[$ids_name] : [];
 

@@ -216,13 +216,11 @@ class widget_rank extends WP_Widget{
 	 *
 	 * @param 
 	 * @return 
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	private static function get_cat_checkbox_list($name,$id,$selected_cat_ids = []){
-		$cats = get_categories(array(
+		$cats = theme_cache::get_categories(array(
 			'hide_empty' => false,
-			'orderby' => 'term_group',
-			'exclude' => '1',
 		));
 		
 		ob_start();
@@ -248,6 +246,7 @@ class widget_rank extends WP_Widget{
 			</label>
 			<?php 
 			}
+			unset($cats);
 		}else{ ?>
 			<p><?= ___('No category, pleass go to add some categories.');?></p>
 		<?php }
