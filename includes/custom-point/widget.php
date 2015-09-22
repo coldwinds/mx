@@ -35,7 +35,7 @@ class widget_point_rank extends WP_Widget{
 		<?php 
 		echo $args['after_title'];
 
-		$users = wp_cache_get('widget',__CLASS__);
+		$users = theme_cache::get('widget',__CLASS__);
 		if(!$users){
 			$user_query = new WP_User_Query([
 				'meta_key' => theme_custom_point::$user_meta_key['point'],
@@ -52,10 +52,13 @@ class widget_point_rank extends WP_Widget{
 			</div>
 			<?php
 		}else{
-			wp_cache_set('widget',$users,__CLASS__,3600);
+			theme_cache::set('widget',$users,__CLASS__,3600);
 			/**
 			 * rand
 			 */
+			if($instance['rand_number'] > $user_query->total_users){
+				$instance['rand_number'] = $user_query->total_users;
+			}
 			$rand_users = array_rand($users,$instance['rand_number']);
 			
 			?>
@@ -79,9 +82,7 @@ class widget_point_rank extends WP_Widget{
 			</div>
 			<?php
 		}
-		?>
-
-		<?php
+		unset($users,$rand_users);
 		echo $args['after_widget'];
 	}
 	function form($instance = []){
