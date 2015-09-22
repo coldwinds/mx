@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-22 10:05+0800\n"
-"PO-Revision-Date: 2015-09-22 10:05+0800\n"
+"POT-Creation-Date: 2015-09-22 10:48+0800\n"
+"PO-Revision-Date: 2015-09-22 10:49+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -36,7 +36,7 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:26 core/core-options.php:170 functions.php:1840
+#: comments.php:26 core/core-options.php:170 functions.php:1841
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:472
 #: includes/custom-collection/custom-collection.php:571
@@ -455,50 +455,55 @@ msgstr "更多 &raquo;"
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
-#: functions.php:1833
+#: functions.php:1802
+#, php-format
+msgid "Look more about %s"
+msgstr "查看更多%s"
+
+#: functions.php:1834
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1836
+#: functions.php:1837
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1846
+#: functions.php:1847
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1847 includes/custom-point-bomb/custom-point-bomb.php:228
+#: functions.php:1848 includes/custom-point-bomb/custom-point-bomb.php:228
 #: includes/custom-point-lottery/custom-point-lottery.php:370
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1879 tpl/author-profile.php:21
+#: functions.php:1880 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:84
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1881
+#: functions.php:1882
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1892
+#: functions.php:1893
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1894
+#: functions.php:1895
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1905
+#: functions.php:1906
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1906
+#: functions.php:1907
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1926 functions.php:1928
+#: functions.php:1927 functions.php:1929
 msgid "Post comment"
 msgstr "发表评论"
 

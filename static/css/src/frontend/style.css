@@ -477,7 +477,7 @@ img{
 	.mod-footer{
 		position: relative;
 	}
-	.mod-footer .more{
+	.mod .below-more{
 		position: relative;
 		display: block;
 		text-align: center;
@@ -485,11 +485,12 @@ img{
 		padding: 5px 0;
 		border: 1px solid rgba(0,0,0,.07);
 		border-bottom-width: 2px;
-		color: #666;
-		margin: -20px 0 20px;
+		color: #999;
+		margin: 0 0 20px;
 	}
-		.mod-footer.more:hover{
-			background: #eee;
+		.mod .below-more:hover{
+			color: #666;
+			border-bottom-color: #FF4081;
 		}
 /**
  * .post-img-list

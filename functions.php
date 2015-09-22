@@ -1799,6 +1799,7 @@ class theme_functions{
 		unset($query);
 		?>
 	</ul>
+	<a href="<?= $link;?>" class="below-more"><?= sprintf(___('Look more about %s'),trim(strip_tags($v['title'])));?>... <i class="fa fa-caret-right"></i></a>
 	<?php
 	/**
 	 * ad
