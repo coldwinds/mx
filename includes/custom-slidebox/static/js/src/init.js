@@ -83,9 +83,9 @@ define(function(require,exports,module){
 		}
 	}
 	function candy(){
-		cache.$blurs = cache.$slide.querySelectorAll('.area-blur .item');
-		cache.$mains = cache.$slide.querySelectorAll('.area-main .item');
-		cache.$thumbnails = cache.$slide.querySelectorAll('.area-thumbnail .item');
+		cache.$blurs = cache.$container.querySelectorAll('.area-blur .item');
+		cache.$mains = cache.$container.querySelectorAll('.area-main .item');
+		cache.$thumbnails = cache.$container.querySelectorAll('.area-thumbnail .item');
 		
 		cache.len = cache.$thumbnails.length;
 		cache.current_i = 0;
