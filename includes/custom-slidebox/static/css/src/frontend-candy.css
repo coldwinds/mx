@@ -167,6 +167,12 @@
 			height: 2px;
 			background: #00FFFF;
 		}
+/**
+ * ad
+ */
+.theme_custom_slidebox-ad-below{
+	margin-bottom: 20px;
+}
 @media(min-width: 768px){
 	#theme_custom_slidebox .area-main{
 	}

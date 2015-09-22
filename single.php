@@ -11,6 +11,16 @@
 					<div class="np-posts">
 						<?php theme_functions::the_post_pagination();?>
 					</div>
+					<?php
+					/**
+					 * ad
+					 */
+					if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('below-adjacent-post'))){
+						?>
+						<div class="ad-container ad-below-adjacent-post"><?= theme_adbox::display_frontend('below-adjacent-post');?></div>
+						<?php
+					}
+					?>
 					<?php theme_functions::the_related_posts_plus();?>
 					<?php comments_template();?>
 				</div>

@@ -28,13 +28,13 @@ class theme_adbox{
 			return isset($caches[$key]) ? $caches[$key] : null;
 		return $caches;
 	}
-	public static function get_ad($key,$desktop_or_mobile){
+	public static function get_ad($key,$device){
 		$ads = self::get_options('ads');
-		return isset($ads[$desktop_or_mobile][$key]) ? stripslashes($ads[$desktop_or_mobile][$key]) : null;
+		return isset($ads[$device][$key]) ? stripslashes($ads[$device][$key]) : null;
 	}
 	public static function display_frontend($key){
-		$desktop_or_mobile = wp_is_mobile() ? 'mobile' : 'desktop';
-		return self::get_ad($key,$desktop_or_mobile);
+		$device = wp_is_mobile() ? 'mobile' : 'desktop';
+		return self::get_ad($key,$device);
 	}
 	private static function loop_options(){
 		$types = [
@@ -67,8 +67,8 @@ class theme_adbox{
 			</th>
 			<td>
 				<?php foreach([
-					'desktop' => ___('Desktop'),
-					'mobile' => ___('Mobile'),
+					'desktop' => ___('Desktop codes'),
+					'mobile' => ___('Mobile codes'),
 				] as $device => $name){ ?>
 					<label for="<?= __CLASS__;?>-ads-<?= $device;?>-<?= $k;?>"><?= $name;?></label>
 					<textarea 

@@ -527,6 +527,10 @@ class theme_point_lottery{
 				if($box['type'] === 'redeem'){
 					$output['redeem'] = $redeem;
 				}
+				
+				/** set max times */
+				self::set_times(self::get_times() + 1);
+				
 				die(theme_features::json_format($output));
 
 			/**
@@ -582,6 +586,7 @@ class theme_point_lottery{
 					'status' => 'success',
 					'msg' => sprintf(___('[%s] Redeem code status has been updated to redeemed.'),$redeems[$redeem_id]['name']),
 				]));
+				
 			default:
 				die(theme_features::json_format([
 					'status' => 'error',

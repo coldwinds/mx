@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-21 23:31+0800\n"
-"PO-Revision-Date: 2015-09-21 23:31+0800\n"
+"POT-Creation-Date: 2015-09-22 10:05+0800\n"
+"PO-Revision-Date: 2015-09-22 10:05+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -26,7 +26,7 @@ msgstr "《%s》的附件"
 msgid "No content yet."
 msgstr "暂无资料"
 
-#: comments.php:14 functions.php:1641
+#: comments.php:14 functions.php:1650
 #: includes/custom-author-profile/custom-author-profile.php:123
 #: tpl/author-profile.php:75
 msgid "Comments"
@@ -36,7 +36,7 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:26 core/core-options.php:170 functions.php:1831
+#: comments.php:26 core/core-options.php:170 functions.php:1840
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:472
 #: includes/custom-collection/custom-collection.php:571
@@ -49,7 +49,7 @@ msgstr "添加评论"
 #: includes/custom-post-point/custom-post-point.php:855
 #: includes/custom-post-point/custom-post-point.php:877
 #: includes/custom-sign/custom-sign.php:599
-#: includes/custom-slidebox/custom-slidebox.php:545
+#: includes/custom-slidebox/custom-slidebox.php:566
 #: includes/custom-user-settings/custom-user-settings.php:468
 #: includes/custom-user-settings/custom-user-settings.php:479
 #: includes/mailer/mailer.php:216
@@ -122,7 +122,7 @@ msgstr "%d天前"
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:662 functions.php:512 functions.php:1697
+#: core/core-functions.php:662 functions.php:512 functions.php:1706
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
@@ -185,11 +185,11 @@ msgstr "还原主题选项"
 msgid "Theme settings"
 msgstr "主题设置"
 
-#: footer.php:10
+#: footer.php:20
 msgid "Please set some widgets in footer."
 msgstr "请放一些小工具到底部栏目"
 
-#: footer.php:23
+#: footer.php:33
 msgid "Back to top"
 msgstr "返回顶部"
 
@@ -286,7 +286,7 @@ msgstr "顶/赞"
 msgid "Comment count"
 msgstr "评论统计"
 
-#: functions.php:305 functions.php:524 functions.php:1637
+#: functions.php:305 functions.php:524 functions.php:1646
 #: includes/post-views/post-views.php:190 tpl/page-account-edit.php:18
 msgid "Views"
 msgstr "查看数"
@@ -304,150 +304,150 @@ msgstr "作者头像"
 msgid "Category"
 msgstr "分类"
 
-#: functions.php:627
+#: functions.php:636
 msgid "comment"
 msgstr "评论"
 
-#: functions.php:627
+#: functions.php:636
 msgid "comments"
 msgstr "评论"
 
-#: functions.php:699 functions.php:701
+#: functions.php:708 functions.php:710
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:714
+#: functions.php:723
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:721
+#: functions.php:730
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:739
+#: functions.php:748
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:743
+#: functions.php:752
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:749 includes/widget-author-posts/widget-author-posts.php:23
+#: functions.php:758 includes/widget-author-posts/widget-author-posts.php:23
 #: includes/widget-author-posts/widget-author-posts.php:79
 msgid "Author posts"
 msgstr "作者文章"
 
-#: functions.php:753
+#: functions.php:762
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:772
+#: functions.php:781
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:779
+#: functions.php:788
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:807
+#: functions.php:816
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:808
+#: functions.php:817
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:823
+#: functions.php:832
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:853 functions.php:1103 functions.php:1105 functions.php:1112
-#: functions.php:1114 functions.php:1503
+#: functions.php:862 functions.php:1112 functions.php:1114 functions.php:1121
+#: functions.php:1123 functions.php:1512
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:872 functions.php:878 functions.php:886
+#: functions.php:881 functions.php:887 functions.php:895
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:1001
+#: functions.php:1010
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1122 functions.php:1123 functions.php:1130 functions.php:1131
-#: functions.php:1500
+#: functions.php:1131 functions.php:1132 functions.php:1139 functions.php:1140
+#: functions.php:1509
 #: includes/custom-attachment-page/custom-attachment-page.php:71
 msgid "Next page"
 msgstr "下一页"
 
-#: functions.php:1180 functions.php:1196
+#: functions.php:1189 functions.php:1205
 msgid "Placeholder"
 msgstr "占位符"
 
-#: functions.php:1183
+#: functions.php:1192
 #, php-format
 msgid "Previous post: %s"
 msgstr "上一篇：%s"
 
-#: functions.php:1199
+#: functions.php:1208
 #, php-format
 msgid "Next post: %s"
 msgstr "下一篇：%s"
 
-#: functions.php:1290
+#: functions.php:1299
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1316
+#: functions.php:1325
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1399 includes/related-post/related-post.php:54
+#: functions.php:1408 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1432
+#: functions.php:1441
 msgid "No data."
 msgstr "暂无资料"
 
-#: functions.php:1478
+#: functions.php:1487
 msgid "No data yet"
 msgstr "此类别暂无资料"
 
-#: functions.php:1520
+#: functions.php:1529
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1545 includes/custom-page-rank/custom-page-rank.php:86
+#: functions.php:1554 includes/custom-page-rank/custom-page-rank.php:86
 msgid "Recommend"
 msgstr "推荐"
 
-#: functions.php:1551
+#: functions.php:1560
 msgid "more &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1569
+#: functions.php:1578
 msgid "Readmore..."
 msgstr "查看更多……"
 
-#: functions.php:1728
+#: functions.php:1737
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1746
+#: functions.php:1755
 msgid "More"
 msgstr "更多"
 
-#: functions.php:1755 includes/widget-rank/widget-rank.php:36
+#: functions.php:1764 includes/widget-rank/widget-rank.php:36
 msgid "More &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1788 includes/custom-dashboard/dashboards.php:34
+#: functions.php:1797 includes/custom-dashboard/dashboards.php:34
 #: includes/widget-author-posts/widget-author-posts.php:65
 #: includes/widget-rank/widget-rank.php:72
 #: includes/widget-tags/widget-tags.php:88 tpl/page-account-edit.php:80
@@ -455,50 +455,50 @@ msgstr "更多 &raquo;"
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
-#: functions.php:1824
+#: functions.php:1833
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1827
+#: functions.php:1836
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1837
+#: functions.php:1846
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1838 includes/custom-point-bomb/custom-point-bomb.php:228
+#: functions.php:1847 includes/custom-point-bomb/custom-point-bomb.php:228
 #: includes/custom-point-lottery/custom-point-lottery.php:370
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1870 tpl/author-profile.php:21
+#: functions.php:1879 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:84
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1872
+#: functions.php:1881
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1883
+#: functions.php:1892
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1885
+#: functions.php:1894
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1896
+#: functions.php:1905
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1897
+#: functions.php:1906
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1917 functions.php:1919
+#: functions.php:1926 functions.php:1928
 msgid "Post comment"
 msgstr "发表评论"
 
@@ -511,7 +511,7 @@ msgstr "登出"
 msgid "Login"
 msgstr "登录"
 
-#: header.php:143
+#: header.php:137
 msgid "Please input search keyword"
 msgstr "请输入搜索关键词"
 
@@ -626,39 +626,39 @@ msgstr "%s 正在关注您。"
 
 #: includes/adbox/adbox.php:42
 msgid "Below the header menu (not in homepage)"
-msgstr ""
+msgstr "顶部菜单之下（不在首页）"
 
 #: includes/adbox/adbox.php:46
 msgid "Above the footer (all page)"
-msgstr ""
+msgstr "底部之上（所有页面）"
 
 #: includes/adbox/adbox.php:50
 msgid "Below the post title (singular post page)"
-msgstr ""
+msgstr "文章标题之下（文章页面）"
 
 #: includes/adbox/adbox.php:54
 msgid "Below the adjacent post (singular post page)"
-msgstr ""
+msgstr "相邻文章之下（文章页面）"
 
-#: includes/adbox/adbox.php:70 includes/adbox/widget.php:45
-msgid "Desktop"
-msgstr "桌面"
+#: includes/adbox/adbox.php:70 includes/custom-slidebox/custom-slidebox.php:298
+msgid "Desktop codes"
+msgstr "桌面版代码"
 
-#: includes/adbox/adbox.php:71 includes/adbox/widget.php:46
-msgid "Mobile"
-msgstr "手机"
+#: includes/adbox/adbox.php:71 includes/custom-slidebox/custom-slidebox.php:299
+msgid "Mobile codes"
+msgstr "手机版代码"
 
-#: includes/adbox/adbox.php:79
+#: includes/adbox/adbox.php:79 includes/custom-slidebox/custom-slidebox.php:307
 msgid "You can write AD HTML codes here."
-msgstr ""
+msgstr "您可以在此处填写广告 HTML 代码"
 
 #: includes/adbox/adbox.php:90
 msgid "ADs settings"
-msgstr ""
+msgstr "广告设置"
 
 #: includes/adbox/adbox.php:92
 msgid "You can put some ADs into your site. Here are some AD areas for using."
-msgstr ""
+msgstr "可以把一些广告放到您的网站，这里有一些广告区域供使用。"
 
 #: includes/adbox/widget.php:12
 msgid "Advertisement code <small>(Custom)</small>"
@@ -680,6 +680,14 @@ msgstr "类型"
 #: includes/adbox/widget.php:44 includes/widget-rank/widget-rank.php:205
 msgid "All"
 msgstr "全部"
+
+#: includes/adbox/widget.php:45
+msgid "Desktop"
+msgstr "桌面"
+
+#: includes/adbox/widget.php:46
+msgid "Mobile"
+msgstr "手机"
 
 #: includes/adbox/widget.php:50
 msgid "Code"
@@ -731,7 +739,7 @@ msgstr "点击之前保存设置。"
 #: includes/custom-pm/custom-pm.php:160
 #: includes/custom-point-lottery/custom-point-lottery.php:234
 #: includes/custom-point/custom-point.php:142
-#: includes/custom-slidebox/custom-slidebox.php:279
+#: includes/custom-slidebox/custom-slidebox.php:283
 #: includes/file-timestamp/file-timestamp.php:58
 #: includes/min-rebuild/min-rebuild.php:37
 msgid "Control"
@@ -845,7 +853,7 @@ msgstr "数据库已在 %s 秒内更新。"
 
 #: includes/clean-up/clean-up.php:228
 #: includes/custom-point/custom-point.php:1049
-#: includes/custom-slidebox/custom-slidebox.php:546
+#: includes/custom-slidebox/custom-slidebox.php:567
 #: includes/mailer/mailer.php:217
 msgid "Server error or network is disconnected."
 msgstr "服务器错误或网络未连接。"
@@ -937,8 +945,8 @@ msgstr "第 {n} 页"
 #: includes/custom-follow/custom-follow.php:141
 #: includes/custom-pm/custom-pm.php:842
 #: includes/custom-point-bomb/custom-point-bomb.php:758
-#: includes/custom-point-lottery/custom-point-lottery.php:745
-#: includes/custom-point-lottery/custom-point-lottery.php:767
+#: includes/custom-point-lottery/custom-point-lottery.php:750
+#: includes/custom-point-lottery/custom-point-lottery.php:772
 #: includes/custom-post-point/custom-post-point.php:856
 #: includes/custom-sign/custom-sign.php:600
 #: includes/custom-user-settings/custom-user-settings.php:469
@@ -1681,7 +1689,7 @@ msgstr "超时"
 
 #: includes/custom-pm/custom-pm.php:422
 #: includes/custom-point-bomb/custom-point-bomb.php:485
-#: includes/custom-point-lottery/custom-point-lottery.php:589
+#: includes/custom-point-lottery/custom-point-lottery.php:594
 #: includes/custom-post-point/custom-post-point.php:113
 msgid "Sorry, type param is invaild."
 msgstr "抱歉，缺少类型参数。"
@@ -1988,7 +1996,7 @@ msgid "Max times daily"
 msgstr "每日最大抽奖次数"
 
 #: includes/custom-point-lottery/custom-point-lottery.php:236
-#: includes/custom-slidebox/custom-slidebox.php:281
+#: includes/custom-slidebox/custom-slidebox.php:285
 msgid "Add a new item"
 msgstr "添加新条目"
 
@@ -2006,7 +2014,7 @@ msgid "Check and set redeem code"
 msgstr "检查并设置兑换码"
 
 #: includes/custom-point-lottery/custom-point-lottery.php:279
-#: includes/custom-point-lottery/custom-point-lottery.php:698
+#: includes/custom-point-lottery/custom-point-lottery.php:703
 msgid "Lottery game"
 msgstr "抽奖游戏"
 
@@ -2088,50 +2096,50 @@ msgstr "抱歉，抽奖条目库存为空。"
 msgid "Sorry, you reached max lottery times today, see you tomorrow."
 msgstr "抱歉，您今天已经达到最大抽奖次数，明天见。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:541
+#: includes/custom-point-lottery/custom-point-lottery.php:545
 #: includes/mailer/mailer.php:154
 msgid "Sorry, your permission is invaild."
 msgstr "抱歉，您的权限无效。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:551
+#: includes/custom-point-lottery/custom-point-lottery.php:555
 msgid "Sorry, the user is invaild."
 msgstr "抱歉，该用户无效。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:559
+#: includes/custom-point-lottery/custom-point-lottery.php:563
 msgid "Sorry, the redeem is invaild."
 msgstr "抱歉，兑换码无效。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:567
+#: includes/custom-point-lottery/custom-point-lottery.php:571
 msgid "Sorry, the redeem does not exist."
 msgstr "抱歉，兑换码不存在。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:575
+#: includes/custom-point-lottery/custom-point-lottery.php:579
 #, php-format
 msgid "[%s] Sorry, the redeem code has been redeemed."
 msgstr "[%s] 抱歉，该兑换码已经被兑换过了。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:583
+#: includes/custom-point-lottery/custom-point-lottery.php:587
 #, php-format
 msgid "[%s] Redeem code status has been updated to redeemed."
 msgstr "[%s] 兑换码状态已成功更新为已兑换。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:704
+#: includes/custom-point-lottery/custom-point-lottery.php:709
 #, php-format
 msgid "You won %1$s . Here is redeem code: %2$s."
 msgstr "您赢得了 %1$s。这个是兑换码：%2$s。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:713
+#: includes/custom-point-lottery/custom-point-lottery.php:718
 #, php-format
 msgid "You won %s."
 msgstr "您赢得了 %s。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:721
+#: includes/custom-point-lottery/custom-point-lottery.php:726
 #, php-format
 msgid "You lost the lottery game %s."
 msgstr "您在%s的抽奖游戏中输了。"
 
-#: includes/custom-point-lottery/custom-point-lottery.php:744
-#: includes/custom-point-lottery/custom-point-lottery.php:766
+#: includes/custom-point-lottery/custom-point-lottery.php:749
+#: includes/custom-point-lottery/custom-point-lottery.php:771
 msgid "Results coming soon..."
 msgstr "结果出炉中……"
 
@@ -2826,11 +2834,11 @@ msgstr "糖果"
 msgid "Scroller"
 msgstr "滑轮"
 
-#: includes/custom-slidebox/custom-slidebox.php:242
+#: includes/custom-slidebox/custom-slidebox.php:246
 msgid "Slide-box settings"
 msgstr "幻灯片设置"
 
-#: includes/custom-slidebox/custom-slidebox.php:244
+#: includes/custom-slidebox/custom-slidebox.php:248
 #, php-format
 msgid ""
 "Slide-box will display on homepage. You can select style type and set images "
@@ -2840,23 +2848,19 @@ msgstr ""
 "您可以设置图片和链接在首页的幻灯片中。图像尺寸为 %s&times;%s px。记得完成设置"
 "后保存哦。"
 
-#: includes/custom-slidebox/custom-slidebox.php:244
+#: includes/custom-slidebox/custom-slidebox.php:248
 msgid "unlimited"
 msgstr "不限制"
 
-#: includes/custom-slidebox/custom-slidebox.php:250
+#: includes/custom-slidebox/custom-slidebox.php:254
 msgid "Style type"
 msgstr "风格类型"
 
-#: includes/custom-slidebox/custom-slidebox.php:290
-msgid "AD HTML codes - below"
-msgstr "广告代码 - 下方"
+#: includes/custom-slidebox/custom-slidebox.php:295
+msgid "AD HTML codes (below the slide-box)"
+msgstr "广告 HTML 代码（幻灯片之下）"
 
-#: includes/custom-slidebox/custom-slidebox.php:292
-msgid "You can write AD HTML codes here, it will display below the slide-box."
-msgstr "您可以在此处写一些广告代码，将会显示在幻灯片下方。"
-
-#: includes/custom-slidebox/custom-slidebox.php:476
+#: includes/custom-slidebox/custom-slidebox.php:498
 msgid "Detail &raquo;"
 msgstr "详细 &raquo;"
 
@@ -4708,6 +4712,13 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:117
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#~ msgid "AD HTML codes - below"
+#~ msgstr "广告代码 - 下方"
+
+#~ msgid ""
+#~ "You can write AD HTML codes here, it will display below the slide-box."
+#~ msgstr "您可以在此处写一些广告代码，将会显示在幻灯片下方。"
 
 #~ msgid "Sign page widget area"
 #~ msgstr "登录页面 小工具区域"

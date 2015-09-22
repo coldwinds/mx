@@ -130,12 +130,6 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 
 		</div><!-- /.tools -->
 	</div><!-- /.container -->
-	<div class="container">
-
-
-		
-		
-	 </div><!-- /.container -->
 	 
 	<!-- search form -->
 	<div class="container">
@@ -145,3 +139,14 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 	</div>
 </div><!-- /.main-nav -->
 <div class="main-nav-placeholder"></div>
+
+<?php
+/**
+ * ad
+ */
+if(!theme_cache::is_home() && class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('below-header-menu'))){
+	?>
+	<div class="container ad-container ad-below-header-menu"><?= theme_adbox::display_frontend('below-header-menu');?></div>
+	<?php
+}
+?>

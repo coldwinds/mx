@@ -1,3 +1,13 @@
+<?php
+/**
+ * ad
+ */
+if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('above-footer'))){
+	?>
+	<div class="container ad-container ad-above-footer"><?= theme_adbox::display_frontend('above-footer');?></div>
+	<?php
+}
+?>
 <footer id="footer">
 	<div class="container">
 		<?php if(!wp_is_mobile()){ ?>

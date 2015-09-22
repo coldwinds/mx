@@ -262,26 +262,27 @@ img{
 	position: fixed;
 	z-index: 10;
 	left: 20px;
-	top: 60%;
+	top: 50%;
 	height: 0;
+	margin-top: -40px;
 	text-align: center;
 }
 	.page-pagination a{
 		background: #000;
 		position: absolute;
-		left: 0;
+		left: 1px;
 		top: 0;
-		height: 50px;
+		height: 80px;
 		padding: 0 15px 0 5px;
-		line-height: 50px;
-		font-size: 20px;
+		line-height: 80px;
+		font-size: 25px;
 		color: #fff;
 		opacity: .3;
 		white-space: nowrap;
 		border-radius: 0 99px 99px 0;
 	}
 		.page-pagination a:hover{
-			opacity: .5;
+			opacity: .8;
 		}
 	.page-pagination .next{
 		border-radius: 99px 0 0 99px;
@@ -722,7 +723,15 @@ img{
 		white-space: nowrap;overflow:hidden;text-overflow:ellipsis; 
 	}
 }
-
+/**
+ * ad
+ */
+.ad-container{
+	margin: 20px 0;
+}
+.ad-below-post-title{
+	margin: -20px -20px 20px;
+}
 /**
  * .widget-area
  */
@@ -1430,7 +1439,7 @@ body.menu-on #mobile-on-layer{
 		padding: 0;
 	}
 	.slide-menu .menu > li{
-		border-bottom: 1px solid #f8f8f8;
+		border-bottom: 1px solid #eee;
 	}
 	.slide-menu.on{
 		display: block;

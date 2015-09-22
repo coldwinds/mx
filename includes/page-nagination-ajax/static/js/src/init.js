@@ -35,18 +35,18 @@ define(function(require, exports, module){
 	exports.page_nagi = {
 		init : function(){
 			var that = this;
-				
 			cache.$post = document.querySelector('.singular-post');
 			cache.$nagi = document.querySelector('.page-pagination');
 			cache.$next = cache.$nagi.querySelector('.next');
 			cache.$prev = cache.$nagi.querySelector('.prev');
 			cache.$next_number = cache.$next.querySelector('.current-page');
 			cache.$prev_number = cache.$prev.querySelector('.current-page');
-
 			
 			if(!cache.$post || !cache.$nagi)
 				return;
-
+				
+			cache.post_top;
+			cache.max_bottom;
 			cache.is_hide = false;
 
 			window.addEventListener('resize',function(){
@@ -241,5 +241,4 @@ define(function(require, exports, module){
 			return cache.$current == cache.$next && config.page == config.numpages;
 		}
 	}
-
 });

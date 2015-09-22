@@ -540,9 +540,18 @@ class theme_functions{
 					</div><!-- /.media-body -->
 				</div><!-- /.media -->
 			</div><!-- /.panel-heading -->
-
+			
 			<div class="panel-body">
-
+				<?php
+				/**
+				 * ad
+				 */
+				if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('below-post-title'))){
+					?>
+					<div class="ad-container ad-below-post-title"><?= theme_adbox::display_frontend('below-post-title');?></div>
+					<?php
+				}
+				?>
 				<!-- post-excerpt -->
 				<?php 
 				$excerpt = $post->post_excerpt;
@@ -1711,10 +1720,10 @@ class theme_functions{
 		/**
 		 * cache
 		 */
-
-		$cache = theme_custom_homebox::get_cache();
-		if(!empty($cache)){
-			echo $cache;
+		$device = wp_is_mobile() ? 'mobile' : 'desktop';
+		$cache = (array)theme_custom_homebox::get_cache();
+		if(isset($cache[$device])){
+			echo $cache[$device];
 			unset($cache);
 			return;
 		}
@@ -1794,7 +1803,7 @@ class theme_functions{
 	/**
 	 * ad
 	 */
-	if(isset($v['ad']) || !empty($v['ad'])){
+	if(isset($v['ad']) && !empty($v['ad'])){
 		?>
 		<div class="homebox-ad"><?= stripslashes($v['ad']);?></div>
 	<?php } ?>
@@ -1803,11 +1812,11 @@ class theme_functions{
 			++$lazyload_i;
 		} /** end foreach */
 
-		$cache = html_minify(ob_get_contents());
+		$cache[$device] = html_minify(ob_get_contents());
 		ob_end_clean();
 		
 		theme_custom_homebox::set_cache($cache);
-		echo $cache;
+		echo $cache[$device];
 		unset($cache);
 	}
 	/**

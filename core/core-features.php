@@ -1662,7 +1662,7 @@ class theme_features{
 		/** 
 		 * js and css files version
 		 */
-		if(theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
+		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
 			@ini_set('max_input_nesting_level','10000');
 			@ini_set('max_execution_time','300'); 
 			

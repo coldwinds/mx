@@ -178,7 +178,7 @@ class theme_custom_slidebox{
 				<?php if($img_url){ ?>
 					<br>
 					<a href="<?= $img_url;?>" target="_blank">
-						<img src="<?= $img_url;?>" alt="preview" width="100" height="60">
+						<img src="<?= $img_url;?>" alt="preview" width="200" height="125">
 					</a>
 				<?php } ?>
 			</th>
@@ -231,9 +231,13 @@ class theme_custom_slidebox{
 	public static function get_type(){
 		return self::get_options('type') ? self::get_options('type') : self::options_default()[__CLASS__]['type'];
 	}
-	public static function get_ad($type){
+	public static function get_ad($type,$device){
 		$ads = self::get_options('ads');
-		return isset($ads[$type]) ? stripslashes($ads[$type]) : null;
+		return isset($ads[$device][$type]) ? stripslashes($ads[$device][$type]) : null;
+	}
+	public static function display_frontend_ad($type){
+		$device = wp_is_mobile() ? 'mobile' : 'desktop';
+		return self::get_ad($type,$device);
 	}
 	public static function display_backend(){
 		$boxes = self::get_boxes();
@@ -284,12 +288,25 @@ class theme_custom_slidebox{
 			</tbody>
 			</table>
 			<hr>
+			<!-- adbox -->
 			<table class="form-table">
 			<tbody>
 			<tr>
-				<th><label for="<?= __CLASS__;?>-ads-below"><?= ___('AD HTML codes - below');?></label></th>
+				<th><label for="<?= __CLASS__;?>-ads-desktop-below"><?= ___('AD HTML codes (below the slide-box)');?></label></th>
 				<td>
-					<textarea name="<?= __CLASS__;?>[ads][below]" id="<?= __CLASS__;?>-ads-below" rows="3" class="widefat" placeholder="<?= ___('You can write AD HTML codes here, it will display below the slide-box.');?>"><?= self::get_ad('below');?></textarea>
+					<?php foreach([
+						'desktop' => ___('Desktop codes'),
+						'mobile' => ___('Mobile codes'),
+					] as $device => $name){ ?>
+						<label for="<?= __CLASS__;?>-ads-<?= $device;?>-below"><?= $name;?></label>
+						<textarea 
+							name="<?= __CLASS__;?>[ads][<?= $device;?>][below]" 
+							id="<?= __CLASS__;?>-ads-<?= $device;?>-below" 
+							rows="3" 
+							class="widefat" 
+							placeholder="<?= ___('You can write AD HTML codes here.');?>"
+						><?= self::get_ad('below',$device);?></textarea>
+					<?php } ?>
 				</td>
 			</tr>
 			</tbody>
@@ -300,9 +317,10 @@ class theme_custom_slidebox{
 	}
 
 	public static function display_frontend(){
-		$cache = theme_cache::get(__CLASS__);
-		if($cache){
-			echo $cache;
+		$device = wp_is_mobile() ? 'mobile' : 'desktop';
+		$cache = (array)theme_cache::get(__CLASS__);
+		if(isset($cache[$device])){
+			echo $cache[$device];
 			unset($cache);
 			return;
 		}
@@ -310,11 +328,16 @@ class theme_custom_slidebox{
 		ob_start();
 		$type = 'display_frontend_' . self::get_type();
 		self::$type();
-		
-		$cache = html_minify(ob_get_contents());
+		/** ad */
+		if(!empty(self::display_frontend_ad('below'))){
+			?>
+			<div class="container <?= __CLASS__;?>-ad-below"><?= self::display_frontend_ad('below');?></div>
+			<?php
+		}
+		$cache[$device] = html_minify(ob_get_contents());
 		ob_end_clean();
 		theme_cache::set(__CLASS__,$cache);
-		echo $cache;
+		echo $cache[$device];
 		unset($cache);
 	}
 	/**
@@ -381,7 +404,6 @@ class theme_custom_slidebox{
 		?>
 	</div>
 </div>
-<div class="container <?= __CLASS__;?>-ad-below"><?= self::get_ad('below');?></div>
 		<?php
 		unset($boxes);
 	}
@@ -503,7 +525,6 @@ class theme_custom_slidebox{
 	</div>
 </div><!-- /#slidebox -->
 </div><!-- /.slidebox-container -->
-<div class="container <?= __CLASS__;?>-ad-below"><?= self::get_ad('below');?></div>
 		<?php
 	}
 	public static function backend_css(){

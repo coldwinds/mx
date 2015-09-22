@@ -27,8 +27,15 @@ define(function(require, exports, module){
 		}
 	}
 	function reset_media(){
-		if(window.jQuery)
+		if(window.jQuery){
 			jQuery(window).resize();
+		}else{
+			try{
+				require.async(['theme_page_nagination_ajax'],function(m){
+					m.page_nagi.reset_nagi_style();
+				});
+			}catch(e){}
+		}
 	}
 	function expand(set){
 		cache.$btn.classList.remove('fa-angle-right');
