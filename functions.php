@@ -1955,25 +1955,16 @@ class theme_functions{
 	 *
 	 * @param array $args
 	 * @return 
-	 * @version 1.0.1
+	 * @version 1.0.2
 	 */
-	public static function the_user_list(array $args = []){
+	public static function the_user_list(array $args){
 		$args = array_merge([
 			'classes' => 'col-xs-4',
-			'user' => null,
+			'user_id' => null,
 			'extra_title' => '', /** e.g. You have % points */
 			'extra' => 'point',
 		],$args);
 		
-		$user = $args['user'];
-		
-		if(is_numeric($user))
-			$user = get_user_by('id',$user);
-			
-		if(empty($user))
-			return false;
-
-
 		/**
 		 * extra point value
 		 */
@@ -1983,7 +1974,7 @@ class theme_functions{
 			 */
 			case 'point':
 				if(class_exists('theme_custom_point')){
-					$point_value = theme_custom_point::get_point($user->ID);
+					$point_value = theme_custom_point::get_point($args['user_id']);
 				}
 				break;
 			/**
@@ -1991,7 +1982,7 @@ class theme_functions{
 			 */
 			case 'fav':
 				if(class_exists('custom_post_fav')){
-					$point_value = custom_post_fav::get_user_be_fav_count($user->ID);
+					$point_value = custom_post_fav::get_user_be_fav_count($args['user_id']);
 				}
 				break;
 			/**
@@ -1999,9 +1990,9 @@ class theme_functions{
 			 */
 			case 'posts':
 				if(class_exists('theme_custom_author_profile')){
-					$point_value = theme_custom_author_profile::get_count('works',$user->ID);
+					$point_value = theme_custom_author_profile::get_count('works',$args['user_id']);
 				}else{
-					$point_value = count_user_posts($user->ID);
+					$point_value = count_user_posts($args['user_id']);
 				}
 				break;
 			default:
@@ -2012,23 +2003,21 @@ class theme_functions{
 			$args['extra_title'] = str_replace('%',$point_value,$args['extra_title']);
 
 		
-		$display_name = theme_cache::get_the_author_meta('display_name',$user->ID);
+		$display_name = theme_cache::get_the_author_meta('display_name',$args['user_id']);
 
-		$avatar_placeholder = theme_functions::$avatar_placeholder;
-
-		$avatar_url = theme_cache::get_avatar_url($user->ID);
+		$avatar_url = theme_cache::get_avatar_url($args['user_id']);
 		?>
 		<div class="user-list <?= $args['classes'];?>">
-			<a href="<?= theme_cache::get_author_posts_url($user->ID)?>" title="<?= $display_name;?>">
+			<a href="<?= theme_cache::get_author_posts_url($args['user_id'])?>" title="<?= $display_name;?>">
 				<div class="avatar-container">
-					<img src="<?= $avatar_placeholder;?>" alt="<?= $display_name;?>" class="placeholder">
-					<img src="<?= $avatar_placeholder;?>" data-src="<?= $avatar_url;?>" alt="<?= $display_name;?>" class="avatar">
+					<img src="<?= theme_functions::$avatar_placeholder;?>" alt="<?= $display_name;?>" class="placeholder">
+					<img src="<?= theme_functions::$avatar_placeholder;?>" data-src="<?= $avatar_url;?>" alt="<?= $display_name;?>" class="avatar">
 				</div>
 				<h4 class="author"><?= $display_name;?></h4>
 				<?php if($args['extra']){ ?>
 					<div class="extra">
 						<span class="<?= $args['extra'];?>" title="<?= $args['extra_title'];?>">
-							<?= $point_value;?>
+							<?= number_format($point_value);?>
 						</span>
 					</div>
 				<?php }/** end args extra */ ?>
