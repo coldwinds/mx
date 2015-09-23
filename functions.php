@@ -58,13 +58,14 @@ class theme_functions{
 		/** 
 		 * register menu
 		 */
-		register_nav_menus(
-			[
-				'menu-header' 			=> ___('Header menu'),
-				'menu-mobile' 			=> ___('Mobile menu'),
-				'menu-top-bar' 			=> ___('Top bar menu'),
-			]
-		);	
+		register_nav_menus([
+			'menu-header' 			=> ___('Header menu'),
+			'menu-header-login' 	=> ___('Login header menu'),
+			'menu-mobile' 			=> ___('Mobile menu'),
+			'menu-mobile-login' 	=> ___('Login mobile menu'),
+			'menu-top-bar' 			=> ___('Top bar menu'),
+			'menu-top-bar-login'	=> ___('Login top bar menu'),
+		]);
 		/** 
 		 * frontend_seajs_use
 		 */
@@ -93,11 +94,6 @@ class theme_functions{
 			'default-attachment'	=> 'fixed',
 			'wp-head-callback'		=> 'theme_features::_fix_custom_background_cb',
 		]);
-
-		/**
-		 * filter filter_get_comment_text
-		 */
-		add_filter('get_comment_text' , __CLASS__ . '::filter_get_comment_text', 10, 2);
 	}
 	
 	public static function frontend_seajs_use(){
@@ -1315,15 +1311,13 @@ class theme_functions{
 				<span class="comment-meta-data author">
 					<?php
 					if($comment->comment_parent != 0){
-						echo theme_cache::get_avatar($comment,50);
-						echo '&nbsp;';
+						echo theme_cache::get_avatar($comment,50), '&nbsp;';
 					}
 					comment_author_link();
-					
 					?>
 				</span>
 				<time class="comment-meta-data time" datetime="<?= get_comment_time('c');?>">
-					<a href="<?= esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?= friendly_date(get_comment_time('U')); ?></a>
+					<a href="<?= esc_url(get_comment_link( $comment->comment_ID));?>"><?= friendly_date(get_comment_time('U')); ?></a>
 				</time>
 				<?php
 				if(!theme_cache::is_user_logged_in()){
@@ -1365,25 +1359,12 @@ class theme_functions{
 					</span><!-- .reply -->
 				<?php } ?>
 			</h4>
-			
 		</div><!-- /.media-body -->
 	</div><!-- /.comment-body -->
 		<?php
 		}
 	}
-	public static function filter_get_comment_text($comment_content,$comment){
-		/**
-		 * has parent
-		 */
-		if($comment->comment_parent != 0){
-			$parent_comment = get_comment($comment->comment_parent);
-			
-			$parent_author = get_comment_author($parent_comment->comment_ID);
-			
-			$comment_content = '<a href="' . theme_cache::get_permalink($parent_comment->comment_post_ID) . '#comment-' . $parent_comment->comment_ID . '" class="at" rel="nofollow">@' . $parent_author . '</a> ' . $comment_content;
-		}
-		return $comment_content;
-	}
+
 	public static function the_related_posts_plus(array $args = []){
 		global $post;
 

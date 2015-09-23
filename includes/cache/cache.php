@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme-cache
 Feature URI:	http://inn-studio.com
-Version:		3.0.0
+Version:		3.0.1
 Description:	theme-cache
 Author:			INN STUDIO
 Author URI:		http://inn-studio.com
@@ -249,6 +249,19 @@ class theme_cache{
 		$cache_id = md5(json_encode($id_or_email));
 		if(!isset($caches[$cache_id]))
 			$caches[$cache_id] = get_avatar_url($id_or_email);
+		return $caches[$cache_id];
+	}
+	public static function get_comment_author($comment_id){
+		static $caches = [];
+		if(!isset($caches[$comment_id]))
+			$caches[$comment_id] = esc_html(get_comment_author($comment_id));
+		return $caches[$comment_id];
+	}
+	public static function get_comment(&$comment = null, $output = OBJECT){
+		static $caches = [];
+		$cache_id = md5(json_encode(func_get_args()));
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = get_comment($comment, $output);
 		return $caches[$cache_id];
 	}
 	public static function get_post($post, $output = OBJECT, $filter = 'raw'){
