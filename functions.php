@@ -663,9 +663,12 @@ class theme_functions{
 	 * @return 
 	 * @version 1.0.3
 	 */
-	public static function get_thumbnail_src($post_id = null,$size = 'thumbnail',$placeholder = null){
+	public static function get_thumbnail_src($post_id,$size = 'thumbnail',$placeholder = null){
 		global $post;
-
+		if($post->ID != $post_id){
+			$post_bak = $post;
+			$post = theme_cache::get_post($post_id);
+		}
 		if(!$placeholder)
 			$placeholder = self::$thumbnail_placeholder;
 			
@@ -685,6 +688,12 @@ class theme_functions{
 		if(!$src)
 			$src = get_img_source($post->post_content);
 
+		/** restore post */
+		if($post->ID != $post_id){
+			$post = $post_bak;
+			unset($post_bak);
+		}
+		
 		if(!$src)
 			$src = $placeholder;
 		

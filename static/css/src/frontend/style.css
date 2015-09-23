@@ -487,6 +487,7 @@ img{
 		border-bottom-width: 2px;
 		color: #999;
 		margin: 0 0 20px;
+		border-radius: 2px;
 	}
 		.mod .below-more:hover{
 			background: #f8f8f8;

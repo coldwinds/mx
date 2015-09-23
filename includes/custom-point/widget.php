@@ -59,7 +59,7 @@ class widget_point_rank extends WP_Widget{
 			if($instance['rand_number'] > $user_query->total_users){
 				$instance['rand_number'] = $user_query->total_users;
 			}
-			$rand_users = array_rand($users,$instance['rand_number']);
+			$rand_users = (array)array_rand($users,$instance['rand_number']);
 			
 			?>
 			<div class="panel-body">

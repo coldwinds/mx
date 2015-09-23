@@ -1,4 +1,35 @@
 /**
+ * common
+ */
+/**
+ * ..area-blur
+ */
+.theme_custom_slidebox-container .area-blur{
+	position: absolute;
+	top: -40px;
+	left: 0;
+	width: 100%;
+	bottom: 0;
+	-webkit-filter: blur(20px);
+	-ms-filter: blur(20px);
+	filter: blur(20px);
+	z-index: 0;
+}
+	.theme_custom_slidebox-container .area-blur .item{
+		position: absolute;
+		-webkit-background-size: cover;
+		background-size: cover;
+		opacity: 0;
+		-webkit-transition: all 1s;
+		-ms-transition: all 1s;
+		transition: all 1s;
+		width: 100%;
+		height: 100%;
+	}
+	.theme_custom_slidebox-container .area-blur .active{
+		opacity: 1;
+	}
+/**
  * candy
  */
 .theme_custom_slidebox-candy{
@@ -10,37 +41,7 @@
 	clear: both;
 	content: '';
 }
-	/**
-	 * ..area-blur
-	 */
-	.theme_custom_slidebox-candy .area-blur{
-		position: absolute;
-		top: -40px;
-		left: 0;
-		width: 100%;
-		bottom: 0;
-		-webkit-filter: blur(15px);
-		-ms-filter: blur(15px);
-		filter: blur(15px);
-		z-index: 0;
-	}
-		.theme_custom_slidebox-candy .area-blur .item{
-			position: absolute;
-			-webkit-background-size: cover;
-			background-size: cover;
-			opacity: 0;
-			-webkit-transition: all .5s;
-			-ms-transition: all .5s;
-			-o-transition: all .5s;
-			transition: all .5s;
-			width: 100%;
-			height: 100%;
-		}
 
-		.theme_custom_slidebox-candy .area-blur .active{
-			opacity: 1;
-			z-index: 1;
-		}
 	/**
 	 * .area-main
 	 */
@@ -66,8 +67,6 @@
 		.theme_custom_slidebox-candy .area-main .item.active{
 			display: block;
 		}
-			.theme_custom_slidebox-candy .area-main .item.active a{
-			}
 		.theme_custom_slidebox-candy .area-main img{
 			display: block;
 			max-width: 90%;
@@ -176,31 +175,6 @@
 	position: relative;
 	margin-bottom: 20px;
 }
-	.theme_custom_slidebox-scroller .area-blur{
-		position: absolute;
-		top: -40px;
-		bottom: -20px;
-		right: 0;
-		left: 0;
-		-webkit-filter: blur(15px);
-		-ms-filter: blur(15px);
-		filter: blur(15px);
-		z-index: 0;
-	}
-	.theme_custom_slidebox-scroller .area-blur .item{
-		position: absolute;
-		-webkit-background-size: cover;
-		background-size: cover;
-		opacity: 0;
-		width: 100%;
-		height: 100%;
-		-webkit-transition: all .5s;
-		-ms-transition: all .5s;
-		transition: all .5s;
-	}
-	.theme_custom_slidebox-scroller .area-blur .active{
-		opacity: 1;
-	}
 .theme_custom_slidebox-scroller .area-main{
 	white-space: nowrap;
 	overflow: hidden;	
