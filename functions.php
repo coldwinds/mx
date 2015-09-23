@@ -1,6 +1,4 @@
 <?php
-remove_action( 'admin_init', '_wp_check_for_scheduled_split_terms' );
-
 /** Theme options */
 include __DIR__ . '/core/core-options.php';
 

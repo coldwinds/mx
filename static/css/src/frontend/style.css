@@ -21,7 +21,11 @@
 	margin-top: 0;
 	right: 0;
 }
-
+.btn select {
+    border: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+}
 .list-group-item{
 	padding: 10px 15px;
 }
