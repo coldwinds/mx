@@ -11,16 +11,21 @@ define(function(require,exports,module){
 		config = exports.config;
 		
 	exports.bind = function(){
-		cache.$slide = document.getElementById('theme_custom_slidebox');
 		cache.$container = document.querySelector('.theme_custom_slidebox-container');
-		if(!cache.$slide || !cache.$container)
+		if(!cache.$container)
 			return;
+			
+		cache.$main = cache.$container.querySelector('.area-main');
+		cache.$blurs = cache.$container.querySelectorAll('.area-blur .item');
+		
 		eval(config.type + '();');
 	}
+	/**
+	 * scroller
+	 */
 	function scroller(){
 		var moving = false,
 			last_x;
-
 		
 		function mousemove(e){
 			if(!moving)
@@ -29,11 +34,10 @@ define(function(require,exports,module){
 			if(!last_x)
 				last_x = e.clientX;
 
-			if(cache.$slide.scrollLeft >= 0)
-				cache.$slide.scrollLeft = cache.$slide.scrollLeft - (last_x - e.clientX);
+			if(cache.$main.scrollLeft >= 0)
+				cache.$main.scrollLeft = cache.$main.scrollLeft - (last_x - e.clientX);
 			
 			last_x = e.clientX;
-
 		}
 		function mouseout(e){
 			if(moving)
@@ -41,25 +45,17 @@ define(function(require,exports,module){
 
 			if(!e.target.width)
 				last_x = 0;
-				
 		}
-
-		//setInterval(function(){
-		//	if(!moving){
-		//		cache.$slide.scrollLeft += 1;
-		//	}
-		//},100);
 		
-		cache.$slide.addEventListener('mouseout', mouseout);
-		cache.$slide.addEventListener('mousemove', mousemove);
+		cache.$main.addEventListener('mouseout', mouseout);
+		cache.$main.addEventListener('mousemove', mousemove);
 		
 		/**
 		 * blur
 		 */
 		blur();
 		function blur(){
-			cache.$blurs = cache.$container.querySelectorAll('.area-blur .item');
-			cache.$as = cache.$slide.querySelectorAll('#theme_custom_slidebox a');
+			cache.$as = cache.$main.querySelectorAll('a');
 			cache.current_i = 0;
 			cache.len = cache.$as.length;
 			function event_hover(e){
@@ -82,8 +78,10 @@ define(function(require,exports,module){
 			}
 		}
 	}
+	/**
+	 * candy
+	 */
 	function candy(){
-		cache.$blurs = cache.$container.querySelectorAll('.area-blur .item');
 		cache.$mains = cache.$container.querySelectorAll('.area-main .item');
 		cache.$thumbnails = cache.$container.querySelectorAll('.area-thumbnail .item');
 		
@@ -96,7 +94,6 @@ define(function(require,exports,module){
 				return false;
 			cache.current_i = current_i;
 			for(var i = 0; i < cache.len; i++){
-				//console.log(i);
 				cache.$blurs[i].classList.contains('active') && cache.$blurs[i].classList.remove('active');
 				
 				cache.$mains[i].classList.contains('active') && cache.$mains[i].classList.remove('active');

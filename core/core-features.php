@@ -6,7 +6,7 @@
  * Help you write a wp site quickly.
  *
  * @package KMTF
- * @version 5.0.5
+ * @version 5.0.6
  */
 theme_features::init();
 class theme_features{
@@ -1652,12 +1652,10 @@ class theme_features{
 		 */
 		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
 			@ini_set('max_input_nesting_level','10000');
-			@ini_set('max_execution_time','300'); 
+			@ini_set('max_execution_time',0); 
 			
-			remove_dir(self::get_stylesheet_directory() . self::$basedir_js_min);
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_js_src);
 			
-			remove_dir(self::get_stylesheet_directory() . self::$basedir_css_min);
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_css_src);
 			
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_includes);

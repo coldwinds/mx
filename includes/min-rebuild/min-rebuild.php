@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme_min_rebuild
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.1
+Version:		2.0.2
 Description:	Rebuild the minify version file of JS and CSS. If you have edit JS or CSS file.
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -13,19 +13,14 @@ add_filter('theme_includes',function($fns){
 	return $fns;
 });
 class theme_min_rebuild{
-	private static $iden = 'theme_min_rebuild';
 	public static function init(){
-		add_action('advanced_settings',			__CLASS__ . '::admin');
-		add_action('wp_ajax_'. self::$iden,		__CLASS__ . '::process');		
+		add_action('advanced_settings',			__CLASS__ . '::display_backend');
+		add_action('wp_ajax_'. __CLASS__,		__CLASS__ . '::process');		
 	}
 	/**
 	 * Admin Display
 	 */
-	public static function admin(){
-		
-		$process_url = theme_features::get_process_url([
-			'action' => self::$iden
-		]);
+	public static function display_backend(){
 		?>
 		<!-- theme_min_rebuild -->
 		<fieldset>
@@ -37,12 +32,12 @@ class theme_min_rebuild{
 						<th scope="row"><?= ___('Control');?></th>
 						<td>
 							<?php
-							if(isset($_GET[self::$iden])){
+							if(isset($_GET[__CLASS__])){
 								echo status_tip('success',___('Files have been rebuilt.'));
 							}
 							?>
 							<p>
-								<a href="<?= $process_url;?>" class="button button-primary" onclick="javascript:this.innerHTML='<?= ___('Rebuilding, please wait...');?>'"><?= ___('Start rebuild');?></a>
+								<a href="<?= theme_features::get_process_url(['action' => __CLASS__ ]);?>" class="button button-primary" onclick="javascript:this.innerHTML='<?= ___('Rebuilding, please wait...');?>'"><?= ___('Start rebuild');?></a>
 								<span class="description"><i class="fa fa-exclamation-circle"></i> <?= ___('Save your settings before rebuild');?></span>
 							</p>
 						</td>
@@ -60,19 +55,19 @@ class theme_min_rebuild{
 			return false;
 		
 		@ini_set('max_input_nesting_level','10000');
-		@ini_set('max_execution_time','300'); 
+		@ini_set('max_execution_time',0); 
+
+		remove_dir(theme_features::get_stylesheet_directory() . theme_features::$basedir_js_min);
+		theme_features::minify_force(theme_features::get_stylesheet_directory() . theme_features::$basedir_js_src);
+
+		remove_dir(theme_features::get_stylesheet_directory() . theme_features::$basedir_css_min);
+		theme_features::minify_force(theme_features::get_stylesheet_directory() . theme_features::$basedir_css_src);
 		
-		remove_dir(get_stylesheet_directory() . theme_features::$basedir_js_min);
-		theme_features::minify_force(get_stylesheet_directory() . theme_features::$basedir_js_src);
-		
-		remove_dir(get_stylesheet_directory() . theme_features::$basedir_css_min);
-		theme_features::minify_force(get_stylesheet_directory() . theme_features::$basedir_css_src);
-		
-		theme_features::minify_force(get_stylesheet_directory() . theme_features::$basedir_includes);
+		theme_features::minify_force(theme_features::get_stylesheet_directory() . theme_features::$basedir_includes);
 
 		theme_file_timestamp::set_timestamp();
 		
-		wp_redirect(add_query_arg(self::$iden,1,theme_options::get_url()));
+		wp_redirect(add_query_arg(__CLASS__,1,theme_options::get_url()));
 		
 		die;
 	}

@@ -349,7 +349,7 @@ class theme_custom_slidebox{
 
 		$small = 5;
 		?>
-<div class="<?= __CLASS__;?>-container">
+<div class="<?= __CLASS__;?>-container <?= __CLASS__;?>-scroller">
 	<div class="area-blur">
 		<?php 
 		$i = 0;
@@ -359,7 +359,7 @@ class theme_custom_slidebox{
 			<div class="item <?= $i === 1 ? 'active' : null;?>" style="background-image:url(<?= $box['img-url'];?>)"></div>
 		<?php } ?>
 	</div>
-	<div id="<?= __CLASS__;?>">
+	<div class="area-main">
 		<?php 
 		$i = 0;
 		foreach($boxes as $box){ 
@@ -435,7 +435,7 @@ class theme_custom_slidebox{
 
 		krsort($boxes);
 		?>
-<div class="<?= __CLASS__;?>-container">
+<div class="<?= __CLASS__;?>-container <?= __CLASS__;?>-candy">
 <div class="area-overdely"></div>
 <div class="area-blur">
 	<?php 
@@ -552,7 +552,7 @@ class theme_custom_slidebox{
 			
 		wp_enqueue_style(
 			__CLASS__,
-			theme_features::get_theme_includes_css(__DIR__, 'frontend-' . self::get_type()),
+			theme_features::get_theme_includes_css(__DIR__),
 			'frontend',
 			theme_file_timestamp::get_timestamp()
 		);
