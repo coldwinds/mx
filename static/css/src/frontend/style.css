@@ -1159,7 +1159,12 @@ label.error{
 		margin:0;
 	}
 	.comment-list .page-tip{
-		margin: 210px;
+		margin: 20px;
+	}
+	.comment-loading .tip-status,
+	#respond-loading-ready .tip-status{
+		background: none;
+		border: none;
 	}
 .page-tip{
 	margin-bottom: 20px;
