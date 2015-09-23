@@ -666,7 +666,7 @@ class theme_cache{
 	 * @param string The widget sidebar name/id
 	 * @param int Cache expire time
 	 * @return string
-	 * @version 2.1.0
+	 * @version 2.1.1
 	 */
 	public static function wp_nav_menu($args,$expire = 3600){
 		$cache_group_id = 'nav-menu';
@@ -676,8 +676,11 @@ class theme_cache{
 
 		$exists_key = self::get_keys($cache_id,$cache_group_id);
 		
-		if($exists_key && $cache)
-			return $cache;
+		if($exists_key && $cache){
+			echo $cache;
+			unset($cache);
+			return;
+		}
 
 		if(!$cache){
 			ob_start();
@@ -690,7 +693,9 @@ class theme_cache{
 			self::set_key($cache_id,$cache_group_id);
 		}
 		
-		return $cache;
+		echo $cache;
+		unset($cache);
+		return;
 	}
 }
 ?>
