@@ -62,11 +62,15 @@ class theme_custom_contribution{
 	public static function get_des(){
 		return stripslashes(self::get_options('description'));
 	}
+	public static function is_pending_after_edited(){
+		return self::get_options('pending-after-edited') == 1;
+	}
 	public static function display_backend(){
 		$opt = (array)self::get_options();
 		?>
 		<fieldset>
 			<legend><?= ___('Contribution settings');?></legend>
+			<p class="description"><?= ___('About contribution setting.');?></p>
 			<table class="form-table">
 				<tr>
 					<th><?= ___('Shows categories');?></th>
@@ -78,6 +82,16 @@ class theme_custom_contribution{
 					<th><label for="<?= __CLASS__;?>-tags-number"><?= ___('Shows tags number');?></label></th>
 					<td>
 						<input class="short-text" type="number" name="<?= __CLASS__;?>[tags-number]" id="<?= __CLASS__;?>-tags-number" value="<?= isset($opt['tags-number']) ?  $opt['tags-number'] : 6;?>">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="<?= __CLASS__;?>-pending-after-edited"><?= ___('Pending after edited');?></label></th>
+					<td>
+						<label for="<?= __CLASS__;?>-pending-after-edited">
+							<input type="checkbox" name="<?= __CLASS__;?>[pending-after-edited]" id="<?= __CLASS__;?>-pending-after-edited" value="1"> 
+							<?= ___('Enable');?> 
+							<span class="description"><?= ___('After the post of contributor published, if contributor edit the post which post status will become to pending if enable.');?></span>
+						</label>
 					</td>
 				</tr>
 				<tr>
@@ -208,10 +222,18 @@ class theme_custom_contribution{
 				$ctb = isset($_POST['ctb']) && is_array($_POST['ctb']) ? $_POST['ctb'] : null;
 				
 				$edit_post_id = isset($_POST['post-id']) && is_numeric($_POST['post-id']) ? (int)$_POST['post-id'] : 0;
+
+				$edit_again = false;
+
 				/**
 				 * check edit
 				 */
 				if($edit_post_id != 0){
+					/** set edit again */
+					$edit_again = true;
+					
+					self::set_once_published($edit_post_id);
+					
 					/**
 					 * check post exists
 					 */
@@ -319,7 +341,7 @@ class theme_custom_contribution{
 				/**
 				 * tags
 				 */
-				$tags = isset($ctb['tags']) && is_array($ctb['tags']) ? $ctb['tags'] : [];
+				$tags = isset($ctb['tags']) && is_array($ctb['tags']) ? array_filter($ctb['tags']) : [];
 				if(!empty($tags)){
 					$tags = array_map(function($tag){
 						if(!is_string($tag)) return null;
@@ -338,17 +360,13 @@ class theme_custom_contribution{
 				/*****************************
 				 * PASS ALL, WRITE TO DB
 				 *****************************/
-				/**
-				 * update post
-				 */
+				/** edit post */
 				if($edit_post_id != 0){
-					/**
-					 * update post
-					 */
+					$post_status = self::get_update_post_status($old_post->post_status);
 					$post_id = wp_update_post([
 						'ID' => $edit_post_id,
 						'post_title' => $post_title,
-						'post_status' => $old_post->post_status,
+						'post_status' => $post_status,
 						'post_type' => $old_post->post_type,
 						'post_excerpt' => fliter_script($post_excerpt),
 						'post_content' => fliter_script($post_content),
@@ -383,8 +401,8 @@ class theme_custom_contribution{
 				/**
 				 * set thumbnail and post parent
 				 */
-				$attach_ids = isset($ctb['attach-ids']) && is_array($ctb['attach-ids']) ? array_map('intval',$ctb['attach-ids']) : null;
-				if(!is_null_array($attach_ids)){
+				$attach_ids = isset($ctb['attach-ids']) && is_array($ctb['attach-ids']) ? array_map('intval',array_filter($ctb['attach-ids'])) : null;
+				if(!$attach_ids){
 					/** set post thumbnail */
 					set_post_thumbnail($post_id,$thumbnail_id);
 					
@@ -415,14 +433,14 @@ class theme_custom_contribution{
 						$output['status'] = 'success';
 						$output['msg'] = sprintf(
 							___('Congratulation! Your post has been published. You can %s or %s.'),
-							'<a href="' . esc_url(theme_cache::get_permalink($post_id)) . '" title="' . esc_attr(theme_cache::get_the_title($post_id)) . '">' . ___('View it now') . '</a>',
+							'<a href="' . esc_url(theme_cache::get_permalink($post_id)) . '" title="' . theme_cache::get_the_title($post_id) . '">' . ___('View it now') . '</a>',
 							'<a href="javascript:location.href=location.href;">' . ___('countinue to write a new post') . '</a>'
 						);
 
 						/**
 						 * add point
 						 */
-						if(class_exists('theme_custom_point')){
+						if($edit_again && class_exists('theme_custom_point')){
 							$post_publish_point = theme_custom_point::get_point_value('post-publish');
 							$output['point'] = array(
 								'value' => $post_publish_point,
@@ -444,6 +462,39 @@ class theme_custom_contribution{
 		}
 
 		die(theme_features::json_format($output));
+	}
+	public static function set_once_published($post_id){
+		if(self::is_once_published($post_id))
+			return false;
+		$cache_id = __CLASS__ . '-once_published';
+		$post_ids = self::get_once_published();
+		$post_ids[] = $post_id;
+		wp_cache_set($cache_id,$post_ids);
+		return true;
+	}
+	public static function get_once_published(){
+		$cache_id = __CLASS__ . '-once_published';
+		return array_filter((array)wp_cache_get($cache_id));
+	}
+	public static function is_once_published($post_id){
+		$cache_id = __CLASS__ . '-once_published';
+		$post_ids = self::get_once_published();
+		return in_array($post_id,$post_ids);
+	}
+	public static function delete_once_published($post_id){
+		$cache_id = __CLASS__ . '-once_published';
+		$post_ids = self::get_once_published();
+		if(!self::is_once_published($post_id))
+			return false;
+		$key = array_search($post_id,$post_ids);
+		unset($post_ids[$key]);
+		wp_cache_set($cache_id,$post_ids);
+		return true;
+	}
+	private static function get_update_post_status($old_status){
+		if($old_status === 'pending')
+			return 'pending';
+		return theme_cache::current_user_can('publish_posts') && self::is_pending_after_edited() ? 'pending' : 'publish';
 	}
 	public static function get_order_cats(){
 		if(!self::get_cats())

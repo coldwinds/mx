@@ -173,7 +173,7 @@ class theme_custom_point{
 		<?php
 	}
 	public static function the_list_icon($type){
-		echo '<span class="point-icon"><i class="fa fa-2x fa-fw fa-' . $type . '"></i></span>';
+		?><span class="point-icon"><i class="fa fa-2x fa-fw fa-<?= $type;?>"></i></span><?php
 	}
 	public static function get_point_img_url(){
 		static $cache = null;
@@ -700,7 +700,11 @@ class theme_custom_point{
 		$post = theme_cache::get_post($post_id);
 		if(!$post)
 			return false;
-			
+
+		/** unset published */
+		if(class_exists('theme_custom_contribution'))
+			theme_custom_contribution::delete_once_published($post_id);
+		
 		if($post->post_type !== 'post')
 			return false;
 			
@@ -1001,9 +1005,13 @@ class theme_custom_point{
 	 *
 	 * @param int Post id
 	 * @param object Post
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	public static function action_add_history_core_post_publish($post_id,$post){
+		
+		/** if published, do not add point and history */
+		if(class_exists('theme_custom_contribution') && theme_custom_contribution::is_once_published($edit_post_id))
+			return false;
 		
 		$meta = array(
 			'type' => 'post-publish',
