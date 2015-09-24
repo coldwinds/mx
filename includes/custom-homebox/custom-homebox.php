@@ -23,6 +23,12 @@ class theme_custom_homebox{
 		add_action('backend_css',__CLASS__ . '::backend_css'); 
 		add_action('page_settings',__CLASS__ . '::display_backend');
 
+		if(!wp_is_mobile()){
+			add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
+			add_action('frontend_seajs_alias',__CLASS__ . '::frontend_seajs_alias');
+			add_action('frontend_seajs_use',__CLASS__ . '::frontend_seajs_use');
+		}
+		
 		add_action('publish_post',__CLASS__ . '::action_public_post');
 	}
 	public static function action_public_post(){
@@ -114,13 +120,17 @@ class theme_custom_homebox{
 		$boxes = self::get_options();
 		
 		$title = isset($boxes[$placeholder]['title']) ? stripcslashes($boxes[$placeholder]['title']) : null;
-
+		
 		if($placeholder !== '%placeholder%' && !$title)
 			return false;
 			
+		$icon = isset($boxes[$placeholder]['icon']) ? $boxes[$placeholder]['icon'] : null;
+		
 		$link = isset($boxes[$placeholder]['link']) ? $boxes[$placeholder]['link'] : null;
 		
 		$number = isset($boxes[$placeholder]['number']) ? (int)$boxes[$placeholder]['number'] : 7;
+		
+		$display = isset($boxes[$placeholder]['display-type']) ? $boxes[$placeholder]['display-type'] : 'all';
 		
 		$keywords = isset($boxes[$placeholder]['keywords']) ? $boxes[$placeholder]['keywords'] : null;
 
@@ -144,7 +154,17 @@ class theme_custom_homebox{
 					class="widefat" 
 					value="<?= esc_attr($title);?>" 
 					placeholder="<?= ___('Box title');?>"
-				>
+				> 
+			</td>
+		</tr>
+		<tr>
+			<th><label for="<?= __CLASS__;?>-icon-<?= $placeholder;?>"><?= ___('Box icon');?></label></th>
+			<td>
+				<select 
+					name="<?= __CLASS__;?>[<?= $placeholder;?>][icon]" 
+					id="<?= __CLASS__;?>-icon-<?= $placeholder;?>" 
+					class="widefat" 
+				><?php icon_option_list($icon);?></select>
 			</td>
 		</tr>
 		<tr>
@@ -175,6 +195,20 @@ class theme_custom_homebox{
 				>
 			</td>
 		</tr>
+		<tr>
+			<th><label for="<?= __CLASS__;?>-display-type-<?= $placeholder;?>"><?= ___('Display type');?></label></th>
+			<td>
+				<select  
+					name="<?= __CLASS__;?>[<?= $placeholder;?>][display-type]" 
+					id="<?= __CLASS__;?>-display-type-<?= $placeholder;?>" 
+					class="widefat" 
+				>
+					<?php the_option_list('all',___('All'),$display);?>
+					<?php the_option_list('login',___('Only login'),$display);?>
+					<?php the_option_list('logout',___('Only logout'),$display);?>
+				</select>
+			</td>
+		</tr>
 		
 		<tr>
 			<th><?= ___('Categories');?></th>
@@ -187,14 +221,13 @@ class theme_custom_homebox{
 			<td>
 				<textarea name="<?= __CLASS__;?>[<?= $placeholder;?>][keywords]" id="<?= __CLASS__;?>-<?= $placeholder;?>-keywords" cols="30" rows="5" class="widefat" placeholder="<?= ___('Eg. Tag1 = http://inn-studio.com');?>"><?= esc_textarea($keywords);?></textarea>
 				<span class="description"><?= ___('Per keyword/line');?></span>
-				<a href="javascript:;" class="<?= __CLASS__;?>-del delete" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-id="<?= $placeholder;?>" data-target="#<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= esc_html(___('Delete this item'));?></a>
-				
 			</td>
 		</tr>
 		<tr>
 			<th><label for="<?= __CLASS__;?>-<?= $placeholder;?>-ad"><?= ___('AD code');?></label></th>
 			<td>
 				<textarea name="<?= __CLASS__;?>[<?= $placeholder;?>][ad]" id="<?= __CLASS__;?>-<?= $placeholder;?>-ad" cols="30" rows="5" class="widefat" placeholder="<?= ___('HTML code will display below this box.');?>"><?= $ad;?></textarea>
+				<a href="javascript:;" class="<?= __CLASS__;?>-del delete" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-id="<?= $placeholder;?>" data-target="#<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= ___('Delete this item');?></a>
 			</td>
 		</tr>
 		</tbody>
@@ -249,5 +282,30 @@ class theme_custom_homebox{
 	public static function backend_seajs_alias(array $alias = []){
 		$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__,'backend.js');
 		return $alias;
+	}
+	public static function frontend_css(){
+		if(!theme_cache::is_home())
+			return false;
+			
+		wp_enqueue_style(
+			__CLASS__,
+			theme_features::get_theme_includes_css(__DIR__),
+			'frontend',
+			theme_file_timestamp::get_timestamp()
+		);
+	}
+	public static function frontend_seajs_alias(array $alias = []){
+		if(theme_cache::is_home())
+			$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
+		return $alias;
+	}
+	public static function frontend_seajs_use(){
+		if(!theme_cache::is_home())
+			return false;
+		?>
+		seajs.use('<?= __CLASS__;?>',function(m){
+			m.init();
+		});
+		<?php
 	}
 }

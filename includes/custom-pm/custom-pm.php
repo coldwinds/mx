@@ -487,7 +487,7 @@ class theme_custom_pm{
 		return $lists;
 	}
 	public static function get_lists($user_id,$force = false){
-		return self::get_user_meta($user_id,'lists',$force);
+		return array_filter((array)self::get_user_meta($user_id,'lists',$force));
 	}
 	public static function is_unread($user_id,$unread_user_id){
 		$unreads = self::get_unreads($user_id);
@@ -798,7 +798,7 @@ class theme_custom_pm{
 		?>
 	</div>
 	<div class="form-group">
-		<input type="text" id="pm-dialog-content-<?= self::get_niceid($user_id);?>" name="content" class="pm-dialog-conteng form-control" placeholder="<?= ___('Enter to send P.M.');?>" required title="<?= ___('P.M. content');?>">
+		<input type="text" id="pm-dialog-content-<?= self::get_niceid($user_id);?>" name="content" class="pm-dialog-conteng form-control" placeholder="<?= ___('Enter to send P.M.');?>" required title="<?= ___('P.M. content');?>" autocomplete="off">
 	</div>
 	<div class="form-group">
 		<button class="btn btn-success btn-block" type="submit"><i class="fa fa-check"></i>&nbsp;<?= ___('Send P.M.');?></button>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-24 01:00+0800\n"
-"PO-Revision-Date: 2015-09-24 01:01+0800\n"
+"POT-Creation-Date: 2015-09-24 16:47+0800\n"
+"PO-Revision-Date: 2015-09-24 16:48+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -36,7 +36,7 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:26 core/core-options.php:170 functions.php:1833
+#: comments.php:26 core/core-options.php:170 functions.php:1836
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:472
 #: includes/custom-collection/custom-collection.php:571
@@ -98,31 +98,35 @@ msgstr "暂无分类目录，请去添加一些分类。"
 msgid "Select page"
 msgstr "选择页面"
 
-#: core/core-functions.php:632
+#: core/core-functions.php:5 includes/custom-navwalker/custom-navwalker.php:378
+msgid "Awesome icon"
+msgstr "Awesome 图标"
+
+#: core/core-functions.php:636
 msgid "Just"
 msgstr "刚刚"
 
-#: core/core-functions.php:638
+#: core/core-functions.php:642
 #, php-format
 msgid "%dmin ago"
 msgstr "%d分钟前"
 
-#: core/core-functions.php:644
+#: core/core-functions.php:648
 #, php-format
 msgid "%dh ago"
 msgstr "%d小时前"
 
-#: core/core-functions.php:650
+#: core/core-functions.php:654
 #, php-format
 msgid "%dd ago"
 msgstr "%d天前"
 
-#: core/core-functions.php:656
+#: core/core-functions.php:660
 #, php-format
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:662 functions.php:506 functions.php:1698
+#: core/core-functions.php:666 functions.php:506 functions.php:1698
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
@@ -223,7 +227,7 @@ msgstr "头部菜单"
 
 #: functions.php:63
 msgid "Login header menu"
-msgstr "已登录的顶部菜单"
+msgstr "头部菜单（已登录状态）"
 
 #: functions.php:64
 msgid "Mobile menu"
@@ -231,7 +235,7 @@ msgstr "手机菜单"
 
 #: functions.php:65
 msgid "Login mobile menu"
-msgstr "已登录的手机版菜单"
+msgstr "手机菜单（已登录状态）"
 
 #: functions.php:66
 msgid "Top bar menu"
@@ -239,7 +243,7 @@ msgstr "顶栏菜单"
 
 #: functions.php:67
 msgid "Login top bar menu"
-msgstr "已登录的顶栏菜单"
+msgstr "顶栏菜单（已登录状态）"
 
 #: functions.php:112
 msgid "Home widget area"
@@ -455,11 +459,11 @@ msgstr "请添加一些首页盒子。"
 msgid "More"
 msgstr "更多"
 
-#: functions.php:1756 includes/widget-rank/widget-rank.php:36
+#: functions.php:1759 includes/widget-rank/widget-rank.php:36
 msgid "More &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1789 includes/custom-dashboard/dashboards.php:34
+#: functions.php:1792 includes/custom-dashboard/dashboards.php:34
 #: includes/widget-author-posts/widget-author-posts.php:65
 #: includes/widget-rank/widget-rank.php:72
 #: includes/widget-tags/widget-tags.php:88 tpl/page-account-edit.php:80
@@ -467,55 +471,55 @@ msgstr "更多 &raquo;"
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
-#: functions.php:1794
+#: functions.php:1797
 #, php-format
 msgid "More about %s"
 msgstr "更多%s"
 
-#: functions.php:1826
+#: functions.php:1829
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1829
+#: functions.php:1832
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1839
+#: functions.php:1842
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1840 includes/custom-point-bomb/custom-point-bomb.php:228
+#: functions.php:1843 includes/custom-point-bomb/custom-point-bomb.php:228
 #: includes/custom-point-lottery/custom-point-lottery.php:370
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1872 tpl/author-profile.php:21
+#: functions.php:1875 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:84
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1874
+#: functions.php:1877
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1885
+#: functions.php:1888
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1887
+#: functions.php:1890
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1898
+#: functions.php:1901
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1899
+#: functions.php:1902
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1919 functions.php:1921
+#: functions.php:1922 functions.php:1924
 msgid "Post comment"
 msgstr "发表评论"
 
@@ -695,7 +699,8 @@ msgstr "广告"
 msgid "Type"
 msgstr "类型"
 
-#: includes/adbox/widget.php:44 includes/widget-rank/widget-rank.php:205
+#: includes/adbox/widget.php:44 includes/custom-homebox/custom-homebox.php:206
+#: includes/widget-rank/widget-rank.php:205
 msgid "All"
 msgstr "全部"
 
@@ -1100,7 +1105,7 @@ msgid "Post preview"
 msgstr "文章预览图"
 
 #: includes/custom-collection/custom-collection.php:158
-#: includes/custom-homebox/custom-homebox.php:190
+#: includes/custom-homebox/custom-homebox.php:230
 #: includes/custom-point-lottery/custom-point-lottery.php:170
 #: includes/custom-slidebox/custom-slidebox.php:205
 msgid "Delete this item"
@@ -1489,70 +1494,90 @@ msgstr "取消关注成功。"
 msgid "Unkown param."
 msgstr "位置参数。"
 
-#: includes/custom-homebox/custom-homebox.php:86
+#: includes/custom-homebox/custom-homebox.php:92
 msgid "Theme home box settings"
 msgstr "首页盒子设置"
 
-#: includes/custom-homebox/custom-homebox.php:101
+#: includes/custom-homebox/custom-homebox.php:107
 msgid "Home box control"
 msgstr "盒子操作"
 
-#: includes/custom-homebox/custom-homebox.php:103
+#: includes/custom-homebox/custom-homebox.php:109
 msgid "Add a new home box"
 msgstr "添加一个新的盒子"
 
-#: includes/custom-homebox/custom-homebox.php:138
-#: includes/custom-homebox/custom-homebox.php:146
+#: includes/custom-homebox/custom-homebox.php:148
+#: includes/custom-homebox/custom-homebox.php:156
 msgid "Box title"
 msgstr "盒子标题"
 
-#: includes/custom-homebox/custom-homebox.php:151
+#: includes/custom-homebox/custom-homebox.php:161
+msgid "Box icon"
+msgstr "盒子图标"
+
+#: includes/custom-homebox/custom-homebox.php:171
 msgid "Box link"
 msgstr "盒子链接"
 
-#: includes/custom-homebox/custom-homebox.php:159
+#: includes/custom-homebox/custom-homebox.php:179
 msgid "Box link (include http://)"
 msgstr "盒子地址（包括 http://）"
 
-#: includes/custom-homebox/custom-homebox.php:164
+#: includes/custom-homebox/custom-homebox.php:184
 msgid "Show posts"
 msgstr "显示文章数量"
 
-#: includes/custom-homebox/custom-homebox.php:172
+#: includes/custom-homebox/custom-homebox.php:192
 msgid "Posts number."
 msgstr "文章数量"
 
-#: includes/custom-homebox/custom-homebox.php:180 tpl/page-account-edit.php:13
+#: includes/custom-homebox/custom-homebox.php:199
+msgid "Display type"
+msgstr "显示类型"
+
+#: includes/custom-homebox/custom-homebox.php:207
+msgid "Only login"
+msgstr "仅登录后显示"
+
+#: includes/custom-homebox/custom-homebox.php:208
+msgid "Only logout"
+msgstr "仅登录前显示"
+
+#: includes/custom-homebox/custom-homebox.php:214 tpl/page-account-edit.php:13
 msgid "Categories"
 msgstr "分类"
 
-#: includes/custom-homebox/custom-homebox.php:186
+#: includes/custom-homebox/custom-homebox.php:220
 msgid "Keywords and links"
 msgstr "关键词与链接"
 
-#: includes/custom-homebox/custom-homebox.php:188
+#: includes/custom-homebox/custom-homebox.php:222
 msgid "Eg. Tag1 = http://inn-studio.com"
 msgstr "例如 标签1 = http://inn-studio.com"
 
-#: includes/custom-homebox/custom-homebox.php:189
+#: includes/custom-homebox/custom-homebox.php:223
 msgid "Per keyword/line"
 msgstr "一行一个关键词"
 
-#: includes/custom-homebox/custom-homebox.php:195
+#: includes/custom-homebox/custom-homebox.php:227
 msgid "AD code"
 msgstr "广告代码"
 
-#: includes/custom-homebox/custom-homebox.php:197
+#: includes/custom-homebox/custom-homebox.php:229
 msgid "HTML code will display below this box."
 msgstr "HTML 代码将显示此盒子下面。"
 
-#: includes/custom-navwalker/custom-navwalker.php:385
-msgid "Awesome icon"
-msgstr "Awesome 图标"
+#: includes/custom-navwalker/custom-navwalker.php:394
+msgid "Toggle navigation label"
+msgstr "导航标签开关"
 
-#: includes/custom-navwalker/custom-navwalker.php:399
+#: includes/custom-navwalker/custom-navwalker.php:396
+msgid "Show navigation label"
+msgstr "显示"
+
+#: includes/custom-navwalker/custom-navwalker.php:397
 msgid "Hide navigation label"
-msgstr "隐藏导航标签"
+msgstr "隐藏"
 
 #: includes/custom-page-cats/custom-page-cats.php:47
 msgid "Categories index settings"

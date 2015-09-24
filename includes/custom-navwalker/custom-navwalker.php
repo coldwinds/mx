@@ -1,13 +1,6 @@
 <?php
 /**
- * Class Name: custom_navwalker
- * GitHub URI: https://github.com/twittem/wp-bootstrap-navwalker
- * Description: A custom WordPress nav walker class to implement the Bootstrap 3 navigation style in a custom theme using the WordPress built in menu manager.
- * Version: 2.0.4
- * Author: Edward McIntyre -
- * 
- * @twittem License: GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * @version 1.0.1
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'custom_navwalker::custom_nav_menu_hook';
@@ -383,7 +376,9 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 				<p class="description description-thin">
 					<label for="edit-menu-item-awesome-<?= $item_id; ?>">
 						<?php __e( 'Awesome icon' ); ?><br />
-						<input type="text" id="edit-menu-item-awesome-<?= $item_id; ?>" class="widefat edit-menu-item-awesome" name="menu-item-awesome[<?= $item_id; ?>]" value="<?= esc_attr( $item->awesome ); ?>" />
+						<select id="edit-menu-item-awesome-<?= $item_id; ?>" class="widefat edit-menu-item-awesome" name="menu-item-awesome[<?= $item_id; ?>]" >
+							<?= icon_option_list($item->awesome);?>
+						</select>
 					</label>
 				</p><!-- /awesome icon -->
 				
@@ -396,7 +391,11 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 				<!-- only show icon -->
 				<p class="description description-thin field-hide-title">
 					<label for="edit-menu-item-hide-title-<?= $item_id; ?>">
-						<input type="checkbox" id="edit-menu-item-hide-title-<?= $item_id; ?>" class="widefat edit-menu-item-hide-title" name="menu-item-hide-title[<?= $item_id; ?>]" value="1" <?= isset( $item->hide_title ) && $item->hide_title == 1 ? 'checked' : null; ?> /> <?php __e( 'Hide navigation label' ); ?>
+						<?= ___( 'Toggle navigation label' ); ?><br>
+						<select id="edit-menu-item-hide-title-<?= $item_id; ?>" class="widefat edit-menu-item-hide-title" name="menu-item-hide-title[<?= $item_id; ?>]" >
+							<option><?= ___('Show navigation label');?></option>
+							<option value="1" <?= isset( $item->hide_title ) && $item->hide_title == 1 ? 'select' : null;?>><?= ___('Hide navigation label');?></option>
+						</select>
 					</label>
 				</p><!-- /only show icon -->
 				

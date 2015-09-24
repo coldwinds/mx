@@ -350,10 +350,6 @@ class theme_functions{
 			'excerpt' => false,
 		],$args);
 
-		$excerpt = get_the_excerpt();
-		if(!empty($excerpt))
-			$excerpt = esc_html($excerpt);
-
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
 		?>
@@ -365,26 +361,19 @@ class theme_functions{
 				</div>
 				<div class="media-body">
 					<h4 class="media-heading"><?= theme_cache::get_the_title($post->ID);?></h4>
-					<?php
-					/**
-					 * output excerpt
-					 */
-					if($args['excerpt'] === true){
-						echo $excerpt;
-					}
-					?>
+			
 					<div class="extra">
 						<div class="metas row">
 							
 							<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
 								<div class="view meta col-xs-6">
-									<i class="fa fa-play-circle"></i>
+									<i class="fa fa-play-circle"></i> 
 									<?= theme_post_views::get_views();?>
 								</div>
 							<?php } ?>
 
 							<div class="comments meta col-xs-6">
-								<i class="fa fa-comment"></i>
+								<i class="fa fa-comment"></i> 
 								<?= (int)$post->comment_count;?>
 							</div>
 						</div><!-- /.metas -->
@@ -1707,7 +1696,7 @@ class theme_functions{
 		if(!class_exists('theme_custom_homebox')) 
 			return false;
 			
-		$opt = (array)theme_custom_homebox::get_options();
+		$opt = array_filter((array)theme_custom_homebox::get_options());
 
 		/**
 		 * cache
@@ -1736,16 +1725,32 @@ class theme_functions{
 		global $post;
 		static $lazyload_i = 0;
 		foreach($opt as $k => $v){
+			
+			/** display type */
+			$display_type = isset($v['display-type']) ? $v['display-type'] : 'all';
+			
+			/** for login */
+			if($display_type === 'login' && !theme_cache::is_user_logged_in())
+				continue;
+				
+			/** for logout */
+			if($display_type === 'logout' && theme_cache::is_user_logged_in())
+				continue;
+
+				
 			if(!isset($v['title']) || trim($v['title']) === '')
 				continue;
+				
 			$link = isset($v['link']) && !empty($v['link']) ? esc_url($v['link']) : false;
 			?>
 <div id="homebox-<?= $k;?>" class="homebox mod">
-	
 	<div class="mod-heading">
 		<h2 class="mod-title">
 			<?php if($link){ ?><a href="<?= $link;?>" title="<?= ___('More');?>"><?php } ?>
-			<?= stripcslashes($v['title']);?>
+			<?php if(!empty($v['icon'])){ ?>
+				<i class="fa fa-<?= $v['icon'];?>"></i> 
+			<?php } ?>
+			<?= $v['title'];?>
 			<?php if($link){ ?></a><?php } ?>
 		</h2>
 		<?php
@@ -1757,7 +1762,7 @@ class theme_functions{
 		<?php } ?>
 		
 		<div class="extra">
-			<?php if(!is_null_array($v['keywords'])){ ?>
+			<?php if(!empty($v['keywords'])){ ?>
 				<div class="keywords hidden-xs">
 					<?php foreach(theme_custom_homebox::keywords_to_html($v['keywords']) as $kw){ ?>
 						<a href="<?= esc_url($kw['url']);?>"><?= $kw['name'];?></a>
@@ -1791,7 +1796,7 @@ class theme_functions{
 		unset($query);
 		?>
 	</ul>
-	<a href="<?= $link;?>" class="below-more"><?= sprintf(___('More about %s'),trim(strip_tags($v['title'])));?> <i class="fa fa-caret-right"></i></a>
+	<a href="<?= $link;?>" class="below-more"><?= sprintf(___('More about %s'),$v['title']);?> <i class="fa fa-caret-right"></i></a>
 	<?php
 	/**
 	 * ad

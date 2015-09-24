@@ -129,7 +129,7 @@ class widget_rank extends WP_Widget{
 			>
 				<?php
 				foreach(self::get_rank_data() as $k => $v){
-					echo get_option_list($k,$v,$instance['date']);
+					the_option_list($k,$v,$instance['date']);
 				}
 				?>
 			</select>
@@ -145,12 +145,12 @@ class widget_rank extends WP_Widget{
 				/** 
 				 * image type
 				 */
-				echo get_option_list('img',___('Image type'),$instance['content_type']);
+				the_option_list('img',___('Image type'),$instance['content_type']);
 				
 				/** 
 				 * text type
 				 */
-				echo get_option_list('tx',___('Text type'),$instance['content_type']);?>
+				the_option_list('tx',___('Text type'),$instance['content_type']);?>
 			</select>
 		</p>
 		<p>
@@ -169,31 +169,31 @@ class widget_rank extends WP_Widget{
 				 * orderby views
 				 */
 				if(class_exists('theme_post_views') && theme_post_views::is_enabled()){
-					echo get_option_list('views',___('Most views'),$instance['orderby']);
+					the_option_list('views',___('Most views'),$instance['orderby']);
 				}
 				
 				/** 
 				 * orderby thumb-up
 				 */
 				if(class_exists('theme_post_thumb') && theme_post_thumb::is_enabled()){
-					echo get_option_list('thumb-up',___('Thumb up'),$instance['orderby']);
+					the_option_list('thumb-up',___('Thumb up'),$instance['orderby']);
 				}
 				
 				/** 
 				 * orderby recommended
 				 */
 				if(class_exists('theme_recommended_post')){
-					echo get_option_list('recommended',___('Recommended'),$instance['orderby']);
+					the_option_list('recommended',___('Recommended'),$instance['orderby']);
 				}
 				/** 
 				 * orderby random
 				 */
-				echo get_option_list('random',___('Random'),$instance['orderby']);
+				the_option_list('random',___('Random'),$instance['orderby']);
 				
 				/** 
 				 * orderby latest
 				 */
-				echo get_option_list('latest',___('Latest'),$instance['orderby']);
+				the_option_list('latest',___('Latest'),$instance['orderby']);
 				
 				?>
 			</select>

@@ -119,7 +119,7 @@ class theme_point_lottery{
 		</tr>
 		<tr>
 			<th><label for="<?= __CLASS__;?>-percent-<?= $placeholder;?>"><?= ___('Award percent');?></label></th>
-			<td><input type="number" id="<?= __CLASS__;?>-percent-<?= $placeholder;?>" name="<?= __CLASS__;?>[boxes][<?= $placeholder;?>][percent]" class="short-number" placeholder="<?= ___('Award percent');?>" value="<?= $percent;?>" min="0" max="100" step="1" title="<?= ___('Award percent');?>"/> %</td>
+			<td><input type="range" id="<?= __CLASS__;?>-percent-<?= $placeholder;?>" name="<?= __CLASS__;?>[boxes][<?= $placeholder;?>][percent]" class="widefat" placeholder="<?= ___('Award percent');?>" value="<?= $percent;?>" min="0" max="100" step="1" title="<?= ___('Award percent');?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="<?= __CLASS__;?>-percent-<?= $placeholder;?>"><?= ___('Remaining');?></label></th>
