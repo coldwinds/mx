@@ -24,9 +24,11 @@ $open_sign_html = function(){
 			<i class="fa fa-qq fa-fw"></i> 
 			<?= ___('Login from QQ');?>
 		</a>
-		<a href="<?= esc_url(theme_open_sign::get_login_url('sina'));?>" class="btn btn-danger">
-			<i class="fa fa-weibo fa-fw"></i> 
-			<?= ___('Login from Weibo');?>
+		<a href="javascript:;" class="btn btn-danger" disabled>
+			<del>
+				<i class="fa fa-weibo fa-fw"></i> 
+				<?= ___('Login from Weibo');?>
+			</del>
 		</a>
 	</div>
 	<?php
@@ -53,37 +55,46 @@ $open_sign_html = function(){
 		<h3><?= ___('Account register');?></h3>
 	</div>
 	<div class="panel-body">
-		<form action="javascript:;" id="fm-sign-register" >
-			<div class="form-group">
-				<div class="input-group">
-					<label for="sign-nickname" class="input-group-addon"><i class="fa fa-user fa-fw"></i></label>
-					<input name="user[nickname]" type="text" class="form-control" id="sign-nickname" minlength="2" placeholder="<?= ___('Your nickname, at least 2 length');?>" title="<?= ___('Please type nickname, at least 2 length');?>" required tabindex="1" autofocus >
+		<?php if(theme_cache::get_option('users_can_register')){ ?>
+			<form action="javascript:;" id="fm-sign-register" >
+				<div class="form-group">
+					<div class="input-group">
+						<label for="sign-nickname" class="input-group-addon"><i class="fa fa-user fa-fw"></i></label>
+						<input name="user[nickname]" type="text" class="form-control" id="sign-nickname" minlength="2" placeholder="<?= ___('Your nickname, at least 2 length');?>" title="<?= ___('Please type nickname, at least 2 length');?>" required tabindex="1" autofocus >
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="input-group">
-					<label for="sign-email" class="input-group-addon"><i class="fa fa-at fa-fw"></i></label>
-					<input name="user[email]" type="email" class="form-control" id="sign-email" placeholder="<?= ___('Please type email');?>" title="<?= ___('Please type email');?>" required tabindex="1">
+				<div class="form-group">
+					<div class="input-group">
+						<label for="sign-email" class="input-group-addon"><i class="fa fa-at fa-fw"></i></label>
+						<input name="user[email]" type="email" class="form-control" id="sign-email" placeholder="<?= ___('Please type email');?>" title="<?= ___('Please type email');?>" required tabindex="1">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="input-group">
-					<label for="sign-pwd" class="input-group-addon"><i class="fa fa-key fa-fw"></i></label>
-					<input name="user[pwd]" type="password" class="form-control" id="sign-pwd" placeholder="<?= ___('Your password, at least 3 length');?>" title="<?= ___('Please type password, at least 3 length');?>" minlength="3" required tabindex="1">
+				<div class="form-group">
+					<div class="input-group">
+						<label for="sign-pwd" class="input-group-addon"><i class="fa fa-key fa-fw"></i></label>
+						<input name="user[pwd]" type="password" class="form-control" id="sign-pwd" placeholder="<?= ___('Your password, at least 3 length');?>" title="<?= ___('Please type password, at least 3 length');?>" minlength="3" required tabindex="1">
+					</div>
 				</div>
+				<div class="form-group form-group-submit">
+					<button type="submit" class="btn btn-success btn-block btn-lg submit" data-loading-text="<?= ___('Processing, please wait...');?>" tabindex="1">
+						<i class="fa fa-check"></i>
+						<?= ___('Register &amp; Log-in');?>
+					</button>
+					<input type="hidden" name="type" value="register">
+				</div>
+				<div class="form-group text-center">
+					<i class="fa fa-check-square-o"></i> 
+					<?= sprintf(___('I am agree the %s.'),'<a href="' . theme_custom_sign::get_tos_url() . '" target="_blank">' . ___('TOS') . '</a>');?>
+				</div>
+			</form>
+		<?php }else{ /** can not reigster */ ?>
+			<div class="page-tip">
+				<?= status_tip('info',___('Sorry, it is not the time, the site is temporarily closed registration.'));?>
 			</div>
-			<div class="form-group form-group-submit">
-				<button type="submit" class="btn btn-success btn-block btn-lg submit" data-loading-text="<?= ___('Processing, please wait...');?>" tabindex="1">
-					<i class="fa fa-check"></i>
-					<?= ___('Register &amp; Log-in');?>
-				</button>
-				<input type="hidden" name="type" value="register">
+			<div class="page-tip">
+				<a href="javascript:history.back();" class="btn btn-success btn-block"><i class="fa fa-arrow-left"></i> <?= ___('Back');?></a>
 			</div>
-			<div class="form-group text-center">
-				<i class="fa fa-check-square-o"></i> 
-				<?= sprintf(___('I am agree the %s.'),'<a href="' . theme_custom_sign::get_tos_url() . '" target="_blank">' . ___('TOS') . '</a>');?>
-			</div>
-		</form>
+		<?php } ?>
 	</div><!-- /.panel-body -->
 </div><!-- /.panel -->
 <div class="form-group">

@@ -770,6 +770,7 @@ img{
 /**
  * #sidebar
  */
+
 #sidebar .widget_nav_menu{
 	overflow: hidden;
 }
@@ -2794,6 +2795,7 @@ body.menu-on #mobile-on-layer{
 	color:#fff;
 }
 @media (min-width: 768px){
+
 	.main-nav-placeholder{
 		height: 94px;
 	}

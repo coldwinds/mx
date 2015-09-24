@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-24 16:47+0800\n"
-"PO-Revision-Date: 2015-09-24 16:48+0800\n"
+"POT-Creation-Date: 2015-09-24 21:30+0800\n"
+"PO-Revision-Date: 2015-09-24 21:31+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -26,7 +26,7 @@ msgstr "《%s》的附件"
 msgid "No content yet."
 msgstr "暂无资料"
 
-#: comments.php:14 functions.php:1642
+#: comments.php:14 functions.php:1631
 #: includes/custom-author-profile/custom-author-profile.php:123
 #: tpl/author-profile.php:75
 msgid "Comments"
@@ -36,7 +36,7 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:26 core/core-options.php:170 functions.php:1836
+#: comments.php:26 core/core-options.php:170 functions.php:1838
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:472
 #: includes/custom-collection/custom-collection.php:571
@@ -126,7 +126,7 @@ msgstr "%d天前"
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:666 functions.php:506 functions.php:1698
+#: core/core-functions.php:666 functions.php:495 functions.php:1687
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
@@ -302,168 +302,168 @@ msgstr "顶/赞"
 msgid "Comment count"
 msgstr "评论统计"
 
-#: functions.php:299 functions.php:518 functions.php:1638
+#: functions.php:299 functions.php:507 functions.php:1627
 #: includes/post-views/post-views.php:190 tpl/page-account-edit.php:18
 msgid "Views"
 msgstr "查看数"
 
-#: functions.php:484 functions.php:511
+#: functions.php:473 functions.php:500
 #, php-format
 msgid "Views all post by %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:485
+#: functions.php:474
 msgid "Author avatar"
 msgstr "作者头像"
 
-#: functions.php:499 tpl/page-account-post.php:239
+#: functions.php:488 tpl/page-account-post.php:239
 msgid "Category"
 msgstr "分类"
 
-#: functions.php:630
+#: functions.php:619
 msgid "comment"
 msgstr "评论"
 
-#: functions.php:630
+#: functions.php:619
 msgid "comments"
 msgstr "评论"
 
-#: functions.php:715 functions.php:717
+#: functions.php:704 functions.php:706
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:730
+#: functions.php:719
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:737
+#: functions.php:726
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:755
+#: functions.php:744
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:759
+#: functions.php:748
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:765 includes/widget-author-posts/widget-author-posts.php:23
+#: functions.php:754 includes/widget-author-posts/widget-author-posts.php:23
 #: includes/widget-author-posts/widget-author-posts.php:79
 msgid "Author posts"
 msgstr "作者文章"
 
-#: functions.php:769
+#: functions.php:758
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:788
+#: functions.php:777
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:795
+#: functions.php:784
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:823
+#: functions.php:812
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:824
+#: functions.php:813
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:839
+#: functions.php:828
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:869 functions.php:1119 functions.php:1121 functions.php:1128
-#: functions.php:1130 functions.php:1504
+#: functions.php:858 functions.php:1108 functions.php:1110 functions.php:1117
+#: functions.php:1119 functions.php:1493
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:888 functions.php:894 functions.php:902
+#: functions.php:877 functions.php:883 functions.php:891
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:1017
+#: functions.php:1006
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1138 functions.php:1139 functions.php:1146 functions.php:1147
-#: functions.php:1501
+#: functions.php:1127 functions.php:1128 functions.php:1135 functions.php:1136
+#: functions.php:1490
 #: includes/custom-attachment-page/custom-attachment-page.php:71
 msgid "Next page"
 msgstr "下一页"
 
-#: functions.php:1196 functions.php:1212
+#: functions.php:1185 functions.php:1201
 msgid "Placeholder"
 msgstr "占位符"
 
-#: functions.php:1199
+#: functions.php:1188
 #, php-format
 msgid "Previous post: %s"
 msgstr "上一篇：%s"
 
-#: functions.php:1215
+#: functions.php:1204
 #, php-format
 msgid "Next post: %s"
 msgstr "下一篇：%s"
 
-#: functions.php:1306
+#: functions.php:1295
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1330
+#: functions.php:1319
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1400 includes/related-post/related-post.php:54
+#: functions.php:1389 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1433
+#: functions.php:1422
 msgid "No data."
 msgstr "暂无资料"
 
-#: functions.php:1479
+#: functions.php:1468
 msgid "No data yet"
 msgstr "此类别暂无资料"
 
-#: functions.php:1521
+#: functions.php:1510
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1546 includes/custom-page-rank/custom-page-rank.php:86
+#: functions.php:1535 includes/custom-page-rank/custom-page-rank.php:86
 msgid "Recommend"
 msgstr "推荐"
 
-#: functions.php:1552
+#: functions.php:1541
 msgid "more &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1570
+#: functions.php:1559
 msgid "Readmore..."
 msgstr "查看更多……"
 
-#: functions.php:1729
+#: functions.php:1718
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1747
+#: functions.php:1749
 msgid "More"
 msgstr "更多"
 
-#: functions.php:1759 includes/widget-rank/widget-rank.php:36
+#: functions.php:1761 includes/widget-rank/widget-rank.php:36
 msgid "More &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1792 includes/custom-dashboard/dashboards.php:34
+#: functions.php:1794 includes/custom-dashboard/dashboards.php:34
 #: includes/widget-author-posts/widget-author-posts.php:65
 #: includes/widget-rank/widget-rank.php:72
 #: includes/widget-tags/widget-tags.php:88 tpl/page-account-edit.php:80
@@ -471,55 +471,55 @@ msgstr "更多 &raquo;"
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
-#: functions.php:1797
+#: functions.php:1799
 #, php-format
 msgid "More about %s"
 msgstr "更多%s"
 
-#: functions.php:1829
+#: functions.php:1831
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1832
+#: functions.php:1834
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1842
+#: functions.php:1844
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1843 includes/custom-point-bomb/custom-point-bomb.php:228
+#: functions.php:1845 includes/custom-point-bomb/custom-point-bomb.php:228
 #: includes/custom-point-lottery/custom-point-lottery.php:370
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1875 tpl/author-profile.php:21
+#: functions.php:1877 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:84
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1877
+#: functions.php:1879
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1888
+#: functions.php:1890
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1890
+#: functions.php:1892
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1901
+#: functions.php:1903
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1902
+#: functions.php:1904
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1922 functions.php:1924
+#: functions.php:1924 functions.php:1926
 msgid "Post comment"
 msgstr "发表评论"
 
@@ -527,7 +527,7 @@ msgstr "发表评论"
 msgid "Log-out"
 msgstr "登出"
 
-#: header.php:160 includes/custom-sign/custom-sign.php:162 page-sign.php:238
+#: header.php:160 includes/custom-sign/custom-sign.php:161 page-sign.php:247
 #: tpl/header-topbar-tools.php:128
 msgid "Login"
 msgstr "登录"
@@ -774,7 +774,7 @@ msgstr "主题缓存已被清空或重建。"
 
 #: includes/cache/cache.php:131 includes/cache/cache.php:134
 #: includes/cache/cache.php:136 includes/cache/cache.php:138
-#: includes/setting-import/setting-import.php:152 page-sign.php:76
+#: includes/setting-import/setting-import.php:152 page-sign.php:77
 msgid "Processing, please wait..."
 msgstr "处理中，请稍候…"
 
@@ -1679,7 +1679,7 @@ msgid "Pinyin initial"
 msgstr "拼音首字母"
 
 #: includes/custom-pm/custom-pm.php:109
-#: includes/widget-author/widget-author.php:97 tpl/header-topbar-tools.php:93
+#: includes/widget-author/widget-author.php:93 tpl/header-topbar-tools.php:93
 msgid "P.M."
 msgstr "私信"
 
@@ -2668,39 +2668,39 @@ msgstr "立即下载"
 msgid "Open in new window"
 msgstr "在新窗口中打开"
 
-#: includes/custom-sign/custom-sign.php:68
+#: includes/custom-sign/custom-sign.php:67
 msgid "Custom sign settings"
 msgstr "自定义登录设置"
 
-#: includes/custom-sign/custom-sign.php:69
+#: includes/custom-sign/custom-sign.php:68
 msgid "You can custom the sign page here."
 msgstr "您可以在这里定制登录页面。"
 
-#: includes/custom-sign/custom-sign.php:74
+#: includes/custom-sign/custom-sign.php:73
 msgid "Sign-in avatar URL"
 msgstr "登录的头像图片 URL"
 
-#: includes/custom-sign/custom-sign.php:81
+#: includes/custom-sign/custom-sign.php:80
 msgid "Recommend 100x100 px image."
 msgstr "建议 100x100 象素的图片。"
 
-#: includes/custom-sign/custom-sign.php:85
+#: includes/custom-sign/custom-sign.php:84
 msgid "Terms of service page URL"
 msgstr "服务协议页面 URL"
 
-#: includes/custom-sign/custom-sign.php:169 tpl/header-topbar-tools.php:168
+#: includes/custom-sign/custom-sign.php:168 tpl/header-topbar-tools.php:168
 msgid "Register"
 msgstr "注册"
 
-#: includes/custom-sign/custom-sign.php:176 page-sign.php:115 page-sign.php:166
+#: includes/custom-sign/custom-sign.php:175 page-sign.php:124 page-sign.php:175
 msgid "Recover password"
 msgstr "找回密码"
 
-#: includes/custom-sign/custom-sign.php:183
+#: includes/custom-sign/custom-sign.php:182
 msgid "Reset password"
 msgstr "重设密码"
 
-#: includes/custom-sign/custom-sign.php:216
+#: includes/custom-sign/custom-sign.php:215
 msgid "Sign"
 msgstr "登录"
 
@@ -4098,27 +4098,27 @@ msgstr "作者名片 <small>（定制）</small>"
 msgid "Show the author information."
 msgstr "显示作者信息。"
 
-#: includes/widget-author/widget-author.php:44
+#: includes/widget-author/widget-author.php:40
 msgid "Views the author information detail"
 msgstr "查看作者资料"
 
-#: includes/widget-author/widget-author.php:58
+#: includes/widget-author/widget-author.php:54
 msgid "The author is lazy, nothing writes here."
 msgstr "作者很懒，啥都没写。"
 
-#: includes/widget-author/widget-author.php:69
+#: includes/widget-author/widget-author.php:65
 msgid "Views author posts"
 msgstr "查看作者的文章"
 
-#: includes/widget-author/widget-author.php:74
+#: includes/widget-author/widget-author.php:70
 msgid "Views author comments"
 msgstr "查看作者的评论"
 
-#: includes/widget-author/widget-author.php:88 tpl/page-account-bomb.php:82
+#: includes/widget-author/widget-author.php:84 tpl/page-account-bomb.php:82
 msgid "Bomb!"
 msgstr "丢雷！"
 
-#: includes/widget-author/widget-author.php:96
+#: includes/widget-author/widget-author.php:92
 msgid "Send a private message."
 msgstr "发送私信"
 
@@ -4229,48 +4229,56 @@ msgstr "微博登录"
 msgid "Account register"
 msgstr "用户注册"
 
-#: page-sign.php:60
+#: page-sign.php:61
 msgid "Your nickname, at least 2 length"
 msgstr "昵称，至少 2 个字符"
 
-#: page-sign.php:60
+#: page-sign.php:61
 msgid "Please type nickname, at least 2 length"
 msgstr "请输入昵称，2个字符以上"
 
-#: page-sign.php:66 page-sign.php:124 page-sign.php:218
+#: page-sign.php:67 page-sign.php:133 page-sign.php:227
 msgid "Please type email"
 msgstr "请输入 Email"
 
-#: page-sign.php:72
+#: page-sign.php:73
 msgid "Your password, at least 3 length"
 msgstr "密码，至少 3 个字符"
 
-#: page-sign.php:72 page-sign.php:224
+#: page-sign.php:73 page-sign.php:233
 msgid "Please type password, at least 3 length"
 msgstr "请输入密码，3个字符以上"
 
-#: page-sign.php:78
+#: page-sign.php:79
 msgid "Register &amp; Log-in"
 msgstr "注册 &amp; 登录"
 
-#: page-sign.php:84
+#: page-sign.php:85
 #, php-format
 msgid "I am agree the %s."
 msgstr "我已同意本站的 %s"
 
-#: page-sign.php:84
+#: page-sign.php:85
 msgid "TOS"
 msgstr "服务协议"
 
-#: page-sign.php:93 page-sign.php:141
+#: page-sign.php:90
+msgid "Sorry, it is not the time, the site is temporarily closed registration."
+msgstr "真抱歉，来的不是时候，目前网站暂时关闭了注册。"
+
+#: page-sign.php:93
+msgid "Back"
+msgstr "返回"
+
+#: page-sign.php:102 page-sign.php:150
 msgid "I have account"
 msgstr "我已有账号"
 
-#: page-sign.php:97 page-sign.php:253
+#: page-sign.php:106 page-sign.php:262
 msgid "Forgot password?"
 msgstr "忘记密码了？"
 
-#: page-sign.php:120
+#: page-sign.php:129
 msgid ""
 "If you forgot your account password, you can recover your password by your "
 "account email. Please entry your account email, we will send a confirm email "
@@ -4279,52 +4287,52 @@ msgstr ""
 "如果您忘记了账号密码，您可以通过账号邮箱来重置密码。请输入您的账号邮箱，我们"
 "将会发送一封确认邮件，并根据提示重置您的密码。"
 
-#: page-sign.php:130
+#: page-sign.php:139
 msgid "Send an email to confirm"
 msgstr "发送邮件以确认"
 
-#: page-sign.php:145 page-sign.php:249
+#: page-sign.php:154 page-sign.php:258
 msgid "Register new account"
 msgstr "注册新用户"
 
-#: page-sign.php:158
+#: page-sign.php:167
 msgid "Reset my password"
 msgstr "重置我的密码"
 
-#: page-sign.php:163
+#: page-sign.php:172
 msgid "Sorry, the url is expired, please recover password again."
 msgstr "抱歉，该地址已过期，请再次重设密码。"
 
-#: page-sign.php:169
+#: page-sign.php:178
 #, php-format
 msgid "You are resetting %s password, please type your new password."
 msgstr "您正在重设 %s 的密码，请输入您的新密码。"
 
-#: page-sign.php:174
+#: page-sign.php:183
 msgid "Please type new password"
 msgstr "请输入新密码"
 
-#: page-sign.php:180
+#: page-sign.php:189
 msgid "Retype new password"
 msgstr "重新输入密码"
 
-#: page-sign.php:186
+#: page-sign.php:195
 msgid "Reset"
 msgstr "重设"
 
-#: page-sign.php:211
+#: page-sign.php:220
 msgid "Account login"
 msgstr "用户登录"
 
-#: page-sign.php:224
+#: page-sign.php:233
 msgid "Please type password"
 msgstr "请输入密码"
 
-#: page-sign.php:231
+#: page-sign.php:240
 msgid "Remember me"
 msgstr "下次自动登录"
 
-#: page-sign.php:236
+#: page-sign.php:245
 msgid "Logging in, please wait..."
 msgstr "登录中，请稍候……"
 

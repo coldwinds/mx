@@ -1,14 +1,13 @@
 <?php
 /** 
  * sign
- * @version 1.0.1
+ * @version 1.0.2
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_custom_sign::init';
 	return $fns;
 });
 class theme_custom_sign{
-	public static $iden = 'theme_custom_sign';
 	public static $page_slug = 'sign';
 	public static $pages = [];
 	public static function init(){
@@ -24,7 +23,7 @@ class theme_custom_sign{
 		add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
 		
 		/** ajax */
-		add_action('wp_ajax_nopriv_' . self::$iden, __CLASS__ . '::process');
+		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
 		
 		add_filter('show_admin_bar', 		__CLASS__ . '::filter_show_admin_bar');
 		add_filter('login_url', 			__CLASS__ . '::filter_wp_login_url',10,2);
@@ -33,7 +32,7 @@ class theme_custom_sign{
 
 		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
 
-		add_filter('cache_request',					__CLASS__ . '::cache_request');
+		add_filter('cache_request',			__CLASS__ . '::cache_request');
 		
 		/**
 		 * backend
@@ -42,29 +41,29 @@ class theme_custom_sign{
 		add_filter('theme_options_save' , __CLASS__ . '::options_save');
 	}
 	public static function options_save(array $options = []){
-		if(isset($_POST[self::$iden])){
-			$options[self::$iden] = $_POST[self::$iden];
+		if(isset($_POST[__CLASS__])){
+			$options[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $options;
 	}
 	public static function options_default(array $opts = []){
-		$opts[self::$iden] = [
+		$opts[__CLASS__] = [
 			'avatar-url' => 'http://ww3.sinaimg.cn/thumb150/686ee05djw1eriqgtewe7j202o02o3y9.jpg'
 		];
 		return $opts;
 	}
 	public static function get_options($key = null){
 		static $caches = [];
-		if(!isset($caches[self::$iden]))
-			$caches[self::$iden] = theme_options::get_options(self::$iden);
+		if(!isset($caches[__CLASS__]))
+			$caches[__CLASS__] = theme_options::get_options(__CLASS__);
 
 		if($key)
-			return isset($caches[self::$iden][$key]) ? $caches[self::$iden][$key] : null;
-		return $caches[self::$iden];
+			return isset($caches[__CLASS__][$key]) ? $caches[__CLASS__][$key] : null;
+		return $caches[__CLASS__];
 	}
 	public static function display_backend(){
 		?>
-		<fieldset id="<?= self::$iden;?>">
+		<fieldset id="<?= __CLASS__;?>">
 			<legend><?= ___('Custom sign settings');?></legend>
 			<p class="description"><?= ___('You can custom the sign page here.');?></p>
 			<table class="form-table">
@@ -77,13 +76,13 @@ class theme_custom_sign{
 							<?php } ?>
 						</th>
 						<td>
-							<input type="url" name="<?= self::$iden;?>[avatar-url]" id="<?= self::$iden;?>-avatar-url" class="widefat code" value="<?= esc_url(self::get_options('avatar-url'));?>">
+							<input type="url" name="<?= __CLASS__;?>[avatar-url]" id="<?= __CLASS__;?>-avatar-url" class="widefat code" value="<?= esc_url(self::get_options('avatar-url'));?>">
 							<p class="description"><?= ___('Recommend 100x100 px image.');?></p>
 						</td>
 					</tr>
 					<tr>
 						<th><?= ___('Terms of service page URL');?></th>
-						<td><input type="url" name="<?= self::$iden;?>[tos-url]" id="<?= self::$iden;?>-tos-url" class="widefat code" value="<?= self::get_tos_url();?>"></td>
+						<td><input type="url" name="<?= __CLASS__;?>[tos-url]" id="<?= __CLASS__;?>-tos-url" class="widefat code" value="<?= self::get_tos_url();?>"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -243,6 +242,7 @@ class theme_custom_sign{
 		}
 		return $title . $sep . theme_cache::get_bloginfo('name');
 	}
+	
 	/** 
 	 * user_login
 	 */
@@ -374,6 +374,17 @@ class theme_custom_sign{
 			 * register
 			 */
 			case 'register':
+				/**
+				 * check can register
+				 */
+				if(!theme_cache::get_option('users_can_register')){
+					die(theme_features::json_format([
+						'status' => 'error',
+						'code' => 'users_can_not_register',
+						'msg' => ___('Sorry, it is not the time, the site is temporarily closed registration.'),
+					]));
+				}
+				
 				$name_at_least_len = 2;
 				$pwd_at_least_len = 3;
 				/**
@@ -585,16 +596,16 @@ class theme_custom_sign{
 		if(theme_cache::is_user_logged_in() || !self::is_page())
 			return $alias;
 
-		$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);
+		$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
 		return $alias;
 	}
 	public static function frontend_seajs_use(){
 		if(theme_cache::is_user_logged_in() || !self::is_page()) 
 			return false;
 		?>
-		seajs.use('<?= self::$iden;?>',function(m){
+		seajs.use('<?= __CLASS__;?>',function(m){
 			m.config.process_url = '<?= theme_features::get_process_url([
-				'action' => self::$iden
+				'action' => __CLASS__
 			]);?>';
 			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
 			m.config.lang.E00001 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
@@ -608,7 +619,7 @@ class theme_custom_sign{
 			return false;
 
 		wp_enqueue_style(
-			self::$iden,
+			__CLASS__,
 			theme_features::get_theme_includes_css(__DIR__),
 			'frontend',
 			theme_file_timestamp::get_timestamp()

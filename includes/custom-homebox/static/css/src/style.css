@@ -1,28 +1,21 @@
 #homebox-nav{
 	position: absolute;
 	background: #fff;
-	margin-left: -20px;
+	margin-left: 0;
 	text-align: center;
-	opacity: .5;
 	box-shadow: 0 1px 5px rgba(0,0,0,.3);
 	border-radius: 2px;
 }
-	#homebox-nav:hover{
-		opacity: 1;
-	}
+
 	#homebox-nav a,
 	#homebox-nav a:hover .title{
 		display: block;
-		
 	}
 	#homebox-nav a{
 		position: relative;
 		padding: 10px;
 		color: #999;
 		transition: none;
-	}
-	#homebox-nav a:before{
-		
 	}
 	#homebox-nav a:after{
 		display: none;
@@ -40,7 +33,8 @@
 	#homebox-nav a:hover:after{
 		display: block;
 	}
-		#homebox-nav a:hover{
+		#homebox-nav a:hover,
+		#homebox-nav a.active{
 			background: #FF4081;
 			color: #fff;
 		}
@@ -48,3 +42,8 @@
 	#homebox-nav a:hover .floor{
 		display: none;
 	}
+@media( min-width: 768px ){
+	body.home #sidebar-container{
+		padding-left: 45px;
+	}
+}
