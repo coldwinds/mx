@@ -87,6 +87,8 @@ class theme_custom_edit{
 		return new WP_Query([
 			'author' => theme_cache::get_current_user_id(),
 			'posts_per_page' => 20,
+			'post_status' => ['publish','pending'],
+			'post_type' => 'post',
 			'paged' => (int)$paged,
 		]);
 		

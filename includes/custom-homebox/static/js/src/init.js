@@ -67,10 +67,15 @@ define(function(require,exports,module){
 		for( var i = 0, len = cache.$boxes.length; i < len; i++ ){
 			var $title = cache.$boxes[i].querySelector('.mod-title a'),
 				title = $title.textContent,
-				icon_class = $title.querySelector('i').getAttribute('class'),
+				$i = $title.querySelector('i'),
 				offsetTop = getElementTop(cache.$boxes[i]) - 100,
 				$item = document.createElement('a');
-
+				
+			if(!$i)
+				continue;
+				
+			var icon_class = $i.getAttribute('class');
+			
 			/** offset top sets */
 			cache.offset_top_sets[offsetTop] = i;
 			

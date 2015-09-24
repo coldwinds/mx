@@ -192,7 +192,7 @@ class custom_navwalker extends Walker_Nav_Menu{
 		/**
 		 * icon
 		 */
-		if( isset($_REQUEST['menu-item-hide-title'][$menu_item_db_id]) ){
+		if( isset($_REQUEST['menu-item-hide-title'][$menu_item_db_id]) && $_REQUEST['menu-item-hide-title'][$menu_item_db_id] == 1){
 			update_post_meta($menu_item_db_id, '_menu_item_hide_title', 1);
 		}else{
 			delete_post_meta($menu_item_db_id, '_menu_item_hide_title');
@@ -393,7 +393,7 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 					<label for="edit-menu-item-hide-title-<?= $item_id; ?>">
 						<?= ___( 'Toggle navigation label' ); ?><br>
 						<select id="edit-menu-item-hide-title-<?= $item_id; ?>" class="widefat edit-menu-item-hide-title" name="menu-item-hide-title[<?= $item_id; ?>]" >
-							<option><?= ___('Show navigation label');?></option>
+							<option value="-1"><?= ___('Show navigation label');?></option>
 							<option value="1" <?= isset( $item->hide_title ) && $item->hide_title == 1 ? 'select' : null;?>><?= ___('Hide navigation label');?></option>
 						</select>
 					</label>
