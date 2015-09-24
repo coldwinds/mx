@@ -177,7 +177,7 @@ class theme_comment_emotion{
 							<div class="comment-emotion-close">&times;</div>
 							<?php
 							foreach(self::get_ems('kaomoji','items') as $name => $item){
-								$item = esc_html($item);
+								$item = htmlspecialchars($item);
 								?>
 								<a href="javascript:;" data-content="<?= $item;?>"><?= $item;?></a>
 							<?php } ?>
@@ -187,7 +187,7 @@ class theme_comment_emotion{
 						<div id="<?= self::$iden;?>-img" class="pop">
 							<div class="comment-emotion-close">&times;</div>
 							<?php foreach(self::get_ems('img','items') as $name => $url){ ?>
-								<a href="javascript:;" data-content="<?= '[',$name,']';?>"><img data-url="<?= esc_url($url);?>" alt="<?= esc_html($name);?>"></a>
+								<a href="javascript:;" data-content="<?= '[',$name,']';?>"><img data-url="<?= esc_url($url);?>" alt="<?= htmlspecialchars($name);?>"></a>
 							<?php } ?>
 						</div>
 					<?php } ?>

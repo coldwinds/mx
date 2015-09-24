@@ -1744,7 +1744,7 @@ class theme_features{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-				<?= esc_html($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank"><?= urldecode($cat->slug);?></a>
+				<?= htmlspecialchars($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank"><?= urldecode($cat->slug);?></a>
 			</label>
 			<?php 
 			}

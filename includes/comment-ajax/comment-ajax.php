@@ -541,7 +541,7 @@ class theme_comment_ajax{
 						'cpage' => $cpage,
 						'logged' => theme_cache::is_user_logged_in(),
 						'registration' => theme_cache::get_option('comment_registration'),
-						'user-name' => esc_html($user_name),
+						'user-name' => htmlspecialchars($user_name),
 						'user-url' => esc_url($user_url),
 						'avatar-url' => $avatar_url,
 					];

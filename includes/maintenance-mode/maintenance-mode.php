@@ -88,7 +88,7 @@ class maintenance_mode{
 	 <body>
 		<article>
 		<h1>' . ___('We&rsquo;ll be back soon!') . '</h1>
-		<p>' . sprintf(___('Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need to you can always <a href="mailto:%s">contact us</a>, otherwise we&rsquo;ll be back online shortly!'),esc_html(theme_cache::get_bloginfo('admin_email'))) . '</p>
+		<p>' . sprintf(___('Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need to you can always <a href="mailto:%s">contact us</a>, otherwise we&rsquo;ll be back online shortly!'),htmlspecialchars(theme_cache::get_bloginfo('admin_email'))) . '</p>
 		<p class="by">&mdash; ' . theme_cache::get_bloginfo('name') . '</p>
 		</article>
 	</body>

@@ -26,7 +26,7 @@ if(theme_custom_point::get_point_img_url()){
 							</strong>
 						</p>
 						<p class="bomb-area-meta">
-							<?= esc_html($current_user->display_name);?>
+							<?= htmlspecialchars($current_user->display_name);?>
 						</p>
 					</div>					
 				</div><!-- .col-sm-5 -->

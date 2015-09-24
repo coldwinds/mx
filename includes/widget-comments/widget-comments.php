@@ -60,7 +60,7 @@ class widget_comments extends WP_Widget{
 					
 					/** author_name */
 					if(!isset($caches['author_name'][$comment->comment_author]))
-						$caches['author_name'][$comment->comment_author] = esc_html(get_comment_author());
+						$caches['author_name'][$comment->comment_author] = htmlspecialchars(get_comment_author());
 						
 					/** avatar placeholder */
 					if(!isset($caches['avatar_placeholder']))

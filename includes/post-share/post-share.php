@@ -103,7 +103,7 @@ class theme_post_share{
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><?= esc_html(___('Restore'));?></th>
+						<th scope="row"><?= htmlspecialchars(___('Restore'));?></th>
 						<td>
 							<label for="<?= self::$iden;?>_restore">
 								<input type="checkbox" id="<?= self::$iden;?>_restore" name="<?= self::$iden;?>[restore]" value="1"/>

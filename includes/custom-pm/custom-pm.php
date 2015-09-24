@@ -277,7 +277,7 @@ class theme_custom_pm{
 				
 				die(theme_features::json_format([
 					'status' => 'success',
-					'name' => esc_html($user->display_name),
+					'name' => htmlspecialchars($user->display_name),
 					'avatar' => get_avatar_url($user->ID),
 					'msg' => ___('User data loaded, you can send P.M. now.'),
 					'url' => theme_cache::get_author_posts_url($user->ID),

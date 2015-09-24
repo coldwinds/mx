@@ -14,5 +14,5 @@ function append_content_nav(){for(var i=0,len=cache.$boxes.length;i<len;i++){var
 function create_nav(){cache.$nav=document.createElement('nav');cache.$nav.id='homebox-nav';append_content_nav();set_nav_style();document.body.appendChild(cache.$nav);}
 function getElementLeft(e){var l=e.offsetLeft,c=e.offsetParent;while(c!==null){l+=c.offsetLeft;c=c.offsetParent;}
 return l;}
-function getElementTop(e){console.log(e);var l=e.offsetTop,c=e.offsetParent;while(c!==null){l+=c.offsetTop;c=c.offsetParent;}
+function getElementTop(e){var l=e.offsetTop,c=e.offsetParent;while(c!==null){l+=c.offsetTop;c=c.offsetParent;}
 return l;}});

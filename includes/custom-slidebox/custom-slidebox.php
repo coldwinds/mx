@@ -65,7 +65,7 @@ class theme_custom_slidebox{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-				<?= esc_html($cat->name);?>
+				<?= htmlspecialchars($cat->name);?>
 			</label>
 			<?php 
 			}
@@ -417,8 +417,8 @@ class theme_custom_slidebox{
 			if(!isset($v['title']))
 				return false;
 			$new_boxes[$k] = $v;
-			$new_boxes[$k]['title'] = esc_html($new_boxes[$k]['title']);
-			$new_boxes[$k]['subtitle'] = esc_html($new_boxes[$k]['subtitle']);
+			$new_boxes[$k]['title'] = htmlspecialchars($new_boxes[$k]['title']);
+			$new_boxes[$k]['subtitle'] = htmlspecialchars($new_boxes[$k]['subtitle']);
 			$new_boxes[$k]['img-url'] = esc_url($new_boxes[$k]['img-url']);
 			$new_boxes[$k]['link-url'] = esc_url($new_boxes[$k]['link-url']);
 		}
@@ -490,7 +490,7 @@ class theme_custom_slidebox{
 								$cat = theme_cache::get_category($cat_id);
 								$color = theme_colorful_cats::get_cat_color($cat_id,true);
 								?>
-								<span style="background-color:rgba(<?= $color['r'];?>,<?= $color['g'];?>,<?= $color['b'];?>,.8);"><?= esc_html($cat->name);?></span>
+								<span style="background-color:rgba(<?= $color['r'];?>,<?= $color['g'];?>,<?= $color['b'];?>,.8);"><?= htmlspecialchars($cat->name);?></span>
 							<?php } ?>
 						</span>
 					<?php } ?>

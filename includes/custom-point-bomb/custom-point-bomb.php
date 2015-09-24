@@ -326,7 +326,7 @@ class theme_custom_point_bomb{
 					'status' => 'success',
 					'points' => theme_custom_point::get_point($target_id),
 					'avatar' => theme_cache::get_avatar_url($target_id),
-					'name' => esc_html($target->display_name),
+					'name' => htmlspecialchars($target->display_name),
 					'msg' => ___('Target locked, bomb is ready.'),
 				];
 
@@ -433,7 +433,7 @@ class theme_custom_point_bomb{
 				/** update target points */
 				theme_custom_point::update_user_points($target_id, $new_target_points);
 
-				$target_name = '<a href="' . theme_cache::get_author_posts_url($target_id) . '" target="_blank" class="author">' . esc_html($target->display_name) . '</a>';
+				$target_name = '<a href="' . theme_cache::get_author_posts_url($target_id) . '" target="_blank" class="author">' . htmlspecialchars($target->display_name) . '</a>';
 							
 				/**
 				 * hit target
@@ -565,7 +565,7 @@ class theme_custom_point_bomb{
 
 		$target_name = theme_cache::get_the_author_meta('display_name',$history['target-id']);
 
-		$says = isset($history['says']) && trim($history['says']) !== '' ? esc_html($history['says']) : false;
+		$says = isset($history['says']) && trim($history['says']) !== '' ? htmlspecialchars($history['says']) : false;
 		?>
 		<li class="list-group-item">
 			<?php theme_custom_point::the_list_icon('bomb');?>
@@ -620,7 +620,7 @@ class theme_custom_point_bomb{
 			$fight_back_url = self::get_tabs('bomb',$history['attacker-id'])['url'];
 		}
 
-		$says = isset($history['says']) && trim($history['says']) !== '' ? esc_html($history['says']) : false;
+		$says = isset($history['says']) && trim($history['says']) !== '' ? htmlspecialchars($history['says']) : false;
 		
 		?>
 		<li class="list-group-item">

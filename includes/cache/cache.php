@@ -254,7 +254,7 @@ class theme_cache{
 	public static function get_comment_author($comment_id){
 		static $caches = [];
 		if(!isset($caches[$comment_id]))
-			$caches[$comment_id] = esc_html(get_comment_author($comment_id));
+			$caches[$comment_id] = htmlspecialchars(get_comment_author($comment_id));
 		return $caches[$comment_id];
 	}
 	public static function get_comment(&$comment = null, $output = OBJECT){
@@ -274,7 +274,7 @@ class theme_cache{
 	public static function get_the_title($post_id){
 		static $caches = [];
 		if(!isset($caches[$post_id]))
-			$caches[$post_id] = esc_html(get_the_title($post_id));
+			$caches[$post_id] = htmlspecialchars(get_the_title($post_id));
 		return $caches[$post_id];
 	}
 	public static function get_permalink($post_id,  $leavename = false){
@@ -298,7 +298,7 @@ class theme_cache{
 				case 'user_firstname':
 				case 'user_lastname':
 				case 'nickname':
-					$cache[$cache_id] = esc_html(get_the_author_meta($field,$user_id));
+					$cache[$cache_id] = htmlspecialchars(get_the_author_meta($field,$user_id));
 					break;
 				default:
 					$cache[$cache_id] = get_the_author_meta($field,$user_id);
@@ -328,7 +328,7 @@ class theme_cache{
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));
 		if(!isset($caches[$cache_id]))
-			$caches[$cache_id] = esc_html(wp_title($sep, $display, $seplocation));
+			$caches[$cache_id] = htmlspecialchars(wp_title($sep, $display, $seplocation));
 		return $caches[$cache_id];
 	}
 	/**

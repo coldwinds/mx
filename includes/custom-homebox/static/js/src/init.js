@@ -101,7 +101,6 @@ define(function(require,exports,module){
 		return l;
 	}
 	function getElementTop(e){
-		console.log(e);
 		var l = e.offsetTop,
 			c = e.offsetParent;
 		while (c !== null){

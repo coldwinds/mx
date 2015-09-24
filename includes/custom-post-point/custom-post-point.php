@@ -523,7 +523,7 @@ class custom_post_point{
 						'<a href="' . theme_cache::get_permalink($history['post-id']) . '">' . theme_cache::get_the_title($history['post-id']) . '</a>',
 						abs($history['points']),
 						theme_custom_point::get_point_name(),
-						esc_html(get_author_meta('display_name',$history['rater-id']))
+						htmlspecialchars(get_author_meta('display_name',$history['rater-id']))
 					);
 				}
 				?>
