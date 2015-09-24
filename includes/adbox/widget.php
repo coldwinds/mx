@@ -1,10 +1,9 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
 add_action('widgets_init','widget_adbox::register_widget');
 class widget_adbox extends WP_Widget{
-	public static $iden = 'widget_adbox';
 	function __construct(){
 		$this->alt_option_name = __CLASS__;
 		parent::__construct(
@@ -41,9 +40,9 @@ class widget_adbox extends WP_Widget{
 				class="widefat"
 				id="<?= self::get_field_id('type');?>"
 			>
-				<?= get_option_list('all',___('All'),$instance['type']);?>
-				<?= get_option_list('desktop',___('Desktop'),$instance['type']);?>
-				<?= get_option_list('mobile',___('Mobile'),$instance['type']);?>
+				<?php the_option_list('all',___('All'),$instance['type']);?>
+				<?php the_option_list('desktop',___('Desktop'),$instance['type']);?>
+				<?php the_option_list('mobile',___('Mobile'),$instance['type']);?>
 			</select>
 		</p>
 		<p>

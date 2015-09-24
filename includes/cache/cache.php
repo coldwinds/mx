@@ -654,7 +654,7 @@ class theme_cache{
 			self::set($cache_id,$cache,$cache_group_id,$expire);
 		}
 		if(!$exists_key){
-			$a = self::set_key($cache_id,$cache_group_id);
+			self::set_key($cache_id,$cache_group_id);
 		}
 		
 		echo $cache;
