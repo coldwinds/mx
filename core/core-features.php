@@ -1290,7 +1290,7 @@ class theme_features{
 			ob_start(); 
 			?>
 			<a href="<?= $prev_page_url;?>" class="page-numbers page-prev <?= esc_attr($numbers_class_str);?> <?= $first_class;?>">
-				<?= esc_html(___('&lsaquo; Previous'));?>
+				<?= ___('&lsaquo; Previous');?>
 			</a>
 			<?php
 			$prev_page_str = ob_get_contents();
@@ -1325,7 +1325,7 @@ class theme_features{
 			
 			<?php ob_start(); ?>
 			<a href="<?= $next_page_url;?>" class="page-numbers page-next <?= esc_attr($numbers_class_str);?> <?= $last_class;?>">
-				<?= esc_html(___('Next &rsaquo;'));?>
+				<?= ___('Next &rsaquo;');?>
 			</a>
 			<?php
 			$next_page_str = ob_get_contents();

@@ -322,7 +322,7 @@ class theme_notification{
 						___('Your comment has a reply by %1$s in %2$s.'),
 						get_comment_author_link($noti['comment-id']),
 						'<a href="' . theme_cache::get_permalink($comment->comment_post_ID) . '#comment-' . $noti['comment-id'] . '">
-							' . esc_html(theme_cache::get_the_title($comment->comment_post_ID)) . '
+							' . theme_cache::get_the_title($comment->comment_post_ID) . '
 						</a>'
 					);
 					?>

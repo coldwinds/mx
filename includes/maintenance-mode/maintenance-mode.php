@@ -47,7 +47,7 @@ class maintenance_mode{
 		<!-- maintenance_mode -->
 		<fieldset>
 			<legend><?= ___('Maintenance Mode');?></legend>
-			<p class="description"><?= esc_html(___('If your site needs to test privately, maybe fill a URL in the redirect area that the the visitors will see the redirect page but yourself, otherwise left blank.'));?></p>
+			<p class="description"><?= ___('If your site needs to test privately, maybe fill a URL in the redirect area that the the visitors will see the redirect page but yourself, otherwise left blank.');?></p>
 			<p class="description"><strong><?= ___('Attention: if theme has frontend log-in page, please DO NOT use maintenance mode, or you can not log-in to background.');?></strong></p>
 			<table class="form-table">
 				<tbody>
@@ -89,7 +89,7 @@ class maintenance_mode{
 		<article>
 		<h1>' . ___('We&rsquo;ll be back soon!') . '</h1>
 		<p>' . sprintf(___('Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need to you can always <a href="mailto:%s">contact us</a>, otherwise we&rsquo;ll be back online shortly!'),esc_html(theme_cache::get_bloginfo('admin_email'))) . '</p>
-		<p class="by">&mdash; ' . esc_html(theme_cache::get_bloginfo('name')) . '</p>
+		<p class="by">&mdash; ' . theme_cache::get_bloginfo('name') . '</p>
 		</article>
 	</body>
 </html>

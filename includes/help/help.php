@@ -52,22 +52,22 @@ class theme_help{
 			</tr>
 			<tr>
 				<th scope="row"><?= ___('Theme author');?></th>
-				<td><?= esc_html($theme_meta['author'])?></td>
+				<td><?= $theme_meta['author']?></td>
 			</tr>
 			<tr>
 				<th scope="row"><?= ___('Author site');?></th>
 				<td><a href="<?= esc_url($theme_meta['author_url'])?>" target="_blank"><?= esc_url($theme_meta['author_url'])?></a></td>
 			</tr>
 			<tr>
-				<th scope="row"><?= esc_html(___('Feedback and technical support'));?></th>
+				<th scope="row"><?= ___('Feedback and technical support');?></th>
 				<td>
 				
 					<?php if(isset($theme_meta['email'])){ ?>
-						<p><?= esc_html(___('E-Mail'));?> <a href="mailto:<?= $theme_meta['email'];?>"><?= esc_html($theme_meta['email']);?></a></p>
+						<p><?= ___('E-Mail');?> <a href="mailto:<?= $theme_meta['email'];?>"><?= $theme_meta['email'];?></a></p>
 					<?php } ?>
 					
 					<?php if(isset($theme_meta['qq'])){ ?>
-						<p><?= esc_html(___('QQ'));?>
+						<p><?= ___('QQ');?>
 							<?php if(isset($theme_meta['qq']['link'])){ ?>
 								<a target="_blank" href="<?= esc_url($theme_meta['qq']['link']);?>"><?= $theme_meta['qq']['number'];?></a>
 							<?php }else{ ?>
@@ -77,7 +77,7 @@ class theme_help{
 					<?php } ?>
 					
 					<?php if(isset($theme_meta['qq_group'])){ ?>
-						<p><?= esc_html(___('QQ group'));?>
+						<p><?= ___('QQ group');?>
 							<?php if(isset($theme_meta['qq_group']['link'])){ ?>
 								<a target="_blank" href="<?= esc_url($theme_meta['qq_group']['link']);?>"><?= $theme_meta['qq_group']['number'];?></a>
 							<?php }else{ ?>
@@ -104,7 +104,7 @@ class theme_help{
 			<?php }else{ ?>
 			<tr>
 				<th scope="row"><?= ___('Theme core');?></th>
-				<td><a href="<?= esc_url($theme_meta['core']['url'])?>" target="_blank"><?= esc_html($theme_meta['core']['name'])?></a></td>
+				<td><a href="<?= esc_url($theme_meta['core']['url'])?>" target="_blank"><?= $theme_meta['core']['name']?></a></td>
 			</tr>
 			<?php } ?>
 

@@ -25,7 +25,7 @@ class theme_clean_up{
 		<fieldset>
 			<legend><?= ___('Database Optimization');?></legend>
 			<p class="description"><?= ___('If your site works for a long time, maybe will have some redundant data in the database, they will reduce the operating speed of the your site, recommend to clean them regularly.');?></p>
-			<p class="description"><strong><?= esc_html(___('Attention: this action will be auto clean up all theme cache.'));?></strong></p>
+			<p class="description"><strong><?= ___('Attention: this action will be auto clean up all theme cache.');?></strong></p>
 			<table class="form-table">
 				<tbody>
 					<tr>
