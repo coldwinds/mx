@@ -60,7 +60,7 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 				}
 			}
 			?>
-			<li><a href="<?= wp_login_url(get_current_url());?>"><i class="fa fa-sign-out fa-fw"></i> <?= ___('Log-out');?></a></li>
+			<li><a href="<?= wp_logout_url(get_current_url());?>"><i class="fa fa-sign-out fa-fw"></i> <?= ___('Log-out');?></a></li>
 		</ul>
 	</div>
 <?php } ?>
