@@ -18,7 +18,7 @@ define(function(require, exports, module){
 		cache.$thumbnail_active = cache.$thumbnail_container.querySelector('a.active');
 		
 		/** scroll it */
-		cache.$thumbnail_container.scrollLeft = cache.$thumbnail_active.offsetLeft / 2;
+		cache.$thumbnail_container.scrollLeft = cache.$thumbnail_active.offsetLeft - 100;
 		
 	}
 });

@@ -22,6 +22,8 @@ class theme_custom_attachment{
 			return $content;
 			
 		global $post;
+		//var_dump($post);
+		//die;
 		$post_title = theme_cache::get_the_title($post->post_parent);
 		if(!wp_attachment_is_image($post->ID))
 			return $content;

@@ -257,7 +257,12 @@ img{
 	max-width: none;
 	overflow: hidden;
 }
-
+/**
+ * fix video
+ */
+.me-plugin {
+  position: relative !important;
+}
 /**
  * .page-pagination
  */

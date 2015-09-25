@@ -179,288 +179,299 @@ class theme_custom_contribution{
 			 * case upload
 			 */
 			case 'upload':
-				/** 
-				 * if not image
-				 */
-				$filename = isset($_FILES['img']['name']) ? $_FILES['img']['name'] : null;
-				$file_ext = $filename ? array_slice(explode('.',$filename),-1,1)[0] : null;
-				$file_ext = strtolower($file_ext);
-				if(!$file_ext || !in_array($file_ext,self::$file_exts)){
-					$output['status'] = 'error';
-					$output['code'] = 'invaild_file_type';
-					$output['msg'] = ___('Invaild file type.');
-					die(theme_features::json_format($output));
-				}
-				/** rename file name */
-				//$_FILES['img']['name'] = theme_cache::get_current_user_id() . '-' . current_time('YmdHis') . '-' . rand(100,999). '.' . $file_ext;
-				
-				/** 
-				 * pass
-				 */
-				require_once( ABSPATH . 'wp-admin/includes/image.php' );
-				require_once( ABSPATH . 'wp-admin/includes/file.php' );
-				require_once( ABSPATH . 'wp-admin/includes/media.php' );
-
-				$attach_id = media_handle_upload('img',0);
-				if(is_wp_error($attach_id)){
-					$output['status'] = 'error';
-					$output['code'] = $attach_id->get_error_code();
-					$output['msg'] = $attach_id->get_error_message();
-					die(theme_features::json_format($output));
-				}else{
-					$output = self::get_thumbnail_data($attach_id,$output);
-					$output['status'] = 'success';
-					$output['attach-id'] = $attach_id;
-					$output['msg'] = ___('Upload success.');
-					die(theme_features::json_format($output));
-				}
+				self::process_upload();
 				break;
 			/**
 			 * post
 			 */
 			case 'post':
-				$ctb = isset($_POST['ctb']) && is_array($_POST['ctb']) ? $_POST['ctb'] : null;
-				
-				$edit_post_id = isset($_POST['post-id']) && is_numeric($_POST['post-id']) ? (int)$_POST['post-id'] : 0;
-
-				$edit_again = false;
-
-				/**
-				 * check edit
-				 */
-				if($edit_post_id != 0){
-					/** set edit again */
-					$edit_again = true;
-					
-					self::set_once_published($edit_post_id);
-					
-					/**
-					 * check post exists
-					 */
-					$old_post = theme_cache::get_post($edit_post_id);
-					if(!$old_post || 
-						$old_post->post_type !== 'post' || 
-						!self::in_edit_post_status($old_post->post_status)
-					){
-						die(theme_features::json_format([
-							'status' => 'error',
-							'code' => 'post_not_exist',
-							'msg' => ___('Sorry, the post does not exist.'),
-						]));
-					}
-					/**
-					 * check post author is myself
-					 */
-					if($old_post->post_author != theme_cache::get_current_user_id()){
-						die(theme_features::json_format([
-							'status' => 'error',
-							'code' => 'post_not_exist',
-							'msg' => ___('Sorry, you are not the post author, can not edit it.'),
-						]));
-					}
-					/**
-					 * check post edit lock status
-					 */
-					$lock_user_id = self::wp_check_post_lock($edit_post_id);
-					if($lock_user_id){
-						die(theme_features::json_format([
-							'status' => 'error',
-							'code' => 'post_not_exist',
-							'msg' => ___('Sorry, the post does not exist.'),
-						]));
-					}
-				}
-				if(is_null_array($ctb)){
-					$output['status'] = 'error';
-					$output['code'] = 'invaild_ctb_param';
-					$output['msg'] = ___('Invaild contribution param.');
-					die(theme_features::json_format($output));
-				}
-				/**
-				 * post title
-				 */
-				$post_title = isset($ctb['post-title']) && is_string($ctb['post-title']) ? trim($ctb['post-title']) : null;
-				if(!$post_title){
-					$output['status'] = 'error';
-					$output['code'] = 'invaild_post_title';
-					$output['msg'] = ___('Please write the post title.');
-					die(theme_features::json_format($output));
-				}
-				/**
-				 * post excerpt
-				 */
-				$post_excerpt = isset($ctb['post-excerpt']) && is_string($ctb['post-excerpt']) ? trim($ctb['post-excerpt']) : null;
-				
-				/**
-				 * post content
-				 */
-				$post_content = isset($ctb['post-content']) && is_string($ctb['post-content']) ? trim($ctb['post-content']) : null;
-				if(!$post_content){
-					$output['status'] = 'error';
-					$output['code'] = 'invaild_post_content';
-					$output['msg'] = ___('Please write the post content.');
-					die(theme_features::json_format($output));
-				}
-				/**
-				 * check thumbnail cover
-				 */
-				$thumbnail_id = isset($ctb['thumbnail-id']) && is_numeric($ctb['thumbnail-id']) ? (int)$ctb['thumbnail-id'] : null;
-				if(!$thumbnail_id){
-					$output['status'] = 'error';
-					$output['code'] = 'invaild_thumbnail_id';
-					$output['msg'] = ___('Please set an image as post thumbnail');
-					die(theme_features::json_format($output));
-				}
-				/**
-				 * cats
-				 */
-				if($edit_post_id == 0){
-					/** new post */
-					$cat_ids = isset($ctb['cats']) && is_array($ctb['cats']) ? $ctb['cats'] : null;
-					if(is_null_array($cat_ids)){
-						$output['status'] = 'error';
-						$output['code'] = 'invaild_cat_id';
-						$output['msg'] = ___('Please select a category.');
-						die(theme_features::json_format($output));
-					}
-					/** edit post */
-				}else{
-					/**
-					 * get all cats
-					 */
-					$cat_id = isset($ctb['cat']) && is_numeric($ctb['cat']) ? (int)$ctb['cat'] : null;
-					if(empty($cat_id)){
-						$output['status'] = 'error';
-						$output['code'] = 'invaild_cat_id';
-						$output['msg'] = ___('Please select a category.');
-						die(theme_features::json_format($output));
-					}
-					$cat_ids = [];
-					theme_features::get_all_cats_by_child($cat_id,$cat_ids);
-				}
-				/**
-				 * tags
-				 */
-				$tags = isset($ctb['tags']) && is_array($ctb['tags']) ? array_filter($ctb['tags']) : [];
-				if(!empty($tags)){
-					$tags = array_map(function($tag){
-						if(!is_string($tag)) return null;
-						return $tag;
-					},$tags);
-				}
-				/**
-				 * post status
-				 */
-				if(theme_cache::current_user_can('publish_posts')){
-					$post_status = 'publish';
-				}else{
-					$post_status = 'pending';
-				} 
-				
-				/*****************************
-				 * PASS ALL, WRITE TO DB
-				 *****************************/
-				/** edit post */
-				if($edit_post_id != 0){
-					$post_status = self::get_update_post_status($old_post->post_status);
-					$post_id = wp_update_post([
-						'ID' => $edit_post_id,
-						'post_title' => $post_title,
-						'post_status' => $post_status,
-						'post_type' => $old_post->post_type,
-						'post_excerpt' => fliter_script($post_excerpt),
-						'post_content' => fliter_script($post_content),
-						'post_category' => $cat_ids,
-						'tags_input' => $tags,
-					],true);
-					
-				/**
-				 * insert post
-				 */
-				}else{
-					$post_id = wp_insert_post([
-						'post_title' => $post_title,
-						'post_excerpt' => fliter_script($post_excerpt),
-						'post_content' => fliter_script($post_content),
-						'post_status' => $post_status,
-						'post_author' => theme_cache::get_current_user_id(),
-						'post_category' => $cat_ids,
-						'tags_input' => $tags,
-					],true);
-				}
-				/**
-				 * check error
-				 */
-				if(is_wp_error($post_id)){
-					$output['status'] = 'error';
-					$output['code'] = $post_id->get_error_code();
-					$output['msg'] = $post_id->get_error_message();
-					die(theme_features::json_format($output));
-				}/** end post error */
-				
-				/**
-				 * set thumbnail and post parent
-				 */
-				$attach_ids = isset($ctb['attach-ids']) && is_array($ctb['attach-ids']) ? array_map('intval',array_filter($ctb['attach-ids'])) : null;
-				if(!$attach_ids){
-					/** set post thumbnail */
-					set_post_thumbnail($post_id,$thumbnail_id);
-					
-					/** set attachment post parent */
-					foreach($attach_ids as $attach_id){
-						$post = theme_cache::get_post($attach_id);
-						if(!$post || $post->post_type !== 'attachment')
-							continue;
-						wp_update_post([
-							'ID' => $attach_id,
-							'post_parent' => $post_id,
-						]);
-					}
-				}/** end set post thumbnail */
-
-				/**
-				 * if new post
-				 */
-				if($edit_post_id == 0){
-					/**
-					 * pending status
-					 */
-					if($post_status === 'pending'){
-						$output['status'] = 'success';
-						$output['msg'] = ___('Your post submitted successful, it will be published after approve in a while.');
-						die(theme_features::json_format($output));
-					}else{
-						$output['status'] = 'success';
-						$output['msg'] = sprintf(
-							___('Congratulation! Your post has been published. You can %s or %s.'),
-							'<a href="' . esc_url(theme_cache::get_permalink($post_id)) . '" title="' . theme_cache::get_the_title($post_id) . '">' . ___('View it now') . '</a>',
-							'<a href="javascript:location.href=location.href;">' . ___('countinue to write a new post') . '</a>'
-						);
-
-						/**
-						 * add point
-						 */
-						if($edit_again && class_exists('theme_custom_point')){
-							$post_publish_point = theme_custom_point::get_point_value('post-publish');
-							$output['point'] = array(
-								'value' => $post_publish_point,
-								'detail' => ___('Post published'),
-							);
-						}/** end point */
-					}/** end post status */
-				}else{
-					$output['status'] = 'success';
-					if($old_post->post_status == 'publish'){
-						$output['msg'] = ___('Your post has updated successful.') . ' <a href="' . theme_cache::get_permalink($post_id) . '" target="_blank">' . ___('Views it now') . '</a>';
-					}else{
-						$output['msg'] = ___('Your post has updated successful.');
-					}
-					die(theme_features::json_format($output));
-				}/** end post edit */
-					
-				die(theme_features::json_format($output));
+				self::process_post();
+				break;
+			default:
 		}
 
+		die(theme_features::json_format($output));
+	}
+	private static function process_upload(){
+		/** 
+		 * if not image
+		 */
+		$filename = isset($_FILES['img']['name']) ? $_FILES['img']['name'] : null;
+		$file_ext = $filename ? array_slice(explode('.',$filename),-1,1)[0] : null;
+		$file_ext = strtolower($file_ext);
+		if(!$file_ext || !in_array($file_ext,self::$file_exts)){
+			$output['status'] = 'error';
+			$output['code'] = 'invaild_file_type';
+			$output['msg'] = ___('Invaild file type.');
+			die(theme_features::json_format($output));
+		}
+		/** rename file name */
+		//$_FILES['img']['name'] = theme_cache::get_current_user_id() . '-' . current_time('YmdHis') . '-' . rand(100,999). '.' . $file_ext;
+		
+		/** 
+		 * pass
+		 */
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+		require_once( ABSPATH . 'wp-admin/includes/file.php' );
+		require_once( ABSPATH . 'wp-admin/includes/media.php' );
+
+		$attach_id = media_handle_upload('img',0);
+		if(is_wp_error($attach_id)){
+			$output['status'] = 'error';
+			$output['code'] = $attach_id->get_error_code();
+			$output['msg'] = $attach_id->get_error_message();
+			die(theme_features::json_format($output));
+		}else{
+			$output = self::get_thumbnail_data($attach_id,$output);
+			$output['status'] = 'success';
+			$output['attach-id'] = $attach_id;
+			$output['msg'] = ___('Upload success.');
+			die(theme_features::json_format($output));
+		}
+	}
+	private static function process_post(){
+		$ctb = isset($_POST['ctb']) && is_array($_POST['ctb']) ? array_filter($_POST['ctb']) : null;
+		
+		/** check ctb object */
+		if(empty($ctb)){
+			$output['status'] = 'error';
+			$output['code'] = 'invaild_ctb_param';
+			$output['msg'] = ___('Invaild contribution param.');
+			die(theme_features::json_format($output));
+		}
+				
+		$edit_post_id = isset($_POST['post-id']) && is_numeric($_POST['post-id']) ? (int)$_POST['post-id'] : 0;
+
+		$edit_again = false;
+
+		/**
+		 * check edit
+		 */
+		if($edit_post_id != 0){
+			/** set edit again */
+			$edit_again = true;
+			
+			self::set_once_published($edit_post_id);
+			
+			/**
+			 * check post exists
+			 */
+			$old_post = theme_cache::get_post($edit_post_id);
+			if(!$old_post || 
+				$old_post->post_type !== 'post' || 
+				!self::in_edit_post_status($old_post->post_status)
+			){
+				die(theme_features::json_format([
+					'status' => 'error',
+					'code' => 'post_not_exist',
+					'msg' => ___('Sorry, the post does not exist.'),
+				]));
+			}
+			/**
+			 * check post author is myself
+			 */
+			if($old_post->post_author != theme_cache::get_current_user_id()){
+				die(theme_features::json_format([
+					'status' => 'error',
+					'code' => 'post_not_exist',
+					'msg' => ___('Sorry, you are not the post author, can not edit it.'),
+				]));
+			}
+			/**
+			 * check post edit lock status
+			 */
+			$lock_user_id = self::wp_check_post_lock($edit_post_id);
+			if($lock_user_id){
+				die(theme_features::json_format([
+					'status' => 'error',
+					'code' => 'post_not_exist',
+					'msg' => ___('Sorry, the post does not exist.'),
+				]));
+			}
+		}
+		/**
+		 * post title
+		 */
+		$post_title = isset($ctb['post-title']) && is_string($ctb['post-title']) ? trim($ctb['post-title']) : null;
+		if(!$post_title){
+			$output['status'] = 'error';
+			$output['code'] = 'invaild_post_title';
+			$output['msg'] = ___('Please write the post title.');
+			die(theme_features::json_format($output));
+		}
+		/**
+		 * post excerpt
+		 */
+		$post_excerpt = isset($ctb['post-excerpt']) && is_string($ctb['post-excerpt']) ? trim($ctb['post-excerpt']) : null;
+		
+		/**
+		 * post content
+		 */
+		$post_content = isset($ctb['post-content']) && is_string($ctb['post-content']) ? trim($ctb['post-content']) : null;
+		if(!$post_content){
+			$output['status'] = 'error';
+			$output['code'] = 'invaild_post_content';
+			$output['msg'] = ___('Please write the post content.');
+			die(theme_features::json_format($output));
+		}
+		/**
+		 * check thumbnail cover
+		 */
+		$thumbnail_id = isset($ctb['thumbnail-id']) && is_numeric($ctb['thumbnail-id']) ? (int)$ctb['thumbnail-id'] : null;
+		if(!$thumbnail_id){
+			$output['status'] = 'error';
+			$output['code'] = 'invaild_thumbnail_id';
+			$output['msg'] = ___('Please set an image as post thumbnail');
+			die(theme_features::json_format($output));
+		}
+		/**
+		 * cats
+		 */
+		if($edit_post_id == 0){
+			/** new post */
+			$cat_ids = isset($ctb['cats']) && is_array($ctb['cats']) ? $ctb['cats'] : null;
+			if(is_null_array($cat_ids)){
+				$output['status'] = 'error';
+				$output['code'] = 'invaild_cat_id';
+				$output['msg'] = ___('Please select a category.');
+				die(theme_features::json_format($output));
+			}
+			/** edit post */
+		}else{
+			/**
+			 * get all cats
+			 */
+			$cat_id = isset($ctb['cat']) && is_numeric($ctb['cat']) ? (int)$ctb['cat'] : null;
+			if(empty($cat_id)){
+				$output['status'] = 'error';
+				$output['code'] = 'invaild_cat_id';
+				$output['msg'] = ___('Please select a category.');
+				die(theme_features::json_format($output));
+			}
+			$cat_ids = [];
+			theme_features::get_all_cats_by_child($cat_id,$cat_ids);
+		}
+		/**
+		 * tags
+		 */
+		$tags = isset($ctb['tags']) && is_array($ctb['tags']) ? array_filter($ctb['tags']) : [];
+		if(!empty($tags)){
+			$tags = array_map(function($tag){
+				if(!is_string($tag)) 
+					return null;
+				return $tag;
+			},$tags);
+		}
+		/**
+		 * post status
+		 */
+		if(theme_cache::current_user_can('publish_posts')){
+			$post_status = 'publish';
+		}else{
+			$post_status = 'pending';
+		} 
+		
+		/*****************************
+		 * PASS ALL, WRITE TO DB
+		 *****************************/
+		/** edit post */
+		if($edit_post_id != 0){
+			$post_status = self::get_update_post_status($old_post->post_status);
+			$post_id = wp_update_post([
+				'ID' => $edit_post_id,
+				'post_title' => $post_title,
+				'post_status' => $post_status,
+				'post_type' => $old_post->post_type,
+				'post_excerpt' => fliter_script($post_excerpt),
+				'post_content' => fliter_script($post_content),
+				'post_category' => $cat_ids,
+				'tags_input' => $tags,
+			],true);
+			
+		/**
+		 * insert post
+		 */
+		}else{
+			$post_id = wp_insert_post([
+				'post_title' => $post_title,
+				'post_excerpt' => fliter_script($post_excerpt),
+				'post_content' => fliter_script($post_content),
+				'post_status' => $post_status,
+				'post_author' => theme_cache::get_current_user_id(),
+				'post_category' => $cat_ids,
+				'tags_input' => $tags,
+			],true);
+		}
+		/**
+		 * check error
+		 */
+		if(is_wp_error($post_id)){
+			$output['status'] = 'error';
+			$output['code'] = $post_id->get_error_code();
+			$output['msg'] = $post_id->get_error_message();
+			die(theme_features::json_format($output));
+		}/** end post error */
+		
+		/** set post thumbnail */
+		set_post_thumbnail($post_id,$thumbnail_id);
+			
+		/**
+		 * set attachment parent
+		 */
+		$attach_ids = isset($ctb['attach-ids']) && is_array($ctb['attach-ids']) ? array_map('intval',array_filter($ctb['attach-ids'])) : null;
+		if($attach_ids){
+			/** set attachment post parent */
+			foreach($attach_ids as $attach_id){
+				$post = theme_cache::get_post($attach_id);
+				if(!$post || $post->post_type !== 'attachment')
+					continue;
+				wp_update_post([
+					'ID' => $attach_id,
+					'post_parent' => $post_id,
+				]);
+			}
+		}/** end set post thumbnail */
+
+		/**
+		 * if new post
+		 */
+		if($edit_post_id == 0){
+			/**
+			 * pending status
+			 */
+			if($post_status === 'pending'){
+				$output['status'] = 'success';
+				$output['msg'] = ___('Your post submitted successful, it will be published after approve in a while.');
+				die(theme_features::json_format($output));
+			}else{
+				$output['status'] = 'success';
+				$output['msg'] = sprintf(
+					___('Congratulation! Your post has been published. You can %s or %s.'),
+					'<a href="' . theme_cache::get_permalink($post_id) . '" title="' . theme_cache::get_the_title($post_id) . '">' . ___('View it now') . '</a>',
+					'<a href="javascript:location.href=location.href;">' . ___('countinue to write a new post') . '</a>'
+				);
+
+				/**
+				 * add point
+				 */
+				if($edit_again && class_exists('theme_custom_point')){
+					$post_publish_point = theme_custom_point::get_point_value('post-publish');
+					$output['point'] = array(
+						'value' => $post_publish_point,
+						'detail' => ___('Post published'),
+					);
+				}/** end point */
+			}/** end post status */
+		}else{
+			$output['status'] = 'success';
+			if($old_post->post_status == 'publish'){
+				$output['msg'] = ___('Your post has updated successful.') . ' <a href="' . theme_cache::get_permalink($post_id) . '" target="_blank">' . ___('Views it now') . '</a>';
+			}else{
+				$output['msg'] = ___('Your post has updated successful.');
+			}
+			die(theme_features::json_format($output));
+		}/** end post edit */
+			
 		die(theme_features::json_format($output));
 	}
 	public static function set_once_published($post_id){

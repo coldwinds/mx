@@ -264,11 +264,11 @@ class theme_cache{
 			$caches[$cache_id] = get_comment($comment, $output);
 		return $caches[$cache_id];
 	}
-	public static function get_post($post, $output = OBJECT, $filter = 'raw'){
+	public static function get_post(){
 		static $caches = [];
 		$cache_id = md5(json_encode(func_get_args()));
 		if(!isset($caches[$cache_id]))
-			$caches[$cache_id] = get_post($post, $output, $filter);
+			$caches[$cache_id] = call_user_func_array('get_post', func_get_args());
 		return $caches[$cache_id];
 	}
 	public static function get_the_title($post_id){

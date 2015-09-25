@@ -64,12 +64,12 @@ class theme_full_width_mode{
 		<?php
 	}
 	public static function frontend_seajs_alias(array $alias = []){
-		if(theme_cache::is_singular() && self::is_enabled())
+		if(theme_cache::is_singular_post() && self::is_enabled())
 			$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
 		return $alias;
 	}
 	public static function frontend_seajs_use(){
-		if(!theme_cache::is_singular() || !self::is_enabled()) 
+		if(!theme_cache::is_singular_post() || !self::is_enabled()) 
 			return false;
 		?>
 		seajs.use('<?= __CLASS__;?>',function(m){
@@ -79,7 +79,7 @@ class theme_full_width_mode{
 		<?php
 	}
 	public static function frontend_css(){
-		if(!theme_cache::is_singular() || !self::is_enabled()) 
+		if(!theme_cache::is_singular_post() || !self::is_enabled()) 
 			return false;
 			
 		wp_enqueue_style(
