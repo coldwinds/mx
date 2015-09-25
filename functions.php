@@ -1702,9 +1702,11 @@ class theme_functions{
 		 * cache
 		 */
 		$device = wp_is_mobile() ? 'mobile' : 'desktop';
+		$sign_status = theme_cache::is_user_logged_in() ? 'login' : 'logout';
+		$cache_id = $device . $sign_status;
 		$cache = (array)theme_custom_homebox::get_cache();
-		if(isset($cache[$device])){
-			echo $cache[$device];
+		if(isset($cache[$cache_id])){
+			echo $cache[$cache_id];
 			unset($cache);
 			return;
 		}
@@ -1810,11 +1812,11 @@ class theme_functions{
 			++$lazyload_i;
 		} /** end foreach */
 
-		$cache[$device] = html_minify(ob_get_contents());
+		$cache[$cache_id] = html_minify(ob_get_contents());
 		ob_end_clean();
 		
 		theme_custom_homebox::set_cache($cache);
-		echo $cache[$device];
+		echo $cache[$cache_id];
 		unset($cache);
 	}
 	/**

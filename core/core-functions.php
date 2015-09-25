@@ -8,6 +8,9 @@ function icon_option_list($selected = null){
 		?><option value="<?= $v;?>" <?= $v === $selected ? 'selected' : null;?>><?= $v;?></option><?php
 	}
 }
+function filter_blank($s){
+	return preg_replace('/[\s\x{3000}\x{FEFF}\xA0]+/ui','',$s);
+}
 /**
  * Filter the js
  *

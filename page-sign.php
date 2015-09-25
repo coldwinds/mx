@@ -60,7 +60,7 @@ $open_sign_html = function(){
 				<div class="form-group">
 					<div class="input-group">
 						<label for="sign-nickname" class="input-group-addon"><i class="fa fa-user fa-fw"></i></label>
-						<input name="user[nickname]" type="text" class="form-control" id="sign-nickname" minlength="2" placeholder="<?= ___('Your nickname, at least 2 length');?>" title="<?= ___('Please type nickname, at least 2 length');?>" required tabindex="1" autofocus >
+						<input name="user[nickname]" type="text" class="form-control" id="sign-nickname" placeholder="<?= sprintf(___('Your nickname, at least %d length'),theme_custom_sign::$min_display_name_length);?>" title="<?= sprintf(___('Please type nickname, at least %d length'),theme_custom_sign::$min_display_name_length);?>" required minlength="<?= theme_custom_sign::$min_display_name_length;?>" tabindex="1" autofocus >
 					</div>
 				</div>
 				<div class="form-group">
@@ -72,7 +72,7 @@ $open_sign_html = function(){
 				<div class="form-group">
 					<div class="input-group">
 						<label for="sign-pwd" class="input-group-addon"><i class="fa fa-key fa-fw"></i></label>
-						<input name="user[pwd]" type="password" class="form-control" id="sign-pwd" placeholder="<?= ___('Your password, at least 3 length');?>" title="<?= ___('Please type password, at least 3 length');?>" minlength="3" required tabindex="1">
+						<input name="user[pwd]" type="password" class="form-control" id="sign-pwd" placeholder="<?= sprintf(___('Your password, at least %d length'),theme_custom_sign::$min_pwd_length);?>" title="<?= sprintf(___('Please type password, at least %d length'),theme_custom_sign::$min_pwd_length);?>" minlength="<?= theme_custom_sign::$min_pwd_length;?>" required tabindex="1">
 					</div>
 				</div>
 				<div class="form-group form-group-submit">
@@ -232,7 +232,7 @@ $open_sign_html();
 			<div class="form-group">
 				<div class="input-group">
 					<label for="sign-pwd" class="input-group-addon"><i class="fa fa-key fa-fw"></i></label>
-					<input name="user[pwd]" type="password" class="form-control" id="sign-pwd" placeholder="<?= ___('Please type password');?>" title="<?= ___('Please type password, at least 3 length');?>" minlength="3" required tabindex="1">
+					<input name="user[pwd]" type="password" class="form-control" id="sign-pwd" placeholder="<?= ___('Please type password');?>" title="<?= sprintf(___('Please type password, at least %d length'),theme_custom_sign::$min_pwd_length);?>" minlength="<?= theme_custom_sign::$min_pwd_length;?>" required tabindex="1">
 				</div>
 			</div>
 			<div class="form-group">

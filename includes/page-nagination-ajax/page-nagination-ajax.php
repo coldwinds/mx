@@ -7,13 +7,12 @@ add_filter('theme_includes',function($fns){
 	return $fns;
 });
 class theme_page_nagination_ajax{
-	public static $iden = 'theme_page_nagination_ajax';
 	public static function init(){
 		add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
 		add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
 		
-		add_action('wp_ajax_' . self::$iden,	__CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . self::$iden,	__CLASS__ . '::process');
+		add_action('wp_ajax_' . __CLASS__,	__CLASS__ . '::process');
+		add_action('wp_ajax_nopriv_' . __CLASS__,	__CLASS__ . '::process');
 		
 	}
 	private static function is_enabled(){
@@ -74,7 +73,7 @@ class theme_page_nagination_ajax{
 	
 	public static function frontend_seajs_alias(array $alias = []){
 		if(self::is_enabled()){
-			$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);
+			$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
 		}
 		return $alias;
 	}
@@ -88,9 +87,9 @@ class theme_page_nagination_ajax{
 				$page = $numpages;
 			
 			?>
-		seajs.use('<?= self::$iden;?>',function(m){
+		seajs.use('<?= __CLASS__;?>',function(m){
 			m.config.process_url = '<?= theme_features::get_process_url([
-				'action' => self::$iden,
+				'action' => __CLASS__,
 				'post-id' => $post->ID,
 			]);?>';
 			m.config.post_id = <?= $post->ID;?>;

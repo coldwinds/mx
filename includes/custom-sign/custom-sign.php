@@ -10,6 +10,8 @@ add_filter('theme_includes',function($fns){
 class theme_custom_sign{
 	public static $page_slug = 'sign';
 	public static $pages = [];
+	public static $min_display_name_length = 2;
+	public static $min_pwd_length = 5;
 	public static function init(){
 		/** filter */
 		add_filter('login_headerurl',		__CLASS__ . '::filter_login_headerurl',1);
@@ -384,25 +386,24 @@ class theme_custom_sign{
 						'msg' => ___('Sorry, it is not the time, the site is temporarily closed registration.'),
 					]));
 				}
-				
-				$name_at_least_len = 2;
-				$pwd_at_least_len = 3;
+			
 				/**
 				 * nickname
 				 */
-				if(!isset($user['nickname']) || !is_string($user['nickname']) || mb_strlen($user['nickname']) < $name_at_least_len){
+				$user['nickname'] = isset($user['nickname']) && is_string($user['nickname']) ? filter_blank($user['nickname']) : false;
+				if(mb_strlen($user['nickname']) < self::$min_display_name_length){
 					$output['status'] = 'error';
 					$output['code'] = 'invalid_nickname';
-					$output['msg'] = sprintf(___('Sorry, you nick name is invalid, at least %d characters in length, please try again.'),$name_at_least_len);
+					$output['msg'] = sprintf(___('Sorry, you nick name is invalid, at least %d characters in length, please try again.'),self::$min_display_name_length);
 					die(theme_features::json_format($output));
 				}
 				/**
 				 * pwd
 				 */
-				if(mb_strlen($pwd) < $pwd_at_least_len){
+				if(mb_strlen($pwd) < self::$min_pwd_length){
 					$output['status'] = 'error';
 					$output['code'] = 'invalid_pwd';
-					$output['msg'] = sprintf(___('Sorry, you password is invalid, at least %d characters in length, please try again.'),$pwd_at_least_len);
+					$output['msg'] = sprintf(___('Sorry, you password is invalid, at least %d characters in length, please try again.'),self::$min_pwd_length);
 					die(theme_features::json_format($output));
 				}
 				/**
@@ -414,6 +415,23 @@ class theme_custom_sign{
 					$output['msg'] = ___('Sorry, your email address is invalid, please check it and try again.');
 					die(theme_features::json_format($output));
 				}
+				/**
+				 * check display_name repeat
+				 */
+				$exists_users = array_filter(get_users( [
+				    'meta_key' => 'display_name',
+				    'meta_value' => $user['nickname'],
+				]));
+				if(count($exists_users) >= 1){
+					$output['status'] = 'error';
+					$output['code'] = 'duplicate_display_name';
+					$output['msg'] = ___('Sorry, the nickname has been used, please change another one.');
+					die(theme_features::json_format($output));
+				}
+
+				/******************
+				 * PASS
+				 *****************/
 				$output = self::user_register(array(
 					'email' => $email,
 					'pwd' => $pwd,

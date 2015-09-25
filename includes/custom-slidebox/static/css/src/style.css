@@ -193,14 +193,22 @@
 		border-top: 1px solid #000;
 	}
 		.theme_custom_slidebox-scroller .area-main .item a{
+			-webkit-background-size: cover;
+			background-size: cover;
 			float: left;
 			color: #fff;
+			width: 320px;
+			height: 200px;
+			border: 1px solid #000;
+			border-top: none;
+			border-right: none;
+			overflow: hidden;
 		}
 	.theme_custom_slidebox-scroller .area-main .item.large{
 		width: 640px;
 		height: 401px;
 	}
-		.theme_custom_slidebox-scroller .area-main .item.large img{
+		.theme_custom_slidebox-scroller .area-main .item.large a{
 			width: 100%;
 			height: 400px;
 		}
@@ -220,22 +228,6 @@
 		}
 		.theme_custom_slidebox-scroller .area-main a:hover:after{
 			opacity: .5;
-		}
-		.theme_custom_slidebox-scroller .area-main a:hover{
-			/*background: rgba(0,0,0,.5);*/
-		}
-		.theme_custom_slidebox-scroller .area-main .item img{
-			float: left;
-			width: 320px;
-			height: 200px;
-			border-radius: 0;
-			border: 1px solid #000;
-			border-top: 0;
-			border-left: 0;
-
-		}
-		.theme_custom_slidebox-scroller .area-main .item img:hover{
-			/*border-color: #FF4081;*/
 		}
 		.theme_custom_slidebox-scroller .area-main h2{
 			position: absolute;

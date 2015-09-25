@@ -347,7 +347,7 @@ class theme_custom_slidebox{
 		if(!$boxes)
 			return false;
 
-		$small = 5;
+		$large_index = 5;
 		?>
 <div class="<?= __CLASS__;?>-container <?= __CLASS__;?>-scroller">
 	<div class="area-blur">
@@ -371,15 +371,13 @@ class theme_custom_slidebox{
 			$img_url = $box['img-url'];
 			$link_url = $box['link-url'];
 
-			$mod = $i % $small;
-			$large = $mod === 0 ? 'large' : null;
+			$mod = $i % $large_index;
 			
-			if($i === 1){
-				$is_bombine_start = true;
-			}else{
-				$is_bombine_start = $i % ($small + 1) === 0;
-			}
-			$is_bombine_end = $i % ($small - 1) === 0;
+			$large = $mod === 0 ? 'large' : null;
+
+			$is_bombine_start = $i === 1 || $mod === 1;
+			
+			$is_bombine_end = $mod === $large_index - 1;
 			
 			if($is_bombine_start){
 				?><div class="item"><?php
@@ -391,10 +389,8 @@ class theme_custom_slidebox{
 				<?= $rel_nofollow;?> 
 				<?= $target_blank;l?> 
 				title="<?= $title;?>" 
-			>
-				<img src="<?= $img_url;?>" alt="<?= $title;?>">
-				<h2><?= $title;?></h2>
-			</a>
+				style="background-image:url(<?= $img_url;?>);" 
+			><h2><?= $title;?></h2></a>
 			<?php
 			if($is_bombine_end || $large || $i === count($boxes)){
 				?></div><?php

@@ -1,14 +1,12 @@
 <?php
 /**
- * @version 2.0.0
+ * @version 2.0.1
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_open_sign::init';
 	return $fns;
 });
 class theme_open_sign{
-	
-	public static $iden = 'theme_open_sign';
 	public static $open_types = array('sina','qq');
 
 	public static $user_meta_key = array(
@@ -25,20 +23,20 @@ class theme_open_sign{
 	
 	public static function init(){
 	
-		add_action('wp_ajax_nopriv_isos_cb',					__CLASS__ . '::process_cb');
+		add_action('wp_ajax_nopriv_isos_cb', __CLASS__ . '::process_cb');
 		
-		add_action('wp_ajax_nopriv_' . self::$iden ,__CLASS__ . '::process');
+		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
 
-		add_action('page_settings',__CLASS__ . '::display_backend');
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
+		add_action('page_settings', __CLASS__ . '::display_backend');
+		add_filter('theme_options_save', __CLASS__ . '::options_save');
 	}
-	public static function options_default($opts){
+	public static function options_default(array $opts = []){
 		
 		return $opts;
 	}
 	public static function options_save($opts){
-		if(isset($_POST[self::$iden])){
-			$opts[self::$iden] = $_POST[self::$iden];
+		if(isset($_POST[__CLASS__])){
+			$opts[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $opts;
 	}
@@ -52,26 +50,26 @@ class theme_open_sign{
 				<tbody>
 					<!-- qq -->
 					<tr>
-						<th><label for="<?= self::$iden;?>-qq-appid"><?= ___('QQ - APPID');?></label></th>
+						<th><label for="<?= __CLASS__;?>-qq-appid"><?= ___('QQ - APPID');?></label></th>
 						<td>
-							<input type="text" class="widefat code" id="<?= self::$iden;?>-qq-appid" name="<?= self::$iden;?>[qq][appid]" value="<?= isset($opt['qq']['appid']) ? $opt['qq']['appid'] : null;?>">
+							<input type="text" class="widefat code" id="<?= __CLASS__;?>-qq-appid" name="<?= __CLASS__;?>[qq][appid]" value="<?= isset($opt['qq']['appid']) ? $opt['qq']['appid'] : null;?>">
 						</td>
 					<tr>
-						<th><label for="<?= self::$iden;?>-qq-appkey"><?= ___('QQ - APPKEY');?></label></th>
+						<th><label for="<?= __CLASS__;?>-qq-appkey"><?= ___('QQ - APPKEY');?></label></th>
 						<td>
-							<input type="text" class="widefat code" id="<?= self::$iden;?>-qq-appkey" name="<?= self::$iden;?>[qq][appkey]" value="<?= isset($opt['qq']['appkey']) ? $opt['qq']['appkey'] : null;?>">
+							<input type="text" class="widefat code" id="<?= __CLASS__;?>-qq-appkey" name="<?= __CLASS__;?>[qq][appkey]" value="<?= isset($opt['qq']['appkey']) ? $opt['qq']['appkey'] : null;?>">
 						</td>
 					</tr>
 					<!-- sina -->
 					<tr>
-						<th><label for="<?= self::$iden;?>-sina-akey"><?= ___('Sina - APPKEY');?></label></th>
+						<th><label for="<?= __CLASS__;?>-sina-akey"><?= ___('Sina - APPKEY');?></label></th>
 						<td>
-							<input type="text" class="widefat code" id="<?= self::$iden;?>-sina-akey" name="<?= self::$iden;?>[sina][akey]" value="<?= isset($opt['sina']['akey']) ? $opt['sina']['akey'] : null;?>">
+							<input type="text" class="widefat code" id="<?= __CLASS__;?>-sina-akey" name="<?= __CLASS__;?>[sina][akey]" value="<?= isset($opt['sina']['akey']) ? $opt['sina']['akey'] : null;?>">
 						</td>
 					<tr>
-						<th><label for="<?= self::$iden;?>-sina-skey"><?= ___('Sina - SECUREKEY');?></label></th>
+						<th><label for="<?= __CLASS__;?>-sina-skey"><?= ___('Sina - SECUREKEY');?></label></th>
 						<td>
-							<input type="text" class="widefat code" id="<?= self::$iden;?>-sina-skey" name="<?= self::$iden;?>[sina][skey]" value="<?= isset($opt['sina']['skey']) ? $opt['sina']['skey'] : null;?>">
+							<input type="text" class="widefat code" id="<?= __CLASS__;?>-sina-skey" name="<?= __CLASS__;?>[sina][skey]" value="<?= isset($opt['sina']['skey']) ? $opt['sina']['skey'] : null;?>">
 						</td>
 					</tr>
 				</tbody>
@@ -111,22 +109,25 @@ class theme_open_sign{
 		static $caches = [];
 		if(!isset($caches[$type]))
 		$caches[$type] = esc_url(theme_features::get_process_url(array(
-			'action' => self::$iden,
+			'action' => __CLASS__,
 			'sign-type' => $type,
 			'redirect' => isset($_GET['redirect']) && is_string($_GET['redirect']) ? urlencode($_GET['redirect']) : null
 		)));
 		return $caches[$type];
 	}
 	public static function get_options($key = null){
-		static $caches = [];
-		if(!isset($caches[self::$iden]))
-			$caches[self::$iden] = theme_options::get_options(self::$iden);
-
-		if($key){
-			return isset($caches[self::$iden][$key]) ? $caches[self::$iden][$key] : null;
-		}else{
-			return $caches[self::$iden];
-		}
+		static $cache = null;
+		if($cache === null)
+			$cache = theme_options::get_options(__CLASS__);
+		if($key)
+			return isset($cache[$key]) ? $cache[$key] : false;
+		return $cache;
+	}
+	public static function filter_display_name($name){
+		$name = filter_blank($name);
+		if(empty($name))
+			$name = ___('Monster') . '-' . mt_rand(100,999);
+		return $name;
 	}
 	public static function process_cb(){
 
@@ -174,11 +175,12 @@ class theme_open_sign{
 			/** register insert user */
 			if(empty($user)){
 				$sina_userdata = $sina->show_user_by_id($open_id);
+				$display_name = self::filter_display_name($sina_userdata['screen_name']);
 				$user_id = wp_insert_user(array(
 					'user_login' => $open_id,
 					'user_pass' => $current_timestamp,
-					'nickname' => $sina_userdata['screen_name'],
-					'display_name' => $sina_userdata['screen_name'],
+					'nickname' => $display_name,
+					'display_name' => $display_name,
 					'user_email' => self::get_tmp_email(),
 				));
 				if(!is_wp_error($user_id)){
@@ -259,12 +261,12 @@ class theme_open_sign{
 			
 			/** avatar */
 			$user_avatar = !empty($open_info['figureurl_qq_2']) ? $open_info['figureurl_qq_2'] : $open_info['figureurl_qq_1'];
-			
+			$display_name = self::filter_display_name($open_info['nickname']);
 			$user_id = wp_insert_user(array(
 				'user_login' => $open_id,
 				'user_pass' => $current_timestamp,
-				'nickname' => $open_info['nickname'],
-				'display_name' => $open_info['nickname'],
+				'nickname' => $display_name,
+				'display_name' => $display_name,
 				'user_email' => self::get_tmp_email($open_id),
 			));
 			if(!is_wp_error($user_id)){

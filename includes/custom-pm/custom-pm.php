@@ -461,7 +461,7 @@ class theme_custom_pm{
 		update_user_meta($user_id,__CLASS__,$metas);
 	}
 	public static function get_unreads($user_id,$force = false){
-		return self::get_user_meta($user_id,'unreads',$force);
+		return array_filter((array)self::get_user_meta($user_id,'unreads',$force));
 	}
 	public static function remove_list($user_id,$receiver_id){
 		$lists = self::get_lists($user_id,true);
@@ -490,8 +490,8 @@ class theme_custom_pm{
 		return array_filter((array)self::get_user_meta($user_id,'lists',$force));
 	}
 	public static function is_unread($user_id,$unread_user_id){
-		$unreads = self::get_unreads($user_id);
-		return is_array($unreads) && in_array($unread_user_id,$unreads);
+		$unreads = array_filter((array)self::get_unreads($user_id));
+		return $unreads && in_array($unread_user_id,$unreads);
 	}
 	public static function get_unread_count($user_id,$force = false){
 		return count(self::get_unreads($user_id,$force));
