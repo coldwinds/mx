@@ -686,7 +686,7 @@ class theme_custom_contribution{
 			};
 			<?php
 			if(self::is_edit()){
-				$thumbnail_id = get_post_thumbnail_id(self::is_edit());
+				$thumbnail_id = (int)get_post_thumbnail_id(self::is_edit());
 				$attachs = [];
 				
 				$attachs_data = self::get_post_attachs(self::is_edit());
