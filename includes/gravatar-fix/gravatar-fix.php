@@ -30,12 +30,12 @@ if(!class_exists('theme_gravatar_fix')){
 				<table class="form-table">
 					<tbody>
 						<tr>
-							<th><label for="<?= __CLASS__;?>-enabled"><?= ___('Enabled or not?');?></label></th>
+							<th><label for="<?= __CLASS__;?>-enabled"><?= ___('Enable or not?');?></label></th>
 							<td>
-								<label for="<?= __CLASS__;?>-enabled">
-									<input type="checkbox" id="<?= __CLASS__;?>-enabled" name="<?= __CLASS__;?>[enabled]" value="1" <?= self::is_enabled() ? 'checked' : null;?> >
-									<?= ___('Enable');?>
-								</label>
+								<select name="<?= __CLASS__;?>[enabled]" id="<?= __CLASS__;?>-enabled" class="widefat">
+									<?php the_option_list(-1,___('Disable'),self::get_options('enabled'));?>
+									<?php the_option_list(1,___('Enable'),self::get_options('enabled'));?>
+								</select>
 							</td>
 						</tr>
 					</tbody>
@@ -44,11 +44,8 @@ if(!class_exists('theme_gravatar_fix')){
 			<?php
 		}
 		public static function options_save(array $opts = []){
-			if(isset($_POST[__CLASS__])){
+			if(isset($_POST[__CLASS__]))
 				$opts[__CLASS__] = $_POST[__CLASS__];
-			}else{
-				$opts[__CLASS__]['enabled'] = -1;
-			}
 			return $opts;
 		}
 		public static function options_default(array $opts = []){

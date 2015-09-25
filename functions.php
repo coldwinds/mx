@@ -1503,6 +1503,9 @@ class theme_functions{
 	 * the_recommended
 	 */
 	public static function the_recommended(){
+		if(!class_exists('theme_recommended_post') || !theme_recommended_post::is_enabled())
+			return false;
+			
 		$recomms = theme_recommended_post::get_ids();
 		
 		if(empty($recomms)){

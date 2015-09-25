@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-24 21:30+0800\n"
-"PO-Revision-Date: 2015-09-24 21:31+0800\n"
+"POT-Creation-Date: 2015-09-25 15:34+0800\n"
+"PO-Revision-Date: 2015-09-25 15:34+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -36,7 +36,7 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:26 core/core-options.php:170 functions.php:1838
+#: comments.php:26 core/core-options.php:170 functions.php:1840
 #: includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:472
 #: includes/custom-collection/custom-collection.php:571
@@ -48,12 +48,12 @@ msgstr "添加评论"
 #: includes/custom-point/custom-point.php:1056
 #: includes/custom-post-point/custom-post-point.php:855
 #: includes/custom-post-point/custom-post-point.php:877
-#: includes/custom-sign/custom-sign.php:599
-#: includes/custom-slidebox/custom-slidebox.php:565
+#: includes/custom-sign/custom-sign.php:628
+#: includes/custom-slidebox/custom-slidebox.php:561
 #: includes/custom-user-settings/custom-user-settings.php:468
 #: includes/custom-user-settings/custom-user-settings.php:479
 #: includes/mailer/mailer.php:216
-#: includes/page-nagination-ajax/page-nagination-ajax.php:100
+#: includes/page-nagination-ajax/page-nagination-ajax.php:99
 #: tpl/page-account-bomb.php:14 tpl/page-account-pm.php:3
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
@@ -102,31 +102,31 @@ msgstr "选择页面"
 msgid "Awesome icon"
 msgstr "Awesome 图标"
 
-#: core/core-functions.php:636
+#: core/core-functions.php:639
 msgid "Just"
 msgstr "刚刚"
 
-#: core/core-functions.php:642
+#: core/core-functions.php:645
 #, php-format
 msgid "%dmin ago"
 msgstr "%d分钟前"
 
-#: core/core-functions.php:648
+#: core/core-functions.php:651
 #, php-format
 msgid "%dh ago"
 msgstr "%d小时前"
 
-#: core/core-functions.php:654
+#: core/core-functions.php:657
 #, php-format
 msgid "%dd ago"
 msgstr "%d天前"
 
-#: core/core-functions.php:660
+#: core/core-functions.php:663
 #, php-format
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:666 functions.php:495 functions.php:1687
+#: core/core-functions.php:669 functions.php:495 functions.php:1687
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
@@ -451,19 +451,19 @@ msgstr "更多 &raquo;"
 msgid "Readmore..."
 msgstr "查看更多……"
 
-#: functions.php:1718
+#: functions.php:1720
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1749
+#: functions.php:1751
 msgid "More"
 msgstr "更多"
 
-#: functions.php:1761 includes/widget-rank/widget-rank.php:36
+#: functions.php:1763 includes/widget-rank/widget-rank.php:36
 msgid "More &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1794 includes/custom-dashboard/dashboards.php:34
+#: functions.php:1796 includes/custom-dashboard/dashboards.php:34
 #: includes/widget-author-posts/widget-author-posts.php:65
 #: includes/widget-rank/widget-rank.php:72
 #: includes/widget-tags/widget-tags.php:88 tpl/page-account-edit.php:80
@@ -471,55 +471,55 @@ msgstr "更多 &raquo;"
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
-#: functions.php:1799
+#: functions.php:1801
 #, php-format
 msgid "More about %s"
 msgstr "更多%s"
 
-#: functions.php:1831
+#: functions.php:1833
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1834
+#: functions.php:1836
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1844
+#: functions.php:1846
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1845 includes/custom-point-bomb/custom-point-bomb.php:228
+#: functions.php:1847 includes/custom-point-bomb/custom-point-bomb.php:228
 #: includes/custom-point-lottery/custom-point-lottery.php:370
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1877 tpl/author-profile.php:21
+#: functions.php:1879 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:84
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1879
+#: functions.php:1881
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1890
+#: functions.php:1892
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1892
+#: functions.php:1894
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1903
+#: functions.php:1905
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1904
+#: functions.php:1906
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1924 functions.php:1926
+#: functions.php:1926 functions.php:1928
 msgid "Post comment"
 msgstr "发表评论"
 
@@ -527,7 +527,7 @@ msgstr "发表评论"
 msgid "Log-out"
 msgstr "登出"
 
-#: header.php:160 includes/custom-sign/custom-sign.php:161 page-sign.php:247
+#: header.php:160 includes/custom-sign/custom-sign.php:163 page-sign.php:249
 #: tpl/header-topbar-tools.php:128
 msgid "Login"
 msgstr "登录"
@@ -548,11 +548,13 @@ msgstr "如果您的服务器支持，当评论被回复时，它将会发送一
 
 #: includes/_comment-notify/comment-notify.php:49
 #: includes/full-width-mode/full-width-mode.php:54
+#: includes/gravatar-fix/gravatar-fix.php:33
 #: includes/link-manager/link-manager.php:30
 #: includes/post-copyright/post-copyright.php:39
 #: includes/post-share/post-share.php:97
+#: includes/recomm-post/recomm-post.php:137
 msgid "Enable or not?"
-msgstr "启用"
+msgstr "是否启用？"
 
 #: includes/_comment-notify/comment-notify.php:53
 #: includes/comment-ajax/comment-ajax.php:98
@@ -565,6 +567,7 @@ msgstr "启用"
 #: includes/link-manager/link-manager.php:34 includes/mailer/mailer.php:106
 #: includes/post-copyright/post-copyright.php:43
 #: includes/post-share/post-share.php:98 includes/post-views/post-views.php:64
+#: includes/recomm-post/recomm-post.php:141
 msgid "Enable"
 msgstr "启用"
 
@@ -682,37 +685,37 @@ msgstr "广告设置"
 msgid "You can put some ADs into your site. Here are some AD areas for using."
 msgstr "可以把一些广告放到您的网站，这里有一些广告区域供使用。"
 
-#: includes/adbox/widget.php:12
+#: includes/adbox/widget.php:11
 msgid "Advertisement code <small>(Custom)</small>"
 msgstr "广告代码 <small>（定制）</small>"
 
-#: includes/adbox/widget.php:15
+#: includes/adbox/widget.php:14
 msgid "Show your advertisement."
 msgstr "显示您的广告"
 
-#: includes/adbox/widget.php:32
+#: includes/adbox/widget.php:31
 msgid "Advertisement"
 msgstr "广告"
 
-#: includes/adbox/widget.php:38
+#: includes/adbox/widget.php:37
 #: includes/custom-point-lottery/custom-point-lottery.php:137
 msgid "Type"
 msgstr "类型"
 
-#: includes/adbox/widget.php:44 includes/custom-homebox/custom-homebox.php:206
+#: includes/adbox/widget.php:43 includes/custom-homebox/custom-homebox.php:206
 #: includes/widget-rank/widget-rank.php:205
 msgid "All"
 msgstr "全部"
 
-#: includes/adbox/widget.php:45
+#: includes/adbox/widget.php:44
 msgid "Desktop"
 msgstr "桌面"
 
-#: includes/adbox/widget.php:46
+#: includes/adbox/widget.php:45
 msgid "Mobile"
 msgstr "手机"
 
-#: includes/adbox/widget.php:50
+#: includes/adbox/widget.php:49
 msgid "Code"
 msgstr "代码"
 
@@ -774,7 +777,7 @@ msgstr "主题缓存已被清空或重建。"
 
 #: includes/cache/cache.php:131 includes/cache/cache.php:134
 #: includes/cache/cache.php:136 includes/cache/cache.php:138
-#: includes/setting-import/setting-import.php:152 page-sign.php:77
+#: includes/setting-import/setting-import.php:152 page-sign.php:79
 msgid "Processing, please wait..."
 msgstr "处理中，请稍候…"
 
@@ -876,7 +879,7 @@ msgstr "数据库已在 %s 秒内更新。"
 
 #: includes/clean-up/clean-up.php:228
 #: includes/custom-point/custom-point.php:1057
-#: includes/custom-slidebox/custom-slidebox.php:566
+#: includes/custom-slidebox/custom-slidebox.php:562
 #: includes/mailer/mailer.php:217
 msgid "Server error or network is disconnected."
 msgstr "服务器错误或网络未连接。"
@@ -937,7 +940,7 @@ msgstr "数据传送完毕。"
 #: includes/comment-ajax/comment-ajax.php:397
 #: includes/custom-contribution/custom-contribution.php:248
 #: includes/custom-contribution/custom-contribution.php:269
-#: includes/page-nagination-ajax/page-nagination-ajax.php:44
+#: includes/page-nagination-ajax/page-nagination-ajax.php:43
 #: tpl/page-account-post.php:31
 msgid "Sorry, the post does not exist."
 msgstr "抱歉，文章不存在。"
@@ -971,10 +974,10 @@ msgstr "第 {n} 页"
 #: includes/custom-point-lottery/custom-point-lottery.php:750
 #: includes/custom-point-lottery/custom-point-lottery.php:772
 #: includes/custom-post-point/custom-post-point.php:856
-#: includes/custom-sign/custom-sign.php:600
+#: includes/custom-sign/custom-sign.php:629
 #: includes/custom-user-settings/custom-user-settings.php:469
 #: includes/custom-user-settings/custom-user-settings.php:480
-#: includes/page-nagination-ajax/page-nagination-ajax.php:104
+#: includes/page-nagination-ajax/page-nagination-ajax.php:103
 msgid ""
 "Sorry, server is busy now, can not respond your request, please try again "
 "later."
@@ -2668,101 +2671,109 @@ msgstr "立即下载"
 msgid "Open in new window"
 msgstr "在新窗口中打开"
 
-#: includes/custom-sign/custom-sign.php:67
+#: includes/custom-sign/custom-sign.php:69
 msgid "Custom sign settings"
 msgstr "自定义登录设置"
 
-#: includes/custom-sign/custom-sign.php:68
+#: includes/custom-sign/custom-sign.php:70
 msgid "You can custom the sign page here."
 msgstr "您可以在这里定制登录页面。"
 
-#: includes/custom-sign/custom-sign.php:73
+#: includes/custom-sign/custom-sign.php:75
 msgid "Sign-in avatar URL"
 msgstr "登录的头像图片 URL"
 
-#: includes/custom-sign/custom-sign.php:80
+#: includes/custom-sign/custom-sign.php:82
 msgid "Recommend 100x100 px image."
 msgstr "建议 100x100 象素的图片。"
 
-#: includes/custom-sign/custom-sign.php:84
+#: includes/custom-sign/custom-sign.php:86
 msgid "Terms of service page URL"
 msgstr "服务协议页面 URL"
 
-#: includes/custom-sign/custom-sign.php:168 tpl/header-topbar-tools.php:168
+#: includes/custom-sign/custom-sign.php:170 tpl/header-topbar-tools.php:168
 msgid "Register"
 msgstr "注册"
 
-#: includes/custom-sign/custom-sign.php:175 page-sign.php:124 page-sign.php:175
+#: includes/custom-sign/custom-sign.php:177 page-sign.php:126 page-sign.php:177
 msgid "Recover password"
 msgstr "找回密码"
 
-#: includes/custom-sign/custom-sign.php:182
+#: includes/custom-sign/custom-sign.php:184
 msgid "Reset password"
 msgstr "重设密码"
 
-#: includes/custom-sign/custom-sign.php:215
+#: includes/custom-sign/custom-sign.php:217
 msgid "Sign"
 msgstr "登录"
 
-#: includes/custom-sign/custom-sign.php:260
-#: includes/custom-sign/custom-sign.php:296
+#: includes/custom-sign/custom-sign.php:262
+#: includes/custom-sign/custom-sign.php:298
 msgid "Sorry, password is invalid, please try again."
 msgstr "抱歉，密码无效，请重试。"
 
-#: includes/custom-sign/custom-sign.php:264
-#: includes/custom-sign/custom-sign.php:300
+#: includes/custom-sign/custom-sign.php:266
+#: includes/custom-sign/custom-sign.php:302
 msgid "Sorry, email is invalid, please try again."
 msgstr "抱歉，邮箱无效，请重试。"
 
-#: includes/custom-sign/custom-sign.php:275
+#: includes/custom-sign/custom-sign.php:277
 msgid "Sorry, your email and password do not match, please try again."
 msgstr "抱歉，您的邮箱和密码不匹配，请重试。"
 
-#: includes/custom-sign/custom-sign.php:305
+#: includes/custom-sign/custom-sign.php:307
 msgid "Sorry, nickname is invalid, please try again."
 msgstr "抱歉，昵称无效，请输入另一个后重试。"
 
-#: includes/custom-sign/custom-sign.php:312
+#: includes/custom-sign/custom-sign.php:314
 msgid "Sorry, email already exists, please change another one and try again."
 msgstr "抱歉，邮箱已经存在，请输入另一个再尝试。"
 
-#: includes/custom-sign/custom-sign.php:368
+#: includes/custom-sign/custom-sign.php:370
 msgid "Login successfully, page is refreshing, please wait..."
 msgstr "登录成功，页面正在刷新，请稍候…"
 
-#: includes/custom-sign/custom-sign.php:385
+#: includes/custom-sign/custom-sign.php:386 page-sign.php:92
+msgid "Sorry, it is not the time, the site is temporarily closed registration."
+msgstr "真抱歉，来的不是时候，目前网站暂时关闭了注册。"
+
+#: includes/custom-sign/custom-sign.php:397
 #, php-format
 msgid ""
 "Sorry, you nick name is invalid, at least %d characters in length, please "
 "try again."
 msgstr "抱歉，您的昵称长度太短，至少需要 %d 个字符，请重试。"
 
-#: includes/custom-sign/custom-sign.php:394
+#: includes/custom-sign/custom-sign.php:406
 #, php-format
 msgid ""
 "Sorry, you password is invalid, at least %d characters in length, please try "
 "again."
 msgstr "抱歉，您的密码无效，至少需要 %d 个字符，请重试。"
 
-#: includes/custom-sign/custom-sign.php:403
-#: includes/custom-sign/custom-sign.php:425
+#: includes/custom-sign/custom-sign.php:415
+#: includes/custom-sign/custom-sign.php:454
 msgid "Sorry, your email address is invalid, please check it and try again."
 msgstr "抱歉，您的邮箱地址不正确，请检查并再尝试。"
 
-#: includes/custom-sign/custom-sign.php:414
+#: includes/custom-sign/custom-sign.php:428
+msgid "Sorry, the nickname has been used, please change another one."
+msgstr "抱歉，该昵称已被使用，请更换另一个试试。"
+
+#: includes/custom-sign/custom-sign.php:443
 msgid "Register successfully, page is refreshing, please wait..."
 msgstr "注册成功，页面正在刷新，请稍候…"
 
-#: includes/custom-sign/custom-sign.php:435
+#: includes/custom-sign/custom-sign.php:464
 msgid "Sorry, the email does not exist."
 msgstr "抱歉，该邮箱不存在。"
 
-#: includes/custom-sign/custom-sign.php:453
+#: includes/custom-sign/custom-sign.php:482
 #, php-format
 msgid "Dear %s!"
 msgstr "亲爱的 %s！"
 
-#: includes/custom-sign/custom-sign.php:455
+#: includes/custom-sign/custom-sign.php:484
 #, php-format
 msgid ""
 "You are receiving this email because you forgot your password. We already "
@@ -2772,60 +2783,60 @@ msgstr ""
 "您接收到这封邮件是因为您忘记了密码。我们已为您创建了一个地址，您可以在 3 小时"
 "内，访问此链接地址（ %s ）登录并修改您的密码。"
 
-#: includes/custom-sign/custom-sign.php:457
+#: includes/custom-sign/custom-sign.php:486
 #, php-format
 msgid "-- From %s"
 msgstr "—— 来自 %s"
 
-#: includes/custom-sign/custom-sign.php:459
+#: includes/custom-sign/custom-sign.php:488
 msgid "You are applying to reset your password."
 msgstr "您正在申请重设密码。"
 
-#: includes/custom-sign/custom-sign.php:475
+#: includes/custom-sign/custom-sign.php:504
 msgid ""
 "Success, we sent an email that includes how to retrieve your password, "
 "please check it out in 3 hours."
 msgstr "成功，我们已发送了一封包括如何找回密码的邮件，请您在 3 小时内查收。"
 
-#: includes/custom-sign/custom-sign.php:480
+#: includes/custom-sign/custom-sign.php:509
 msgid "Error, server can not send email, please contact the administrator."
 msgstr "抱歉，服务器无法发送邮件，请联系管理员。"
 
-#: includes/custom-sign/custom-sign.php:490
+#: includes/custom-sign/custom-sign.php:519
 msgid "Sorry, the param is invalid."
 msgstr "对不起，参数无效。"
 
-#: includes/custom-sign/custom-sign.php:497
+#: includes/custom-sign/custom-sign.php:526
 msgid "Sorry, the token is invaild."
 msgstr "抱歉，令牌无效或已经过期。"
 
-#: includes/custom-sign/custom-sign.php:505
+#: includes/custom-sign/custom-sign.php:534
 msgid "Sorry, twice password is invaild, please try again."
 msgstr "抱歉，两次密码无效，请再试一次。"
 
-#: includes/custom-sign/custom-sign.php:514
+#: includes/custom-sign/custom-sign.php:543
 msgid "Sorry, the token is expired."
 msgstr "抱歉，令牌无效或已经过期"
 
-#: includes/custom-sign/custom-sign.php:524
+#: includes/custom-sign/custom-sign.php:553
 msgid "Sorry, the token email and you account email do not match."
 msgstr "抱歉，令牌的邮箱与帐号邮箱不匹配。"
 
-#: includes/custom-sign/custom-sign.php:533
+#: includes/custom-sign/custom-sign.php:562
 msgid "Sorry, your account email is not exist."
 msgstr "抱歉，您张帐号电子邮件不存在。"
 
-#: includes/custom-sign/custom-sign.php:540
+#: includes/custom-sign/custom-sign.php:569
 msgid "Sorry, the user do not apply recover yet."
 msgstr "抱歉，该用户未申请密码寻回。"
 
-#: includes/custom-sign/custom-sign.php:549
+#: includes/custom-sign/custom-sign.php:578
 msgid ""
 "Congratulation, your account has been recovered! Password has been updated. "
 "Redirecting home page, please wait..."
 msgstr "恭喜，您的帐号已成功寻回！密码已更新。正在跳转到首页，请稍候……"
 
-#: includes/custom-sign/custom-sign.php:555
+#: includes/custom-sign/custom-sign.php:584
 msgid "Invalid type."
 msgstr "抱歉，无效的类型。"
 
@@ -2917,7 +2928,7 @@ msgstr "风格类型"
 msgid "AD HTML codes (below the slide-box)"
 msgstr "广告 HTML 代码（幻灯片之下）"
 
-#: includes/custom-slidebox/custom-slidebox.php:497
+#: includes/custom-slidebox/custom-slidebox.php:493
 msgid "Detail &raquo;"
 msgstr "详细 &raquo;"
 
@@ -3016,8 +3027,6 @@ msgstr "开发者模式"
 
 #: includes/dev-mode/dev-mode.php:77 includes/dev-mode/dev-mode.php:89
 #: includes/dev-mode/dev-mode.php:100 includes/post-views/post-views.php:68
-#: includes/recomm-post/recomm-post.php:138
-#: includes/recomm-post/recomm-post.php:142
 msgid "Enabled"
 msgstr "启用"
 
@@ -3131,9 +3140,10 @@ msgstr ""
 "此功能可以修复 Gravatar 头像无法在中国内地显示，仅对中国内地用户使用。如果使"
 "用“自定义默认 Gravatar 头像”，请不要启用此功能。"
 
-#: includes/gravatar-fix/gravatar-fix.php:33
-msgid "Enabled or not?"
-msgstr "是否启用？"
+#: includes/gravatar-fix/gravatar-fix.php:36
+#: includes/recomm-post/recomm-post.php:140
+msgid "Disable"
+msgstr "禁用"
 
 #: includes/help/help.php:30
 msgid "Theme Information"
@@ -3464,68 +3474,72 @@ msgstr "开始重建"
 msgid "Save your settings before rebuild"
 msgstr "在重建前请保存您的设置"
 
-#: includes/open-sign/open-sign.php:49
+#: includes/open-sign/open-sign.php:47
 msgid "Open sign settings"
 msgstr "第三方登录设置"
 
-#: includes/open-sign/open-sign.php:50
+#: includes/open-sign/open-sign.php:48
 msgid "You can use the third-part sign feature for easy to register and login."
 msgstr "您可以使用第三方登录功能，给用户更方便地注册或登录。"
 
-#: includes/open-sign/open-sign.php:55
+#: includes/open-sign/open-sign.php:53
 msgid "QQ - APPID"
 msgstr "QQ - appid"
 
-#: includes/open-sign/open-sign.php:60
+#: includes/open-sign/open-sign.php:58
 msgid "QQ - APPKEY"
 msgstr "QQ - appkey"
 
-#: includes/open-sign/open-sign.php:67
+#: includes/open-sign/open-sign.php:65
 msgid "Sina - APPKEY"
 msgstr "渣浪 - appkey"
 
-#: includes/open-sign/open-sign.php:72
+#: includes/open-sign/open-sign.php:70
 msgid "Sina - SECUREKEY"
 msgstr "渣浪 - securekey"
 
-#: includes/open-sign/open-sign.php:158
+#: includes/open-sign/open-sign.php:129
+msgid "Monster"
+msgstr "妖怪"
+
+#: includes/open-sign/open-sign.php:159
 msgid "Invalid callback data."
 msgstr "无效的回调数据。"
 
-#: includes/open-sign/open-sign.php:214 includes/open-sign/open-sign.php:295
-#: includes/open-sign/open-sign.php:331 includes/open-sign/open-sign.php:341
+#: includes/open-sign/open-sign.php:216 includes/open-sign/open-sign.php:297
+#: includes/open-sign/open-sign.php:333 includes/open-sign/open-sign.php:343
 msgid "Redirecting, please wait..."
 msgstr "跳转中，请稍后……"
 
-#: includes/open-sign/open-sign.php:228
+#: includes/open-sign/open-sign.php:230
 msgid "Invalid access token,"
 msgstr "无效的token。"
 
-#: includes/open-sign/open-sign.php:238
+#: includes/open-sign/open-sign.php:240
 msgid "Invalid expires time."
 msgstr "无效的 expires time。"
 
-#: includes/open-sign/open-sign.php:243
+#: includes/open-sign/open-sign.php:245
 msgid "Invalid refresh token."
 msgstr "无效的 refresh token。"
 
-#: includes/page-nagination-ajax/page-nagination-ajax.php:32
+#: includes/page-nagination-ajax/page-nagination-ajax.php:31
 msgid "Sorry, post id is invaild."
 msgstr "抱歉，文章 ID 编号无效。"
 
-#: includes/page-nagination-ajax/page-nagination-ajax.php:55
+#: includes/page-nagination-ajax/page-nagination-ajax.php:54
 msgid "Sorry, page number is invaild."
 msgstr "对不起，页码无效。"
 
-#: includes/page-nagination-ajax/page-nagination-ajax.php:101
+#: includes/page-nagination-ajax/page-nagination-ajax.php:100
 msgid "Content loaded."
 msgstr "内容加载完毕。"
 
-#: includes/page-nagination-ajax/page-nagination-ajax.php:102
+#: includes/page-nagination-ajax/page-nagination-ajax.php:101
 msgid "Already first page."
 msgstr "已是第一页了。"
 
-#: includes/page-nagination-ajax/page-nagination-ajax.php:103
+#: includes/page-nagination-ajax/page-nagination-ajax.php:102
 msgid "Already last page."
 msgstr "已是最后一页了。"
 
@@ -3668,24 +3682,24 @@ msgstr "推荐文章"
 msgid "Set as recommended post"
 msgstr "作为推荐文章"
 
-#: includes/recomm-post/recomm-post.php:133
+#: includes/recomm-post/recomm-post.php:132
 msgid "Recommended posts"
 msgstr "推荐文章"
 
-#: includes/recomm-post/recomm-post.php:134
+#: includes/recomm-post/recomm-post.php:133
 msgid "Recommended posts will display on home page if enabled."
 msgstr "如果启用，将会在首页显示推荐文章。"
 
-#: includes/recomm-post/recomm-post.php:147
+#: includes/recomm-post/recomm-post.php:146
 msgid "Marked posts"
 msgstr "已标记的文章"
 
-#: includes/recomm-post/recomm-post.php:165
+#: includes/recomm-post/recomm-post.php:164
 msgid "Open in open window"
 msgstr "在新窗口中打开"
 
-#: includes/recomm-post/recomm-post.php:171
-#: includes/recomm-post/recomm-post.php:174
+#: includes/recomm-post/recomm-post.php:170
+#: includes/recomm-post/recomm-post.php:173
 msgid "No any post yet"
 msgstr "暂无任何资料"
 
@@ -4220,65 +4234,65 @@ msgstr "无法找到包含文件。"
 msgid "Login from QQ"
 msgstr "QQ 登录"
 
-#: page-sign.php:29 tpl/header-topbar-tools.php:154
+#: page-sign.php:30 tpl/header-topbar-tools.php:154
 #: tpl/header-topbar-tools.php:156
 msgid "Login from Weibo"
 msgstr "微博登录"
 
-#: page-sign.php:53
+#: page-sign.php:55
 msgid "Account register"
 msgstr "用户注册"
 
-#: page-sign.php:61
-msgid "Your nickname, at least 2 length"
-msgstr "昵称，至少 2 个字符"
+#: page-sign.php:63
+#, php-format
+msgid "Your nickname, at least %d length"
+msgstr "您的昵称，至少 %d 个字符或以上"
 
-#: page-sign.php:61
-msgid "Please type nickname, at least 2 length"
-msgstr "请输入昵称，2个字符以上"
+#: page-sign.php:63
+#, php-format
+msgid "Please type nickname, at least %d length"
+msgstr "请输入昵称，至少 %d 个字符或以上"
 
-#: page-sign.php:67 page-sign.php:133 page-sign.php:227
+#: page-sign.php:69 page-sign.php:135 page-sign.php:229
 msgid "Please type email"
 msgstr "请输入 Email"
 
-#: page-sign.php:73
-msgid "Your password, at least 3 length"
-msgstr "密码，至少 3 个字符"
+#: page-sign.php:75
+#, php-format
+msgid "Your password, at least %d length"
+msgstr "您的密码，至少 %d 个字符或以上"
 
-#: page-sign.php:73 page-sign.php:233
-msgid "Please type password, at least 3 length"
-msgstr "请输入密码，3个字符以上"
+#: page-sign.php:75 page-sign.php:235
+#, php-format
+msgid "Please type password, at least %d length"
+msgstr "请输入密码，至少 %d 字符或以上"
 
-#: page-sign.php:79
+#: page-sign.php:81
 msgid "Register &amp; Log-in"
 msgstr "注册 &amp; 登录"
 
-#: page-sign.php:85
+#: page-sign.php:87
 #, php-format
 msgid "I am agree the %s."
 msgstr "我已同意本站的 %s"
 
-#: page-sign.php:85
+#: page-sign.php:87
 msgid "TOS"
 msgstr "服务协议"
 
-#: page-sign.php:90
-msgid "Sorry, it is not the time, the site is temporarily closed registration."
-msgstr "真抱歉，来的不是时候，目前网站暂时关闭了注册。"
-
-#: page-sign.php:93
+#: page-sign.php:95
 msgid "Back"
 msgstr "返回"
 
-#: page-sign.php:102 page-sign.php:150
+#: page-sign.php:104 page-sign.php:152
 msgid "I have account"
 msgstr "我已有账号"
 
-#: page-sign.php:106 page-sign.php:262
+#: page-sign.php:108 page-sign.php:264
 msgid "Forgot password?"
 msgstr "忘记密码了？"
 
-#: page-sign.php:129
+#: page-sign.php:131
 msgid ""
 "If you forgot your account password, you can recover your password by your "
 "account email. Please entry your account email, we will send a confirm email "
@@ -4287,52 +4301,52 @@ msgstr ""
 "如果您忘记了账号密码，您可以通过账号邮箱来重置密码。请输入您的账号邮箱，我们"
 "将会发送一封确认邮件，并根据提示重置您的密码。"
 
-#: page-sign.php:139
+#: page-sign.php:141
 msgid "Send an email to confirm"
 msgstr "发送邮件以确认"
 
-#: page-sign.php:154 page-sign.php:258
+#: page-sign.php:156 page-sign.php:260
 msgid "Register new account"
 msgstr "注册新用户"
 
-#: page-sign.php:167
+#: page-sign.php:169
 msgid "Reset my password"
 msgstr "重置我的密码"
 
-#: page-sign.php:172
+#: page-sign.php:174
 msgid "Sorry, the url is expired, please recover password again."
 msgstr "抱歉，该地址已过期，请再次重设密码。"
 
-#: page-sign.php:178
+#: page-sign.php:180
 #, php-format
 msgid "You are resetting %s password, please type your new password."
 msgstr "您正在重设 %s 的密码，请输入您的新密码。"
 
-#: page-sign.php:183
+#: page-sign.php:185
 msgid "Please type new password"
 msgstr "请输入新密码"
 
-#: page-sign.php:189
+#: page-sign.php:191
 msgid "Retype new password"
 msgstr "重新输入密码"
 
-#: page-sign.php:195
+#: page-sign.php:197
 msgid "Reset"
 msgstr "重设"
 
-#: page-sign.php:220
+#: page-sign.php:222
 msgid "Account login"
 msgstr "用户登录"
 
-#: page-sign.php:233
+#: page-sign.php:235
 msgid "Please type password"
 msgstr "请输入密码"
 
-#: page-sign.php:240
+#: page-sign.php:242
 msgid "Remember me"
 msgstr "下次自动登录"
 
-#: page-sign.php:245
+#: page-sign.php:247
 msgid "Logging in, please wait..."
 msgstr "登录中，请稍候……"
 
@@ -4777,6 +4791,21 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:117
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#~ msgid "Enabled or not?"
+#~ msgstr "是否启用？"
+
+#~ msgid "Your nickname, at least 2 length"
+#~ msgstr "昵称，至少 2 个字符"
+
+#~ msgid "Please type nickname, at least 2 length"
+#~ msgstr "请输入昵称，2个字符以上"
+
+#~ msgid "Your password, at least 3 length"
+#~ msgstr "密码，至少 3 个字符"
+
+#~ msgid "Please type password, at least 3 length"
+#~ msgstr "请输入密码，3个字符以上"
 
 #~ msgid "Look more about %s"
 #~ msgstr "查看更多%s"

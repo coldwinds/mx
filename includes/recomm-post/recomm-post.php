@@ -126,7 +126,6 @@ class theme_recommended_post{
 		return theme_cache::get(__CLASS__);
 	}
 	public static function display_backend(){
-		$checked = self::is_enabled() ? ' checked ' : null;
 		$recomm_posts = self::get_ids();
 		?>
 		<fieldset>
@@ -135,12 +134,12 @@ class theme_recommended_post{
 			<table class="form-table">
 				<tbody>
 					<tr>
-						<th><?= ___('Enabled');?></th>
+						<th><label for="<?= __CLASS__;?>-enabled"></label><?= ___('Enable or not?');?></th>
 						<td>
-							<label for="<?= __CLASS__;?>-enabled">
-								<input type="checkbox" name="<?= __CLASS__;?>[enabled]" id="<?= __CLASS__;?>-enabled" <?= $checked;?> value="1">
-								<?= ___('Enabled');?>
-							</label>
+							<select name="<?= __CLASS__;?>[enabled]" id="<?= __CLASS__;?>-enabled" class="widefat">
+								<?php the_option_list(-1,___('Disable'),self::get_options('enabled'));?>
+								<?php the_option_list(1,___('Enable'),self::get_options('enabled'));?>
+							</select>
 						</td>
 					</tr>
 					<tr>
@@ -160,8 +159,7 @@ class theme_recommended_post{
 										?>
 <label for="<?= __CLASS__;?>-<?= $post->ID;?>" class="button">
 	<input type="checkbox" id="<?= __CLASS__;?>-<?= $post->ID;?>" name="<?= __CLASS__;?>[ids][]" value="<?= $post->ID;?>" checked >
-	<?= theme_cache::get_the_title($post->ID);?>
-	-
+	#<?= $post->ID;?> <?= theme_cache::get_the_title($post->ID);?> 
 	<a href="<?= esc_url(get_edit_post_link($post->ID));?>" target="_blank" title="<?= ___('Open in open window');?>"><i class="fa fa-external-link"></i></a>
 </label>
 										<?php
@@ -182,9 +180,8 @@ class theme_recommended_post{
 		<?php
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[__CLASS__])){
+		if(isset($_POST[__CLASS__]))
 			$opts[__CLASS__] = $_POST[__CLASS__];
-		}
 		return $opts;
 	}
 }
