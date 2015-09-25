@@ -193,6 +193,7 @@ class theme_custom_contribution{
 		die(theme_features::json_format($output));
 	}
 	private static function process_upload(){
+		$output = [];
 		/** 
 		 * if not image
 		 */
@@ -230,6 +231,7 @@ class theme_custom_contribution{
 		}
 	}
 	private static function process_post(){
+		$output = [];
 		$ctb = isset($_POST['ctb']) && is_array($_POST['ctb']) ? array_filter($_POST['ctb']) : null;
 		
 		/** check ctb object */
