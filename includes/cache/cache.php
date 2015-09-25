@@ -600,6 +600,7 @@ class theme_cache{
 			
 		if(self::is_singular()){
 			global $post;
+			wp_reset_postdata();
 			$cache_id_prefix = 'post-' . $post->ID;
 		}else if(self::is_home()){
 			$cache_id_prefix = 'home';
