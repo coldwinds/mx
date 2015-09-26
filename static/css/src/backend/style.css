@@ -8,6 +8,83 @@
 	color:#fff;
 }
 
+/**
+ * #ajax-loading
+ * @version 1.0.1
+ */
+#ajax-loading-container{
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 100000;
+	width: 100%;
+	text-align: center;
+	padding: 10px;
+	font-size: 20px;
+	line-height: 30px;
+	box-shadow: 0 20px 50px rgba(0,0,0,.5);
+	-webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	transition: all .3s;
+}
+	#ajax-loading-container .fa{
+		vertical-align: inherit;
+	}
+	/** 
+	 * type
+	 */
+	#ajax-loading-container.closed{
+		-moz-transform: translateY(-100%);
+		-webkit-transform: translateY(-100%);
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+	#ajax-loading-container.success,
+	#ajax-loading-container.green{background:#defcd5}
+
+	#ajax-loading-container.error,
+	#ajax-loading-container.ban{background:#f1d7d7}
+
+	#ajax-loading-container.warning{background:#f6f3d5}
+
+	#ajax-loading-container.help,
+	#ajax-loading-container.blue,
+	#ajax-loading-container.info{background:#e6f4f9}
+	#ajax-loading-container.question{background:#FBEC88}
+
+	#ajax-loading-container.spinner,
+	#ajax-loading-container.loading{background:#FBEC88}
+
+	#ajax-loading-container .btn-close{
+		position: absolute;
+		top: 7px;
+		right: 30px;
+		padding: 2px 5px;
+		cursor: pointer;
+		font-size: 30px;
+		color: #FBEEEE;
+		border-radius: 2px;
+		box-shadow: none;
+		border-bottom: 2px solid rgba(0,0,0,.1);
+		background: #D54E21;
+	}
+		#ajax-loading-container .btn-close:hover{
+			color:#fff;
+		}
+		#ajax-loading-container .btn-close .number{
+			font-size: 90%;
+		}
+	#ajax-loading-container .tip-status{
+		display: inline;
+		margin: 0 auto;
+		background: none;
+		border: none;
+	}
+	#ajax-loading-container #ajax-loading{
+		visibility: visible;
+		margin: 0 40px;
+	}
+
 /* 描述 */
 .description{
 	padding-left:1rem;

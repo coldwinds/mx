@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-26 17:20+0800\n"
-"PO-Revision-Date: 2015-09-26 17:21+0800\n"
+"POT-Creation-Date: 2015-09-26 18:24+0800\n"
+"PO-Revision-Date: 2015-09-26 18:24+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -26,7 +26,7 @@ msgstr "《%s》的附件"
 msgid "No content yet."
 msgstr "暂无资料"
 
-#: comments.php:14 functions.php:1634
+#: comments.php:14 functions.php:1636
 #: includes/custom-author-profile/custom-author-profile.php:123
 #: tpl/author-profile.php:75
 msgid "Comments"
@@ -36,8 +36,7 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:26 core/core-options.php:163 functions.php:1843
-#: includes/clean-up/clean-up.php:227
+#: comments.php:26 functions.php:1845 includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:472
 #: includes/custom-collection/custom-collection.php:571
 #: includes/custom-contribution/custom-contribution.php:672
@@ -122,76 +121,84 @@ msgstr "%d天前"
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:674 functions.php:495 functions.php:1690
+#: core/core-functions.php:674 functions.php:495 functions.php:1692
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
-#: core/core-options.php:156
-msgid "Settings have been saved."
-msgstr "设置已保存。"
+#: core/core-options.php:134
+msgid "Saving your settings, please wait..."
+msgstr "正在保存您的设置，请稍后……"
 
-#: core/core-options.php:168
+#: core/core-options.php:157
+msgid "Your settings were saved successfully."
+msgstr "您的设置已保存成功。"
+
+#: core/core-options.php:164
+msgid "Loading your settings, please wait..."
+msgstr "正在加载您的设置，请稍后……"
+
+#: core/core-options.php:169
 msgid "Visit the official of theme"
 msgstr "访问主题官网"
 
-#: core/core-options.php:172
+#: core/core-options.php:173
 msgid "The theme common basic settings."
 msgstr "主题通用的基本设置。"
 
-#: core/core-options.php:174
+#: core/core-options.php:175
 msgid "Basic settings"
 msgstr "基本设置"
 
-#: core/core-options.php:177
+#: core/core-options.php:178
 msgid "You can customize the theme in this label."
 msgstr "您可以在这个标签中自定义主题。"
 
-#: core/core-options.php:179
+#: core/core-options.php:180
 msgid "Page settings"
 msgstr "页面设置"
 
-#: core/core-options.php:182
+#: core/core-options.php:183
 msgid ""
 "If the theme there are some problems, you can try to use these settings."
 msgstr "如果主题有一些问题，你可以尝试使用这些设置。"
 
-#: core/core-options.php:184
+#: core/core-options.php:185
 msgid "Advanced settings"
 msgstr "高级设置"
 
-#: core/core-options.php:187
+#: core/core-options.php:188
 msgid ""
 "This settings is for developer, if you want to debug code, you can try this."
 msgstr "此设置专为开发者，如果你想调试代码，你可以试试这个。"
 
-#: core/core-options.php:189
+#: core/core-options.php:190
 msgid "Developer settings"
 msgstr "开发者设置"
 
-#: core/core-options.php:192
+#: core/core-options.php:193
 msgid "If you in trouble, maybe this label can help you."
 msgstr "如果你陷入困境，也许这个标签可以帮助你。"
 
-#: core/core-options.php:194
+#: core/core-options.php:195
 msgid "About &amp; help"
 msgstr "关于 &amp; 帮助"
 
-#: core/core-options.php:226
+#: core/core-options.php:227
 msgid "Save all settings"
 msgstr "保存所有设置"
 
-#: core/core-options.php:228
+#: core/core-options.php:229
 msgid ""
 "Something error with theme? Try to restore. Be careful, theme options will "
 "be cleared up!"
 msgstr "主题发生了错误？试试还原数据。注意，主题选项将会被清空！"
 
-#: core/core-options.php:230
+#: core/core-options.php:231
 msgid "Restore to theme default options"
 msgstr "还原主题选项"
 
-#: core/core-options.php:317 core/core-options.php:318
-#: core/core-options.php:340
+#: core/core-options.php:318 core/core-options.php:319
+#: core/core-options.php:341
 msgid "Theme settings"
 msgstr "主题设置"
 
@@ -308,7 +315,7 @@ msgstr "顶/赞"
 msgid "Comment count"
 msgstr "评论统计"
 
-#: functions.php:299 functions.php:507 functions.php:1630
+#: functions.php:299 functions.php:507 functions.php:1632
 #: includes/post-views/post-views.php:190 tpl/page-account-edit.php:18
 msgid "Views"
 msgstr "查看数"
@@ -441,35 +448,27 @@ msgstr "暂无资料"
 msgid "No data yet"
 msgstr "此类别暂无资料"
 
-#: functions.php:1513
+#: functions.php:1521
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1538 includes/custom-page-rank/custom-page-rank.php:86
-msgid "Recommend"
-msgstr "推荐"
-
-#: functions.php:1544
+#: functions.php:1551
 msgid "more &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1562
-msgid "Readmore..."
-msgstr "查看更多……"
-
-#: functions.php:1723
+#: functions.php:1725
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1754
+#: functions.php:1756
 msgid "More"
 msgstr "更多"
 
-#: functions.php:1766 includes/widget-rank/widget-rank.php:36
+#: functions.php:1768 includes/widget-rank/widget-rank.php:36
 msgid "More &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1799 includes/custom-dashboard/dashboards.php:34
+#: functions.php:1801 includes/custom-dashboard/dashboards.php:34
 #: includes/widget-author-posts/widget-author-posts.php:65
 #: includes/widget-rank/widget-rank.php:72
 #: includes/widget-tags/widget-tags.php:88 tpl/page-account-edit.php:80
@@ -477,55 +476,55 @@ msgstr "更多 &raquo;"
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
-#: functions.php:1804
+#: functions.php:1806
 #, php-format
 msgid "More about %s"
 msgstr "更多%s"
 
-#: functions.php:1836
+#: functions.php:1838
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1839
+#: functions.php:1841
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1849
+#: functions.php:1851
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1850 includes/custom-point-bomb/custom-point-bomb.php:228
+#: functions.php:1852 includes/custom-point-bomb/custom-point-bomb.php:228
 #: includes/custom-point-lottery/custom-point-lottery.php:370
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1882 tpl/author-profile.php:21
+#: functions.php:1884 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:84
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1884
+#: functions.php:1886
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1895
+#: functions.php:1897
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1897
+#: functions.php:1899
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1908
+#: functions.php:1910
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1909
+#: functions.php:1911
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1929 functions.php:1931
+#: functions.php:1931 functions.php:1933
 msgid "Post comment"
 msgstr "发表评论"
 
@@ -558,7 +557,7 @@ msgstr "如果您的服务器支持，当评论被回复时，它将会发送一
 #: includes/link-manager/link-manager.php:30
 #: includes/post-copyright/post-copyright.php:39
 #: includes/post-share/post-share.php:97
-#: includes/recomm-post/recomm-post.php:137
+#: includes/recomm-post/recomm-post.php:141
 msgid "Enable or not?"
 msgstr "是否启用？"
 
@@ -573,7 +572,7 @@ msgstr "是否启用？"
 #: includes/link-manager/link-manager.php:34 includes/mailer/mailer.php:106
 #: includes/post-copyright/post-copyright.php:43
 #: includes/post-share/post-share.php:98 includes/post-views/post-views.php:64
-#: includes/recomm-post/recomm-post.php:141
+#: includes/recomm-post/recomm-post.php:145
 msgid "Enable"
 msgstr "启用"
 
@@ -1517,20 +1516,24 @@ msgstr "添加一个新的盒子"
 
 #: includes/custom-homebox/custom-homebox.php:148
 #: includes/custom-homebox/custom-homebox.php:156
+#: includes/recomm-post/recomm-post.php:150
 msgid "Box title"
 msgstr "盒子标题"
 
 #: includes/custom-homebox/custom-homebox.php:162
+#: includes/recomm-post/recomm-post.php:157
 msgid "Box icon"
 msgstr "盒子图标"
 
 #: includes/custom-homebox/custom-homebox.php:163
 #: includes/custom-navwalker/custom-navwalker.php:378
+#: includes/recomm-post/recomm-post.php:158
 msgid "Views all icons"
 msgstr "查看所有图标"
 
 #: includes/custom-homebox/custom-homebox.php:163
 #: includes/custom-navwalker/custom-navwalker.php:378
+#: includes/recomm-post/recomm-post.php:158
 msgid "ALL"
 msgstr "全部"
 
@@ -1590,15 +1593,15 @@ msgstr "HTML 代码将显示此盒子下面。"
 msgid "Awesome icon"
 msgstr "Awesome 图标"
 
-#: includes/custom-navwalker/custom-navwalker.php:395
+#: includes/custom-navwalker/custom-navwalker.php:394
 msgid "Toggle navigation label"
 msgstr "导航标签开关"
 
-#: includes/custom-navwalker/custom-navwalker.php:397
+#: includes/custom-navwalker/custom-navwalker.php:396
 msgid "Show navigation label"
 msgstr "显示"
 
-#: includes/custom-navwalker/custom-navwalker.php:398
+#: includes/custom-navwalker/custom-navwalker.php:397
 msgid "Hide navigation label"
 msgstr "隐藏"
 
@@ -1639,6 +1642,11 @@ msgstr "首字"
 #: includes/custom-page-rank/custom-page-rank.php:44
 msgid "Rank"
 msgstr "排行榜"
+
+#: includes/custom-page-rank/custom-page-rank.php:86
+#: includes/recomm-post/recomm-post.php:77
+msgid "Recommend"
+msgstr "推荐"
 
 #: includes/custom-page-rank/custom-page-rank.php:94
 msgid "Popular"
@@ -3161,7 +3169,7 @@ msgstr ""
 "用“自定义默认 Gravatar 头像”，请不要启用此功能。"
 
 #: includes/gravatar-fix/gravatar-fix.php:36
-#: includes/recomm-post/recomm-post.php:140
+#: includes/recomm-post/recomm-post.php:144
 msgid "Disable"
 msgstr "禁用"
 
@@ -3698,28 +3706,32 @@ msgstr ""
 msgid "Recommended post"
 msgstr "推荐文章"
 
-#: includes/recomm-post/recomm-post.php:55
-msgid "Set as recommended post"
-msgstr "作为推荐文章"
+#: includes/recomm-post/recomm-post.php:53
+msgid "Add to recommended posts"
+msgstr "添加到推荐文章"
 
-#: includes/recomm-post/recomm-post.php:132
+#: includes/recomm-post/recomm-post.php:136
 msgid "Recommended posts"
 msgstr "推荐文章"
 
-#: includes/recomm-post/recomm-post.php:133
+#: includes/recomm-post/recomm-post.php:137
 msgid "Recommended posts will display on home page if enabled."
 msgstr "如果启用，将会在首页显示推荐文章。"
 
-#: includes/recomm-post/recomm-post.php:146
+#: includes/recomm-post/recomm-post.php:172
+msgid "Show posts number"
+msgstr "文章数量"
+
+#: includes/recomm-post/recomm-post.php:178
 msgid "Marked posts"
 msgstr "已标记的文章"
 
-#: includes/recomm-post/recomm-post.php:163
+#: includes/recomm-post/recomm-post.php:195
 msgid "Open in open window"
 msgstr "在新窗口中打开"
 
-#: includes/recomm-post/recomm-post.php:169
-#: includes/recomm-post/recomm-post.php:172
+#: includes/recomm-post/recomm-post.php:201
+#: includes/recomm-post/recomm-post.php:204
 msgid "No any post yet"
 msgstr "暂无任何资料"
 
@@ -4811,6 +4823,15 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:117
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#~ msgid "Readmore..."
+#~ msgstr "查看更多……"
+
+#~ msgid "Set as recommended post"
+#~ msgstr "作为推荐文章"
+
+#~ msgid "Settings have been saved."
+#~ msgstr "设置已保存。"
 
 #~ msgid "theme settings"
 #~ msgstr "主题设置"
@@ -5990,10 +6011,6 @@ msgstr "保存我的设置"
 
 #~ msgid "Display different content on homepage."
 #~ msgstr "在首页中显示不同的内容。"
-
-#, fuzzy
-#~ msgid "Show posts number"
-#~ msgstr "文章数量："
 
 #, fuzzy
 #~ msgid "Must be common multiple of 5 and 2."

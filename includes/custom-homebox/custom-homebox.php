@@ -170,7 +170,7 @@ class theme_custom_homebox{
 					name="<?= __CLASS__;?>[<?= $placeholder;?>][icon]" 
 					id="<?= __CLASS__;?>-icon-<?= $placeholder;?>" 
 					class="widefat" 
-				><?php icon_option_list(__CLASS__ . '-icon-' . $placeholder . '-datalist');?></select>
+				><?php icon_option_list(__CLASS__ . '-icon-' . $placeholder . '-datalist');?>
 			</td>
 		</tr>
 		<tr>

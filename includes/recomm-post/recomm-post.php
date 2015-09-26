@@ -14,7 +14,7 @@ class theme_recommended_post{
 		add_action('add_meta_boxes',__CLASS__ . '::add_meta_boxes');
 		add_action('page_settings',__CLASS__ . '::display_backend');
 		add_filter('theme_options_save',__CLASS__ . '::options_save');
-		add_filter('theme_options_default',__CLASS__ . '::opttions_default');
+		add_filter('theme_options_default',__CLASS__ . '::options_default');
 		
 		add_action('save_post',__CLASS__ . '::save_post');
 		add_action('delete_post',__CLASS__ . '::delete_post');
@@ -45,14 +45,12 @@ class theme_recommended_post{
 	
 		wp_nonce_field(__CLASS__,__CLASS__ . '-nonce' );
 
-		$recomm_posts = self::get_ids();
-
-		$checked = in_array($post->ID,$recomm_posts) ? ' checked ' : null;
+		$checked = in_array($post->ID,self::get_ids()) ? ' checked ' : null;
 		$btn_class = $checked ? ' button-primary ' : null;
 		?>
 		<label for="<?= __CLASS__;?>-set" class="button widefat <?= $btn_class;?>">
 			<input type="checkbox" id="<?= __CLASS__;?>-set" name="<?= __CLASS__;?>" value="1" <?= $checked;?> />
-			<?= ___('Set as recommended post');?>
+			<?= ___('Add to recommended posts');?>
 		</label>
 		<?php
 	}
@@ -71,9 +69,12 @@ class theme_recommended_post{
 			self::clear_cache();
 		}
 	}
-	public static function opttions_default(array $opts = []){
+	public static function options_default(array $opts = []){
 		$opts[__CLASS__] = [
 			'enabled' => 1,
+			'number' => 8,
+			'icon' => 'star-o',
+			'title' => ___('Recommend'),
 		];
 		return $opts;
 	}
@@ -120,10 +121,13 @@ class theme_recommended_post{
 		theme_cache::delete(__CLASS__);
 	}
 	public static function set_cache($data){
-		theme_cache::set(__CLASS__,$data,null);
+		theme_cache::set(__CLASS__,$data);
 	}
 	public static function get_cache(){
 		return theme_cache::get(__CLASS__);
+	}
+	public static function get_item($key){
+		return self::get_options($key) ? (int)self::get_options($key) : self::options_default()[__CLASS__][$key];
 	}
 	public static function display_backend(){
 		$recomm_posts = self::get_ids();
@@ -140,6 +144,34 @@ class theme_recommended_post{
 								<?php the_option_list(-1,___('Disable'),self::get_options('enabled'));?>
 								<?php the_option_list(1,___('Enable'),self::get_options('enabled'));?>
 							</select>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="<?= __CLASS__;?>-title"></label><?= ___('Box title');?></th>
+						<td>
+							<input type="text" name="<?= __CLASS__;?>[title]" id="<?= __CLASS__;?>-title" value="<?= self::get_item('title');?>" class="widefat">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<label for="<?= __CLASS__;?>-icon"><?= ___('Box icon');?></label>
+							<a href="//fortawesome.github.io/Font-Awesome/icons" target="_blank" title="<?= ___('Views all icons');?>">#<?= ___('ALL');?></a>
+						</th>
+						<td>
+							<input 
+								type="text" 
+								value="<?= self::get_item('icon');?>" 
+								list="<?= __CLASS__;?>-icon-datalist" 
+								name="<?= __CLASS__;?>[icon]" 
+								id="<?= __CLASS__;?>-icon" 
+								class="widefat" 
+							><?php icon_option_list(__CLASS__ . '-icon-datalist');?>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="<?= __CLASS__;?>-number"></label><?= ___('Show posts number');?></th>
+						<td>
+							<input type="number" name="<?= __CLASS__;?>[number]" id="<?= __CLASS__;?>-number" min="4" step="4" value="<?= self::get_item('number');?>" class="short-text">
 						</td>
 					</tr>
 					<tr>

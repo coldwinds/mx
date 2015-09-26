@@ -378,8 +378,7 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 						<?php __e( 'Awesome icon' ); ?> <a href="//fortawesome.github.io/Font-Awesome/icons" target="_blank" title="<?= ___('Views all icons');?>">#<?= ___('ALL');?></a>
 						<br />
 						<input type="text" id="edit-menu-item-awesome-<?= $item_id; ?>" class="widefat edit-menu-item-awesome" name="menu-item-awesome[<?= $item_id; ?>]" value="<?= $item->awesome;?>" list="edit-menu-item-awesome-<?= $item_id; ?>-datalist">
-							<?= icon_option_list('edit-menu-item-awesome-' . $item_id . '-datalist');?>
-						</select>
+						<?= icon_option_list('edit-menu-item-awesome-' . $item_id . '-datalist');?>
 					</label>
 				</p><!-- /awesome icon -->
 				

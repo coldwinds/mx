@@ -1,17 +1,29 @@
 define(function(require, exports, module){
 	'use strict';
 	var tools = require('modules/tools');
-
-	var cache = {};
+	exports.config = {
+		lang : {
+			M01 : 'Saving your settings, please wait...'
+		}
+	};
+	var cache = {},
+		config = exports.config;
 	/**
 	 * admin page init js
 	 */
 	exports.init = function(args){
 		tools.ready(function(){
-			tab_bind();
+			exports.submit_tip();
+			exports.tab_bind();
 			exports.select_text();
 		})
 	};
+	exports.submit_tip = function(){
+		I('backend-options-frm').addEventListener('submit',function(){
+			tools.ajax_loading_tip('loading',config.lang.M01);
+			return true;
+		});
+	}
 	exports.select_text = function(){
 		var $inputs = document.querySelectorAll('.text-select');
 		if(!$inputs[0])
@@ -22,7 +34,8 @@ define(function(require, exports, module){
 			});
 		});
 	};
-	function tab_bind(){
+
+	exports.tab_bind = function(){
 		cache.$tab = I('backend-tab');
 		if(!cache.$tab)
 			return false;

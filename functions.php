@@ -153,7 +153,7 @@ class theme_functions{
 		$args = array_merge([
 			'orderby' => 'views',
 			'order' => 'desc',
-			'posts_per_page' => get_option('posts_per_page'),
+			'posts_per_page' => theme_cache::get_option('posts_per_page'),
 			'paged' => 1,
 			'category__in' => [],
 			'date' => 'all',
@@ -170,7 +170,7 @@ class theme_functions{
 			'has_password' => false,
 		],$query_args);
 		
-		switch($orderby){
+		switch($args['orderby']){
 			case 'views':
 				$query_args['meta_key'] = 'views';
 				$query_args['orderby'] = 'meta_value_num';
@@ -1506,6 +1506,14 @@ class theme_functions{
 		if(!class_exists('theme_recommended_post') || !theme_recommended_post::is_enabled())
 			return false;
 			
+		$cache = theme_recommended_post::get_cache();
+		
+		if(!empty($cache)){
+			echo $cache;
+			unset($cache);
+			return;
+		}
+		
 		$recomms = theme_recommended_post::get_ids();
 		
 		if(empty($recomms)){
@@ -1514,18 +1522,14 @@ class theme_functions{
 			<?php
 			return false;
 		}
-		$cache = theme_recommended_post::get_cache();
 		
-		if(!empty($cache)){
-			echo $cache;
-			unset($cache);
-			return;
-		}
 		global $post;
-		$query = self::get_posts_query(array(
-			'posts_per_page' => 8,
-			'orderby' => 'recomm',
-		));
+		$query = new WP_Query([
+			'posts_per_page' => theme_recommended_post::get_item('number'),
+			'post__in' => $recomms,
+			'orderby' => 'ID',
+			'ignore_sticky_posts' => true,
+		]);
 		ob_start();
 		if(have_posts()){
 			?>
@@ -1535,7 +1539,10 @@ class theme_functions{
 						<?php if(class_exists('theme_page_rank')){ ?>
 							<a href="<?= theme_page_rank::get_tabs('recommend')['url'];?>">
 						<?php } ?>
-						<i class="fa fa-star-o"></i> <?= ___('Recommend');?>
+						<?php if(theme_recommended_post::get_item('icon')){ ?>
+							<i class="fa fa-<?= theme_recommended_post::get_item('icon');?>"></i> 
+						<?php } ?>
+						<?= theme_recommended_post::get_item('title');?>">
 						<?php if(class_exists('theme_page_rank')){ ?>
 							</a>
 						<?php } ?>
@@ -1557,14 +1564,9 @@ class theme_functions{
 					?>
 				</ul>
 			</div>
-			<?php if(class_exists('theme_page_rank')){ ?>
-				<!-- <div class="mod-footer">
-					<a class="more" href="<?= theme_page_rank::get_tabs('recommend')['url'];?>"><?= ___('Readmore...');?> <i class="fa fa-external-link"></i></a>
-				</div> -->
-			<?php } ?>
 			<?php
 		}
-		unset($query);
+		unset($query,$recomms);
 		$cache = ob_get_contents();
 		ob_end_clean();
 		theme_recommended_post::set_cache($cache);

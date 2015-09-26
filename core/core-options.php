@@ -3,7 +3,7 @@
  * Theme Options
  * the theme options and show admin control planel
  * 
- * @version 5.0.4
+ * @version 5.1.0
  * 
  */
 theme_options::init();
@@ -131,6 +131,7 @@ class theme_options{
 		seajs.config(<?= json_encode($config);?>);
 		<?php do_action('before_backend_tab_init');?>
 		seajs.use('backend',function(backend_m){
+			backend_m.config.lang.M01 = '<?= ___('Saving your settings, please wait...');?>';
 			backend_m.init();
 			<?php do_action('after_backend_tab_init');?>
 		});
@@ -145,7 +146,7 @@ class theme_options{
 	 * show the options settings for admin theme setting page.
 	 * 
 	 * @return string html string for options
-	 * @version 3.1.7
+	 * @version 3.2.0
 	 * 
 	 */
 	public static function display_backend(){
@@ -153,14 +154,14 @@ class theme_options{
 		<div class="wrap">
 			<?php if(isset($_GET['updated'])){?>
 				<div id="settings-updated">
-					<?= status_tip('success',___('Settings have been saved.'));?>
+					<?= status_tip('success',___('Your settings were saved successfully.'));?>
 				</div>
 			<?php } ?>
 			<form id="backend-options-frm" method="post" action="<?= theme_features::get_process_url([
 				'action' => __CLASS__,
 			]);?>">
 				
-				<div class="backend-tab-loading"><?= status_tip('loading',___('Loading, please wait...'));?></div>
+				<div class="backend-tab-loading"><?= status_tip('loading',___('Loading your settings, please wait...'));?></div>
 				
 				<div id="backend-tab" class="backend-tab">
 					<nav class="tab-header">
