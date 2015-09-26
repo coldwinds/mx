@@ -203,11 +203,11 @@ class theme_functions{
 			default:
 				$query_args['orderby'] = 'date';
 		}
-		if($date && $date != 'all'){
+		if($args['date'] && $args['date'] != 'all'){
 			/** 
 			 * date query
 			 */
-			switch($date){
+			switch($args['date']){
 				case 'daily' :
 					$after = 'day';
 					break;
@@ -1803,7 +1803,7 @@ class theme_functions{
 		unset($query);
 		?>
 	</ul>
-	<a href="<?= $link;?>" class="below-more"><?= sprintf(___('More about %s'),$v['title']);?> <i class="fa fa-caret-right"></i></a>
+	<a href="<?= $link;?>" class="below-more" target="_blank"><?= sprintf(___('More about %s'),$v['title']);?> <i class="fa fa-caret-right"></i></a>
 	<?php
 	/**
 	 * ad

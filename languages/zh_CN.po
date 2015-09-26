@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-26 18:24+0800\n"
-"PO-Revision-Date: 2015-09-26 18:24+0800\n"
+"POT-Creation-Date: 2015-09-26 19:02+0800\n"
+"PO-Revision-Date: 2015-09-26 19:02+0800\n"
 "Last-Translator: kmvan <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -39,7 +39,7 @@ msgstr "添加评论"
 #: comments.php:26 functions.php:1845 includes/clean-up/clean-up.php:227
 #: includes/comment-ajax/comment-ajax.php:472
 #: includes/custom-collection/custom-collection.php:571
-#: includes/custom-contribution/custom-contribution.php:672
+#: includes/custom-contribution/custom-contribution.php:674
 #: includes/custom-follow/custom-follow.php:140
 #: includes/custom-page-cats/custom-page-cats.php:203
 #: includes/custom-page-tags/custom-page-tags.php:310
@@ -972,7 +972,7 @@ msgstr "第 {n} 页"
 
 #: includes/comment-ajax/comment-ajax.php:479
 #: includes/custom-collection/custom-collection.php:575
-#: includes/custom-contribution/custom-contribution.php:685
+#: includes/custom-contribution/custom-contribution.php:687
 #: includes/custom-follow/custom-follow.php:141
 #: includes/custom-pm/custom-pm.php:842
 #: includes/custom-point-bomb/custom-point-bomb.php:758
@@ -1380,52 +1380,52 @@ msgstr "立即查看它"
 msgid "Select a category"
 msgstr "选择一个分类"
 
-#: includes/custom-contribution/custom-contribution.php:673
+#: includes/custom-contribution/custom-contribution.php:675
 msgid "Uploading {0}/{1}, please wait..."
 msgstr "正在上传 {0}/{1}，请稍候…"
 
-#: includes/custom-contribution/custom-contribution.php:674
+#: includes/custom-contribution/custom-contribution.php:676
 msgid "Click to delete"
 msgstr "点击删除此张图片"
 
-#: includes/custom-contribution/custom-contribution.php:675
+#: includes/custom-contribution/custom-contribution.php:677
 msgid "{0} files have been uploaded."
 msgstr "{0} 个文件上传成功，嘻嘻…"
 
-#: includes/custom-contribution/custom-contribution.php:676
+#: includes/custom-contribution/custom-contribution.php:678
 #: tpl/page-account-post.php:371
 msgid "Source"
 msgstr "来源"
 
-#: includes/custom-contribution/custom-contribution.php:677
+#: includes/custom-contribution/custom-contribution.php:679
 msgid "Click to view source"
 msgstr "点击查看原图"
 
-#: includes/custom-contribution/custom-contribution.php:678
+#: includes/custom-contribution/custom-contribution.php:680
 msgid "Set as cover."
 msgstr "设为封面"
 
-#: includes/custom-contribution/custom-contribution.php:679
+#: includes/custom-contribution/custom-contribution.php:681
 msgid "Optional: some description"
 msgstr "[在此处写下一些描述]"
 
-#: includes/custom-contribution/custom-contribution.php:680
+#: includes/custom-contribution/custom-contribution.php:682
 msgid "Insert to content"
 msgstr "插入到文章"
 
-#: includes/custom-contribution/custom-contribution.php:681
+#: includes/custom-contribution/custom-contribution.php:683
 msgid "Preview"
 msgstr "预览图"
 
-#: includes/custom-contribution/custom-contribution.php:682
+#: includes/custom-contribution/custom-contribution.php:684
 msgid "Large size"
 msgstr "大尺寸"
 
-#: includes/custom-contribution/custom-contribution.php:683
+#: includes/custom-contribution/custom-contribution.php:685
 msgid "Medium size"
 msgstr "中尺寸"
 
-#: includes/custom-contribution/custom-contribution.php:684
+#: includes/custom-contribution/custom-contribution.php:686
 msgid "Small size"
 msgstr "小尺寸"
 
