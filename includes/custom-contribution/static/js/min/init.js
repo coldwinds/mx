@@ -15,7 +15,7 @@ h=ed.plugins.wordpress._setEmbed(h);}
 ed.execCommand('mceInsertContent',false,h);}else if(qt){QTags.insertContent(h);}else{document.getElementById(wpActiveEditor).value+=h;}
 try{tb_remove();}catch(e){};}
 function load_thumbnails(){if(!config.edit||!config.attachs)
-return false;for(var i in config.attachs){console.log(config.attachs[i]);append_tpl(config.attachs[i]);}}
+return false;for(var i in config.attachs){append_tpl(config.attachs[i]);}}
 function upload(){cache.$file.addEventListener('change',file_select);cache.$file.addEventListener('drop',file_drop);cache.$file.addEventListener('dragover',dragover);}
 function dragover(evt){evt.stopPropagation();evt.preventDefault();evt.dataTransfer.dropEffect='copy';}
 function file_drop(e){e.stopPropagation();e.preventDefault();cache.files=e.dataTransfer.files;cache.file_count=cache.files.length;cache.file=cache.files[0];cache.file_index=0;file_upload(cache.files[0]);}

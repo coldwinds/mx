@@ -1,219 +1,251 @@
 define(function(require, exports, module){
 	'use strict';
 	var tools = require('modules/tools');
-			
+
+	var cache = {};
 	/**
 	 * admin page init js
 	 */
 	exports.init = function(args){
 		tools.ready(function(){
-			var ootab = new exports.backend_tab({
-				done : args.done,
-				custom : args.custom,
-				tab_title: args.tab_title
-			});
+			tab_bind();
+			exports.select_text();
 		})
 	};
-	/**
-	 * Select Text
-	 * 
-	 * 
-	 * @version 1.0.0
-	 * 
-	 */
-	exports.select_text = {
-		config : {
-			input_id : '.text-select'
-		},
-		init : function(){
-			var $inputs = document.querySelectorAll(exports.select_text.config.input_id);
-
-			if(!$inputs[0])
-				return false;
-
-			Array.prototype.forEach.call($inputs, function($input,i){
-				$input.addEventListener('click', function (e) {
-					this.select();
-				},false);
-			});
-		}
-	};
-
-	exports.backend_tab = function(args){
-		this.config = {
-			tab_id : 'backend-tab',
-			tab_remember_key : 'backend_default_tab',
-		}
-
-		var that = this,
-			cache = {},
-			$tab = I(that.config.tab_id);
-		if(!$tab)
+	exports.select_text = function(){
+		var $inputs = document.querySelectorAll('.text-select');
+		if(!$inputs[0])
 			return false;
-		require('modules/jquery.kandytabs');
-		var current_tab = localStorage.getItem(that.config.tab_remember_key),
-			$scroll_ele = navigator.userAgent.toLowerCase().indexOf('webkit') === -1 ? jQuery('html') : jQuery('body'),
-			admin_bar_height = I('wpadminbar').offsetHeight;
-
-		if(!current_tab) current_tab = 1;
-
-		function get_data($cont){
-			var nav_links = '',
-				legends_ot = [],
-				$legends = $cont.querySelectorAll('legend');
-			for(var i = 0, len = $legends.length; i < len; i++){
-				var $this = $legends[i],
-					tx = $this.textContent;
-				$this.id = tx;
-				nav_links += '<a href="#' + tx + '" title="' + tx + '" data-target-index="' + i +'">' + tx + '</a>';
-				legends_ot.push(parseInt($this.offsetTop));
-			}
-			
-			return {
-				nav_html : '<nav class="tabnav-container"><div class="tabnav">'+nav_links+'</div></nav>',
-				$legends : $legends,
-				legends_ot : legends_ot
-			}
-		}
-		function scroll_to_switch($nav_links,items_ot){
-			var $win = jQuery(window),
-				len = items_ot.length,
-				win_st = 0,
-				last_active_i = 0,
-				margin_t = 40;
-			$nav_links[0].classList.add('active');
-
-			$win.scroll(function(){
-				win_st = $win.scrollTop();
-				for(var i=0;i<=len;i++){
-
-					if((win_st >= items_ot[i] - margin_t - admin_bar_height) && (win_st < items_ot[i + 1])){
-						if(last_active_i !== i){
-							for(var j = 0; j < len; j++){
-								$nav_links[j].classList.remove('active');
-							}
-							$nav_links[i].classList.add('active');
-							last_active_i = i;
-						}
-					}
-				}
-			})
-		}
-		function fixed_nav($nav){
-			var $win = jQuery(window),
-				ori_st = jQuery($nav).offset().top,
-				margin_t = 0,
-				placeholder_t = 20,
-				is_fixed = false;
-
-			$win.scroll(function(){
-				if($win.scrollTop() >= ori_st - admin_bar_height - margin_t){
-					if(!is_fixed){
-						$nav.style.position = 'fixed';
-						$nav.style.top = admin_bar_height + 'px';
-						$nav.style.marginTop = margin_t + 'px';
-						
-						is_fixed = true;
-					}
-				}else{
-					if(is_fixed){
-						$nav.style.position = '';
-						$nav.style.top = '';
-						$nav.style.marginTop = '';
-						
-						is_fixed = false;
-					}
-				}
+		Array.prototype.forEach.call($inputs, function($input,i){
+			$input.addEventListener('click', function () {
+				this.select();
 			});
-		}
-		function scroll_to_item($nav_links,$legends){
-			var placeholder_t = 20,
-				helper = function(i){
-					$nav_links[i].addEventListener('click',function(e){
-						e.preventDefault();
-						for(var j = 0; j < len; j++){
-							$nav_links[j].classList.remove('active');
-						}
-						this.classList.add('active');
-						/** scroll */
-						window.scrollTo(0,i === 0 ? 0 : jQuery($legends[i]).offset().top - admin_bar_height - placeholder_t);
-						/** flash */
-						flash_legend($legends[i]);
-						/** fake hash */
-						history.pushState(null, null, '#' + this.innerHTML);
-					});
-				};
-			for(var i = 0, len = $nav_links.length; i < len; i++){
-				$nav_links[i].addEventListener('click',helper(i));
-			}
-			
-		}
-		function flash_legend($legend){
-			var $parent = $legend.parentNode,
-				i = 0,
-				st;
-			$parent.classList.add('active');
-			function toggle(last){
-				if(last){
-					$parent.classList.remove('active');
-					return false;
-				}
-				if($parent.classList.contains('active')){
-					$parent.classList.remove('active');
-				}else{
-					$parent.classList.add('active');
-				}
-			}
-			st = setInterval(function(){
-				if(i >= 10){
-					toggle(true);
-					clearInterval(st);
-					return false;
-				}
-				toggle();
-				i++;
-			}, 70);
-		}
-		jQuery($tab).KandyTabs({
-			delay:100,
-			resize:false,
-			current:current_tab,
-			custom:function(b,c,i,t){
-				localStorage.setItem(that.config.tab_remember_key,i+1);
-				args.custom(b,c,i,t);
-				
-				/**
-				 * tabnav
-				 */
-				if(!cache.navtab)
-					cache.navtab = [];
-					
-				if(cache.navtab[i] === true)
-					return false;
-				cache.navtab[i] = true;
-				
-				var $cont = c[i],
-					data = get_data($cont),
-					$nav_container = jQuery(data.nav_html)[0],
-					$nav = $nav_container.querySelector('.tabnav'),
-					$nav_links = $nav_container.querySelectorAll('a'),
-					legends_ot = data.legends_ot;
-
-				$cont.insertBefore($nav_container,$cont.firstChild);
-				scroll_to_switch($nav_links,legends_ot);
-				scroll_to_item($nav_links,data.$legends);
-				fixed_nav($nav);
-			},
-			done:function($btn,$cont,$tab){
-				document.querySelector('.backend-tab-loading').style.display = 'none';
-				$btn.eq(0).before('<span class="tab-title">' + args.tab_title +'</span>');
-				$tab[0].style.display = 'block';
-				args.done($btn,$cont,$tab);
-				exports.select_text.init();
-			}
-		})
+		});
 	};
+	function tab_bind(){
+		cache.$tab = I('backend-tab');
+		if(!cache.$tab)
+			return false;
 
+		cache.$tab_loading = document.querySelector('.backend-tab-loading');
+		cache.$tab_header = cache.$tab.querySelector('.tab-header');
+		cache.$tab_header_items = cache.$tab_header.querySelectorAll('.tab-item');
+		cache.$tab_body = cache.$tab.querySelector('.tab-body');
+		cache.$tab_body_items = cache.$tab_body.querySelectorAll('.tab-item');
+		
+		cache.len = cache.$tab_header_items.length;
+		cache.last_active_i = 0;
+		cache.active_i = 0;
+		cache.actived = [];
+
+		for( var i = 0; i < cache.len; i++){
+			cache.$tab_header_items[i].setAttribute('data-i',i);
+			cache.$tab_header_items[i].addEventListener('mouseover',event_tab_header_hover);
+		}
+
+		/** show tab */
+		cache.$tab_loading.style.display = 'none';
+		cache.$tab.style.display = 'block';
+
+		/** show last tab */
+		last_tab_init();
+
+		/** nav init */
+		tab_nav_init();
+
+		/** nav fixed init */
+		tab_nav_fixed_init();
+		
+	}
+	function event_tab_header_hover(e){
+		e.preventDefault();
+		e.stopPropagation();
+		
+		cache.active_i = this.getAttribute('data-i');
+		
+		if(cache.last_active_i == cache.active_i)
+			return false;
+			
+		/** hide last tab */
+		action_tab_hide(cache.last_active_i);
+		
+		/** show current tab */
+		action_tab_show(cache.active_i);
+
+		/** hide last tab nav */
+		action_tab_nav_hide(cache.last_active_i);
+
+		/** show current tab nav */
+		action_tab_nav_show(cache.active_i);
+
+		/** init tab nav scroll */
+		tab_nav_scroll_init();
+		
+		/** set last tab */
+		cache.last_active_i = cache.active_i;
+		
+		/** set last tab to localStorage */
+		localStorage.setItem('backend-tab-last-active',cache.active_i);
+	}
+	function last_tab_init(){
+		cache.last_active_i = parseInt(localStorage.getItem('backend-tab-last-active'));
+		if(!cache.last_active_i)
+			cache.last_active_i = 0;
+		cache.active_i = cache.last_active_i;
+		action_tab_show(cache.last_active_i);
+	}
+	function action_tab_show(i){
+		//console.log(i);
+		//console.log(cache.$tab_body_items[i]);
+		cache.$tab_header_items[i].classList.add('active');
+		cache.$tab_body_items[i].classList.add('active');
+	}
+	function action_tab_hide(i){
+		cache.$tab_header_items[i].classList.remove('active');
+		cache.$tab_body_items[i].classList.remove('active');
+	}
+	/**
+	 * nav
+	 */
+	function tab_nav_init(){
+		cache.$nav_container = document.createElement('div');
+		cache.$nav_container.className = 'tab-nav-container';
+		cache.$tab_body.insertBefore(cache.$nav_container,cache.$tab_body.firstChild);
+
+		cache.admin_bar_height = 32;
+		cache.legend_tops = [];
+		cache.$tab_nav = [];
+		cache.$nav_items = [];
+		cache.$tab_legends = [];
+		
+		for(var i = 0; i < cache.len; i++){
+			nav_item_create(i);
+		}
+		/** show tab nav */
+		action_tab_nav_show(cache.last_active_i);
+	}
+	function nav_item_create(i){
+		cache.$tab_nav[i] = document.createElement('nav');
+		cache.$tab_nav[i].className = 'tab-nav';
+
+		cache.$nav_items[i] = {};
+		cache.$tab_legends[i] = cache.$tab_body_items[i].querySelectorAll('legend');
+
+		cache.last_tab_nav_active_i = 0;
+		
+		if(!cache.$tab_legends[i][0])
+			return false;
+			
+		for(var j = 0, len = cache.$tab_legends[i].length; j < len; j++){
+			/** get legend title */
+			var title = cache.$tab_legends[i][j].innerHTML,
+				text = cache.$tab_legends[i][j].textContent;
+				/** create nav item */
+				if(!cache.$nav_items[i])
+					cache.$nav_items[i] = [];
+				cache.$nav_items[i][j] = document.createElement('span');
+				
+			/** scroll to top */
+			cache.$tab_legends[i][j].addEventListener('click',function(){
+				scrollTo(0,0);
+			});
+			
+			/** set legend id */
+			cache.$tab_legends[i][j].id = encodeURI(text);
+			
+			/** set data */
+			cache.$nav_items[i][j].setAttribute('data-hash',encodeURI(text));
+			cache.$nav_items[i][j].setAttribute('data-i',i);
+			cache.$nav_items[i][j].setAttribute('data-j',j);
+			cache.$nav_items[i][j].innerHTML = title;
+			
+			/** bind click */
+			cache.$nav_items[i][j].addEventListener('click',event_nav_item_click);
+			
+			/** append */
+			cache.$tab_nav[i].appendChild(cache.$nav_items[i][j]);
+		}
+		cache.$nav_container.appendChild(cache.$tab_nav[i]);
+	}
+	function event_nav_item_click(e){
+		e.preventDefault();
+		var $legend = cache.$tab_legends[this.getAttribute('data-i')][this.getAttribute('data-j')],
+			$parent = $legend.parentNode;
+			
+		scrollTo(0,tools.getElementTop($legend) - cache.admin_bar_height);
+		
+		history.pushState(null, null, '#' + this.getAttribute('data-hash'));
+		
+		$parent.classList.add('active');
+		setTimeout(function(){
+			$parent.classList.remove('active');
+		},2000);
+	}
+	function action_tab_nav_show(i){
+		cache.$tab_nav[i].classList.add('active');
+	}
+	function action_tab_nav_hide(i){
+		cache.$tab_nav[i].classList.remove('active');
+	}
+	function tab_nav_fixed_init(){
+		cache.nav_ori_top = tools.getElementTop(cache.$nav_container) - cache.admin_bar_height;
+		cache.is_fixed = false;
+		
+		tab_nav_scroll_init();
+	}
+	function tab_nav_scroll_init(){
+		if(cache.actived.indexOf(cache.active_i) !== -1)
+			return;
+
+		/** set first active */
+		cache.$nav_items[cache.active_i][0].classList.add('active');
+		
+		/** set offset top */
+		for(var j = 0, len = cache.$tab_legends[cache.active_i].length; j < len; j++){
+			if(!cache.legend_tops[cache.active_i])
+				cache.legend_tops[cache.active_i] = [];
+			cache.legend_tops[cache.active_i][j] = parseInt(tools.getElementTop(cache.$tab_legends[cache.active_i][j]));
+		}
+		window.addEventListener('scroll', function (e) {
+			event_tab_nav_fixed();
+			event_legends_scroll();
+		});
+		
+		/** set actived */
+		cache.actived.push(cache.active_i);
+	}
+	function event_legends_scroll(){
+		var wot = parseInt(window.pageYOffset);
+
+		var len = cache.legend_tops[cache.active_i].length;
+		for(var i=0; i<len; i++){
+			if((wot >= cache.legend_tops[cache.active_i][i] - cache.admin_bar_height*2) && (wot < cache.legend_tops[cache.active_i][i + 1])){
+				
+				if(cache.tab_nav_last_active_i !== i){
+					for(var j = 0; j < len; j++){
+						cache.$nav_items[cache.active_i][j].classList.remove('active');
+					}
+					cache.$nav_items[cache.active_i][i].classList.add('active');
+					cache.tab_nav_last_active_i = i;
+				}
+			}
+		}
+	}
+	function event_tab_nav_fixed(){
+		if(window.pageYOffset >= cache.nav_ori_top){
+			if(!cache.is_fixed){
+				cache.$tab_nav[cache.active_i].style.top = cache.admin_bar_height + 'px';
+				cache.$tab_nav[cache.active_i].style.position = 'fixed';
+				cache.is_fixed = true;
+			}
+		}else{
+			if(cache.is_fixed){
+				cache.$tab_nav[cache.active_i].style.top = 0;
+				cache.$tab_nav[cache.active_i].style.position = 'relative';
+				cache.is_fixed = false;
+			}
+		}
+	}
 	function I(e){
 		return document.getElementById(e);
 	}

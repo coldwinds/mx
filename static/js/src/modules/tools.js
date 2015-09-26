@@ -2,7 +2,31 @@ define(function(require, exports, module){
 	'use strict';
 	
 	var js_request = require('theme-cache-request');
-
+	
+	/**
+	 * get ele offset left
+	 */
+	exports.getElementLeft = function(e){
+		var l = e.offsetLeft,
+			c = e.offsetParent;
+		while (c !== null){
+			l += c.offsetLeft;
+			c = c.offsetParent;
+		}
+		return l;
+	};
+	/**
+	 * get ele offset top
+	 */
+	exports.getElementTop = function(e){
+		var l = e.offsetTop,
+			c = e.offsetParent;
+		while (c !== null){
+			l += c.offsetTop;
+			c = c.offsetParent;
+		}
+		return l;
+	};
 	exports.parseHTML = function(s) {
 		var t = document.createElement('div');
 		t.innerHTML = s;

@@ -125,7 +125,7 @@ define(function(require, exports, module){
 			return false;
 			
 		for(var i in config.attachs){
-			console.log(config.attachs[i]);
+			//console.log(config.attachs[i]);
 			append_tpl(config.attachs[i]);
 		}
 	}

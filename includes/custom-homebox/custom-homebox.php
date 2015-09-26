@@ -158,13 +158,19 @@ class theme_custom_homebox{
 			</td>
 		</tr>
 		<tr>
-			<th><label for="<?= __CLASS__;?>-icon-<?= $placeholder;?>"><?= ___('Box icon');?></label></th>
+			<th>
+				<label for="<?= __CLASS__;?>-icon-<?= $placeholder;?>"><?= ___('Box icon');?></label>
+				<a href="//fortawesome.github.io/Font-Awesome/icons" target="_blank" title="<?= ___('Views all icons');?>">#<?= ___('ALL');?></a>
+			</th>
 			<td>
-				<select 
+				<input 
+					type="text" 
+					value="<?= $icon;?>" 
+					list="<?= __CLASS__;?>-icon-<?= $placeholder;?>-datalist" 
 					name="<?= __CLASS__;?>[<?= $placeholder;?>][icon]" 
 					id="<?= __CLASS__;?>-icon-<?= $placeholder;?>" 
 					class="widefat" 
-				><?php icon_option_list($icon);?></select>
+				><?php icon_option_list(__CLASS__ . '-icon-' . $placeholder . '-datalist');?></select>
 			</td>
 		</tr>
 		<tr>

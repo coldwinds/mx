@@ -19,9 +19,9 @@ define(function(require,exports,module){
 			return;
 		cache.len = cache.$boxes.length;
 		cache.$last_boxes = cache.$boxes[cache.len - 1];
-		cache.ori_bottom = getElementTop(cache.$last_boxes) + cache.$last_boxes.offsetHeight;
-		cache.ori_offset_left = getElementLeft(document.getElementById('sidebar-container'));
-		cache.ori_offset_top = getElementTop(cache.$boxes[0]);
+		cache.ori_bottom = tools.getElementTop(cache.$last_boxes) + cache.$last_boxes.offsetHeight;
+		cache.ori_offset_left = tools.getElementLeft(document.getElementById('sidebar-container'));
+		cache.ori_offset_top = tools.getElementTop(cache.$boxes[0]);
 		create_nav();
 		bind_window_scroll();
 	}
@@ -68,7 +68,7 @@ define(function(require,exports,module){
 			var $title = cache.$boxes[i].querySelector('.mod-title a'),
 				title = $title.textContent,
 				$i = $title.querySelector('i'),
-				offsetTop = getElementTop(cache.$boxes[i]) - 100,
+				offsetTop = tools.getElementTop(cache.$boxes[i]) - 100,
 				$item = document.createElement('a');
 				
 			if(!$i)
@@ -95,23 +95,5 @@ define(function(require,exports,module){
 		append_content_nav();
 		set_nav_style();
 		document.body.appendChild(cache.$nav);
-	}
-	function getElementLeft(e){
-		var l = e.offsetLeft,
-			c = e.offsetParent;
-		while (c !== null){
-			l += c.offsetLeft;
-			c = c.offsetParent;
-		}
-		return l;
-	}
-	function getElementTop(e){
-		var l = e.offsetTop,
-			c = e.offsetParent;
-		while (c !== null){
-			l += c.offsetTop;
-			c = c.offsetParent;
-		}
-		return l;
 	}
 });

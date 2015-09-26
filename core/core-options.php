@@ -25,8 +25,8 @@ class theme_options{
 	public static function admin_init(){
 		if(!self::is_options_page())
 			return false;
-		add_action('admin_head',__CLASS__ . '::backend_css');
-		add_action('admin_footer',__CLASS__ . '::backend_js');
+		add_action('admin_head', __CLASS__ . '::backend_css');
+		add_action('admin_footer', __CLASS__ . '::backend_js');
 		add_action('backend_seajs_alias', __CLASS__ . '::backend_seajs_alias');
 	}
 	/**
@@ -130,16 +130,9 @@ class theme_options{
 		?>
 		seajs.config(<?= json_encode($config);?>);
 		<?php do_action('before_backend_tab_init');?>
-		seajs.use('backend',function(m){
-			m.init({
-				done : function($btn,$cont,$tab){
-					<?php do_action('after_backend_tab_init');?>
-				},
-				custom : function(b,c,i,t){
-					<?php do_action('after_backend_tab_custom');?>
-				},
-				tab_title : '<?= wp_get_theme();?> <?= ___('theme settings');?>'
-			});
+		seajs.use('backend',function(backend_m){
+			backend_m.init();
+			<?php do_action('after_backend_tab_init');?>
 		});
 		</script>
 		<?php	
@@ -169,56 +162,63 @@ class theme_options{
 				
 				<div class="backend-tab-loading"><?= status_tip('loading',___('Loading, please wait...'));?></div>
 				
-				<dl id="backend-tab" class="backend-tab">
-					<?php do_action('before_base_settings');?>
-					<dt title="<?= ___('Theme common settings.');?>">
-						<i class="fa fa-fw fa-cog"></i>
-						<span class="tx"><?= ___('Basic Settings');?></span>
-					</dt>
-					<dd>
-						<!-- the action of base_settings -->
-						<?php do_action('base_settings');?>
-					</dd><!-- BASE SETTINGS -->
+				<div id="backend-tab" class="backend-tab">
+					<nav class="tab-header">
+
+						<a href="<?= theme_functions::theme_meta_translate()['theme_url'];?>" target="_blank" title="<?= ___('Visit the official of theme');?>" class="tab-title">
+							<?= theme_functions::theme_meta_translate()['name'];?>
+						</a>
 					
-					<?php do_action('before_page_settings');?>
-					<dt title="<?= ___('Theme appearance/template settings.');?>">
-						<i class="fa fa-fw fa-paint-brush"></i>
-						<span class="tx"><?= ___('Page Settings');?></span>
-					</dt>
-					<dd>
-						<!-- the action of page_settings -->
-						<?php do_action('page_settings');?>
-					</dd><!-- PAGE SETTINGS -->
+						<span class="tab-item" title="<?= ___('The theme common basic settings.');?>">
+							<i class="fa fa-fw fa-cog"></i> 
+							<span class="tx"><?= ___('Basic settings');?></span>
+						</span><!-- basic settings -->
+						
+						<span class="tab-item" title="<?= ___('You can customize the theme in this label.');?>">
+							<i class="fa fa-fw fa-paint-brush"></i> 
+							<span class="tx"><?= ___('Page settings');?></span>
+						</span><!-- page settings -->
+						
+						<span class="tab-item" title="<?= ___('If the theme there are some problems, you can try to use these settings.');?>">
+							<i class="fa fa-fw fa-cogs"></i> 
+							<span class="tx"><?= ___('Advanced settings');?></span>
+						</span><!-- advanced settings -->
+						
+						<span class="tab-item" title="<?= ___('This settings is for developer, if you want to debug code, you can try this.');?>">
+							<i class="fa fa-fw fa-code"></i> 
+							<span class="tx"><?= ___('Developer settings');?></span>
+						</span><!-- developer mode -->
+						
+						<span class="tab-item" title="<?= ___('If you in trouble, maybe this label can help you.');?>">
+							<i class="fa fa-fw fa-question-circle"></i> 
+							<span class="tx"><?= ___('About &amp; help');?></span>
+						</span><!-- about and help -->
+						
+					</nav>
+
 					
-					<?php do_action('before_advanced_settings');?>
-					<dt title="<?= ___('Theme special settings, you need to know what are you doing.');?>">
-						<i class="fa fa-fw fa-cogs"></i>
-						<span class="tx"><?= ___('Advanced Settings');?></span>
-					</dt>
-					<dd>
-						<!-- the action of advanced_settings -->
-						<?php do_action('advanced_settings');?>
-					</dd><!-- ADVANCED SETTINGS -->
-										
-					<?php do_action('before_dev_settings');?>
-					<dt>
-						<i class="fa fa-fw fa-code"></i>
-						<span class="tx"><?= ___('Developer Mode');?></span>
-					</dt>
-					<dd>
-						<?php do_action('dev_settings');?>
-					</dd><!-- DEVELOPER SETTINGS -->
+					<div class="tab-body">
+						<div class="tab-item">
+							<?php do_action('base_settings');?>
+						</div><!-- BASE SETTINGS -->
 					
-					<?php do_action('before_help_settings');?>
-					<dt>
-						<i class="fa fa-fw fa-question-circle"></i>
-						<span class="tx"><?= ___('About &amp; Help');?></span>
-					</dt>
-					<dd>
-						<?php do_action('help_settings');?>
-					</dd><!-- ABOUT and HELP -->
-					<?php do_action('after_help_settings');?>
-				</dl>
+						<div class="tab-item">
+							<?php do_action('page_settings');?>
+						</div><!-- PAGE SETTINGS -->
+					
+						<div class="tab-item">
+							<?php do_action('advanced_settings');?>
+						</div><!-- ADVANCED SETTINGS -->
+					
+						<div class="tab-item">
+							<?php do_action('dev_settings');?>
+						</div><!-- DEVELOPER SETTINGS -->
+					
+						<div class="tab-item">
+							<?php do_action('help_settings');?>
+						</div><!-- ABOUT and HELP -->
+					</div><!-- tab-content -->
+				</div><!-- backend-tab -->
 		
 				<p>
 					<input type="hidden" name="<?= __CLASS__;?>[nonce]" value="<?= wp_create_nonce(__CLASS__);?>">
