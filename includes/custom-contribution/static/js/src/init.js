@@ -333,7 +333,7 @@ define(function(require, exports, module){
 		/**
 		 * set as cover
 		 */
-		if(!cache.first_cover){
+		if((!config.thumbnail_id && !cache.first_cover) || (args['attach-id'] == config.thumbnail_id)){
 			$tpl.querySelector('.img-thumbnail-checkbox').checked = true;
 			cache.first_cover = true;
 		}

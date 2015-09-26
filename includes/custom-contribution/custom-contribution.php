@@ -645,6 +645,8 @@ class theme_custom_contribution{
 			'post_type' => 'attachment',
 			'post_mime_type' => 'image',
 			'posts_per_page' => -1,
+			'orderby' => 'ID',
+			'order' => 'ASC',
 		]);
 	}
 	public static function frontend_seajs_alias(array $alias = []){
@@ -695,13 +697,13 @@ class theme_custom_contribution{
 					$attachs[$v->ID]['attach-id'] = $v->ID;
 				}
 
-				if($thumbnail_id && !empty($attachs_data)){
-					$unshift_attach = $attachs[$thumbnail_id];
-					unset($attachs[$thumbnail_id]);
-					array_unshift($attachs,$unshift_attach);
-				}
+				//if($thumbnail_id && !empty($attachs_data)){
+				//	$unshift_attach = $attachs[$thumbnail_id];
+				//	unset($attachs[$thumbnail_id]);
+				//	array_unshift($attachs,$unshift_attach);
+				//}
 				unset($attachs_data);
-				asort($attachs);
+				//asort($attachs);
 				?>
 				m.config.edit = 1;
 				m.config.thumbnail_id = <?= $thumbnail_id;?>;

@@ -94,6 +94,9 @@
 		position: relative;
 		margin-top: 10px;
 	}
+		#ctb-files .thumbnail-tpl .img-link{
+			min-height: 98px;
+		}
 		#ctb-files .thumbnail-tpl input[type=radio]{
 			display: none;
 		}
