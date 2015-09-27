@@ -2,7 +2,7 @@
 /**
  * img placeholder
  *
- * @version 1.0.2
+ * @version 2.2.2
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_img_placeholder::init';
@@ -15,10 +15,10 @@ class theme_img_placeholder{
 
 		add_action('base_settings', __CLASS__ . '::display_backend');
 
-		if(self::get_options('thumbnail') !== '' && theme_functions::$thumbnail_placeholder !== self::get_options('thumbnail'))
+		if(theme_functions::$thumbnail_placeholder !== self::get_options('thumbnail'))
 			theme_functions::$thumbnail_placeholder = self::get_options('thumbnail');
 			
-		if(self::get_options('avatar') !== '' && theme_functions::$avatar_placeholder !== self::get_options('avatar'))
+		if(theme_functions::$avatar_placeholder !== self::get_options('avatar'))
 		theme_functions::$avatar_placeholder = self::get_options('avatar');
 	}
 	public static function options_save(array $opts = []){
@@ -34,13 +34,15 @@ class theme_img_placeholder{
 		return $opts;
 	}
 	public static function get_options($key = null){
-		static $caches = null;
-		if($caches === null)
-			$caches = (array)theme_options::get_options(__CLASS__);
-			
-		if($key)
-			return isset($caches[$key]) ? esc_url($caches[$key]) : false;
-		return $caches;
+		static $cache = null;
+		if($cache === null)
+			$cache = array_filter((array)theme_options::get_options(__CLASS__));
+		if($key){
+			if(isset($cache[$key]))
+				return $cache[$key];
+			return isset(self::options_default()[__CLASS__][$key]) ?self::options_default()[__CLASS__][$key] : false;
+		}
+		return $cache ? $cache : self::options_default()[__CLASS__];
 	}
 	public static function display_backend(){
 		?>
@@ -53,7 +55,7 @@ class theme_img_placeholder{
 						<label for="<?= __CLASS__;?>-thumbnail-url"><?= ___('Thumbnail image URL');?></label>
 						<br>
 						<a href="<?= self::get_options('thumbnail');?>" target="_blank">
-							<img src="<?= self::get_options('thumbnail');?>" alt="thumbnail" width="160" height="100">
+							<img src="<?= self::get_options('thumbnail');?>" alt="thumbnail" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>">
 						</a>
 					</th>
 					<td>
