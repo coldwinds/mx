@@ -87,15 +87,15 @@ class theme_custom_contribution{
 				<tr>
 					<th><label for="<?= __CLASS__;?>-pending-after-edited"><?= ___('Pending after edited');?></label></th>
 					<td>
-						<label for="<?= __CLASS__;?>-pending-after-edited">
-							<input type="checkbox" name="<?= __CLASS__;?>[pending-after-edited]" id="<?= __CLASS__;?>-pending-after-edited" value="1"> 
-							<?= ___('Enable');?> 
-							<span class="description"><?= ___('After the post of contributor published, if contributor edit the post which post status will become to pending if enable.');?></span>
-						</label>
+						<select name="<?= __CLASS__;?>[pending-after-edited]" id="<?= __CLASS__;?>-pending-after-edited" class="widefat">
+							<?php the_option_list(-1,___('Disable'),self::get_options('pending-after-edited'));?>
+							<?php the_option_list(1,___('Enable'),self::get_options('pending-after-edited'));?>
+						</select>
+						<p class="description"><?= ___('After the post of contributor published, if contributor edit the post which post status will become to pending if enable.');?></p>
 					</td>
 				</tr>
 				<tr>
-					<th><label for="<?= __CLASS__;?>-description"><?= ___('You can write some description for contribution page header. Please use tag <p> to wrap your HTML codes.');?></label></th>
+					<th><label for="<?= __CLASS__;?>-description"><?= htmlentities(___('You can write some description for contribution page header. Please use tag <p> to wrap your HTML codes.'));?></label></th>
 					<td>
 						<textarea name="<?= __CLASS__;?>[description]" id="<?= __CLASS__;?>-description" class="widefat" rows="5"><?= self::get_des();?></textarea>
 					</td>
