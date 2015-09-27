@@ -2,7 +2,7 @@
 /*
 Feature Name:	Post Views
 Feature URI:	http://www.inn-studio.com
-Version:		3.0.2
+Version:		3.0.1
 Description:	Count the post views.
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -12,7 +12,6 @@ add_filter('theme_includes',function($fns){
 	return $fns;
 });
 class theme_post_views{
-	public static $iden = 'theme_post_views';
 	public static $post_meta_key = 'views';
 	public static $cache_key = array(
 		'views' => 'theme_post_views',
@@ -47,7 +46,7 @@ class theme_post_views{
 		add_filter('manage_posts_columns', __CLASS__ . '::admin_add_column');
 	}
 	public static function options_default(array $opts = []){
-		$opts[self::$iden] = array(
+		$opts[__CLASS__] = array(
 			'enabled' => 1,
 			'storage-times' => 10,
 		);
@@ -61,19 +60,19 @@ class theme_post_views{
 			<table class="form-table">
 				<tbody>
 					<tr>
-						<th><label for="<?= self::$iden;?>-enabled"><?= ___('Enable');?></label></th>
+						<th><label for="<?= __CLASS__;?>-enabled"><?= ___('Enable or not?');?></label></th>
 						<td>
-							<label for="<?= self::$iden;?>-enabled">
-								<input type="checkbox" name="<?= self::$iden;?>[enabled]" id="<?= self::$iden;?>-enabled" value="1" <?= $checked;?>> 
-								<?= ___('Enabled');?>
-							</label>
+							<select name="<?= __CLASS__;?>[enabled]" id="<?= __CLASS__;?>-enabled" class="widefat">
+								<?php the_option_list(-1,___('Disable'),self::get_options('enabled'));?>
+								<?php the_option_list(1,___('Enable'),self::get_options('enabled'));?>
+							</select>
 						</td>
 					</tr>
 					<?php if(wp_using_ext_object_cache()){ ?>
 						<tr>
-							<th><label for="<?= self::$iden;?>-storage-times"><?= ___('Max cache storage times');?></label></th>
+							<th><label for="<?= __CLASS__;?>-storage-times"><?= ___('Max cache storage times');?></label></th>
 							<td>
-								<input class="short-text" type="number" name="<?= self::$iden;?>[storage-times]" id="<?= self::$iden;?>-storage-times" value="<?= self::get_storage_times();?>" min="1">
+								<input class="short-text" type="number" name="<?= __CLASS__;?>[storage-times]" id="<?= __CLASS__;?>-storage-times" value="<?= self::get_storage_times();?>" min="1">
 								<span class="description"><?= ___('Using cache to improve performance. When the views more than max storage times, views will be save to database.');?></span>
 							</td>
 						</tr>
@@ -106,7 +105,7 @@ class theme_post_views{
 	 */
 	private static function update_views_using_cache($post_id,$force = false){
 
-		$times = wp_cache_get($post_id,self::$iden);
+		$times = wp_cache_get($post_id,__CLASS__);
 
 		$meta = (int)get_post_meta($post_id,self::$post_meta_key,true) + (int)$times;
 		/**
@@ -114,7 +113,7 @@ class theme_post_views{
 		 */
 		if($force){
 			$meta++;
-			wp_cache_set($post_id,0,self::$iden,self::$expire);
+			wp_cache_set($post_id,0,__CLASS__,self::$expire);
 			update_post_meta($post_id,self::$post_meta_key,$meta);
 		/**
 		 * update cache
@@ -126,15 +125,15 @@ class theme_post_views{
 			if($times >= self::get_storage_times()){
 				$meta = $meta + $times + 1;
 				update_post_meta($post_id,self::$post_meta_key,$meta);
-				wp_cache_set($post_id,0,self::$iden,self::$expire);
+				wp_cache_set($post_id,0,__CLASS__,self::$expire);
 			/**
 			 * update cache
 			 */
 			}else{
 				if($times === false)
-					wp_cache_set($post_id,0,self::$iden,self::$expire);
+					wp_cache_set($post_id,0,__CLASS__,self::$expire);
 					
-				wp_cache_incr($post_id,1,self::$iden);
+				wp_cache_incr($post_id,1,__CLASS__);
 				$meta++;
 			}
 		}
@@ -164,14 +163,14 @@ class theme_post_views{
 		$meta = (int)get_post_meta($post_id,self::$post_meta_key,true) + 1;
 		
 		if(wp_using_ext_object_cache())
-			return $meta + (int)wp_cache_get($post_id,self::$iden);
+			return $meta + (int)wp_cache_get($post_id,__CLASS__);
 		
 		return $meta;
 	}
 	public static function get_options($key = null){
 		static $caches = null;
 		if($caches === null)
-			$caches = theme_options::get_options(self::$iden);
+			$caches = theme_options::get_options(__CLASS__);
 		if($key)
 			return isset($caches[$key]) ? $caches[$key] : false;
 		return $caches;
@@ -180,8 +179,8 @@ class theme_post_views{
 		return self::get_options('enabled') == 1;
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[self::$iden])){
-			$opts[self::$iden] = $_POST[self::$iden];
+		if(isset($_POST[__CLASS__])){
+			$opts[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $opts;
 	}
@@ -199,7 +198,7 @@ class theme_post_views{
 	}
 
 	public static function process_cache_request(array $output = []){
-		$id = isset($_GET[self::$iden]) && is_string($_GET[self::$iden]) ? (int)$_GET[self::$iden] : null;
+		$id = isset($_GET[__CLASS__]) && is_string($_GET[__CLASS__]) ? (int)$_GET[__CLASS__] : null;
 		
 		if(empty($id))
 			return $output;
@@ -215,9 +214,12 @@ class theme_post_views{
 		];
 		return $output;
 	}
+	private static function get_client_id(){
+		
+	}
 	public static function get_viewed_ids(){
 		if(self::$cookie === null)
-			self::$cookie = isset($_COOKIE[self::$iden]) ? json_decode($_COOKIE[self::$iden],true) : false;
+			self::$cookie = isset($_COOKIE[__CLASS__]) ? json_decode($_COOKIE[__CLASS__],true) : false;
 
 		return self::$cookie;
 	}
@@ -226,12 +228,12 @@ class theme_post_views{
 		self::$cookie = self::get_viewed_ids();
 		if(empty(self::$cookie)){
 			self::$cookie = [$post_id];
-			setcookie(self::$iden,json_encode([$post_id]),$expire);
+			setcookie(__CLASS__,json_encode([$post_id]),$expire);
 			return true;
 		}else{
 			if(!in_array($post_id,self::$cookie)){
 				self::$cookie[] = $post_id;
-				setcookie(self::$iden,json_encode(self::$cookie),$expire);
+				setcookie(__CLASS__,json_encode(self::$cookie),$expire);
 				return true;
 			}
 			return false;
@@ -243,21 +245,21 @@ class theme_post_views{
 	public static function js_cache_request(array $alias = []){
 		if(!theme_cache::is_singular_post())
 			return $alias;
-		$alias[self::$iden] = get_the_ID();
+		$alias[__CLASS__] = get_the_ID();
 		return $alias;
 	}
 	public static function frontend_seajs_alias(array $alias = []){
 		if(!theme_cache::is_singular_post())
 			return $alias;
 
-		$alias[self::$iden] = theme_features::get_theme_includes_js(__DIR__);
+		$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
 		return $alias;
 	}
 	public static function frontend_seajs_use(){
 		if(!theme_cache::is_singular_post())
 			return false;
 		?>
-		seajs.use('<?= self::$iden;?>',function(m){
+		seajs.use('<?= __CLASS__;?>',function(m){
 			m.init();
 		});
 		<?php
