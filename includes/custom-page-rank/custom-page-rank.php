@@ -2,7 +2,7 @@
 /**
  * theme_page_rank
  *
- * @version 1.0.0
+ * @version 1.0.1
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_page_rank::init';
@@ -281,6 +281,7 @@ class theme_page_rank{
 			'paged' => 1,
 			'orderby' => 'rand',
 			'post__in' => theme_recommended_post::get_ids(),
+			'ignore_sticky_posts' => false,
 		],$args);
 
 		$query = new WP_Query($args);
@@ -332,7 +333,7 @@ class theme_page_rank{
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
 		?>
-		<a class="list-group-item <?= $args['classes'];?>" href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title, empty($excerpt) ? null : ' - ' . $excerpt;?>">
+		<a class="list-group-item <?= $args['classes'];?>" href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title;?>">
 			<div class="row">
 				<div class="col-sm-12 col-md-4 col-lg-3">
 					<div class="thumbnail-container">
@@ -352,7 +353,7 @@ class theme_page_rank{
 					 */
 					if($args['excerpt'] === true){
 						?>
-						<div class="excerpt hidden-xs"><?= str_sub(strip_tags(get_the_content()),200);?></div>
+						<div class="excerpt hidden-xs"><?= str_sub(strip_tags($excerpt),200);?></div>
 					<?php } ?>
 					<div class="extra">
 						<div class="metas row">

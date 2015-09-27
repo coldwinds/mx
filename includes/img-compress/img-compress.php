@@ -2,7 +2,7 @@
 /**
  * img compress
  *
- * @version 1.0.0
+ * @version 1.0.1
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_img_compress::init';
@@ -58,18 +58,24 @@ class theme_img_compress{
 				<tr>
 					<th><label for="<?= __CLASS__;?>-png2jpg"><?= ___('PNG to JPG format');?></label></th>
 					<td>
-						<label for="<?= __CLASS__;?>-png2jpg">
-							<input type="checkbox" id="<?= __CLASS__;?>-png2jpg" name="<?= __CLASS__;?>[png2jpg]" value="1" <?= self::is_png2jpg() ? 'checked' : null;?> > 
-							<?= ___('Enable');?>
-						</label>
-						<span class="description"><?= ___('It will convent png to jpg image format When user upload image file. This feature always disable if is administrator.');?></span>
+						<select name="<?= __CLASS__;?>[png2jpg]" id="<?= __CLASS__;?>-png2jpg" class="widefat">
+							<?php the_option_list(-1,___('Disable'),self::get_options('png2jpg'));?>
+							<?php the_option_list(1,___('Enable'),self::get_options('png2jpg'));?>
+						</select>
+						<p class="description"><?= ___('It will convent png to jpg image format When user upload image file. This feature always disable if is administrator.');?></p>
 					</td>
 				</tr>
 				<tr>
 					<th><label for="<?= __CLASS__;?>-jpeg-quality"><?= ___('JPG image compress quality');?></label></th>
 					<td>
-						<input type="number" id="<?= __CLASS__;?>-jpeg-quality" name="<?= __CLASS__;?>[jpeg-quality]" value="<?= self::get_jpg_quality();?>" min="1" max="100" step="1" class="short-number"> 
-						<span class="description"><?= ___('It will compress image When user upload image file.');?></span>
+						<select name="<?= __CLASS__;?>[png2jpg]" id="<?= __CLASS__;?>-png2jpg" class="widefat">
+							<?php 
+							for($i=100;$i>=50;$i-=5){
+								the_option_list($i,sprintf(___('Level %d'),$i),self::get_jpg_quality());
+							}
+							?>
+						</select>
+						<p class="description"><?= ___('It will compress image When user upload image file.');?></p>
 					</td>
 				</tr>
 			</table>
