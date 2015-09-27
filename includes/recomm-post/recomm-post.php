@@ -127,7 +127,7 @@ class theme_recommended_post{
 		return theme_cache::get(__CLASS__);
 	}
 	public static function get_item($key){
-		return self::get_options($key) ? (int)self::get_options($key) : self::options_default()[__CLASS__][$key];
+		return self::get_options($key) ? self::get_options($key) : self::options_default()[__CLASS__][$key];
 	}
 	public static function display_backend(){
 		$recomm_posts = self::get_ids();
@@ -212,8 +212,10 @@ class theme_recommended_post{
 		<?php
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[__CLASS__]))
+		if(isset($_POST[__CLASS__])){
 			$opts[__CLASS__] = $_POST[__CLASS__];
+			self::clear_cache();
+		}
 		return $opts;
 	}
 }

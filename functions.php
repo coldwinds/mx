@@ -1542,7 +1542,7 @@ class theme_functions{
 						<?php if(theme_recommended_post::get_item('icon')){ ?>
 							<i class="fa fa-<?= theme_recommended_post::get_item('icon');?>"></i> 
 						<?php } ?>
-						<?= theme_recommended_post::get_item('title');?>">
+						<?= theme_recommended_post::get_item('title');?>
 						<?php if(class_exists('theme_page_rank')){ ?>
 							</a>
 						<?php } ?>
