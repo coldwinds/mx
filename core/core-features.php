@@ -6,7 +6,7 @@
  * Help you write a wp site quickly.
  *
  * @package KMTF
- * @version 5.0.6
+ * @version 5.0.7
  */
 theme_features::init();
 class theme_features{
@@ -26,8 +26,10 @@ class theme_features{
 	
 	public static $iden = 'theme_features';	
 	
-	
 	public static function init(){
+		/** mt_xx encoding */
+		mb_internal_encoding('UTF-8');
+		
 		self::set_basename();
 		add_action('after_setup_theme',	__CLASS__ . '::after_setup_theme');
 		add_action('wp_footer',			__CLASS__ . '::theme_js',20);
@@ -101,8 +103,7 @@ class theme_features{
 		 */
 		}else{
 			$file = $file_or_dir;
-			$ext = new SplFileInfo($file);
-			$ext = strtolower($ext->getExtension());
+			$ext = strtolower(substr(strrchr($file, '.'), 1));
 			/** 
 			 * not js or css ,return
 			 */
@@ -194,8 +195,6 @@ class theme_features{
 		if(!$file_basename)
 			return self::get_template_directory_uri();
 		
-
-		
 		/**
 		 * fix basename string
 		 */
@@ -230,8 +229,8 @@ class theme_features{
 		/**
 		 * minify
 		 */
-		$ext = new SplFileInfo($file_path);
-		switch(strtolower($ext->getExtension())){
+		$ext = strtolower(substr(strrchr($file_path, '.'), 1));
+		switch($ext){
 			/**
 			 * JS file
 			 */
@@ -307,13 +306,13 @@ class theme_features{
 		 */
 		$extension = '.js';
 		/**
-		 * get path info
+		 * get file ext
 		 */
-		$path_info = pathinfo($file_basename);
+		$ext = strtolower(substr(strrchr($file_basename, '.'), 1));
 		/**
 		 * redefine $file_basename
 		 */
-		$file_basename = isset($path_info['extension']) && $path_info['extension'] === 'js' ? $file_basename : $file_basename . $extension;
+		$file_basename = $ext && $ext === 'js' ? $file_basename : $file_basename . $extension;
 		$file_url = self::get_theme_file_url($basedir . $file_basename,$version);
 		$caches[$cache_id] = $url_only ? $file_url : '<script src="' . esc_url($file_url) . '"></script>';
 		
@@ -322,24 +321,13 @@ class theme_features{
 	/**
 	 * theme_features::get_theme_css
 	 * 
-	 * @since 3.2.0
-	 * @version 1.2.3
+	 * @version 1.2.4
 	 * @param string $file_basename css file basename, style = style.css
 	 * @param mix $args
 	 * @param bool/string $version The file version
 	 * @return string url only /<link...> by $args
 	 */
-	public static function get_theme_css($file_basename = null,$args = null,$version = true){
-		static $caches = [];
-		
-		/**
-		 * cache
-		 */
-		$cache_id = md5(json_encode(func_get_args()));
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-
-			
+	public static function get_theme_css($file_basename = null, $args = null,$version = true){
 		$basedir = self::$basedir_css_min;
 		/**
 		 * if dev mode is ON
@@ -351,37 +339,42 @@ class theme_features{
 		/**
 		 * file_basename
 		 */
-		if(!$file_basename) return self::get_template_directory_uri() . $basedir;
+		if(!$file_basename) 
+			return self::get_template_directory_uri() . $basedir;
 		/**
 		 * extension
 		 */
 		$extension = '.css';
-		/**
-		 * get path info
-		 */
-		$path_info = pathinfo($file_basename);
+	
+		/** get file ext */
+		$ext = strtolower(substr(strrchr($file_basename, '.'), 1));
+		
 		/**
 		 * redefine $file_basename
 		 */
-		$file_basename = isset($file_info['extension']) ? $file_basename : $file_basename . $extension;
-		$file_url = self::get_theme_file_url($basedir . $file_basename,$version);
+		if($ext){
+			$file_name = $file_basename;
+			$file_basename = basename($file_basename);
+		}else{
+			$file_name = $file_basename . $extension;
+		}
+		
+		$file_url = self::get_theme_file_url($basedir . $file_name,$version);
 		/**
 		 * check the $args
 		 */
 		if(!$args){
-			$caches[$cache_id] = $file_url;
+			return $file_url;
 		}else if($args === 'normal'){
-			$caches[$cache_id] = '<link id="' . $path_info['filename'] . '" href="' . esc_url($file_url) .'" rel="stylesheet" media="all"/>';
+			return '<link id="' . $file_basename . '" href="' . $file_url .'" rel="stylesheet" media="all"/>';
 		}else if(is_array($args)){
 			/* check the array of $args and to release */
-			$ext = null;
-			foreach($args as $key => $value){
-				$ext .= ' ' .$key. '="' .$value. '"';
+			$args = null;
+			foreach($args as $k => $v){
+				$args .= ' ' .$k. '="' .$v. '"';
 			}
-			$caches[$cache_id] = '<link id="' . $path_info['filename'] . '" href="' . esc_url($file_url) .'" rel="stylesheet" ' .$ext. '/>';
+			return '<link id="' . $file_basename . '" href="' . $file_url .'" rel="stylesheet" ' .$args. '/>';
 		}
-
-		return $caches[$cache_id];
 	}
 	/**
 	 * get_theme_extension_url
@@ -394,7 +387,7 @@ class theme_features{
 			'url_only' => true,
 		 ]
 	 * @return 
-	 * @version 2.0.0
+	 * @version 2.0.1
 	 */
 	public static function get_theme_extension_url(array $args = []){
 		$args = array_merge([
@@ -428,10 +421,6 @@ class theme_features{
 			$file_url = self::get_theme_url() . self::$$self_basedir . basename($args['basedir']) . self::$$self_basedir_extension . $args['file_basename'];
 			
 		}
-		//if(!file_exists($file_path))
-		//	return false;
-
-		//$mtime = theme_file_timestamp::get_timestamp();
 		
 		/**
 		 * return if not url_only
@@ -443,9 +432,6 @@ class theme_features{
 				//'mtime' => $mtime,
 			];
 		
-		//$version = '?v=' . $mtime;
-
-		//return $file_url . $version;
 		return $file_url;
 	}
 	
@@ -456,20 +442,14 @@ class theme_features{
 	 * @param string $filename
 	 * @param bool $mtime
 	 * @return string
-	 * @version 2.0.0
+	 * @version 2.0.1
 	 */
 	public static function get_theme_includes_js($DIR = null,$filename = 'init',$url_only = true){
-		static $caches = [];
-		$cache_id = md5($DIR . $filename . $url_only);
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
+
+		$ext = strtolower(substr(strrchr($filename, '.'), 1));
 		
-		$path_info = pathinfo($filename);
-		if(!isset($path_info['extension']) || empty($path_info['extension']) || $path_info['extension'] !== 'js'){
-			$file_basename = $filename . '.js';
-		}else{
-			$file_basename = $filename;
-		}
+		$file_basename = $ext !== 'js' ? $filename . '.js' : $filename;
+		
 		$args = [
 			'type' => 'includes',
 			'basedir' => $DIR,
@@ -478,8 +458,7 @@ class theme_features{
 			'url_only' => $url_only,
 		];
 		
-		$caches[$cache_id] = self::get_theme_extension_url($args);
-		return $caches[$cache_id];
+		return self::get_theme_extension_url($args);
 	}
 	/**
 	 * get_theme_includes_css
@@ -492,8 +471,8 @@ class theme_features{
 	 */
 	public static function get_theme_includes_css($DIR = null,$filename = 'style',$url_only = true, $mtime = false){
 		
-		$path_info = pathinfo($filename);
-		if(!isset($path_info['extension']) || empty($path_info['extension']) || $path_info['extension'] !== 'css'){
+		$ext = strtolower(substr(strrchr($filename, '.'), 1));
+		if($ext !== 'css'){
 			$file_basename = $filename . '.css';
 		}else{
 			$file_basename = $filename;
@@ -518,7 +497,7 @@ class theme_features{
 	 * @return string
 	 * @version 1.0.3
 	 */
-	public static function get_theme_includes_image($DIR,$filename){
+	public static function get_theme_includes_image($DIR, $filename){
 		static $caches = [];
 		
 		$cache_id = $DIR . $filename;
@@ -534,8 +513,8 @@ class theme_features{
 
 		$url = self::get_template_directory_uri() . '/' . $args['type'] . '/' . $args['basedir'] . $args['file_basename'] . '?v=' . theme_file_timestamp::get_timestamp();
 
-		$caches[$cache_id] = esc_url($url);
-		return $caches[$cache_id];
+		$caches[$cache_id] = $url;
+		return $url;
 	}
 	/**
 	 * get_theme_extension_url_core
@@ -568,7 +547,7 @@ class theme_features{
 		 * check $basedir
 		 */
 		if(!$basedir) return self::get_theme_url();
-		$basedir_pi = pathinfo($basedir);
+
 		$basedir = basename($basedir);
 		
 		if(!$file_basename) 
@@ -584,20 +563,18 @@ class theme_features{
 		$self_basedir_type = 'basedir_' . $type;
 		
 		$dir_path = self::$self_get_theme_type_path('/' . $basedir . '/');
-		/**
-		 * pathinfo
-		 */
-		$path_info = pathinfo($file_basename);
-		$extension = $path_info['extension'];
+
+		/** file ext */
+		$ext = strtolower(substr(strrchr($file_basename, '.'), 1));
 		
 		/**
 		 * file type
 		 */
-		if($extension === 'js' || $extension === 'css'){
+		if($ext === 'js' || $ext === 'css'){
 			/**
 			 * self::$basedir_js_src / self::$basedir_css_src
 			 */
-			$self_basedir_extension_src = 'basedir_' . $extension . '_src';
+			$self_basedir_extension_src = 'basedir_' . $ext . '_src';
 			
 			$file_path_src = $dir_path . self::$$self_basedir_extension_src . $file_basename;
 			//if(!file_exists($file_path_src)) return false;
@@ -612,7 +589,7 @@ class theme_features{
 			if(class_exists('theme_dev_mode') && theme_dev_mode::is_enabled()){
 				$file_path = $file_path_src;
 			}else{
-				$self_basedir_extension_min = 'basedir_' . $extension . '_min';
+				$self_basedir_extension_min = 'basedir_' . $ext . '_min';
 				$file_url = self::get_theme_url() . self::$$self_basedir_type . $basedir . self::$$self_basedir_extension_min . $file_basename;
 			}
 		}else{
@@ -659,20 +636,13 @@ class theme_features{
 	 * @param string $file_basename
 	 * @param bool $mtime
 	 * @return string
-	 * @version 1.0.3
+	 * @version 1.0.4
 	 */
 	public static function get_theme_images_url($file_basename = null,$mtime = true){
-		static $caches = [];
-		
-		$cache_id = md5($file_basename . $mtime);
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
+		if(!$file_basename) 
+			return self::get_template_directory_uri() . self::$basedir_images_min;
 			
-		if(!$file_basename) return self::get_template_directory_uri() . self::$basedir_images_min;
-		$file_url = self::get_theme_file_url(self::$basedir_images_min . $file_basename,$mtime);
-
-		$caches[$cache_id] = $file_url;
-		return $file_url;
+		return self::get_theme_file_url(self::$basedir_images_min . $file_basename,$mtime);
 	}
 	/**
 	 * get the process file url of theme
@@ -774,22 +744,9 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_theme_url($file_basename = null,$mtime = false){
-		
-		static $caches = [];
-		
-		$cache_id = md5($file_basename . $mtime);
-		
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-			
-		if(!$file_basename){
-			$caches[$cache_id] = self::get_template_directory_uri();
-			return $caches[$cache_id];
-		}
-		$file_url = self::get_theme_file_url($file_basename,$mtime);
-
-		$caches[$cache_id] = $file_url;
-		return $file_url;
+		if(!$file_basename)
+			return self::get_template_directory_uri();
+		return self::get_theme_file_url($file_basename,$mtime);
 	}
 	/**
 	 * theme_features::get_theme_path
@@ -799,20 +756,9 @@ class theme_features{
 	 * @version 1.0.2
 	 */
 	public static function get_theme_path($file_basename = null){
-		static $caches = [];
-
-		$cache_id = md5($file_basename);
-		
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-		
 		if(!$file_basename) 
-			return get_stylesheet_directory() . '/';
-			
-		$file_path = $file_basename[0] === '/' ? self::get_stylesheet_directory() . $file_basename : self::get_stylesheet_directory() . '/' . $file_basename;
-
-		$caches[$cache_id] = $file_path;
-		return $file_path;
+			return self::get_stylesheet_directory() . '/';
+		return $file_basename[0] === '/' ? self::get_stylesheet_directory() . $file_basename : self::get_stylesheet_directory() . '/' . $file_basename;
 	}
 	/**
 	 * theme_features::get_theme_includes_path
@@ -822,20 +768,9 @@ class theme_features{
 	 * @version 1.0.2
 	 */
 	public static function get_theme_includes_path($file_basename = null){
-		static $caches = [];
-
-		$cache_id = md5($file_basename);
-		
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-		
 		if(!$file_basename) 
 			return self::get_stylesheet_directory() . self::$basedir_includes;
-			
-		$file_path = $file_basename[0] === '/' ? self::get_stylesheet_directory() . self::$basedir_includes . $file_basename : self::get_stylesheet_directory() . self::$basedir_includes . $file_basename;
-		
-		$caches[$cache_id] = $file_path;
-		return $file_path;
+		return $file_basename[0] === '/' ? self::get_stylesheet_directory() . self::$basedir_includes . $file_basename : self::get_stylesheet_directory() . self::$basedir_includes . $file_basename;
 	}
 	/**
 	 * Get post thumbnail src, if the post have not thumbnail, then get the first image from post content.
@@ -955,7 +890,7 @@ class theme_features{
 	 * @version 1.0.1
 	 */
 	public static function get_current_tag_obj(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			static $cache = null;
 			if($cache !== null)
 				return $cache;
@@ -973,7 +908,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_current_tag_name(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			$tag_obj = self::get_current_tag_obj();
 			$tag_name = $tag_obj->name;
 			return $tag_name;
@@ -986,7 +921,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_current_tag_slug(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			$tag_obj = self::get_current_tag_obj();
 			$tag_slug = $tag_obj->slug;
 			return $tag_slug;
@@ -999,7 +934,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_current_tag_count(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			$tag_obj = self::get_current_tag_obj();
 			$tag_count = $tag_obj->count;
 			return $tag_count;
@@ -1012,7 +947,7 @@ class theme_features{
 	 * @version 1.0.0
 	 */
 	public static function get_current_tag_id(){
-		if(is_tag()){
+		if(theme_cache::is_tag()){
 			global $wp_query;
 			$tag_id = $wp_query->query_vars['tag_id'];
 			return $tag_id;
@@ -1195,28 +1130,6 @@ class theme_features{
 		}
 		return $caches[$slug];
 	}
-	
-	/**
-	 * Get theme local dir
-	 * 
-	 * 
-	 * @param string $file_name The file name
-	 * @return string The file path
-	 * @version 1.0.0
-	 * 
-	 */
-	public static function get_wp_themes_local_dir($file_name = null){
-		static $caches = [];
-		$cache_id = md5($file_name);
-		
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-			
-		$basedir_name = '/themes/';
-		$file_name = $file_name ? '/' . $file_name : '/';
-		$caches[$cache_id] = self::get_stylesheet_directory().$basedir_name.$file_name;
-		return $caches[$cache_id];
-	}
 	/**
 	 * get_link_page_url
 	 *
@@ -1285,11 +1198,11 @@ class theme_features{
 		
 		ob_start();
 		?>
-		<nav class="<?= esc_attr($nav_class);?>">
+		<nav class="<?= $nav_class;?>">
 			<?php 
 			ob_start(); 
 			?>
-			<a href="<?= $prev_page_url;?>" class="page-numbers page-prev <?= esc_attr($numbers_class_str);?> <?= $first_class;?>">
+			<a href="<?= $prev_page_url;?>" class="page-numbers page-prev <?= $numbers_class_str;?> <?= $first_class;?>">
 				<?= ___('&lsaquo; Previous');?>
 			</a>
 			<?php
@@ -1302,7 +1215,7 @@ class theme_features{
 			 */
 			echo apply_filters('prev_pagination_link',$prev_page_str,$page,$numpages);
 			?>
-			<div class="page-numbers page-middle <?= esc_attr($middle_class);?>">
+			<div class="page-numbers page-middle <?= $middle_class;?>">
 				<span class="page-middle-btn"><?= $page , ' / ' , $numpages;?></span>
 				<div class="page-middle-numbers">
 				<?php
@@ -1324,7 +1237,7 @@ class theme_features{
 			</div>
 			
 			<?php ob_start(); ?>
-			<a href="<?= $next_page_url;?>" class="page-numbers page-next <?= esc_attr($numbers_class_str);?> <?= $last_class;?>">
+			<a href="<?= $next_page_url;?>" class="page-numbers page-next <?= $numbers_class_str;?> <?= $last_class;?>">
 				<?= ___('Next &rsaquo;');?>
 			</a>
 			<?php
@@ -1491,13 +1404,6 @@ class theme_features{
 		wp_cache_set($cache_id,$count,null,3600);
 		return $count;
 	}
-
-	/* 后台登录logo 链接修改 */
-	public static function custom_login_logo_url() {
-		return theme_cache::home_url();
-	}
-
-	/* 增強bodyclass樣式 */
 	public static function theme_body_classes(array $classes = []){
 		if(theme_cache::is_singular())
 			$classes[] = 'singular';
@@ -1594,19 +1500,11 @@ class theme_features{
 		/**
 		 * Custom login logo url
 		 */
-		add_filter('login_headerurl',__CLASS__ . '::custom_login_logo_url' );
+		add_filter('login_headerurl',__CLASS__ . 'theme_cache::home_url' );
 		/**
 		 * Add thumbnails function
 		 */
 		add_theme_support('post-thumbnails');
-		/**
-		 * MB functions charset
-		 */
-		mb_internal_encoding(get_bloginfo('charset'));
-		/**
-		 * Add editor style
-		 */
-		add_editor_style();
 		/**
 		 * Load includes functions
 		 */
@@ -1644,15 +1542,15 @@ class theme_features{
 	 * auto_minify
 	 *
 	 * @return 
-	 * @version 1.0.4
+	 * @version 1.0.5
 	 */
 	public static function auto_minify(){
 		/** 
 		 * js and css files version
 		 */
 		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
-			@ini_set('max_input_nesting_level','10000');
-			@ini_set('max_execution_time',0); 
+			ini_set('max_input_nesting_level','10000');
+			ini_set('max_execution_time',0); 
 			
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_js_src);
 			

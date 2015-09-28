@@ -110,7 +110,9 @@ define(function(require, exports, module){
 				}
 			}
 		}
-		function hide_menu(){
+		function hide_menu(e){
+			if(e)
+				e.preventDefault();
 			var icon_active = $last_click_btn.getAttribute('data-icon-active'),
 				icon_original = $last_click_btn.getAttribute('data-icon-original');
 				
@@ -121,6 +123,8 @@ define(function(require, exports, module){
 			}
 		}
 		function helper(e){
+			if(e)
+				e.preventDefault();
 			$last_target = Q(this.getAttribute('data-toggle-target'));
 			$last_click_btn = this;
 			/** hide */
@@ -131,7 +135,7 @@ define(function(require, exports, module){
 			}
 		}
 		for( var i = 0, len = $toggles.length; i < len; i++){
-			$toggles[i].addEventListener('click',helper);
+			$toggles[i].addEventListener(tools.click_handler,helper);
 		}
 	}
 	exports.mobile_menu = function(){
@@ -146,7 +150,7 @@ define(function(require, exports, module){
 		$layer.id = 'mobile-on-layer';
 		
 		/** bind layer */
-		$layer.addEventListener('click',hide_menu);
+		$layer.addEventListener(tools.click_handler,hide_menu);
 		
 		/** insert to body */
 		document.body.appendChild($layer);
@@ -183,6 +187,8 @@ define(function(require, exports, module){
 			}
 		}
 		function helper(e){
+			if(e)
+				e.preventDefault();
 			$last_target = Q(this.getAttribute('data-mobile-target'));
 			$last_click_btn = this;
 			/** hide */
@@ -193,7 +199,7 @@ define(function(require, exports, module){
 			}
 		}
 		for( var i = 0, len = $toggles.length; i < len; i++){
-			$toggles[i].addEventListener('click',helper);
+			$toggles[i].addEventListener(tools.click_handler,helper);
 		}
 	}
 	exports.posts_nav = function(){
@@ -224,12 +230,14 @@ define(function(require, exports, module){
 				if($input.value.trim() === '')
 					return false;
 			};
-			
-		$btn.addEventListener('click',function(){
+		function st(e){
+			if(e)
+				e.preventDefault();
 			setTimeout(function(){
 				$input.focus();
 			},100);
-		},false);
+		}
+		$btn.addEventListener(tools.click_handler,st);
 
 		$fm.onsubmit = submit_helper;
 	}

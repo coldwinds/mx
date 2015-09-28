@@ -30,10 +30,15 @@ class theme_custom_collection{
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
 		}
+		self::add_editor_style();
 
 		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
 
 		add_action('page_settings',			__CLASS__ . '::display_backend');
+	}
+
+	public static function add_editor_style(){
+	    add_editor_style([theme_features::get_theme_includes_css(__DIR__,'editor',true,true)]);
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 
@@ -65,6 +70,15 @@ class theme_custom_collection{
 			<legend><?= ___('Collection settings');?></legend>
 			<table class="form-table">
 				<tr>
+					<th><label for="<?= __CLASS__;?>-enabled"><?= ___('Enable or not?');?></label></th>
+					<td>
+						<select name="<?= __CLASS__;?>[enabled]" id="<?= __CLASS__;?>-enabled" class="widefat">
+							<?php the_option_list(-1,___('Disable'),self::get_options('enabled'));?>
+							<?php the_option_list(1,___('Enable'),self::get_options('enabled'));?>
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<th><?= ___('Which categories will be added after submit?');?></th>
 					<td>
 						<?php theme_features::cat_checkbox_list(__CLASS__,'cats');?>
@@ -73,19 +87,19 @@ class theme_custom_collection{
 				<tr>
 					<th><label for="<?= __CLASS__;?>-tags-number"><?= ___('Shows tags number');?></label></th>
 					<td>
-						<input class="short-text" type="number" name="<?= __CLASS__;?>[tags-number]" id="<?= __CLASS__;?>-tags-number" value="<?= isset($opt['tags-number']) ?  (int)$opt['tags-number'] : 6;?>">
+						<input class="short-text" type="number" name="<?= __CLASS__;?>[tags-number]" id="<?= __CLASS__;?>-tags-number" value="<?= self::get_options('tag-number');?>">
 					</td>
 				</tr>
 				<tr>
 					<th><label for="<?= __CLASS__;?>-posts-min-number"><?= ___('Post boxes min number');?></label></th>
 					<td>
-						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-min-number]" id="<?= __CLASS__;?>-posts-min-number" value="<?= isset($opt['posts-min-number']) ?  (int)$opt['posts-min-number'] : 5;?>">
+						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-min-number]" id="<?= __CLASS__;?>-posts-min-number" value="<?= self::get_options('posts-min-number');?>">
 					</td>
 				</tr>
 				<tr>
 					<th><label for="<?= __CLASS__;?>-posts-max-number"><?= ___('Post boxes max number');?></label></th>
 					<td>
-						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-max-number]" id="<?= __CLASS__;?>-posts-max-number" value="<?= isset($opt['posts-max-number']) ?  (int)$opt['posts-max-number'] : 10;?>">
+						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-max-number]" id="<?= __CLASS__;?>-posts-max-number" value="<?= self::get_options('posts-max-number');?>">
 					</td>
 				</tr>
 				<tr>
@@ -176,30 +190,34 @@ class theme_custom_collection{
 
 		return $content;
 	}
-	public static function options_save($opts){
-		if(!isset($_POST[__CLASS__]))
-			return $opts;
-
-		$opts[__CLASS__] = $_POST[__CLASS__];
+	public static function options_save(array $opts = []){
+		if(isset($_POST[__CLASS__]))
+			$opts[__CLASS__] = $_POST[__CLASS__];
 		return $opts;
 	}
 	public static function options_default(array $opts = []){
-		$opts[__CLASS__]['posts-min-number'] = 5;
-		$opts[__CLASS__]['posts-max-number'] = 10;
-		$opts[__CLASS__]['tags-number'] = 10;
-		$opts[__CLASS__]['description'] = '<p>' . ___('Welcome to collection page, you can fill in the post ID and make them as a collection to share you favorite posts.') . '</p>';
+		$opts[__CLASS__] = [
+			'enabled' => 1,
+			'posts-min-number' => 5,
+			'posts-max-number' => 10,
+			'tags-number' => 10,
+			'description' => '<p>' . ___('Welcome to collection page, you can fill in the post ID and make them as a collection to share you favorite posts.') . '</p>',
+		];
 		return $opts;
 	}
 	public static function get_options($key = null){
 		static $caches = [];
 		if(empty($caches))
 			$caches = theme_options::get_options(__CLASS__);
-			
-		if(empty($key)){
-			return $caches;
-		}else{
-			return isset($caches[$key]) ? $caches[$key] : null;
+		if($key){
+			if(isset($caches[$key])){
+				return $caches[$key];
+			}else{
+				$caches[$key] = isset(self::options_default()[__CLASS__][$key]) ? self::options_default()[__CLASS__][$key] : false;
+				return $caches[$key];
+			}
 		}
+		return $caches;
 	}
 	public static function get_url(){
 		static $cache = null;

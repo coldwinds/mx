@@ -65,6 +65,7 @@ class theme_functions{
 			'menu-mobile-login' 	=> ___('Login mobile menu'),
 			'menu-top-bar' 			=> ___('Top bar menu'),
 			'menu-top-bar-login'	=> ___('Login top bar menu'),
+			'links-footer'			=> ___('Footer links'),
 		]);
 		/** 
 		 * frontend_seajs_use

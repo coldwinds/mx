@@ -7,7 +7,6 @@ add_filter('theme_includes',function($fns){
 	return $fns;
 });
 class theme_custom_pm{
-	public static $iden = 'theme_custom_pm';
 	public static $page_slug = 'account';
 	public static $metas = [];
 	public static $comet_timeout = 30;	
@@ -106,7 +105,7 @@ class theme_custom_pm{
 		$baseurl = self::get_url();
 		$tabs = array(
 			'pm' => array(
-				'text' => ___('P.M.') . ' beta',
+				'text' => ___('P.M.'),
 				'icon' => 'envelope',
 				'url' => esc_url(add_query_arg('tab','pm',$baseurl)),
 				'filter_priority' => 28,

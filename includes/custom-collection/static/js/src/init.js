@@ -38,8 +38,10 @@ define(function(require, exports, module){
 		
 		if(!$preview)
 			return false;
-			
-		$preview.addEventListener('click', function(){
+
+		function event_preview_click(e){
+			if(e)
+				e.preventDefault();
 			var lists_count = get_posts_count();
 			
 			if(lists_count < config.min_posts){
@@ -51,9 +53,8 @@ define(function(require, exports, module){
 			}
 
 			show_preview();
-			
-			return false;
-		}, false);
+		}
+		$preview.addEventListener('click',event_preview_click);
 
 		function show_preview(){
 			var $lists = document.querySelectorAll('.clt-list'),
@@ -135,8 +136,9 @@ define(function(require, exports, module){
 		 * action add new psot
 		 */
 		function add_list(){
-			var helper = function(){
-				
+			var helper = function(e){
+				if(e)
+					e.preventDefault();
 				/** too many posts */
 				if(get_posts_count() >= config.max_posts){
 					tools.ajax_loading_tip('error',config.lang.E03,3);
@@ -158,9 +160,8 @@ define(function(require, exports, module){
 					$new_list.classList.remove('delete');
 				},1);
 
-				return false;
 			};
-			_cache.$add.addEventListener('click', helper, false);
+			_cache.$add.addEventListener('click', helper);
 		}
 		function get_input_tpl(placeholder){
 			return config.tpl_input.replace(/%placeholder%/g,placeholder);
@@ -186,8 +187,9 @@ define(function(require, exports, module){
 			 * delete action
 			 */
 			function del(placeholder){
-				var helper = function(){
-					
+				var helper = function(e){
+					if(e)
+						e.preventDefault();
 					/** not enough posts */
 					if(get_posts_count() <= config.min_posts){
 						tools.ajax_loading_tip('error',config.lang.E02,3);
@@ -197,9 +199,8 @@ define(function(require, exports, module){
 					setTimeout(function(){
 						$list.parentNode.removeChild($list);
 					},500);
-					return false;
 				};
-				I('clt-list-del-' + placeholder).addEventListener('click', helper, false);;
+				I('clt-list-del-' + placeholder).addEventListener('click', helper);;
 			}
 
 			/**

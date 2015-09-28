@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.1
+ * @version 1.0.2
  */
 add_action('widgets_init','widget_adbox::register_widget');
 class widget_adbox extends WP_Widget{
@@ -16,15 +16,19 @@ class widget_adbox extends WP_Widget{
 		);
 	}
 	function widget($args,$instance){
-		$type = isset($instance['type']) ? $instance['type'] : 'desktop';
-		extract($args);
-		echo $before_widget;
+		$device = wp_is_mobile() ? 'desktop' : 'mobile';
+		
+		if(isset($instance['type']) && $instance['type'] !== 'all' && $instance['type'] !== $device)
+			return;
+			
+		$type = isset($instance['type']) ? $instance['type'] : 'all';
+		echo $args['before_widget'];
 		?>
 		<div class="adbox">
 			<?= stripslashes($instance['code']);?>
 		</div>
 		<?php
-		echo $after_widget;
+		echo $args['after_widget'];
 	}
 	function form($instance = []){
 		$instance = array_merge([
@@ -36,9 +40,9 @@ class widget_adbox extends WP_Widget{
 		<p>
 			<label for="<?= self::get_field_id('type');?>"><?= ___('Type');?></label>
 			<select 
-				name="<?= self::get_field_name('type');?>" 
-				class="widefat"
-				id="<?= self::get_field_id('type');?>"
+				name="<?= self::get_field_name('type');?>"  
+				class="widefat" 
+				id="<?= self::get_field_id('type');?>" 
 			>
 				<?php the_option_list('all',___('All'),$instance['type']);?>
 				<?php the_option_list('desktop',___('Desktop'),$instance['type']);?>
@@ -52,7 +56,7 @@ class widget_adbox extends WP_Widget{
 				id="<?= self::get_field_id('code');?>" 
 				cols="30" 
 				rows="10" 
-				class="widefat"
+				class="widefat" 
 			><?= stripslashes($instance['code']);?></textarea>
 			
 		</p>

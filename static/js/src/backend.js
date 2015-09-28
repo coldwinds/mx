@@ -53,7 +53,7 @@ define(function(require, exports, module){
 
 		for( var i = 0; i < cache.len; i++){
 			cache.$tab_header_items[i].setAttribute('data-i',i);
-			cache.$tab_header_items[i].addEventListener('mouseover',event_tab_header_hover);
+			cache.$tab_header_items[i].addEventListener(('ontouchstart' in document.documentElement ? 'touchstart' : 'mouseover'),event_tab_header_hover);
 		}
 
 		/** show tab */

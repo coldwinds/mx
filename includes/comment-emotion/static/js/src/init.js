@@ -26,7 +26,9 @@ define(function(require, exports, module){
 		insert();
 	}
 	function insert(){
-		function insert_content(){
+		function insert_content(e){
+			if(e)
+				e.preventDefault();
 			cache.$comment.focus();
 			var caret_pos = cache.$comment.selectionStart,
 				old_val = cache.$comment.value;
@@ -51,7 +53,9 @@ define(function(require, exports, module){
 			}
 				
 		}
-		function show_pop(){
+		function show_pop(e){
+			if(e)
+				e.preventDefault();
 			/**
 			 * hide other pop
 			 */

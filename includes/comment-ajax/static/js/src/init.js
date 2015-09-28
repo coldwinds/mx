@@ -207,13 +207,15 @@ define(function(require, exports, module){
 				_cache.$prev.setAttribute(k,attrs[k]);
 			}
 			_cache.$prev.innerHTML = _that.lang.prev;
-			_cache.$prev.addEventListener('click',prev_click,false);
+			_cache.$prev.addEventListener(tools.click_handler,prev_click);
 			return _cache.$prev;
 		}
 		/**
 		 * Previous btn click
 		 */
-		function prev_click(){
+		function prev_click(e){
+			if(e)
+				e.preventDefault();
 			if(_that.cpage <= 1)
 				return false;
 			target_page = parseInt(_that.cpage) - 1;
@@ -238,13 +240,15 @@ define(function(require, exports, module){
 			}
 			_cache.$next.innerHTML = _that.lang.next;
 			//console.log(_that.cpage == _that.pages);
-			_cache.$next.addEventListener('click',next_click,false);
+			_cache.$next.addEventListener(tools.click_handler,next_click);
 			return _cache.$next;
 		}
 		/**
 		 * Next btn click
 		 */
-		function next_click(){
+		function next_click(e){
+			if(e)
+				e.preventDefault();
 			//console.log(_that.cpage == _that.pages);
 			if(_that.cpage == _that.pages)
 				return false;

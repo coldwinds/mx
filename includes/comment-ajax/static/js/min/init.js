@@ -11,13 +11,15 @@ function get_cache(cpage){return!_cache.comments||!_cache.comments[cpage]?false:
 function create(){if(_that.pages<=1)
 return false;_cache.$pagi=document.createElement('div');_cache.$pagi.id=_that.id;_cache.$pagi.setAttribute('class','comment-pagination btn-group btn-group-sm');_cache.$pagi.appendChild(create_prev());_cache.$pagi.appendChild(create_next());return _cache.$pagi;}
 function create_prev(){var prev_class=_that.cpage<=1?'disabled':'',attrs={'class':'prev btn btn-success '+prev_class,'href':'javascript:;'};_cache.$prev=document.createElement('a');for(var k in attrs){_cache.$prev.setAttribute(k,attrs[k]);}
-_cache.$prev.innerHTML=_that.lang.prev;_cache.$prev.addEventListener('click',prev_click,false);return _cache.$prev;}
-function prev_click(){if(_that.cpage<=1)
+_cache.$prev.innerHTML=_that.lang.prev;_cache.$prev.addEventListener(tools.click_handler,prev_click);return _cache.$prev;}
+function prev_click(e){if(e)
+e.preventDefault();if(_that.cpage<=1)
 return false;target_page=parseInt(_that.cpage)-1;ajax();}
 function done_prev(){if(_that.cpage<=1){_cache.$prev.classList.add('disabled');}else{_cache.$prev.classList.remove('disabled');}}
 function create_next(){var next_class=_that.cpage>_that.pages-1?'disabled':'',attrs={'class':'next btn btn-success '+next_class,'href':'javascript:;'};_cache.$next=document.createElement('a');for(var k in attrs){_cache.$next.setAttribute(k,attrs[k]);}
-_cache.$next.innerHTML=_that.lang.next;_cache.$next.addEventListener('click',next_click,false);return _cache.$next;}
-function next_click(){if(_that.cpage==_that.pages)
+_cache.$next.innerHTML=_that.lang.next;_cache.$next.addEventListener(tools.click_handler,next_click);return _cache.$next;}
+function next_click(e){if(e)
+e.preventDefault();if(_that.cpage==_that.pages)
 return false;target_page=parseInt(_that.cpage)+1;ajax();}
 function done_next(){if(_that.cpage==_that.pages){_cache.$next.classList.add('disabled');}else{_cache.$next.classList.remove('disabled');}}
 function get_process_url(){return _that.url_format.replace('=n','='+target_page);}

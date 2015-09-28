@@ -2,7 +2,9 @@ define(function(require, exports, module){
 	'use strict';
 	
 	var js_request = require('theme-cache-request');
-	
+
+
+	exports.click_handler = ('ontouchstart' in document.documentElement ? 'touchstart' : 'click');
 	/**
 	 * get ele offset left
 	 */
@@ -76,7 +78,7 @@ define(function(require, exports, module){
 			$t_container.appendChild($close);
 			document.body.appendChild($t_container);
 			
-			$close.addEventListener('click',function(){
+			$close.addEventListener(exports.click_handler,function(){
 				action_close();
 				clearInterval(si);
 			});

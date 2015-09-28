@@ -20,19 +20,7 @@ class theme_page_rank{
 		add_filter('query_vars', __CLASS__ . '::filter_query_vars');
 		
 	}
-	public static function get_options($key = null){
-		static $caches = null;
-		if($caches === null)
-			$caches = (array)theme_options::get_options(__CLASS__);
-		if($key)
-			return isset($caches[$key]) ? $caches[$key] : false;
-		return $caches;
-	}
-	public static function options_save(array $opts = []){
-		if(isset($_POST[__CLASS__]))
-			$opts[__CLASS__] = $_POST[__CLASS__];
-		return $opts;
-	}
+
 	public static function page_create(){
 		if(!theme_cache::current_user_can('manage_options')) 
 			return false;
