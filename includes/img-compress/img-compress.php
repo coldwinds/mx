@@ -50,7 +50,6 @@ class theme_img_compress{
 		return self::get_options('png2jpg') == 1;
 	}
 	public static function display_backend(){
-		var_dump(self::get_options('png2jpg'));
 		?>
 		<fieldset>
 			<legend><?= ___('Image settings');?></legend>
