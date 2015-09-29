@@ -4,7 +4,7 @@ define(function(require, exports, module){
 	var js_request = require('theme-cache-request');
 
 
-	exports.click_handler = ('ontouchstart' in document.documentElement ? 'touchstart' : 'click');
+	exports.click_handler = ('touchend' in document.documentElement ? 'touchend' : 'click');
 	/**
 	 * get ele offset left
 	 */
