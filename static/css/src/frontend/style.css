@@ -24,7 +24,9 @@
 .btn select {
     border: 0 !important;
     box-shadow: none !important;
-    cursor: pointer !important;
+}
+select{
+	cursor: pointer;
 }
 .list-group-item{
 	padding: 10px 15px;

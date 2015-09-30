@@ -22,7 +22,7 @@ $target_post = theme_custom_storage::get_decode_post();
 						the_content();
 					}
 				}
-				echo theme_custom_storage::add_shortcode(null);
+				theme_custom_storage::download_info($target_post->ID);
 				?>
 			</div>
 		</div>

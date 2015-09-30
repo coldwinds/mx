@@ -2,7 +2,6 @@
 /**
  * Post form
  *
- * @param array $args
  * @return 
  * @version 1.0.0
  */
@@ -70,12 +69,7 @@ function post_form($post_id = null){
 			<?php
 			return false;
 		}
-		/**
-		 * check storage
-		 */
-		if(class_exists('theme_custom_storage')){
-			
-		}
+	
 		$edit = true;
 		$post_title = $post->post_title;
 		$post_content = $post->post_content;
@@ -156,7 +150,7 @@ function post_form($post_id = null){
 		<div class="form-group">
 			<div class="col-sm-2 control-label">
 				<i class="fa fa-image"></i>
-				<?= ___('Upload image');?>
+				<?= ___('Upload preview image');?>
 			</div>
 			<div class="col-sm-10">
 				<div id="ctb-file-area">
@@ -178,60 +172,119 @@ function post_form($post_id = null){
 				
 			</div>
 		</div>
-		<!-- storage -->
-		<?php if(class_exists('theme_custom_storage')){ ?>
-			<div class="form-group">
-				<div class="col-sm-2 control-label">
-					<i class="fa fa-cloud-download"></i>
-					<?= ___('Storage link');?>
-				</div>
-				<div class="col-sm-10">
-					<?php foreach(theme_custom_storage::get_types() as $k => $v){ ?>
-<div class="row">
-<div class="col-sm-8">
-<div class="input-group">
-<label class="input-group-addon" id="<?= theme_custom_storage::$iden;?>-<?= $k;?>-url-addon" for="<?= theme_custom_storage::$iden;?>-<?= $k;?>-url"><i class="fa fa-link fa-fw"></i></label>
-<input 
-	type="url" 
-	name="<?= theme_custom_storage::$iden;?>[<?= $k;?>][url]" 
-	id="<?= theme_custom_storage::$iden;?>-<?= $k;?>-url" 
-	class="form-control" 
-	placeholder="<?= sprintf(___('%s url'),$v['text']);?>"
-	aria-describedby="<?= theme_custom_storage::$iden;?>-<?= $k;?>-url-addon"
-	title="<?= sprintf(___('%s url'),$v['text']);?>"
-	value="<?php
-	if($edit){
-		$post_storage_meta = theme_custom_storage::get_post_meta($post->ID);
-		echo isset($post_storage_meta[$k]['url']) ? esc_url($post_storage_meta[$k]['url']) : null;
-	}
-	?>"
->
-</div>
-</div>
-<div class="col-sm-4">
-<div class="input-group">
-<label class="input-group-addon" id="<?= theme_custom_storage::$iden;?>-<?= $k;?>-pwd-addon" for="<?= theme_custom_storage::$iden;?>-<?= $k;?>-pwd"><i class="fa fa-key fa-fw"></i></label>
-<input 
-	type="text" 
-	name="<?= theme_custom_storage::$iden;?>[<?= $k;?>][pwd]" 
-	id="<?= theme_custom_storage::$iden;?>-<?= $k;?>-pwd" 
-	class="form-control" 
-	placeholder="<?= sprintf(___('%s password'),$v['text']);?>"
-	aria-describedby="<?= theme_custom_storage::$iden;?>-<?= $k;?>-pwd-addon"
-	title="<?= sprintf(___('%s password'),$v['text']);?>"
-	value="<?php
-	if($edit){
-		echo isset($post_storage_meta[$k]['pwd']) ? htmlspecialchars($post_storage_meta[$k]['pwd']) : null;
-	}
-	?>"
->
-</div>
-</div>
-</div>
-					<?php } ?>
+
+
+
+
+
+
+		
+<!-- storage -->
+<?php
+if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
+	
+	$storage_meta = $post_id ? theme_custom_storage::get_post_meta($post_id) : null;
+
+	/**
+	 * tpl
+	 */
+	$storage_tpl = function($placeholder) use ($storage_meta){
+		
+		$storage_type = isset($storage_meta[$placeholder]['type']) ? $storage_meta[$placeholder]['type'] : null;
+		
+		$storage_url = isset($storage_meta[$placeholder]['url']) ? $storage_meta[$placeholder]['url'] : null;
+		
+		$storage_download_pwd = isset($storage_meta[$placeholder]['download-pwd']) ? $storage_meta[$placeholder]['download-pwd'] : null;
+		
+		$storage_extract_pwd = isset($storage_meta[$placeholder]['extract-pwd']) ? $storage_meta[$placeholder]['extract-pwd'] : null;
+		
+		?>
+		<select name="theme_custom_storage[<?= $placeholder;?>][type]" id="theme_custom_storage-<?= $placeholder;?>-type" class="form-control">
+			<?php foreach(theme_custom_storage::get_types() as $storage_id => $storage_name){ ?>
+				<?php the_option_list($storage_id,$storage_name,$storage_type);?>
+			<?php } ?>
+		</select>
+		<div class="row">
+			<div class="col-sm-6">
+				<input 
+					type="url" 
+					class="form-control" 
+					name="theme_custom_storage[<?= $placeholder;?>][url]" 
+					id="theme_custom_storage-<?= $placeholder;?>-url" 
+					title="<?= ___('Download page URL (include http://)');?>" 
+					placeholder="<?= ___('Download page URL (include http://)');?>" 
+					value="<?= $storage_url;?>" 
+				>
+			</div>
+			<div class="col-sm-3">
+				<div class="input-group">
+					<label class="input-group-addon" for="theme_custom_storage-download-pwd"><i class="fa fa-key fa-fw"></i></label>
+					<input 
+						type="text" 
+						class="form-control" 
+						name="theme_custom_storage[<?= $placeholder;?>][download-pwd]" 
+						id="theme_custom_storage-<?= $placeholder;?>-download-pwd" 
+						title="<?= ___('Download password (optional)');?>" 
+						placeholder="<?= ___('Download password (optional)');?>" 
+						value="<?= $storage_download_pwd;?>" 
+					>
 				</div>
 			</div>
-		<?php } ?>
+			<div class="col-sm-3">
+				<div class="input-group">
+					<label class="input-group-addon" for="theme_custom_storage-url"><i class="fa fa-unlock fa-fw"></i></label>
+					<input 
+						type="text" 
+						class="form-control" 
+						name="theme_custom_storage[<?= $placeholder;?>][extract-pwd]" 
+						id="theme_custom_storage-extract-<?= $placeholder;?>-extract-pwd" 
+						title="<?= ___('Extract password (optional)');?>" 
+						placeholder="<?= ___('Extract password (optional)');?>" 
+						value="<?= $storage_extract_pwd;?>" 
+					>
+				</div>
+			</div>
+		</div><!-- /.row -->
+		<?php
+	};
+	/**
+	 * end $storage_tpl()
+	 */
+	
+	?>
+	<div class="form-group">
+		<div class="col-sm-2 control-label">
+			<i class="fa fa-cloud-download"></i>
+			<?= ___('Storage link');?>
+		</div>
+		<div class="col-sm-10">
+			<?php
+			/** is edit */
+			if($post_id){
+				foreach($storage_meta as $k => $v){
+					$storage_tpl($k);
+				}
+			/** new post */
+			}else{
+				$storage_tpl(0);
+			}
+			?>
+		</div>
+	</div>
+<?php 
+/**
+ * end theme_custom_storage
+ */
+} 
+?>
+		
+
+
+
+
+
+
+		
 		<!-- cats -->
 		<div class="form-group">
 			<div class="col-sm-2 control-label">
@@ -267,6 +320,12 @@ function post_form($post_id = null){
 				?>
 			</div>
 		</div>
+
+
+
+
+
+		
 		<!-- tags -->
 		<div class="form-group">
 			<div class="col-sm-2 control-label">
@@ -355,9 +414,10 @@ function post_form($post_id = null){
 			</div>
 		</div>
 
+
 		<!-- source -->
 		<?php 
-		if(class_exists('theme_custom_post_source')){
+		if(class_exists('theme_custom_post_source') && theme_custom_post_source::is_enabled()){
 			if($edit){
 				$post_source_meta = theme_custom_post_source::get_post_meta($post->ID);
 			}else{
@@ -371,24 +431,24 @@ function post_form($post_id = null){
 					<?= ___('Source');?>
 				</div>
 				<div class="col-sm-10">
-					<label class="radio-inline" for="<?= theme_custom_post_source::$iden;?>-source-original">
+					<label class="radio-inline" for="theme_custom_post_source-source-original">
 						<input 
 							type="radio" 
-							name="<?= theme_custom_post_source::$iden;?>[source]" 
-							id="<?= theme_custom_post_source::$iden;?>-source-original" 
+							name="theme_custom_post_source[source]" 
+							id="theme_custom_post_source-source-original" 
 							value="original" 
-							class="<?= theme_custom_post_source::$iden;?>-source-radio" 
+							class="theme_custom_post_source-source-radio" 
 							<?= !isset($post_source_meta['source']) || $post_source_meta['source'] === 'original' ? 'checked' : null;?>
 						>
 						<?= ___('Original');?>
 					</label>
-					<label class="radio-inline" for="<?= theme_custom_post_source::$iden;?>-source-reprint">
+					<label class="radio-inline" for="theme_custom_post_source-source-reprint">
 						<input 
 							type="radio" 
-							name="<?= theme_custom_post_source::$iden;?>[source]" 
-							id="<?= theme_custom_post_source::$iden;?>-source-reprint" 
+							name="theme_custom_post_source[source]" 
+							id="theme_custom_post_source-source-reprint" 
 							value="reprint" 
-							class="<?= theme_custom_post_source::$iden;?>-source-radio" 
+							class="theme_custom_post_source-source-radio" 
 							<?= isset($post_source_meta['source']) && $post_source_meta['source'] === 'reprint' ? 'checked' : null;?>
 						>
 						<?= ___('Reprint');?>
@@ -396,30 +456,30 @@ function post_form($post_id = null){
 					<div class="row" id="reprint-group">
 						<div class="col-sm-7">
 							<div class="input-group">
-								<label class="input-group-addon" for="<?= theme_custom_post_source::$iden;?>-reprint-url">
+								<label class="input-group-addon" for="theme_custom_post_source-reprint-url">
 									<i class="fa fa-link"></i>
 								</label>
 								<input 
 									type="url" 
 									class="form-control" 
-									name="<?= theme_custom_post_source::$iden;?>[reprint][url]" 
-									id="<?= theme_custom_post_source::$iden;?>-reprint-url" 
+									name="theme_custom_post_source[reprint][url]" 
+									id="theme_custom_post_source-reprint-url" 
 									placeholder="<?= ___('The source of work URL, includes http://');?>" 
 									title="<?= ___('The source of work URL, includes http://');?>"
-									value="<?= isset($post_source_meta['reprint']['url']) ? esc_url($post_source_meta['reprint']['url']) : null;?>"
+									value="<?= isset($post_source_meta['reprint']['url']) ? $post_source_meta['reprint']['url'] : null;?>"
 								>
 							</div>
 						</div>
 						<div class="col-sm-5">
 							<div class="input-group">
-								<label class="input-group-addon" for="<?= theme_custom_post_source::$iden;?>-reprint-author">
+								<label class="input-group-addon" for="theme_custom_post_source-reprint-author">
 									<i class="fa fa-user"></i>
 								</label>
 								<input 
 									type="text" 
 									class="form-control" 
-									name="<?= theme_custom_post_source::$iden;?>[reprint][author]" 
-									id="<?= theme_custom_post_source::$iden;?>-reprint-author" 
+									name="theme_custom_post_source[reprint][author]" 
+									id="theme_custom_post_source-reprint-author" 
 									placeholder="<?= ___('Author');?>" 
 									title="<?= ___('Author');?>"
 									value="<?= isset($post_source_meta['reprint']['author']) ? esc_attr($post_source_meta['reprint']['author']) : null;?>"
@@ -430,6 +490,8 @@ function post_form($post_id = null){
 				</div>
 			</div>
 		<?php } /** end theme_custom_post_source */ ?>
+
+		
 		<!-- submit -->
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">

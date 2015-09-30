@@ -23,18 +23,22 @@ class theme_custom_collection{
 		
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 
+		add_action('page_settings',			__CLASS__ . '::display_backend');
+
+		self::add_editor_style();
+		
+		if(!self::is_enabled())
+			return;
+			
 		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
 
-		
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
 		}
-		self::add_editor_style();
 
 		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
 
-		add_action('page_settings',			__CLASS__ . '::display_backend');
 	}
 
 	public static function add_editor_style(){
@@ -63,6 +67,9 @@ class theme_custom_collection{
 	public static function get_cat_ids(){
 		return self::get_options('cats');
 	}
+	public static function is_enabled(){
+		return self::get_options('enabled') == 1;
+	}
 	public static function display_backend(){
 		$opt = (array)self::get_options();
 		?>
@@ -87,19 +94,19 @@ class theme_custom_collection{
 				<tr>
 					<th><label for="<?= __CLASS__;?>-tags-number"><?= ___('Shows tags number');?></label></th>
 					<td>
-						<input class="short-text" type="number" name="<?= __CLASS__;?>[tags-number]" id="<?= __CLASS__;?>-tags-number" value="<?= self::get_options('tag-number');?>">
+						<input class="short-text" type="number" name="<?= __CLASS__;?>[tags-number]" id="<?= __CLASS__;?>-tags-number" value="<?= (int)self::get_options('tags-number');?>" min="1">
 					</td>
 				</tr>
 				<tr>
 					<th><label for="<?= __CLASS__;?>-posts-min-number"><?= ___('Post boxes min number');?></label></th>
 					<td>
-						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-min-number]" id="<?= __CLASS__;?>-posts-min-number" value="<?= self::get_options('posts-min-number');?>">
+						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-min-number]" id="<?= __CLASS__;?>-posts-min-number" value="<?= (int)self::get_options('posts-min-number');?>" min="1">
 					</td>
 				</tr>
 				<tr>
 					<th><label for="<?= __CLASS__;?>-posts-max-number"><?= ___('Post boxes max number');?></label></th>
 					<td>
-						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-max-number]" id="<?= __CLASS__;?>-posts-max-number" value="<?= self::get_options('posts-max-number');?>">
+						<input class="short-text" type="number" name="<?= __CLASS__;?>[posts-max-number]" id="<?= __CLASS__;?>-posts-max-number" value="<?= (int)self::get_options('posts-max-number');?>" min="1">
 					</td>
 				</tr>
 				<tr>
@@ -127,7 +134,7 @@ class theme_custom_collection{
 			$args['url'] = theme_cache::get_permalink($args['post_id']);
 		}
 		
-		$args['content'] = strip_tags($args['content'],'<b><strong><del><span><img>');
+		$args['content'] = strip_tags($args['content'],'<b><strong><del><span><img><br><em><i>');
 
 		$target = $args['preview'] === true ? ' target="_blank" ' : null;
 		$href = $args['preview'] === true ? '#clt-list-' . $args['hash'] : $args['url'];
@@ -206,9 +213,9 @@ class theme_custom_collection{
 		return $opts;
 	}
 	public static function get_options($key = null){
-		static $caches = [];
-		if(empty($caches))
-			$caches = theme_options::get_options(__CLASS__);
+		static $caches = null;
+		if($caches === null)
+			$caches = (array)theme_options::get_options(__CLASS__);
 		if($key){
 			if(isset($caches[$key])){
 				return $caches[$key];
@@ -253,12 +260,11 @@ class theme_custom_collection{
 			
 		return $cache;
 	}
-	private static function wp_get_attachment_image_src(...$args){
+	private static function wp_get_attachment_image_src(){
 		static $caches = [];
-		$cache_id = md5(serialize($args));
+		$cache_id = md5(serialize(func_get_arg()));
 		if(!isset($caches[$cache_id]))
-			$caches[$cache_id] = call_user_func_array('wp_get_attachment_image_src',$args);
-
+			$caches[$cache_id] = call_user_func_array('wp_get_attachment_image_src',func_get_arg());
 		return $caches[$cache_id];
 	}
 	public static function process(){

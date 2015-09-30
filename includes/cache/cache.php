@@ -446,28 +446,19 @@ class theme_cache{
 			$cache = (bool)is_home();
 		return $cache;
 	}
-	public static function is_singular_post(){
-		static $cache = null;
-		if($cache === null)
-			$cache = (bool)is_singular('post');
-		return $cache;
-	}
-	public static function is_singular(){
-		static $cache = null;
-		if($cache === null)
-			$cache = (bool)is_singular();
-		return $cache;
+	public static function is_singular($post_types = null){
+		static $caches = [];
+		$cache_id = md5(json_encode(func_get_args()));
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = (bool)is_singular($post_types);
+		return $caches[$cache_id];
 	}
 	public static function is_page($page = null){
-		static $caches = [],$cache = null;
-		if($page === null){
-			if($cache === null)
-				$cache = is_page();
-			return $cache;
-		}
-		if(!isset($caches[$page]))
-			$caches[$page] = is_page($page);
-		return $caches[$page];
+		static $caches = [];
+		$cache_id = md5(json_encode(func_get_args()));
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = (bool)is_page($page);
+		return $caches[$cache_id];
 	}
 	public static function get_bloginfo($key){
 		static $caches = [];

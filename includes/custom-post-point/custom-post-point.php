@@ -841,14 +841,14 @@ class custom_post_point{
 		return true;
 	}
 	public static function frontend_seajs_alias(array $alias = []){
-		if(!theme_cache::is_singular_post())
+		if(!theme_cache::is_singular('post'))
 			return $alias;
 			
 		$alias[__CLASS__] = theme_features::get_theme_includes_js(__DIR__);
 		return $alias;
 	}
 	public static function frontend_seajs_use(){
-		if(!theme_cache::is_singular_post())
+		if(!theme_cache::is_singular('post'))
 			return;
 		?>
 		seajs.use(['<?= __CLASS__;?>'],function(m){

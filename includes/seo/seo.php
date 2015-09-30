@@ -122,7 +122,7 @@ class theme_seo_plus{
 		/** 
 		 * post page
 		 */
-		if(theme_cache::is_singular_post()){
+		if(theme_cache::is_singular('post')){
 			$posttags = get_the_tags();
 			if(!empty($posttags)){
 				foreach($posttags as $v) {
