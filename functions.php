@@ -1748,7 +1748,9 @@ class theme_functions{
 				
 			if(!isset($v['title']) || trim($v['title']) === '')
 				continue;
-				
+
+			$title = htmlspecialchars($v['title']);
+			
 			$link = isset($v['link']) && !empty($v['link']) ? esc_url($v['link']) : false;
 			?>
 <div id="homebox-<?= $k;?>" class="homebox mod">
@@ -1758,7 +1760,7 @@ class theme_functions{
 			<?php if(!empty($v['icon'])){ ?>
 				<i class="fa fa-<?= $v['icon'];?>"></i> 
 			<?php } ?>
-			<?= $v['title'];?>
+			<?= $title;?>
 			<?php if($link){ ?></a><?php } ?>
 		</h2>
 		<?php
@@ -1804,7 +1806,7 @@ class theme_functions{
 		unset($query);
 		?>
 	</ul>
-	<a href="<?= $link;?>" class="below-more" target="_blank"><?= sprintf(___('More about %s'),$v['title']);?> <i class="fa fa-caret-right"></i></a>
+	<a href="<?= $link;?>" class="below-more" target="_blank"><?= sprintf(___('More about %s'),$title);?> <i class="fa fa-caret-right"></i></a>
 	<?php
 	/**
 	 * ad
