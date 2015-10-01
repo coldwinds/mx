@@ -58,9 +58,9 @@ class theme_custom_storage{
 					</td>
 				</tr>
 				<tr>
-					<th><label for="<?= __CLASS__;?>-item"><?= ___('Storage item');?></label></th>
+					<th><label for="<?= __CLASS__;?>-types"><?= ___('Storage types');?></label></th>
 					<td>
-						<textarea name="<= __CLASS__;?>[item]" id="<?= __CLASS__;?>-item" cols="50" rows="5" class="widefat" placeholder="<?= ___('ID = Storage name, e.g. bdpan = Baidu storage');?>"><?= self::get_types_text();?></textarea>
+						<textarea name="<= __CLASS__;?>[types]" id="<?= __CLASS__;?>-item" cols="50" rows="5" class="widefat" placeholder="<?= ___('ID = Storage name, e.g. bdpan = Baidu storage');?>"><?= self::get_types_text();?></textarea>
 						<p class="description"><?= ___('One item per line');?></p>
 					</td>
 				</tr>

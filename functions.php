@@ -1014,11 +1014,8 @@ class theme_functions{
 	 * smart_page_pagination
 	 */
 	public static function smart_page_pagination($args = []){
-		static $cache = null;
-		if($cache !== null)
-			return $cache;
 			
-		global $post,$page,$numpages;
+		global $post, $page, $numpages;
 
 		$output = [];
 	
@@ -1072,8 +1069,7 @@ class theme_functions{
 				$output['next_page']['number'] = $next_page_number;
 			}
 		}
-		$cache = array_filter($output);
-		return $cache;
+		return array_filter($output);
 	}
 
 	

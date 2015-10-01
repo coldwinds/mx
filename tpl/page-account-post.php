@@ -260,7 +260,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		<div class="col-sm-10">
 			<?php
 			/** is edit */
-			if($post_id){
+			if($post_id && $storage_meta){
 				foreach($storage_meta as $k => $v){
 					$storage_tpl($k);
 				}
