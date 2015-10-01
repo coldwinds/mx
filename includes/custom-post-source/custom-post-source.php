@@ -95,11 +95,10 @@ class theme_custom_post_source{
 			return;
 
 		$new_meta = $_POST[__CLASS__];
-		$source = isset($new_meta['source']) ? array_filter((array)$new_meta['source']) : null;
+		$source = isset($new_meta['source']) ? $new_meta['source'] : null;
 
 		$old_meta = self::get_post_meta($post_id);
 
-		
 		if($new_meta == $old_meta)
 			return;
 			
