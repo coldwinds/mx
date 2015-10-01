@@ -95,7 +95,7 @@ class theme_custom_post_source{
 			return;
 
 		$new_meta = $_POST[__CLASS__];
-		$source = isset($new_meta['source']) ? $new_meta['source'] : null;
+		$source = isset($new_meta['source']) && is_string($new_meta['source']) ? $new_meta['source'] : null;
 
 		$old_meta = self::get_post_meta($post_id);
 

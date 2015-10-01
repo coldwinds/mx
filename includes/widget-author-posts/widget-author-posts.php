@@ -1,18 +1,15 @@
 <?php
 /** 
- * version 1.0.0
+ * version 1.0.1
  */
-
-add_action('widgets_init','widget_author_posts::register_widget' );
 class widget_author_posts extends WP_Widget{
-	public static $iden = 'widget_author_posts';
 	function __construct(){
-		$this->alt_option_name = self::$iden;
+		$this->alt_option_name = __CLASS__;
 		parent::__construct(
-			self::$iden,
+			__CLASS__,
 			___('Author posts <small>(custom)</small>'),
 			array(
-				'classname' => self::$iden,
+				'classname' => __CLASS__,
 				'description'=> ___('Display author posts on singular page.'),
 			)
 		);
@@ -23,27 +20,24 @@ class widget_author_posts extends WP_Widget{
 			'title' => ___('Author posts'),
 			'posts_per_page' => 12,
 			'orderby' => 'random',
-			'category__in' => [],
 			'content_type' => 'img',
 		],$instance);
-		$title = $instance['title'];
 		echo $args['before_title'];
 			?>
 			<a href="<?= class_exists('theme_custom_author_profile') ? theme_custom_author_profile::get_tabs('works',$post->post_author)['url'] : theme_cache::get_author_posts_url($post->post_author);?>" title="<?= ___('Views more author posts.');?>">
 				<i class="fa fa-file-text"></i> 
-				<?= sprintf($title,theme_cache::get_the_author_meta('display_name',$post->post_author));?>
+				<?= sprintf($instance['title'],theme_cache::get_the_author_meta('display_name',$post->post_author));?>
 			</a>
 			<?php
 		echo $args['after_title'];
 		
 		$query = new WP_Query([
-			'category__in' => (array)$instance['category__in'],
 			'posts_per_page' => (int)$instance['posts_per_page'],
 			'orderby' => $instance['orderby'],
 			'author' => $post->post_author,
 			'post_not__in' => [$post->ID],
+			'ignore_sticky_posts' => true,
 		]);
-		$content_type_class = $instance['content_type'] === 'tx' ? ' post-tx-lists ' : ' post-img-list ';
 		?>
 		<div class="panel-body">
 			<?php
@@ -67,6 +61,7 @@ class widget_author_posts extends WP_Widget{
 			<?php } ?>
 		</div>
 		<?php
+		unset($query);
 	}
 	function widget($args,$instance){
 		echo $args['before_widget'];
@@ -78,7 +73,6 @@ class widget_author_posts extends WP_Widget{
 		$instance = array_merge([
 			'title'=>___('Author posts'),
 			'posts_per_page' => 6,
-			'category__in' => [],
 			'content_type' => 'img',
 			'orderby' => 'random',
 		],$instance);
@@ -104,14 +98,6 @@ class widget_author_posts extends WP_Widget{
 				value="<?= $instance['posts_per_page'];?>" 
 				placeholder="<?= ___('Post number (required)');?>"
 			/>
-		</p>
-		<p>
-			<?= ___('Categories: ');?>
-			<?= self::get_cat_checkbox_list(
-				self::get_field_name('category__in'),
-				self::get_field_id('category__in'),
-				$instance['category__in']
-			);?>
 		</p>
 
 		<p>
@@ -227,6 +213,7 @@ class widget_author_posts extends WP_Widget{
 		return array_merge($old_instance,$new_instance);
 	}
 	public static function register_widget(){
-		register_widget(self::$iden);
+		register_widget(__CLASS__);
 	}
 }
+add_action('widgets_init','widget_author_posts::register_widget');

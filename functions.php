@@ -1358,7 +1358,7 @@ class theme_functions{
 		 * cache
 		 */
 		$cache_group_id = 'related_posts';
-		$cache = theme_dev_mode::is_enabled() ? false : wp_cache_get($post->ID,$cache_group_id);
+		$cache = theme_cache::get($post->ID,$cache_group_id);
 		if($cache){
 			echo $cache;
 			unset($cache);
@@ -1427,7 +1427,7 @@ class theme_functions{
 		<?php
 		$cache = ob_get_contents();
 		ob_end_clean();
-		wp_cache_set($post->ID,$cache,$cache_group_id,3600);
+		theme_cache::set($post->ID,$cache,$cache_group_id,3600);
 		echo $cache;
 		unset($cache);
 	}

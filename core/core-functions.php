@@ -679,12 +679,14 @@ function friendly_date($timestamp){
  * get_current_url
  *
  * @return string
- * @version 1.0.2
+ * @version 1.0.3
  */
 function get_current_url(){
-	$url = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
-	$url .= $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	return $url;
+	static $cache = null;
+	if($cache !== null)
+		return $cache;
+	$cache = '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	return $cache;
 }
 
 /**

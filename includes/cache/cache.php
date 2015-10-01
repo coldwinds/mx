@@ -622,11 +622,11 @@ class theme_cache{
 	 * @param string The widget sidebar name/id
 	 * @param int Cache expire time
 	 * @return string
-	 * @version 3.0.0
+	 * @version 3.0.1
 	 */
 	public static function dynamic_sidebar($id,$expire = 3600){
 		$cache_group_id = 'dynamic-sidebar';
-		$cache_id = md5(self::get_page_prefix() . wp_is_mobile() . $id);
+		$cache_id = md5(get_current_url() . wp_is_mobile() . $id);
 
 		$cache = self::get($cache_id,$cache_group_id);
 
