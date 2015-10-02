@@ -142,7 +142,7 @@ function post_form($post_id = null){
 						<option value="<?= $i;?>"><?= sprintf(___('%d image(s) / page'),$i);?></option>
 					<?php } ?>
 				</select>
-				<p class="description"><?= ___('How many images to split with next-page tag?');?> <?= ___('Please confirm before uploading image.');?></p>
+				<p class="description"><?= ___('How many images to split with next-page tag?');?> <i class="fa fa-info-circle"></i> <?= ___('Please confirm before uploading image.');?></p>
 			</div>
 		</div>
 		
@@ -197,9 +197,11 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		$storage_download_pwd = isset($storage_meta[$placeholder]['download-pwd']) ? $storage_meta[$placeholder]['download-pwd'] : null;
 		
 		$storage_extract_pwd = isset($storage_meta[$placeholder]['extract-pwd']) ? $storage_meta[$placeholder]['extract-pwd'] : null;
-		
+
+		ob_start();
 		?>
-		<select name="theme_custom_storage[<?= $placeholder;?>][type]" id="theme_custom_storage-<?= $placeholder;?>-type" class="form-control">
+		<div class="theme_custom_storage-item">
+		<select name="theme_custom_storage[<?= $placeholder;?>][type]" id="theme_custom_storage-<?= $placeholder;?>-type" class="form-control theme_custom_storage-control">
 			<?php foreach(theme_custom_storage::get_types() as $storage_id => $storage_name){ ?>
 				<?php the_option_list($storage_id,$storage_name,$storage_type);?>
 			<?php } ?>
@@ -237,7 +239,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 						type="text" 
 						class="form-control" 
 						name="theme_custom_storage[<?= $placeholder;?>][extract-pwd]" 
-						id="theme_custom_storage-extract-<?= $placeholder;?>-extract-pwd" 
+						id="theme_custom_storage-<?= $placeholder;?>-extract-pwd" 
 						title="<?= ___('Extract password (optional)');?>" 
 						placeholder="<?= ___('Extract password (optional)');?>" 
 						value="<?= $storage_extract_pwd;?>" 
@@ -245,14 +247,18 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 				</div>
 			</div>
 		</div><!-- /.row -->
+		</div><!-- /.item -->
 		<?php
+		$html = html_minify(ob_get_contents());
+		ob_end_clean();
+		return $html;
 	};
 	/**
 	 * end $storage_tpl()
 	 */
 	
 	?>
-	<div class="form-group">
+	<div class="form-group theme_custom_storage-group" data-tpl="<?= esc_attr($storage_tpl(0));?>">
 		<div class="col-sm-2 control-label">
 			<i class="fa fa-cloud-download"></i>
 			<?= ___('Storage link');?>
@@ -262,11 +268,11 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 			/** is edit */
 			if($post_id && $storage_meta){
 				foreach($storage_meta as $k => $v){
-					$storage_tpl($k);
+					echo $storage_tpl($k);
 				}
 			/** new post */
 			}else{
-				$storage_tpl(0);
+				echo $storage_tpl(0);
 			}
 			?>
 		</div>
@@ -329,7 +335,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		<!-- tags -->
 		<div class="form-group">
 			<div class="col-sm-2 control-label">
-				<i class="fa fa-tags"></i>
+				<i class="fa fa-tags"></i> 
 				<?= ___('Pop. tags');?>
 			</div>
 			<div class="col-sm-10">
@@ -377,6 +383,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 						?>
 						<label class="ctb-tag" for="ctb-tags-<?= $tag->term_id;?>">
 							<input 
+								class="ctb-preset-tag" 
 								type="checkbox" 
 								id="ctb-tags-<?= $tag->term_id;?>" 
 								name="ctb[tags][]" 
@@ -393,23 +400,20 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 				</div>
 			</div>
 		</div>
+		
+		<!-- custom tags -->
 		<div class="form-group">
 			<div class="col-sm-2 control-label">
-				<i class="fa fa-tag"></i>
+				<i class="fa fa-tag"></i> 
 				<?= ___('Custom tags');?>
 			</div>
 			<div class="col-sm-10">
-				<div id="custom-tag">
-					<div class="row">
-						<?php for($i = 0;$i<=3;++$i){ ?>
-							<div class="col-xs-6 col-sm-3">
-								<div class="input-group input-group-sm">
-									<label class="input-group-addon" for="ctb-tag-<?= $i;?>"><i class="fa fa-tag fa-fw"></i></label>
-									<input id="ctb-tag-<?= $i;?>" class="custom-tag-list form-control" type="text" name="ctb[tags][]" placeholder="<?= sprintf(___('tag %d'),$i+1);?>" size="10">
-								</div>
-							</div>
-						<?php } ?>
-					</div>
+				<div class="row">
+					<?php for($i = 0;$i<=3;++$i){ ?>
+						<div class="col-xs-6 col-sm-3">
+							<input id="ctb-custom-tag-<?= $i;?>" class="ctb-custom-tag form-control" type="text" name="ctb[tags][]" placeholder="<?= sprintf(___('Custom tag %d'),$i+1);?>" >
+						</div>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
@@ -427,7 +431,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 			?>
 			<div class="form-group">
 				<div class="col-sm-2 control-label">
-					<i class="fa fa-truck"></i>
+					<i class="fa fa-truck"></i> 
 					<?= ___('Source');?>
 				</div>
 				<div class="col-sm-10">
@@ -438,7 +442,8 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 							id="theme_custom_post_source-source-original" 
 							value="original" 
 							class="theme_custom_post_source-source-radio" 
-							<?= !isset($post_source_meta['source']) || $post_source_meta['source'] === 'original' ? 'checked' : null;?>
+							<?= !isset($post_source_meta['source']) || $post_source_meta['source'] === 'original' ? 'checked' : null;?> 
+							target="theme_custom_post_source-input-original" 
 						>
 						<?= ___('Original');?>
 					</label>
@@ -449,11 +454,12 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 							id="theme_custom_post_source-source-reprint" 
 							value="reprint" 
 							class="theme_custom_post_source-source-radio" 
-							<?= isset($post_source_meta['source']) && $post_source_meta['source'] === 'reprint' ? 'checked' : null;?>
+							<?= isset($post_source_meta['source']) && $post_source_meta['source'] === 'reprint' ? 'checked' : null;?> 
+							target="theme_custom_post_source-input-reprint" 
 						>
 						<?= ___('Reprint');?>
 					</label>
-					<div class="row" id="reprint-group">
+					<div class="row theme_custom_post_source-inputs" id="theme_custom_post_source-input-reprint" >
 						<div class="col-sm-7">
 							<div class="input-group">
 								<label class="input-group-addon" for="theme_custom_post_source-reprint-url">
@@ -500,7 +506,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 					<i class="fa fa-check"></i> 
 					<?= $edit ? ___('Update') : ___('Submit');?>
 				</button>
-				<input type="hidden" name="post-id" value="<?= $edit ? $post->ID : 0;?>">
+				<input type="hidden" id="ctb-post-id" name="post-id" value="<?= $edit ? $post->ID : 0;?>">
 				<input type="hidden" name="type" value="post">
 			</div>
 		</div>

@@ -686,6 +686,10 @@ class theme_custom_contribution{
 				M13 : '<?= ___('Small size');?>',
 				E01 : '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>'
 			};
+			m.auto_save.config.lang = {
+				M01 : '<?= ___('You have a auto save version, do you want to restore? Auto-save in last {seconds} seconds.');?>',
+				M02 : '<?= ___('Restore completed.');?>'
+			};
 			<?php
 			if(self::is_edit()){
 				$thumbnail_id = (int)get_post_thumbnail_id(self::is_edit());

@@ -1,9 +1,18 @@
 
-define(function(require,exports,module){'use strict';var tools=require('modules/tools'),js_request=require('theme-cache-request');exports.config={fm_id:'fm-ctb',file_area_id:'ctb-file-area',file_btn_id:'ctb-file-btn',file_id:'ctb-file',file_tip_id:'ctb-file-tip',files_id:'ctb-files',edit:false,thumbnail_id:false,attachs:false,cats:false,default_size:'large',process_url:'',lang:{M01:'Loading, please wait...',M02:'Uploading {0}/{1}, please wait...',M03:'Click to delete',M04:'{0} files have been uploaded.',M05:'Source',M06:'Click to view source',M07:'Set as cover.',M08:'Optional: some description',M09:'Insert',M10:'Preview',M11:'Large size',M12:'Medium size',M13:'Small size',E01:'Sorry, server is busy now, can not respond your request, please try again later.'}}
+define(function(require,exports,module){'use strict';var tools=require('modules/tools'),js_request=require('theme-cache-request');exports.config={fm_id:'fm-ctb',file_area_id:'ctb-file-area',file_btn_id:'ctb-file-btn',file_id:'ctb-file',file_tip_id:'ctb-file-tip',files_id:'ctb-files',edit:false,thumbnail_id:false,attachs:false,cats:false,default_size:'large',process_url:'',lang:{M01:'Loading, please wait...',M02:'Uploading {0}/{1}, please wait...',M03:'Click to delete',M04:'{0} files have been uploaded.',M05:'Source',M06:'Click to view source',M07:'Set as cover.',M08:'Optional: some description',M09:'Insert',M10:'Preview',M11:'Large size',M12:'Medium size',M13:'Small size',M20:'You have a auto save version, do you want to restore? Auto-save in %time%.',M21:'Restore completed.',E01:'Sorry, server is busy now, can not respond your request, please try again later.'}}
 var config=exports.config,cache={};exports.init=function(){tools.ready(exports.bind);}
 function I(e){return document.getElementById(e);}
-exports.bind=function(){cache.$fm=I('fm-ctb');cache.$file_area=I('ctb-file-area');cache.$file_btn=I('ctb-file-btn');cache.$file=I('ctb-file');cache.$files=I('ctb-files');cache.$file_progress=I('ctb-file-progress');cache.$file_completion_tip=I('ctb-file-completion');cache.$file_progress_bar=I('ctb-file-progress-bar');cache.$file_progress_tx=I('ctb-file-progress-tx');cache.$split_number=I('ctb-split-number');if(!cache.$fm)
-return false;load_thumbnails();upload();cats();toggle_reprint_group();fm_validate(cache.$fm);}
+exports.bind=function(){cache.$fm=I('fm-ctb');cache.$post_title=I('ctb-title');cache.$file_area=I('ctb-file-area');cache.$file_btn=I('ctb-file-btn');cache.$file=I('ctb-file');cache.$files=I('ctb-files');cache.$file_progress=I('ctb-file-progress');cache.$file_completion_tip=I('ctb-file-completion');cache.$file_progress_bar=I('ctb-file-progress-bar');cache.$file_progress_tx=I('ctb-file-progress-tx');cache.$split_number=I('ctb-split-number');if(!cache.$fm)
+return false;load_thumbnails();upload();cats();toggle_reprint_group();fm_validate(cache.$fm);auto_save.bind();}
+var auto_save={};auto_save.bind=function(){cache.$post_excerpt=I('ctb-excerpt');auto_save.check_version();setInterval(auto_save.save,5000);};auto_save.check_version=function(){var data=localStorage.getItem('auto-save');if(!data)
+return false;data=JSON.parse(data);if(!data)
+return false;var msg=config.lang.M20.replace('%time%',data.save_time);if(!confirm(msg))
+return false;auto_save.restore();tools.ajax_loading_tip('success',config.lang.M21,3);}
+auto_save.save=function(){var data={save_time:new Date(),title:cache.$post_title.value,experct:cache.$post_excerpt.value};localStorage.setItem('auto-save',JSON.stringify(data));};auto_save.restore=function(){var data=localStorage.getItem('auto-save');if(!data)
+return false;data=JSON.parse(data);if(!data)
+return false;if(data.title)
+cache.$post_title.value=data.title;if(data.excerpt)
+cache.$post_excerpt.value=data.excerpt;}
 function send_to_editor(h){var ed,mce=typeof(tinymce)!='undefined',qt=typeof(QTags)!='undefined';if(!wpActiveEditor){if(mce&&tinymce.activeEditor){ed=tinymce.activeEditor;wpActiveEditor=ed.id;}else if(!qt){return false;}}else if(mce){if(tinymce.activeEditor&&(tinymce.activeEditor.id=='mce_fullscreen'||tinymce.activeEditor.id=='wp_mce_fullscreen'))
 ed=tinymce.activeEditor;else
 ed=tinymce.get(wpActiveEditor);}
