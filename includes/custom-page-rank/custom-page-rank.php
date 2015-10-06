@@ -316,7 +316,7 @@ class theme_page_rank{
 
 		$excerpt = get_the_excerpt();
 		if(!empty($excerpt))
-			$excerpt = htmlspecialchars($excerpt);
+			$excerpt = esc_html($excerpt);
 
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 

@@ -357,7 +357,7 @@ class RegenerateThumbnails {
 		$image = theme_cache::get_post( $id );
 
 		if ( ! $image || 'attachment' != $image->post_type || 'image/' != substr( $image->post_mime_type, 0, 6 ) )
-			die( json_encode( array( 'error' => sprintf( ___( 'Failed resize: %s is an invalid image ID.'), htmlspecialchars( $_REQUEST['id'] ) ) ) ) );
+			die( json_encode( array( 'error' => sprintf( ___( 'Failed resize: %s is an invalid image ID.'), esc_html( $_REQUEST['id'] ) ) ) ) );
 
 		if ( ! theme_cache::current_user_can( $this->capability ) )
 			$this->die_json_error_msg( $image->ID, ___( "Your user account doesn't have permission to resize images") );
@@ -365,7 +365,7 @@ class RegenerateThumbnails {
 		$fullsizepath = get_attached_file( $image->ID );
 
 		if ( false === $fullsizepath || ! file_exists( $fullsizepath ) )
-			$this->die_json_error_msg( $image->ID, sprintf( ___( 'The originally uploaded image file cannot be found at %s'), '<code>' . htmlspecialchars( $fullsizepath ) . '</code>' ) );
+			$this->die_json_error_msg( $image->ID, sprintf( ___( 'The originally uploaded image file cannot be found at %s'), '<code>' . esc_html( $fullsizepath ) . '</code>' ) );
 
 		@set_time_limit( 900 ); // 5 minutes per image should be PLENTY
 

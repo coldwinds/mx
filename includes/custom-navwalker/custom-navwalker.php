@@ -308,9 +308,9 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 		<li id="menu-item-<?= $item_id; ?>" class="<?= implode(' ', $classes ); ?>">
 			<dl class="menu-item-bar">
 				<dt class="menu-item-handle">
-					<span class="item-title"><span class="menu-item-title"><?= htmlspecialchars( $title ); ?></span> <span class="is-submenu" <?= $submenu_text; ?>><?php _e( 'sub item' ); ?></span></span>
+					<span class="item-title"><span class="menu-item-title"><?= esc_html( $title ); ?></span> <span class="is-submenu" <?= $submenu_text; ?>><?php _e( 'sub item' ); ?></span></span>
 					<span class="item-controls">
-						<span class="item-type"><?= htmlspecialchars( $item->type_label ); ?></span>
+						<span class="item-type"><?= esc_html( $item->type_label ); ?></span>
 						<span class="item-order hide-if-js">
 							<a href="<?php
 								echo wp_nonce_url(
@@ -408,7 +408,7 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 				<p class="field-description description description-wide">
 					<label for="edit-menu-item-description-<?= $item_id; ?>">
 						<?php _e( 'Description' ); ?><br />
-						<textarea id="edit-menu-item-description-<?= $item_id; ?>" class="widefat edit-menu-item-description" rows="3" cols="20" name="menu-item-description[<?= $item_id; ?>]"><?= htmlspecialchars( $item->description ); // textarea_escaped ?></textarea>
+						<textarea id="edit-menu-item-description-<?= $item_id; ?>" class="widefat edit-menu-item-description" rows="3" cols="20" name="menu-item-description[<?= $item_id; ?>]"><?= esc_html( $item->description ); // textarea_escaped ?></textarea>
 						<span class="description"><?php _e('The description will be displayed in the menu if the current theme supports it.'); ?></span>
 					</label>
 				</p>
@@ -427,7 +427,7 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 				<div class="menu-item-actions description-wide submitbox">
 					<?php if( 'custom' != $item->type && $original_title !== false ) : ?>
 						<p class="link-to-original">
-							<?php printf( __('Original: %s'), '<a href="' . esc_attr( $item->url ) . '">' . htmlspecialchars( $original_title ) . '</a>' ); ?>
+							<?php printf( __('Original: %s'), '<a href="' . esc_attr( $item->url ) . '">' . esc_html( $original_title ) . '</a>' ); ?>
 						</p>
 					<?php endif; ?>
 					<a class="item-delete submitdelete deletion" id="delete-<?= $item_id; ?>" href="<?php

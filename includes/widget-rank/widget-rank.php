@@ -26,7 +26,7 @@ class widget_rank extends WP_Widget{
 			'category__in' => [],
 			'content_type' => 'tx',
 		],$instance);
-		$title = htmlspecialchars($instance['title']);
+		$title = esc_html($instance['title']);
 		echo $args['before_title'];
 		if(isset($instance['category__in'][0])){ ?>
 			<a class="link" href="<?= get_category_link($instance['category__in'][0]);?>" title="<?= sprintf(___('Views more about %s'),$title);?>">
@@ -242,7 +242,7 @@ class widget_rank extends WP_Widget{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-					<?= htmlspecialchars($cat->name);?>
+					<?= esc_html($cat->name);?>
 			</label>
 			<?php 
 			}

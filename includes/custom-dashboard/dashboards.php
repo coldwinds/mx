@@ -205,7 +205,7 @@ class theme_dashboards{
 					?>
 					<li class="list-group-item">
 						<a href="<?php the_permalink();?>"><?php the_title();?></a>
-						<small><?= htmlspecialchars(friendly_date((get_the_time('U'))));?></small>
+						<small><?= esc_html(friendly_date((get_the_time('U'))));?></small>
 					</li>
 					<?php
 				}

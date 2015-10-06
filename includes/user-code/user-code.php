@@ -37,7 +37,7 @@ class theme_user_code{
 						<th><label for="<?= __CLASS__;?>-header"><?= ___('Header code');?></label></th>
 						<td>
 							<textarea name="<?= __CLASS__;?>[header]" id="<?= __CLASS__;?>-header" class="widefat code" rows="10"><?= self::get_frontend_header_code();?></textarea>
-							<p class="description"><?= htmlspecialchars(___('This codes will be put between <head> and </head>.'));?></p>
+							<p class="description"><?= esc_html(___('This codes will be put between <head> and </head>.'));?></p>
 						</td>
 					</tr>
 					<tr>

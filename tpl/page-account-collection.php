@@ -144,7 +144,7 @@ if(class_exists('theme_custom_collection')){
 									hidden
 								>
 								<span class="label label-default">
-									<?= htmlspecialchars($tag->name);?>
+									<?= esc_html($tag->name);?>
 								</span>
 							</label>
 							

@@ -61,7 +61,8 @@ define(function(require,exports,module){
 	}
 	function scroll_to(e){
 		e.preventDefault();
-		scrollTo(0,this.getAttribute('data-scroll-top'));
+		//scrollTo(0,this.getAttribute('data-scroll-top'));
+		tools.scrollTop(this.getAttribute('data-scroll-top'));
 	}
 	function append_content_nav(){
 		for( var i = 0, len = cache.$boxes.length; i < len; i++ ){

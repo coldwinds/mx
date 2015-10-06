@@ -225,6 +225,10 @@
 .wp-editor-wrap{
 	margin-top: -30px;
 }
+
+.theme_custom_post_source-inputs{
+	display: none;
+}
 @media (min-width: 768px){
 	label[for="ctb-content"]{
 		margin-top: 30px;

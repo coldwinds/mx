@@ -402,7 +402,7 @@ class theme_custom_storage{
 							<label for="<?= __CLASS__;?>-<?= $k;?>-download-pwd" class="input-group-addon" >
 								<i class="fa fa-key"></i> <?= ___('Download password');?>
 							</label>
-							<input type="text" id="<?= __CLASS__;?>-<?= $k;?>-download-pwd" class="form-control pwd" value="<?= htmlspecialchars($v['download-pwd']);?>" size="5" onclick="this.select();" >
+							<input type="text" id="<?= __CLASS__;?>-<?= $k;?>-download-pwd" class="form-control pwd" value="<?= esc_html($v['download-pwd']);?>" size="5" onclick="this.select();" >
 						</div>
 					</div>
 				<?php } ?>
@@ -413,7 +413,7 @@ class theme_custom_storage{
 							<label for="<?= __CLASS__;?>-<?= $k;?>-extract-pwd" class="input-group-addon" >
 								<i class="fa fa-unlock"></i> <?= ___('Extract password');?>
 							</label>
-							<input type="text" id="<?= __CLASS__;?>-<?= $k;?>-extract-pwd" class="form-control pwd" value="<?= htmlspecialchars($v['extract-pwd']);?>" size="5" onclick="this.select();" >
+							<input type="text" id="<?= __CLASS__;?>-<?= $k;?>-extract-pwd" class="form-control pwd" value="<?= esc_html($v['extract-pwd']);?>" size="5" onclick="this.select();" >
 						</div>
 					</div>
 				<?php } ?>

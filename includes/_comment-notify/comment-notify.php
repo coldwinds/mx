@@ -94,7 +94,7 @@ class theme_comment_notify {
 <p>
 	<?= sprintf(
 		___('Comment content: %s'),
-		htmlspecialchars(get_comment_text($comment->comment_ID))
+		esc_html(get_comment_text($comment->comment_ID))
 	);?>
 </p>
 
@@ -159,7 +159,7 @@ class theme_comment_notify {
 <p>
 	<?= sprintf(
 		___('Your comment: %s'),
-		htmlspecialchars(get_comment_text($parent_comment->comment_ID))
+		esc_html(get_comment_text($parent_comment->comment_ID))
 	);?>
 </p>
 

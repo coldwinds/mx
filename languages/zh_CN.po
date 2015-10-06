@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-03 00:24+0800\n"
-"PO-Revision-Date: 2015-10-03 00:25+0800\n"
-"Last-Translator: kmvan <kmvan.com@gmail.com>\n"
+"POT-Creation-Date: 2015-10-05 18:19-0700\n"
+"PO-Revision-Date: 2015-10-05 18:20-0700\n"
+"Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.5\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: attachment.php:12
@@ -1457,13 +1457,18 @@ msgstr "小尺寸"
 
 #: includes/custom-contribution/custom-contribution.php:690
 msgid ""
-"You have a auto save version, do you want to restore? Auto-save in last "
-"{seconds} seconds."
-msgstr "你的文章有自动保存版本，需要还原吗？自动保存在最后的 {seconds} 秒内。"
+"You have a auto save version, do you want to restore? Auto save last time is "
+"{time}."
+msgstr ""
+"你有自动保存版本，需要还原到该版本吗?最后一次自动保存的时间是  {time} 。"
 
 #: includes/custom-contribution/custom-contribution.php:691
-msgid "Restore completed."
-msgstr "还原完毕。"
+msgid "Restore post data completed, please check it."
+msgstr "恢复文章数据完毕，请检查。"
+
+#: includes/custom-contribution/custom-contribution.php:692
+msgid "The post data has saved your browser."
+msgstr "文章数据已成功保存到您的浏览器中。"
 
 #: includes/custom-dashboard/custom-dashboard.php:66
 msgid "My dashboard"
@@ -4700,11 +4705,11 @@ msgstr "自定义标签"
 msgid "tag %d"
 msgstr "标签 %d"
 
-#: tpl/page-account-collection.php:184 tpl/page-account-post.php:505
+#: tpl/page-account-collection.php:184 tpl/page-account-post.php:510
 msgid "Sending, please wait..."
 msgstr "数据发送中，请稍候…"
 
-#: tpl/page-account-collection.php:186 tpl/page-account-post.php:507
+#: tpl/page-account-collection.php:186 tpl/page-account-post.php:512
 msgid "Submit"
 msgstr "提交"
 
@@ -4883,7 +4888,18 @@ msgstr "自定义标签 %d"
 msgid "The source of work URL, includes http://"
 msgstr "作品的来源地址，包括 http://"
 
-#: tpl/page-account-post.php:507
+#: tpl/page-account-post.php:504
+msgid ""
+"The post data will be saved automatically per minute in your current "
+"borwser, you can also save it now manually."
+msgstr ""
+"该文章数据会在您当前的浏览器中，每分钟自动保存一次，您也可以手动进行保存。"
+
+#: tpl/page-account-post.php:505
+msgid "Quick save"
+msgstr "快速保存"
+
+#: tpl/page-account-post.php:512
 msgid "Update"
 msgstr "更新"
 
@@ -4929,3 +4945,12 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:117
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#~ msgid "Restore completed."
+#~ msgstr "还原完毕。"
+
+#~ msgid ""
+#~ "You have a auto save version, do you want to restore? Auto-save in last "
+#~ "{seconds} seconds."
+#~ msgstr ""
+#~ "你的文章有自动保存版本，需要还原吗？自动保存在最后的 {seconds} 秒内。"

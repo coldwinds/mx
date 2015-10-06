@@ -687,8 +687,9 @@ class theme_custom_contribution{
 				E01 : '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>'
 			};
 			m.auto_save.config.lang = {
-				M01 : '<?= ___('You have a auto save version, do you want to restore? Auto-save in last {seconds} seconds.');?>',
-				M02 : '<?= ___('Restore completed.');?>'
+				M01 : '<?= ___('You have a auto save version, do you want to restore? Auto save last time is {time}.');?>',
+				M02 : '<?= ___('Restore post data completed, please check it.');?>',
+				M03 : '<?= ___('The post data has saved your browser.');?>'
 			};
 			<?php
 			if(self::is_edit()){

@@ -479,7 +479,7 @@ class theme_custom_sign{
 				],self::get_tabs('reset')['url']));
 
 				$content = '
-					<h3>' . sprintf(___('Dear %s!'),htmlspecialchars($user->display_name)) . '</h3>
+					<h3>' . sprintf(___('Dear %s!'),esc_html($user->display_name)) . '</h3>
 					<p>
 						' . sprintf(___('You are receiving this email because you forgot your password. We already made an address for your account, you can access this address ( %s ) to log-in and change your password in 3 hours.'),'<a href="' . $callback_url . '" target="_blank">' . $callback_url . '</a>') . '
 					</p>

@@ -82,51 +82,113 @@ define(function(require, exports, module){
 	 */
 	exports.auto_save = {
 		config : {
-			save_interval : 5,
+			save_interval : 30,
 			lang : {
-				M01 : 'You have a auto save version, do you want to restore? Auto-save in last {seconds} seconds.',
-				M02 : 'Restore completed.', 
+				M01 : 'You have a auto save version, do you want to restore? Auto save last time is {time}.',
+				M02 : 'Restore completed.',
+				M03 : 'The data has saved your browser.'
 			}
 		},
 		timer : false,
 		bind : function(){
 			var that = this;
 			/** set save key */
-			that.save_key = 'auto-save' + cache.$post_id.value;
+			this.save_key = 'auto-save-' + cache.$post_id.value;
 			
-			that.check_version();
+			this.check_version();
 			
 			/** save data per x seconds */
-			that.timer = setInterval(that.save, that.config.save_interval * 1000);
+			this.timer = setInterval(function(){
+				that.save();
+			}, this.config.save_interval * 1000);
+
+			cache.$quick_save = I('ctb-quick-save');
+			if(cache.$quick_save){
+				cache.$quick_save.addEventListener('click',function(){
+					that.save();
+					tools.ajax_loading_tip('success',that.config.lang.M03,3);
+				})
+			}
+		},
+		get : function(){
+			var data = localStorage.getItem(this.save_key);
+			return data ? JSON.parse(data) : false;
 		},
 		/** action check version */
-		check_version : function(){
-			var that = this;
-			var data = localStorage.getItem(that.save_key);
-			if(!data)
-				return false;
-			data = JSON.parse(data);
-			if(!data)
+		check_version : function(){ 
+			var data = this.get();
+			if(!data || !data.can_restore)
 				return false;
 			
-			var msg = that.config.lang.M01.replace('{seconds}',that.config.save_interval);
+			var msg = this.config.lang.M01.replace('{time}',data.time);
 			if(!confirm(msg))
 				return false;
 			
-			that.restore();
-			tools.ajax_loading_tip('success',that.config.lang.M02,3);
+			this.restore();
+			tools.ajax_loading_tip('success',this.config.lang.M02,3);
+		},
+		/** preview thumbnail */
+		get_data_preview : function(){
+			var doc = document,
+				$insert_btns = doc.querySelectorAll('.ctb-insert-btn');
+			if(!$insert_btns[0])
+				return false;
+				
+			var $img_links = doc.querySelectorAll('.img-link'),
+				$img_thumbnail_urls = doc.querySelectorAll(' .img-link img'),
+				$thumbnail_ids = doc.querySelectorAll('.img-thumbnail-checkbox'),
+				
+				data = {};
+			for(var i=0,len=$insert_btns.length;i<len;i++){
+				data[$thumbnail_ids[i].value] = {
+					'attach-page-url' :  $insert_btns[i].getAttribute('data-attach-page-url'),
+					full : {
+						url : $img_links[i].href,
+					},
+					large : {
+						url : $insert_btns[i].getAttribute('data-large-url'),
+						width : $insert_btns[i].getAttribute('data-width'),
+						height : $insert_btns[i].getAttribute('data-height')
+					},
+					thumbnail : {
+						url : $img_thumbnail_urls[i].src
+					},
+					'attach-id' : $thumbnail_ids[i].value
+				}
+			}
+			return data;
 		},
 		del : function(){
-			localStorage.removeItem(that.save_key);
-			clearInterval(that.timer);
+			localStorage.removeItem(this.save_key);
+			clearInterval(this.timer);
 		},
 		/** action save */
 		save : function(){
 			var data = {
-				title : cache.$post_title.value,
-				excerpt : cache.$post_excerpt.value,
-				content : tinymce.editors['ctb-content'].getContent(),
-			};
+					can_restore : false
+				};
+				
+			/** title */
+			if(cache.$post_title.value !== ''){
+				data.title = cache.$post_title.value;
+				data.can_restore = true;
+			}
+
+			/** excerpt */
+			if(cache.$post_excerpt.value !== ''){
+				data.excerpt = cache.$post_excerpt.value;
+				data.can_restore = true;
+			}
+
+			/** content */
+			var post_content = tinymce.editors['ctb-content'].getContent();
+			if(post_content !== ''){
+				data.content = post_content;
+				data.can_restore = true;
+			}
+			
+			
+			
 			/** storage */
 			if(document.querySelector('.theme_custom_storage-group')){
 				data.storage = {};
@@ -141,6 +203,7 @@ define(function(require, exports, module){
 						extract_pwd : I('theme_custom_storage-' + i + '-extract-pwd').value
 					};
 				}
+				data.can_restore = true;
 			}
 			/** preset tags */
 			var $tags = document.querySelectorAll('.ctb-preset-tag:checked');
@@ -151,6 +214,7 @@ define(function(require, exports, module){
 						data.preset_tags[i] = {};
 					data.preset_tags[i] = $tags[i].id;
 				}
+				data.can_restore = true;
 			}
 
 			/** custom tags */
@@ -162,6 +226,7 @@ define(function(require, exports, module){
 						data.custom_tags[$custom_tags[i].id] = {};
 					data.custom_tags[$custom_tags[i].id] = $custom_tags[i].value;
 				}
+				data.can_restore = true;
 			}
 			/** source */
 			var $source = document.querySelector('.theme_custom_post_source-source-radio:checked');
@@ -171,17 +236,37 @@ define(function(require, exports, module){
 					reprint_url : I('theme_custom_post_source-reprint-url').value,
 					reprint_author : I('theme_custom_post_source-reprint-author').value
 				};
+				data.can_restore = true;
 			}
-			console.log(data);
-			localStorage.setItem('auto-save',JSON.stringify(data));
+
+			/** preview */
+			data.preview = this.get_data_preview();
+			if(data.preview){
+				data.can_restore = true;
+			}
+
+			/** cover id */
+			var $cover = document.querySelector('.img-thumbnail-checkbox:checked');
+			if($cover){
+				data.cover_id = $cover.value;
+				data.can_restore = true;
+			}
+
+			/** time */
+			if(data.can_restore){
+				var d = new Date();
+				data.time = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
+				localStorage.setItem(this.save_key,JSON.stringify(data));
+			}else{
+				return false;
+			}
 		},
+
 		/** action restore */
 		restore : function(){
 			var that = this;
-			var data = localStorage.getItem('auto-save');
-			if(!data)
-				return false;
-			data = JSON.parse(data);
+			
+			var data = this.get();
 			if(!data)
 				return false;
 			/** post title */
@@ -249,12 +334,39 @@ define(function(require, exports, module){
 					var $item = I('theme_custom_post_source-source-' + data.source.source),
 						$reprint_url = I('theme_custom_post_source-reprint-url'),
 						$reprint_author = I('theme_custom_post_source-reprint-author');
-					if($item)
-						$item.checked = true;
 					if($reprint_url)
 						$reprint_url.value = data.source.reprint_url;
 					if($reprint_url)
 						$reprint_author.value = data.source.reprint_author;
+					if($item)
+						$item.checked = true;
+				}
+			}
+
+			/** Preview */
+			if(data.preview){
+				for(var i in data.preview){
+					console.log(i);
+					var preview_args = {
+						full : {
+							url : data.preview[i].full.url
+						},
+						large : {
+							url : data.preview[i].large.url,
+							width : data.preview[i].large.width,
+							height : data.preview[i].large.height
+						},
+						thumbnail : {
+							url : data.preview[i].thumbnail.url
+						},
+						'attach-id' : data.preview[i]['attach-id']
+					};
+					/** set cover id */
+					if(data.cover_id){
+						config.thumbnail_id = data.cover_id;
+					}
+					preview_args['attach-page-url'] = data.preview[i]['attach-page-url'];
+					append_tpl(preview_args);
 				}
 			}
 		}
@@ -490,12 +602,25 @@ define(function(require, exports, module){
 		$tpl.style.display = 'block';
 	}
 	/**
-	 * args = {
-		original,
-		thumbnail,
-		medium
-		attach-id
-	 }
+	args = {
+		attach-page-url : ...
+		full : {
+			url : ...,
+			height : ...,
+			width : ...
+		},
+		large : {
+			url : ...,
+			height : ...,
+			width : ...
+		}
+		thumbnail : {
+			url : ...,
+			height : ...,
+			width : ...
+		}
+		attach-id : ...
+	}
 	 */
 	function get_preview_tpl(args){
 		if(!cache.$post_title)
@@ -507,7 +632,7 @@ define(function(require, exports, module){
 					'<img src="' + args.thumbnail.url + '" alt="' + M10 +'" >' +
 				'</a>' +
 				
-				'<a href="javascript:;" class="btn btn-primary btn-block ctb-insert-btn" id="ctb-insert-' + args['attach-id'] + '" data-size="large" data-attach-page-url="' + args['attach-page-url'] + '" data-width="' + args['large']['width'] + '" data-height="' + args['large']['height'] + '"><i class="fa fa-plug"></i> ' + config.lang.M09 + '</a>' +
+				'<a href="javascript:;" class="btn btn-primary btn-block ctb-insert-btn" id="ctb-insert-' + args['attach-id'] + '" data-size="large" data-attach-page-url="' + args['attach-page-url'] + '" data-width="' + args.large.width + '" data-height="' + args.large.height + '" data-large-url="' + args.large.url + '" ><i class="fa fa-plug"></i> ' + config.lang.M09 + '</a>' +
 				
 				'<input type="radio" name="ctb[thumbnail-id]" id="img-thumbnail-' + args['attach-id'] + '" value="' + args['attach-id'] + '" hidden class="img-thumbnail-checkbox" required >' +
 				
@@ -591,9 +716,10 @@ define(function(require, exports, module){
 				if(config.edit){
 					$fm.querySelector('.submit').removeAttribute('disabled');
 				}
+				/** delete auto save */
+				exports.auto_save.del();
 			};
 			m.init();
-		
 	}
 	function cats(){
 		if(!config.cats)
@@ -628,7 +754,7 @@ define(function(require, exports, module){
 				var target = $radio.getAttribute('target'),
 					$target = I(target);
 				for(var i=0,len=$inputs.length;i<len;i++){
-					if($target && $target.id === target){
+					if($target && $target.id === target && $radio.checked){
 						$target.style.display = 'block';
 						var $input = $target.querySelector('input');
 						if($input.value.trim() === '')

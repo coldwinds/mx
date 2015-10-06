@@ -110,7 +110,7 @@ class theme_custom_collection{
 					</td>
 				</tr>
 				<tr>
-					<th><label for="<?= __CLASS__;?>-description"><?=htmlspecialchars(___('You can write some description for collection page header. Please use tag <p> to wrap your HTML codes.'));?></label></th>
+					<th><label for="<?= __CLASS__;?>-description"><?=esc_html(___('You can write some description for collection page header. Please use tag <p> to wrap your HTML codes.'));?></label></th>
 					<td>
 						<textarea name="<?= __CLASS__;?>[description]" id="<?= __CLASS__;?>-description" class="widefat" rows="5"><?= self::get_des();?></textarea>
 					</td>
@@ -343,7 +343,7 @@ class theme_custom_collection{
 				/**
 				 * post title
 				 */
-				$post_title = isset($clt['post-title']) && is_string($clt['post-title']) ? htmlspecialchars(trim($clt['post-title'])) : null;
+				$post_title = isset($clt['post-title']) && is_string($clt['post-title']) ? esc_html(trim($clt['post-title'])) : null;
 				if(empty($post_title)){
 					$output['status'] = 'error';
 					$output['code'] = 'invaild_post_title';

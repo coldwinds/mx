@@ -209,7 +209,7 @@ function esc_attr__e( $text, $domain = null ) {
 function esc_html__e( $text, $domain = null ) {
 	if(!$domain)
 		$domain = theme_functions::$iden;
-	echo htmlspecialchars( translate( $text, $domain ) );
+	echo esc_html( translate( $text, $domain ) );
 }
 /**
  * Translate string with gettext context, and escapes it for safe use in an attribute.
@@ -239,7 +239,7 @@ function esc_attr__x( $text, $context, $domain = null ) {
 function esc_html__x( $text, $context, $domain = null ) {
 	if(!$domain)
 		$domain = theme_functions::$iden;
-	return htmlspecialchars( translate_with_gettext_context( $text, $context, $domain ) );
+	return esc_html( translate_with_gettext_context( $text, $context, $domain ) );
 }
 /**
  * Retrieve the plural or single form based on the supplied amount.

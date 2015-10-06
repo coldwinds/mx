@@ -9,7 +9,7 @@ cache.$items[cache.offset_top_sets[i]].classList.add('active');}
 if(cache.$last_item!=cache.$items[cache.offset_top_sets[i]])
 cache.$last_item=cache.$items[cache.offset_top_sets[i]];}}});}
 function set_nav_style(){cache.$nav.style.left=cache.ori_offset_left+'px';cache.$nav.style.top=cache.ori_offset_top+'px';}
-function scroll_to(e){e.preventDefault();scrollTo(0,this.getAttribute('data-scroll-top'));}
+function scroll_to(e){e.preventDefault();tools.scrollTop(this.getAttribute('data-scroll-top'));}
 function append_content_nav(){for(var i=0,len=cache.$boxes.length;i<len;i++){var $title=cache.$boxes[i].querySelector('.mod-title a'),title=$title.textContent,$i=$title.querySelector('i'),offsetTop=tools.getElementTop(cache.$boxes[i])-100,$item=document.createElement('a');if(!$i)
 continue;var icon_class=$i.getAttribute('class');cache.offset_top_sets[offsetTop]=i;$item.setAttribute('data-scroll-top',offsetTop);$item.href='#'+cache.$boxes[i].id;$item.title=title;$item.innerHTML='<i class="'+icon_class+' fa-fw"></i>';$item.addEventListener('click',scroll_to);cache.$items[i]=$item;cache.$nav.appendChild(cache.$items[i]);}}
 function create_nav(){cache.$nav=document.createElement('nav');cache.$nav.id='homebox-nav';append_content_nav();set_nav_style();document.body.appendChild(cache.$nav);}});

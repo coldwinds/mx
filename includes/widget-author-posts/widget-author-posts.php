@@ -197,7 +197,7 @@ class widget_author_posts extends WP_Widget{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-					<?= htmlspecialchars($cat->name);?>
+					<?= esc_html($cat->name);?>
 			</label>
 			<?php 
 			}

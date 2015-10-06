@@ -379,7 +379,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 								$exist_tags[$tag->term_id] = 1;
 							}
 						}
-						$tag_name = htmlspecialchars($tag->name);
+						$tag_name = esc_html($tag->name);
 						?>
 						<label class="ctb-tag" for="ctb-tags-<?= $tag->term_id;?>">
 							<input 
@@ -500,7 +500,12 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		
 		<!-- submit -->
 		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-sm-2">
+				<a href="javascript:;" id="ctb-quick-save" class="btn btn-block btn-default btn-lg" title="<?= ___('The post data will be saved automatically per minute in your current borwser, you can also save it now manually.');?>">
+					<i class="fa fa-save"></i> <?= ___('Quick save');?>
+				</a>
+			</div>
+			<div class="col-sm-10">
 				
 				<button type="submit" class="btn btn-lg btn-success btn-block submit" data-loading-text="<?= ___('Sending, please wait...');?>">
 					<i class="fa fa-check"></i> 
