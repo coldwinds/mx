@@ -262,7 +262,9 @@ class theme_custom_storage{
 	}
 	public static function meta_box_display($post){
 		$meta = array_filter((array)self::get_post_meta($post->ID));
-		
+		if(!$meta)
+			$meta[] = [];
+			
 		foreach($meta as $k => $v){
 			?>
 			<div class="<?= __CLASS__;?>">
