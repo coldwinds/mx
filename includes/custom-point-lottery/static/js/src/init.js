@@ -42,8 +42,10 @@ define(function(require, exports, module){
 			if(data.status === 'warning'){
 				tools.ajax_loading_tip(data.status,data.msg);
 			}
-			/** set new point */
-			highlight_point(parseInt(data['new-points']) - parseInt(cache.$point_count.innerHTML));
+			if(data.status !== 'error'){
+				/** set new point */
+				highlight_point(parseInt(data['new-points']) - parseInt(cache.$point_count.innerHTML));
+			}
 		}
 		function always(){
 			cache.$fm.querySelector('.submit').removeAttribute('disabled');

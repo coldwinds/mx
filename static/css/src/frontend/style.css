@@ -1673,9 +1673,7 @@ body.menu-on #mobile-on-layer{
  * .tools
  */
 .tools{
-	position: absolute;
-	right: 20px;
-	top: 0;
+	float: right;
 }
 	.tools li,
 	.tools .menu-tools,
@@ -1720,11 +1718,11 @@ body.menu-on #mobile-on-layer{
 		border: 3px solid #2196F3;
 		text-align: center;
 		margin-bottom: 10px;
-		background: rgba(255,255,255,.95);
+		background: #fff;
 		font-size: 1.5em;
 		line-height: 2em;
 		height: 2em;
-		border-radius: 2px;
+		border-radius: 99px;
 		box-shadow: 0 0 20px #fff;
 	}
 	
@@ -2502,11 +2500,11 @@ body.menu-on #mobile-on-layer{
 	z-index: 100000;
 	width: 100%;
 	text-align: center;
-	padding: 10px;
-	font-size: 20px;
+	padding: 20px;
+	font-size: 30px;
 	line-height: 30px;
-	-webkit-transition-duration: .75s;
-	transition-duration: .75s;
+	-webkit-transition-duration: .35s;
+	transition-duration: .35s;
 	-webkit-transform: translate3d(0,-100%,0);
 	transform: translate3d(0,-100%,0);
 }
@@ -2536,16 +2534,14 @@ body.menu-on #mobile-on-layer{
 
 	#ajax-loading-container .btn-close{
 		position: absolute;
-		top: 8px;
-		right: 10px;
+		top: 20px;
+		right: 20px;
 		cursor: pointer;
 		font-size: 30px;
-		color:rgb(251,238,238);
-		box-shadow: none;
-		border-bottom: 2px solid rgba(0,0,0,.1);
+		color: rgb(199,80,80);
 	}
 		#ajax-loading-container .btn-close:hover{
-			color:#fff;
+			color:red;
 		}
 		#ajax-loading-container .btn-close .number{
 			font-size: 90%;
@@ -2559,7 +2555,9 @@ body.menu-on #mobile-on-layer{
 	#ajax-loading{
 		margin: 0 40px;
 	}
-
+.fa-spin {
+    animation: 2s cubic-bezier(.68,-0.55,.27,1.55) 0s normal none infinite running fa-spin;
+}
 /**
  * .list-group-item .excerpt p
  */
@@ -2947,6 +2945,6 @@ body.menu-on #mobile-on-layer{
 @media (min-width: 1300px){
 	.container{
 		width: auto;
-		padding: 0 20px;
+		padding: 0 80px;
 	}
 }
