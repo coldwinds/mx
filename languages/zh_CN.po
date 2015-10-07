@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KMTF-1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-05 18:19-0700\n"
-"PO-Revision-Date: 2015-10-05 18:20-0700\n"
+"POT-Creation-Date: 2015-10-08 00:26+0800\n"
+"PO-Revision-Date: 2015-10-08 00:26+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -48,9 +48,9 @@ msgstr "添加评论"
 #: includes/custom-post-point/custom-post-point.php:855
 #: includes/custom-post-point/custom-post-point.php:877
 #: includes/custom-sign/custom-sign.php:628
-#: includes/custom-slidebox/custom-slidebox.php:561
-#: includes/custom-user-settings/custom-user-settings.php:468
-#: includes/custom-user-settings/custom-user-settings.php:479
+#: includes/custom-slidebox/custom-slidebox.php:562
+#: includes/custom-user-settings/custom-user-settings.php:478
+#: includes/custom-user-settings/custom-user-settings.php:489
 #: includes/mailer/mailer.php:216
 #: includes/page-nagination-ajax/page-nagination-ajax.php:99
 #: tpl/page-account-bomb.php:14 tpl/page-account-pm.php:3
@@ -536,16 +536,27 @@ msgstr "没什么好说的吗？"
 msgid "Post comment"
 msgstr "发表评论"
 
-#: header.php:63 tpl/header-topbar-tools.php:115
+#: header.php:63 header.php:164
 msgid "Log-out"
 msgstr "登出"
 
-#: header.php:160 includes/custom-sign/custom-sign.php:163 page-sign.php:249
-#: tpl/header-topbar-tools.php:128
-msgid "Login"
+#: header.php:178
+msgid "Your have new notification"
+msgstr "您有新的提醒"
+
+#: header.php:188
+msgid "You have new P.M."
+msgstr "您有新的私信"
+
+#: header.php:195
+msgid "Log-in"
 msgstr "登录"
 
-#: header.php:173
+#: header.php:207
+msgid "Search"
+msgstr "搜索"
+
+#: header.php:216
 msgid "Please input search keyword"
 msgstr "请输入搜索关键词"
 
@@ -899,7 +910,7 @@ msgstr "数据库已在 %s 秒内更新。"
 
 #: includes/clean-up/clean-up.php:227
 #: includes/custom-point/custom-point.php:1057
-#: includes/custom-slidebox/custom-slidebox.php:562
+#: includes/custom-slidebox/custom-slidebox.php:563
 #: includes/mailer/mailer.php:217
 msgid "Server error or network is disconnected."
 msgstr "服务器错误或网络未连接。"
@@ -995,8 +1006,8 @@ msgstr "第 {n} 页"
 #: includes/custom-point-lottery/custom-point-lottery.php:772
 #: includes/custom-post-point/custom-post-point.php:856
 #: includes/custom-sign/custom-sign.php:629
-#: includes/custom-user-settings/custom-user-settings.php:469
-#: includes/custom-user-settings/custom-user-settings.php:480
+#: includes/custom-user-settings/custom-user-settings.php:479
+#: includes/custom-user-settings/custom-user-settings.php:490
 #: includes/page-nagination-ajax/page-nagination-ajax.php:103
 msgid ""
 "Sorry, server is busy now, can not respond your request, please try again "
@@ -1054,7 +1065,7 @@ msgid "Sorry, the post do not exist."
 msgstr "抱歉，文章不存在。"
 
 #: includes/custom-api/custom-api.php:176
-#: includes/custom-user-settings/custom-user-settings.php:318
+#: includes/custom-user-settings/custom-user-settings.php:328
 msgid "Sorry, the type param is invaild."
 msgstr "抱歉，缺少类型参数。"
 
@@ -1357,7 +1368,6 @@ msgstr ""
 "代码。"
 
 #: includes/custom-contribution/custom-contribution.php:141
-#: tpl/header-topbar-tools.php:45
 msgid "Edit post"
 msgstr "编辑文章"
 
@@ -1751,7 +1761,7 @@ msgid "Pinyin initial"
 msgstr "拼音首字母"
 
 #: includes/custom-pm/custom-pm.php:108
-#: includes/widget-author/widget-author.php:91 tpl/header-topbar-tools.php:93
+#: includes/widget-author/widget-author.php:91 tpl/author-profile.php:110
 msgid "P.M."
 msgstr "私信"
 
@@ -1837,6 +1847,7 @@ msgid "P.M. content"
 msgstr "私信内容"
 
 #: includes/custom-pm/custom-pm.php:803 includes/custom-pm/custom-pm.php:837
+#: tpl/author-profile.php:113
 msgid "Send P.M."
 msgstr "发送私信"
 
@@ -1942,7 +1953,7 @@ msgstr "啊咧，就算是抖M也不能轰自己哦！"
 #: includes/custom-point-bomb/custom-point-bomb.php:295
 #: includes/custom-point-lottery/custom-point-lottery.php:396
 msgid "Sorry, you have reached the maximun times today, see you tomorrow."
-msgstr "抱歉，你今天已达到丢雷最大次数了，明天见！"
+msgstr "抱歉，你今天已到了最大次数了，明天见！"
 
 #: includes/custom-point-bomb/custom-point-bomb.php:330
 msgid "Target locked, bomb is ready."
@@ -2363,7 +2374,7 @@ msgid "Your are not enough permission to modify user."
 msgstr "你有没有足够的权限来修改用户。"
 
 #: includes/custom-point/custom-point.php:234
-#: includes/custom-user-settings/custom-user-settings.php:127
+#: includes/custom-user-settings/custom-user-settings.php:137
 msgid "Invaild param."
 msgstr "无效的参数。"
 
@@ -2758,43 +2769,43 @@ msgstr "错误"
 msgid "File storage"
 msgstr "文件存储"
 
-#: includes/custom-post-storage/custom-post-storage.php:281
-#: includes/custom-post-storage/custom-post-storage.php:282
+#: includes/custom-post-storage/custom-post-storage.php:283
+#: includes/custom-post-storage/custom-post-storage.php:284
 #: tpl/page-account-post.php:216 tpl/page-account-post.php:217
 msgid "Download page URL (include http://)"
 msgstr "下载页面的 URL (包括 http://)"
 
-#: includes/custom-post-storage/custom-post-storage.php:290
-#: includes/custom-post-storage/custom-post-storage.php:291
+#: includes/custom-post-storage/custom-post-storage.php:292
+#: includes/custom-post-storage/custom-post-storage.php:293
 #: tpl/page-account-post.php:229 tpl/page-account-post.php:230
 msgid "Download password (optional)"
 msgstr "提取码（可选）"
 
-#: includes/custom-post-storage/custom-post-storage.php:299
-#: includes/custom-post-storage/custom-post-storage.php:300
+#: includes/custom-post-storage/custom-post-storage.php:301
+#: includes/custom-post-storage/custom-post-storage.php:302
 #: tpl/page-account-post.php:243 tpl/page-account-post.php:244
 msgid "Extract password (optional)"
 msgstr "解压密码（可选）"
 
-#: includes/custom-post-storage/custom-post-storage.php:318
+#: includes/custom-post-storage/custom-post-storage.php:320
 msgid "Storage download"
 msgstr "网盘下载"
 
-#: includes/custom-post-storage/custom-post-storage.php:403
+#: includes/custom-post-storage/custom-post-storage.php:405
 msgid "Download password"
 msgstr "提取密码"
 
-#: includes/custom-post-storage/custom-post-storage.php:414
+#: includes/custom-post-storage/custom-post-storage.php:416
 msgid "Extract password"
 msgstr "解压密码"
 
-#: includes/custom-post-storage/custom-post-storage.php:430
-#: includes/custom-post-storage/custom-post-storage.php:467
+#: includes/custom-post-storage/custom-post-storage.php:432
+#: includes/custom-post-storage/custom-post-storage.php:469
 msgid "Download now"
 msgstr "立即下载"
 
-#: includes/custom-post-storage/custom-post-storage.php:437
-#: includes/custom-post-storage/custom-post-storage.php:470
+#: includes/custom-post-storage/custom-post-storage.php:439
+#: includes/custom-post-storage/custom-post-storage.php:472
 #: includes/custom-slidebox/custom-slidebox.php:202
 msgid "Open in new window"
 msgstr "在新窗口中打开"
@@ -2819,7 +2830,11 @@ msgstr "建议 100x100 象素的图片。"
 msgid "Terms of service page URL"
 msgstr "服务协议页面 URL"
 
-#: includes/custom-sign/custom-sign.php:170 tpl/header-topbar-tools.php:168
+#: includes/custom-sign/custom-sign.php:163 page-sign.php:249
+msgid "Login"
+msgstr "登录"
+
+#: includes/custom-sign/custom-sign.php:170
 msgid "Register"
 msgstr "注册"
 
@@ -3055,85 +3070,84 @@ msgstr "风格类型"
 msgid "AD HTML codes (below the slide-box)"
 msgstr "广告 HTML 代码（幻灯片之下）"
 
-#: includes/custom-slidebox/custom-slidebox.php:493
+#: includes/custom-slidebox/custom-slidebox.php:494
 msgid "Detail &raquo;"
 msgstr "详细 &raquo;"
 
-#: includes/custom-user-settings/custom-user-settings.php:71
+#: includes/custom-user-settings/custom-user-settings.php:72
 msgid "When user save settings"
 msgstr "当用户保存设置时"
 
-#: includes/custom-user-settings/custom-user-settings.php:75
+#: includes/custom-user-settings/custom-user-settings.php:76
 msgid "When user save avatar"
 msgstr "当用户保存头像时"
 
-#: includes/custom-user-settings/custom-user-settings.php:119
+#: includes/custom-user-settings/custom-user-settings.php:129
 msgid "Sorry, your points are not enough to modify settings."
 msgstr "抱歉，您的积分不足，无法修改设置。"
 
-#: includes/custom-user-settings/custom-user-settings.php:135
+#: includes/custom-user-settings/custom-user-settings.php:145
 msgid "Invaild nickname."
 msgstr "无效的昵称。"
 
-#: includes/custom-user-settings/custom-user-settings.php:181
+#: includes/custom-user-settings/custom-user-settings.php:191
 msgid "Your settings have been saved."
 msgstr "您的设置已保存。"
 
-#: includes/custom-user-settings/custom-user-settings.php:197
+#: includes/custom-user-settings/custom-user-settings.php:207
 msgid "Password invaild twice."
 msgstr "两次密码无效。"
 
-#: includes/custom-user-settings/custom-user-settings.php:209
+#: includes/custom-user-settings/custom-user-settings.php:219
 msgid "Invaild current password."
 msgstr "当前密码无效。"
 
-#: includes/custom-user-settings/custom-user-settings.php:227
+#: includes/custom-user-settings/custom-user-settings.php:237
 msgid "Your new password has been saved."
 msgstr "您的密码保存成功。"
 
-#: includes/custom-user-settings/custom-user-settings.php:246
+#: includes/custom-user-settings/custom-user-settings.php:256
 msgid "Sorry, your points are not enough to modify avatar."
 msgstr "抱歉，您的积分不足，无法修改头像。"
 
-#: includes/custom-user-settings/custom-user-settings.php:254
+#: includes/custom-user-settings/custom-user-settings.php:264
 msgid "Sorry, your file is invaild format, please check it again."
 msgstr "对不起，您的文件是无效的格式，请再检查一下。"
 
-#: includes/custom-user-settings/custom-user-settings.php:278
+#: includes/custom-user-settings/custom-user-settings.php:288
 msgid ""
 "Sorry, system can not write file, please try again later or contact the "
 "administrator."
 msgstr "对不起，系统无法写入文件，请稍后重试或联系管理员。"
 
-#: includes/custom-user-settings/custom-user-settings.php:311
+#: includes/custom-user-settings/custom-user-settings.php:321
 msgid ""
 "Congratulation! Your avatar has been updated. Page is redirecting, please "
 "wait..."
 msgstr "恭喜！你的头像已经成功更新。页面正在刷新，请稍候.……"
 
-#: includes/custom-user-settings/custom-user-settings.php:342
+#: includes/custom-user-settings/custom-user-settings.php:352
 msgid "Reward history"
 msgstr "积分历史"
 
-#: includes/custom-user-settings/custom-user-settings.php:348
-#: tpl/header-topbar-tools.php:109
+#: includes/custom-user-settings/custom-user-settings.php:358
 msgid "My settings"
 msgstr "我的设置"
 
-#: includes/custom-user-settings/custom-user-settings.php:354
+#: includes/custom-user-settings/custom-user-settings.php:364
 #: tpl/page-account-settings.php:63
 msgid "My avatar"
 msgstr "我的头像"
 
-#: includes/custom-user-settings/custom-user-settings.php:360
+#: includes/custom-user-settings/custom-user-settings.php:370
 msgid "Change password"
 msgstr "修改密码"
 
-#: includes/custom-user-settings/custom-user-settings.php:410
+#: includes/custom-user-settings/custom-user-settings.php:420
 msgid "You modified your settings."
 msgstr "你修改了你的设置。"
 
-#: includes/custom-user-settings/custom-user-settings.php:426
+#: includes/custom-user-settings/custom-user-settings.php:436
 msgid "You modified your avatar."
 msgstr "你修改了你的头像。"
 
@@ -4363,13 +4377,11 @@ msgstr "缺少初始化文件。"
 msgid "Can not find the include file."
 msgstr "无法找到包含文件。"
 
-#: page-sign.php:25 tpl/header-topbar-tools.php:144
-#: tpl/header-topbar-tools.php:146
+#: page-sign.php:25
 msgid "Login from QQ"
 msgstr "QQ 登录"
 
-#: page-sign.php:30 tpl/header-topbar-tools.php:154
-#: tpl/header-topbar-tools.php:156
+#: page-sign.php:30
 msgid "Login from Weibo"
 msgstr "微博登录"
 
@@ -4567,26 +4579,6 @@ msgstr "暂无文章。"
 msgid "Lack custom_post_point class"
 msgstr "缺少 custom_post_point 类"
 
-#: tpl/header-topbar-tools.php:11
-msgid "My profile"
-msgstr "我的资料"
-
-#: tpl/header-topbar-tools.php:18
-msgid "My points"
-msgstr "我的积分"
-
-#: tpl/header-topbar-tools.php:53
-msgid "New post"
-msgstr "新建作品"
-
-#: tpl/header-topbar-tools.php:73
-msgid "Notification"
-msgstr "提醒"
-
-#: tpl/header-topbar-tools.php:84
-msgid "My favor"
-msgstr "我的收藏"
-
 #: tpl/page-account-avatar.php:27
 #, php-format
 msgid "You have %1$s %2$s, You need to collect %3$s %2$s to modify the avatar."
@@ -4745,7 +4737,7 @@ msgstr "已发布"
 msgid "Pending"
 msgstr "待审核"
 
-#: tpl/page-account-history.php:24
+#: tpl/page-account-history.php:23
 msgid "Your have not any history yet."
 msgstr "您暂无任何历史记录哦。"
 
@@ -4945,6 +4937,30 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:117
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#~ msgid "My profile"
+#~ msgstr "我的资料"
+
+#~ msgid "My points"
+#~ msgstr "我的积分"
+
+#~ msgid "New post"
+#~ msgstr "新建作品"
+
+#~ msgid "Notification"
+#~ msgstr "提醒"
+
+#~ msgid "My favor"
+#~ msgstr "我的收藏"
+
+#~ msgid "My menu"
+#~ msgstr "我的菜单"
+
+#~ msgid "My %1$s %2$s"
+#~ msgstr "我的%1$s %2$s"
+
+#~ msgid "Login now"
+#~ msgstr "登录"
 
 #~ msgid "Restore completed."
 #~ msgstr "还原完毕。"

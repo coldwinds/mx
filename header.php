@@ -65,46 +65,17 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 	</div>
 <?php } ?>
 
-<?php if(!wp_is_mobile()){ ?>
-	<div class="top-bar navbar navbar-inverse navbar-fixed-top hidden-xs">	
-		<div class="container">
-			<?php
-			/** 
-			 * menu top-bar
-			 */
-			if(theme_cache::is_user_logged_in()){
-				theme_cache::wp_nav_menu([
-	                'theme_location'    => 'menu-top-bar-login',
-	                'container'         => 'nav',
-	                'container_class'   => 'top-bar-nav',
-	                'menu_class'        => 'menu',
-	                'menu_id' 			=> 'menu-top-bar',
-	                'fallback_cb'       => 'custom_navwalker::fallback',
-	                'walker'            => new custom_navwalker()
-	            ]);
-            }else{
-	            theme_cache::wp_nav_menu([
-	                'theme_location'    => 'menu-top-bar',
-	                'container'         => 'nav',
-	                'container_class'   => 'top-bar-nav',
-	                'menu_class'        => 'menu',
-	                'menu_id' 			=> 'menu-top-bar',
-	                'fallback_cb'       => 'custom_navwalker::fallback',
-	                'walker'            => new custom_navwalker()
-	            ]);
-            }
-			?>
-			<div class="top-bar-tools">
-				<?php include __DIR__ . '/tpl/header-topbar-tools.php';?>
-			</div>
-		</div><!-- /.container -->
-	</div><!-- /.top-bar -->	
-<?php } ?>
-
-<div class="main-nav">
+<div class="main-nav top">
 	<div class="container">
-		<a href="javascript:;" class="navicon toggle visible-xs-block fa fa-navicon fa-2x fa-fw" data-mobile-target=".menu-mobile" data-icon-active="fa-arrow-left" data-icon-original="fa-navicon"></a>
-
+		<?php if(wp_is_mobile()){ ?>
+			<a 
+				href="javascript:;" 
+				class="navicon toggle fa fa-navicon fa-2x fa-fw" 
+				data-mobile-target=".menu-mobile" 
+				data-icon-active="fa-arrow-left" 
+				data-icon-original="fa-navicon"
+			></a>
+		<?php } ?>
 		<?php
 		/** 
 		 * banner
@@ -151,25 +122,97 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 		?>
 		
 		<div class="tools">
-			<?php if(wp_is_mobile()){ ?>
-				<!-- account btn -->
-				<?php if(theme_cache::is_user_logged_in()){ ?>
-					<a class="tool mx-account-btn fa fa-user fa-fw fa-2x" href="javascript:;" data-mobile-target=".header-nav-account-menu" data-icon-active="fa-arrow-left" data-icon-original="fa-user"></a>
-				<?php }else{ ?>
-					<a class="tool mx-account-btn toggle" href="<?= esc_url(wp_login_url(get_current_url()));?>">
-						<?= ___('Login');?>
+			<!-- account btn -->
+			<?php if(theme_cache::is_user_logged_in()){ ?>
+				<?php if(wp_is_mobile()){ ?>
+					<a class="tool tool-avatar" href="javascript:;" data-mobile-target=".header-nav-account-menu" >
+						<img class="avatar" width="32" height="32" src="<?= theme_cache::get_avatar_url(theme_cache::get_current_user_id());?>" alt="avatar">
 					</a>
-				<?php } ?>
-			<?php } ?>
+				<?php }else{ ?>
+					<div class="tool tool-me">
+						<a href="<?= theme_cache::get_author_posts_url(theme_cache::get_current_user_id());?>">
+							<img class="avatar" width="32" height="32" src="<?= theme_cache::get_avatar_url(theme_cache::get_current_user_id());?>" alt="avatar">&nbsp;<?= theme_cache::get_the_author_meta('display_name',theme_cache::get_current_user_id());?> <i class="fa fa-caret-down"></i>
+						</a>
+						<div class="box">
+							<!-- points -->
+							<div class="box-points">
+								<?php if(class_exists('theme_custom_point')){ ?>
+									<a href="<?= theme_custom_user_settings::get_tabs('history')['url'];?>">
+										<?php if(theme_custom_point::get_point_img_url()){ ?>
+											<img src="<?= theme_custom_point::get_point_img_url();?>" alt="" width="16" height="16">
+										<?php }else{ ?>
+											<i class="fa fa-diamond fa-fw"></i> 
+										<?php } ?>
+										<?= number_format(theme_custom_point::get_point(theme_cache::get_current_user_id()));?> 
+										<?= theme_custom_point::get_point_name();?>
+									</a>
+								<?php } ?>
+							</div>
+							<ul>
+								<?php
+								$account_navs = apply_filters('account_navs',[]);
+								if(!empty($account_navs)){
+									$active_tab = get_query_var('tab');
+									foreach($account_navs as $k => $v){
+										$active_class = $k === $active_tab ? ' active ' : null;
+										?>
+										<li class="<?= theme_custom_account::is_page() ? $active_class : null;?>"><?= $v;?></li>
+										<?php
+									}
+								}
+								?>
+								<li><a href="<?= wp_logout_url(get_current_url());?>"><i class="fa fa-sign-out fa-fw"></i> <?= ___('Log-out');?></a></li>
+							</ul>
+						</div>
+					</div>
+					
+
+					<!-- notification -->
+					<?php 
+					if(class_exists('theme_notification')){
+						$unread = theme_notification::get_count([
+							'type' => 'unread'
+						]);
+						if($unread > 0){ 
+							?>
+							<a href="<?= theme_notification::get_tabs('notifications')['url'];?>" class="tool tool-notification " title="<?= ___('Your have new notification');?>">
+								<i class="fa fa-bell fa-fw fa-spin"></i> 
+							</a>
+						<?php } ?>
+					<?php } ?>
+
+					<!-- pm -->
+					<?php 
+					if(class_exists('theme_custom_pm') && !theme_custom_pm::is_page() && theme_custom_pm::get_unread_count(theme_cache::get_current_user_id()) > 0){ 
+						?>
+						<a href="<?= theme_custom_pm::get_tabs('pm')['url'];?>" class="tool tool-pm" title="<?= ___('You have new P.M.');?>">
+							<i class="fa fa-<?= theme_custom_pm::get_tabs('pm')['icon'];?> fa-fw fa-spin"></i>
+						</a>
+					<?php } ?>
+				<?php }/** end if mobile */ ?>
+			<?php }else{ ?>
+				<a class="tool-login tool mx-account-btn" href="<?= esc_url(wp_login_url(get_current_url()));?>">
+					<?= ___('Log-in');?>
+				</a>
+			<?php } /** end if login */?>
+			
 			<!-- search btn -->
-			<a class="tool search fa fa-search fa-fw fa-2x" href="javascript:;" data-toggle-target="#fm-search" data-focus-target="#fm-search-s" data-icon-active="fa-arrow-down" data-icon-original="fa-search"></a>
+			<a 
+				class="tool search fa fa-search fa-fw fa-2x" 
+				href="javascript:;" 
+				data-toggle-target="#fm-search" 
+				data-focus-target="#fm-search-s" 
+				data-icon-active="fa-arrow-down" 
+				data-icon-original="fa-search" 
+				title="<?= ___('Search');?>" 
+			></a>
 
 		</div><!-- /.tools -->
 	</div><!-- /.container -->
 	 
 	<!-- search form -->
 	<div class="container">
-		<form id="fm-search" action="<?= theme_cache::home_url('/'); ?>" data-focus-target="#fm-search-s">
+		<form id="fm-search" action="<?= theme_cache::home_url();?>/" data-focus-target="#fm-search-s">
 			<input id="fm-search-s" name="s" class="form-control" placeholder="<?= ___('Please input search keyword');?>" value="<?= esc_attr(get_search_query())?>" type="search" required>
         </form>		
 	</div>

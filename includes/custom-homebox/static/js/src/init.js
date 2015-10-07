@@ -20,7 +20,7 @@ define(function(require,exports,module){
 		cache.len = cache.$boxes.length;
 		cache.$last_boxes = cache.$boxes[cache.len - 1];
 		cache.ori_bottom = tools.getElementTop(cache.$last_boxes) + cache.$last_boxes.offsetHeight;
-		cache.ori_offset_left = tools.getElementLeft(document.getElementById('sidebar-container'));
+		cache.ori_offset_left = tools.getElementLeft(cache.$boxes[0]);
 		cache.ori_offset_top = tools.getElementTop(cache.$boxes[0]);
 		create_nav();
 		bind_window_scroll();

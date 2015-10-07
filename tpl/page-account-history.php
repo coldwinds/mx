@@ -1,5 +1,4 @@
 <?php
-$current_user_id = theme_cache::get_current_user_id();
 ?>
 <div class="panel panel-default">
 	<div class="panel-body">
@@ -9,7 +8,7 @@ $current_user_id = theme_cache::get_current_user_id();
 	</div>
 	<div class="media-body">
 		<h4 class="media-heading">
-			<strong class="total-point"><?= theme_custom_point::get_point($current_user_id);?></strong>
+			<strong class="total-point"><?= number_format(theme_custom_point::get_point(theme_cache::get_current_user_id()));?></strong>
 		</h4>
 	</div>
 </div>

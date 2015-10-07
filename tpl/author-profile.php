@@ -104,6 +104,17 @@ global $author;
 						</td>
 					</tr>
 				<?php } ?>
+				<!-- pm -->
+				<?php if(class_exists('theme_custom_pm')){ ?>
+					<tr>
+						<th><?= ___('P.M.');?></th>
+						<td>
+							<a href="<?= theme_custom_pm::get_user_pm_url($author);?>">
+								<i class="fa fa-envelope"></i> <?= ___('Send P.M.');?>
+							</a>
+						</td>
+					</tr>
+				<?php } ?>
 			</tbody>
 		</table>
 	</fieldset>

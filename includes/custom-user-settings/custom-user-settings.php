@@ -1,32 +1,34 @@
 <?php
 /**
- * @version 1.0.2
+ * @version 1.1.1
  */
 add_filter('theme_includes',function($fns){
 	$fns[] = 'theme_custom_user_settings::init';
 	return $fns;
 });
 class theme_custom_user_settings{
-	public static $iden = 'theme_custom_user_settings';
 	public static $page_slug = 'account';
 	public static $cache_expire = 2505600; /** 29 days */
+	public static $user_meta_key = [
+		'key' => 'theme_user_settings'
+	];
 
 	public static function init(){
-		add_filter('query_vars',			__CLASS__ . '::filter_query_vars');
+		add_filter('query_vars', __CLASS__ . '::filter_query_vars');
 		
-		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
+		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
 
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
+		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
 		
-		add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
+		add_filter('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
 
-		add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
+		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
 		
-		add_action('wp_ajax_' . self::$iden, __CLASS__ . '::process');
+		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 
 		add_filter('custom_point_value_default', __CLASS__ . '::filter_custom_point_value_default');
 
-		add_filter('custom_point_types' , __CLASS__ . '::filter_custom_point_types');
+		add_filter('custom_point_types', __CLASS__ . '::filter_custom_point_types');
 	
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
@@ -44,7 +46,7 @@ class theme_custom_user_settings{
 			add_action('list_point_histroy',__CLASS__ . '::' . $v);
 
 	}
-
+	
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 
 			return $title;
@@ -65,7 +67,6 @@ class theme_custom_user_settings{
 		
 		return $cache;
 	}
-
 	public static function filter_custom_point_types(array $types = []){
 		$types['save-settings'] = [
 			'text' => ___('When user save settings'),
@@ -82,6 +83,15 @@ class theme_custom_user_settings{
 		$opts['save-settings'] = -30;
 		$opts['save-avatar'] = -50;
 		return $opts;
+	}
+	public static function get_user_settings($user_id,$key){
+		static $caches = null;
+		$cache_id = md5(json_encode(func_num_args()));
+		if(!isset($caches[$cache_id]))
+			$caches[$cache_id] = get_user_meta($user_id,self::$user_meta_key['key'],true);
+		if($key)
+			return isset($caches[$cache_id][$key]) ? $caches[$cache_id][$key] : false;
+		return $caches[$cache_id];
 	}
 	public static function process(){
 		$output = [];
@@ -445,9 +455,9 @@ class theme_custom_user_settings{
 			return $alias;
 			
 		foreach(self::get_tabs() as $k => $v){
-			$alias[self::$iden . '-' . $k] = theme_features::get_theme_includes_js(__DIR__,$k);
+			$alias[__CLASS__ . '-' . $k] = theme_features::get_theme_includes_js(__DIR__,$k);
 			if($k === 'avatar'){
-				$alias[self::$iden . '-' . $k . '-cropper'] = theme_features::get_theme_includes_js(__DIR__,'cropper');
+				$alias[__CLASS__ . '-' . $k . '-cropper'] = theme_features::get_theme_includes_js(__DIR__,'cropper');
 			}
 		}
 		return $alias;
@@ -463,8 +473,8 @@ class theme_custom_user_settings{
 			case 'password':
 			case 'settings':
 				?>
-				seajs.use('<?= self::$iden,'-settings';?>',function(m){
-					m.config.process_url = '<?= theme_features::get_process_url(array('action' => self::$iden));?>';
+				seajs.use('<?= __CLASS__,'-settings';?>',function(m){
+					m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
 					m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
 					m.config.lang.E00001 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
 					
@@ -474,8 +484,8 @@ class theme_custom_user_settings{
 				break;
 			case 'avatar':
 				?>
-				seajs.use('<?= self::$iden,'-',$tab_active;?>',function(m){
-					m.config.process_url = '<?= theme_features::get_process_url(array('action' => self::$iden));?>';
+				seajs.use('<?= __CLASS__,'-',$tab_active;?>',function(m){
+					m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
 					m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
 					m.config.lang.E00001 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
 					
@@ -494,14 +504,14 @@ class theme_custom_user_settings{
 		switch($tab_active){
 			case 'avatar':
 				wp_enqueue_style(
-					self::$iden . '-' . $tab_active,
+					__CLASS__ . '-' . $tab_active,
 					theme_features::get_theme_includes_css(__DIR__,$tab_active),
 					'frontend',
 					theme_file_timestamp::get_timestamp()
 				);
 				
 				wp_enqueue_style(
-					self::$iden . '-cropper',
+					__CLASS__ . '-cropper',
 					theme_features::get_theme_includes_css(__DIR__,'cropper'),
 					'frontend',
 					theme_file_timestamp::get_timestamp()
