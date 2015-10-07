@@ -87,13 +87,14 @@ define(function(require, exports, module){
 			
 			$t_container = document.createElement('div');
 			$t_container.id = 'ajax-loading-container';
-
+			
 			$t = document.createElement('div');
 			$t.id = 'ajax-loading';
 			
 			$t_container.appendChild($t)
 			$t_container.appendChild($close);
 			document.body.appendChild($t_container);
+
 			
 			$close.addEventListener(exports.click_handler,function(){
 				action_close();
@@ -115,18 +116,23 @@ define(function(require, exports, module){
 		}else{
 			$close.innerHTML = '';
 		}
+		console.log($t_container);
 		if(s !== 'hide'){
 			$t.innerHTML = exports.status_tip(t,s);
 			$t_container.setAttribute('class',t);
-			$t_container.style.display = 'block';
+			setTimeout(function(){
+				$t_container.classList.add('show');
+			},1);
+			//$t_container.style.display = 'block';
 		}else{
 			action_close();
 		}
+		console.log($t_container);
 		function set_close_time(t){
 			$close.innerHTML = '<span class="number">' + t + '</span>';
 		}
 		function action_close(){
-			$t_container.classList.add('closed');
+			$t_container.classList.remove('show');
 		}
 	};
 	exports.param = function(obj){

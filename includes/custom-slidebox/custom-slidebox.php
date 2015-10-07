@@ -317,6 +317,7 @@ class theme_custom_slidebox{
 
 	public static function display_frontend(){
 		$device = wp_is_mobile() ? 'mobile' : 'desktop';
+		$type = wp_is_mobile() ? 'scroller' : self::get_type();
 		$cache = (array)theme_cache::get(__CLASS__);
 		if(isset($cache[$device])){
 			echo $cache[$device];
@@ -325,7 +326,7 @@ class theme_custom_slidebox{
 		}
 		
 		ob_start();
-		$type = 'display_frontend_' . self::get_type();
+		$type = 'display_frontend_' . $type;
 		self::$type();
 		/** ad */
 		if(!empty(self::display_frontend_ad('below'))){
@@ -533,7 +534,7 @@ class theme_custom_slidebox{
 		return $alias;
 	}
 	public static function frontend_seajs_use(){
-		if(!theme_cache::is_home())
+		if(wp_is_mobile() || !theme_cache::is_home())
 			return false;
 		?>
 		seajs.use('<?= __CLASS__;?>',function(m){
