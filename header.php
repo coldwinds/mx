@@ -71,7 +71,7 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 		<?php if(wp_is_mobile()){ ?>
 			<a 
 				href="javascript:;" 
-				class="navicon toggle fa fa-navicon fa-2x fa-fw" 
+				class="navicon toggle fa fa-navicon fa-fw" 
 				data-mobile-target=".menu-mobile" 
 				data-icon-active="fa-arrow-left" 
 				data-icon-original="fa-navicon"

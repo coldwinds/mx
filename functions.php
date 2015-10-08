@@ -520,6 +520,16 @@ class theme_functions{
 								<i class="fa fa-comment"></i>
 								<span class="comment-count-number"><?= $comment_count;?></span>
 							</a>
+							<?php
+							/**
+							 * edit
+							 */
+							if(class_exists('theme_custom_edit') &&  $post->post_author == theme_cache::get_current_user_id()){
+								?>
+								<a class="post-meta edit-post" href="<?= theme_custom_edit::get_edit_post_link($post->ID);?>">
+									<i class="fa fa-edit"></i> <?= ___('Edit');?>
+								</a>
+							<?php } ?>
 						</header>
 					</div><!-- /.media-body -->
 				</div><!-- /.media -->

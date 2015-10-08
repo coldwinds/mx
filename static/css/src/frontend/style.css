@@ -1223,107 +1223,18 @@ label.error{
 	.tip-status-large{font-size:2rem}
 
 /**
- * .top-bar
- */
-#menu-top-bar{
-	list-style-type: none;
-	padding: 0;
-}
-	#menu-top-bar > li{
-		float: left;
-	}
-	#menu-top-bar > li > a{
-		display: block;
-	}
-		#menu-top-bar li[class*=current] > a{
-			background: rgba(255,255,255,.2);
-		}
-.top-bar{
-	background: #23282D;
-	min-height: 1px;
-	font-size: 12px;
-	border-radius: 0;
-	height: 30px;
-	border: none;
-	margin-bottom: 0;
-	color: #eee;
-	box-shadow: none;
-}
-.admin-bar .top-bar{
-	top: 32px;
-}
-	.top-bar .container{
-		position: relative;
-	}
-	.top-bar a{
-		color: #eee;
-		background: none;
-		border: none;
-	}
-		.top-bar a:hover{
-			background: rgba(255,255,255,.2);
-		}
-	.top-bar .dropdown-menu{
-		text-shadow: none;
-	}
-	.top-bar-nav{
-		position: absolute;
-		left: 10px;
-		top: 0;
-	}
-	.top-bar li a{
-		line-height: 30px;
-		padding: 0 10px;
-	}
-
-/**
- * .top-bar-tools
- */
-.top-bar-tools{
-	position: absolute;
-	right: 10px;
-	padding-top: 4px;
-	margin-bottom: 0;
-}
-	.top-bar-tools a{
-		box-shadow: none;
-	}
-	.top-bar-tools .btn-group .btn{
-		color: #eee;
-		border-radius: 2px !important;
-	}
-	.top-bar-tools .btn-group .btn:hover,
-	.top-bar-tools .btn-group .btn:active{
-		color: #fff;
-		background: rgba(255,255,255,.3);
-	}
-	.top-bar-tools .user-avatar{
-
-	}
-		.top-bar-tools .avatar{
-			width: 15px;
-			height: 15px;
-			vertical-align: middle;
-			margin-top: -3px;
-		}
-		.top-bar-tools .tx{
-
-		}
-	.top-bar-tools .meta{
-	}
-	.top-bar-tools .tool-point img{
-		height: 15px;
-		width: auto;
-		margin-top: -2px;
-	}
-
-/**
  * .navicon
  */
 .main-nav .navicon {
+	margin-left: -10px;
 	color: #FF4081;
-	font-size: 2.5em;
+	font-size: 2em;
+	padding: 0 20px;
+	width: auto;
 }
+	.main-nav .navicon:hover{
+		background: rgba(0,0,0,.05);
+	}
 /**
  * .main-header
  */
@@ -1434,7 +1345,7 @@ body.menu-on{
 #mobile-on-layer{
 	position: fixed;
 	background: #000;
-	opacity: .5;
+	opacity: .0;
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -1444,12 +1355,12 @@ body.menu-on{
 	-webkit-transform: translate3d(-100%,0,0);
 	transform: translate3d(-100%,0,0);
 	z-index: 99;
+	opacity: 0;
 }
 body.menu-on #mobile-on-layer{
-	width: 100%;
-	height: 100%;
 	-webkit-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
+	opacity: .5;
 }
 .slide-menu{
 	position: fixed;
@@ -1688,6 +1599,7 @@ body.menu-on #mobile-on-layer{
 		color: #666;
 		padding: 0 10px;
 		white-space: nowrap;
+		width: auto;
 	}
 	.tools .tool-login{
 		color: #FF4081;
@@ -2594,7 +2506,7 @@ body.menu-on #mobile-on-layer{
 	width: 100%;
 	text-align: center;
 	padding: 20px;
-	font-size: 30px;
+	font-size: 20px;
 	line-height: 30px;
 	-webkit-transition-duration: .35s;
 	transition-duration: .35s;
@@ -2627,17 +2539,26 @@ body.menu-on #mobile-on-layer{
 
 	#ajax-loading-container .btn-close{
 		position: absolute;
-		top: 20px;
-		right: 20px;
+		top: 0;
+		right: 0;
 		cursor: pointer;
 		font-size: 30px;
+		padding: 20px;
+		width: auto;
+		height: 100%;
 		color: rgb(199,80,80);
 	}
 		#ajax-loading-container .btn-close:hover{
-			color:red;
+			color: #fff;
+			background:rgb(224,67,67);
+		}
+		#ajax-loading-container .btn-close:active,
+		#ajax-loading-container .btn-close:focus{
+			color: #fff;
+			background: rgb(153,61,61);
 		}
 		#ajax-loading-container .btn-close .number{
-			font-size: 90%;
+			font-size: 50%;
 		}
 	#ajax-loading-container .tip-status{
 		display: inline;
@@ -2646,8 +2567,16 @@ body.menu-on #mobile-on-layer{
 		border: none;
 	}
 	#ajax-loading{
+		margin: 0 20px;
+	}
+@media( min-width: 768px ){
+	#ajax-loading-container{
+		font-size: 25px;
+	}
+	#ajax-loading{
 		margin: 0 40px;
 	}
+}
 .fa-spin {
     animation: 2s cubic-bezier(.68,-0.55,.27,1.55) 0s normal none infinite running fa-spin;
 }

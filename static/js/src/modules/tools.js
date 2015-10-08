@@ -128,7 +128,7 @@ define(function(require, exports, module){
 			cache.alt.$t.innerHTML = exports.status_tip(t,s);
 		}
 		function set_close_time(t){
-			cache.alt.$c.innerHTML = '<span class="number">' + t + '</span>';
+			cache.alt.$c.innerHTML = '<b class="number">' + t + '</b>';
 		}
 		function action_close(){
 			cache.alt.$t_container.classList.remove('show');
