@@ -4,6 +4,7 @@
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <meta name="author" content="INN STUDIO">
+<meta name="theme-color" content="#FF4081">
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?= theme_cache::get_bloginfo('pingback_url'); ?>">
 <?php wp_head();?></head>
