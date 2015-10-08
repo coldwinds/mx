@@ -6,7 +6,6 @@
  * @version 5.1.0
  * 
  */
-theme_options::init();
 class theme_options{
 	public static $iden = 'theme_options';
 	public static $opts = [];
@@ -343,3 +342,4 @@ class theme_options{
 		));
 	}
 }
+theme_options::init();

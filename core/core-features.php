@@ -8,7 +8,6 @@
  * @package KMTF
  * @version 5.0.7
  */
-theme_features::init();
 class theme_features{
 	
 	public static $basedir_js 					= '/static/js/';
@@ -1500,7 +1499,9 @@ class theme_features{
 		/**
 		 * Custom login logo url
 		 */
-		add_filter('login_headerurl',__CLASS__ . 'theme_cache::home_url' );
+		add_filter('login_headerurl', function(){
+			return theme_cache::home_url();
+		});
 		/**
 		 * Add thumbnails function
 		 */
@@ -1757,5 +1758,4 @@ class theme_features{
 		}
 	}
 }
-
-?>
+theme_features::init();
