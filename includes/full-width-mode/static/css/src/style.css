@@ -3,6 +3,10 @@
 	display: none;
 }
 @media ( min-width: 768px ){
+	#main{
+		-webkit-transition-duration: .75s;
+		transition-duration: .75s;
+	}
 	.singular-post > .panel-body{
 		position: relative;
 	}
@@ -22,6 +26,9 @@
 	}
 	#full-width-mode:hover{
 		opacity: 1;
+	}
+	#full-width-mode:active{
+		background: #eee;
 	}
 	#main.expand{
 		width: 100%;
