@@ -463,7 +463,8 @@ class theme_custom_storage{
 			<div id="post-storage-number-<?= $post_id;?>" class="number">
 				<?php
 				if(class_exists('theme_post_views') && theme_post_views::is_enabled()){
-					echo number_format(theme_post_views::get_views($post_id) + mt_rand(1,9));
+					$number = number_format(theme_post_views::get_views($post_id) * 0.5 - mt_rand(1,9));
+					echo $number <= 0 ? 0 : (int)$number;
 				}
 				?>
 			</div>

@@ -884,7 +884,7 @@ class custom_post_point{
 				<div id="post-point-number-<?= $post_id;?>" class="number"><?= number_format((int)self::get_post_points_count($post_id));?></div>
 				<div class="tx"><?= ___('Rate it');?></div>
 			</a>
-			<?php if($count_point_values > 1){ ?>
+			<?php if(!wp_is_mobile() && $count_point_values > 1){ ?>
 				<div class="box">
 					<?php 
 					foreach($point_values as $v){ 

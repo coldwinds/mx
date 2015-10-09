@@ -2236,14 +2236,15 @@ body.menu-on #mobile-on-layer{
 	/** post-circle-metas */
 	.post-circle-metas{
 		text-align: center;
+		margin: 40px -20px;
 	}
 		.post-circle-metas .meta{
 			position: relative;
 			background: #FA8546;
 			display: inline-block;
-			margin: 40px 10px;
-			width: 120px;
-			height: 120px;
+			margin: 5px;
+			width: 80px;
+			height: 80px;
 			border-radius: 50%;
 			color: #fff;
 			white-space: nowrap;
@@ -2265,14 +2266,13 @@ body.menu-on #mobile-on-layer{
 		.post-circle-metas .meta:nth-child(2){background: #58C780;}
 		.post-circle-metas .meta:nth-child(3){background: #F9BB43;}
 		.post-circle-metas .number{
-			height: 60px;
-			line-height: 90px;
-			font-size: 2.5em;
+			height: 40px;
+			line-height: 60px;
+			font-size: 1.5em;
 		}
 		.post-circle-metas .tx{
-			height: 60px;
-			line-height: 40px;
-			font-size: 1.3em;
+			height: 40px;
+			line-height: 30px;
 		}
 		.post-circle-metas .box{
 			position: absolute;
@@ -2303,7 +2303,23 @@ body.menu-on #mobile-on-layer{
 			.post-circle-metas .box a.active{
 				background: rgba(0,0,0,.1);
 			}
-		
+	@media( min-width: 768px ){
+		.post-circle-metas .meta{
+			width: 120px;
+			height: 120px;
+			margin: 10px;
+		}
+		.post-circle-metas .number{
+			height: 60px;
+			line-height: 90px;
+			font-size: 2.5em;
+		}
+		.post-circle-metas .tx{
+			height: 60px;
+			line-height: 40px;
+			font-size: 1.3em;
+		}
+	}
 	/**
 	 * .post-storage
 	 */
