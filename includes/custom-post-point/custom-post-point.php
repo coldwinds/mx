@@ -24,14 +24,14 @@ class custom_post_point{
 		add_action('wp_ajax_backend_' . __CLASS__, __CLASS__ . '::process_backend');
 
 
-		add_action('before_delete_post',__CLASS__ . '::sync_delete_post');
+		add_action('before_delete_post', __CLASS__ . '::sync_delete_post');
 
-		add_filter('frontend_seajs_alias',__CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use',__CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
+		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
 
-		add_filter('custom_point_value_default',__CLASS__ . '::filter_custom_point_value_default');
+		add_filter('custom_point_value_default', __CLASS__ . '::filter_custom_point_value_default');
 
-		add_filter('custom_point_types',__CLASS__ . '::filter_custom_point_types');
+		add_filter('custom_point_types', __CLASS__ . '::filter_custom_point_types');
 
 		/**
 		 * backend options
@@ -44,7 +44,7 @@ class custom_post_point{
 			'list_history_post_rate',
 			'list_history_post_be_rate'
 		] as $v)
-			add_action('list_point_histroy',__CLASS__ . '::' . $v);
+			add_action('list_point_histroy', __CLASS__ . '::' . $v);
 
 		//add_action('pre_get_posts' , __CLASS__ . '::pre_get_posts_in_rates');
 	}
@@ -370,8 +370,8 @@ class custom_post_point{
 		
 		$type = isset($_GET['type']) && is_string($_GET['type']) ? $_GET['type'] : null;
 
-		$post_id = isset($_POST['post-id']) && is_string($_POST['post-id']) ? (int)$_POST['post-id'] : null;
-		if(empty($post_id)){
+		$post_id = isset($_POST['post-id']) && is_numeric($_POST['post-id']) ? (int)$_POST['post-id'] : null;
+		if(!$post_id){
 			$output['status'] = 'error';
 			$output['code'] = 'invaild_post_id';
 			$output['msg'] = ___('Invaild post id param.');
@@ -379,7 +379,7 @@ class custom_post_point{
 		}
 		
 		$post = theme_cache::get_post($post_id);
-		if(empty($post) || $post->post_type !== 'post')
+		if(!$post || $post->post_type !== 'post')
 			die(theme_features::json_format([
 				'status' => 'error',
 				'code' => 'post_not_exist',
@@ -405,7 +405,7 @@ class custom_post_point{
 				/**
 				 * points
 				 */
-				$points = isset($_POST['points']) && is_string($_POST['points']) ? (int)$_POST['points'] : null;
+				$points = isset($_POST['points']) && is_numeric($_POST['points']) ? (int)$_POST['points'] : null;
 				if(!in_array($points,self::get_point_values())){
 					$output['status'] = 'error';
 					$output['code'] = 'invaild_point_value';
@@ -462,7 +462,7 @@ class custom_post_point{
 					 */
 					$output['status'] = 'success';
 					$output['points'] = (int)self::get_post_points_count($post_id);
-					$output['msg'] = ___('Operation completed.');
+					$output['msg'] = ___('Operation successful, thank you for your participation.');
 					die(theme_features::json_format($output));
 				}
 				break;
@@ -852,8 +852,8 @@ class custom_post_point{
 			return;
 		?>
 		seajs.use(['<?= __CLASS__;?>'],function(m){
-			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.E00001 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
+			m.config.lang.M01 = '<?= ___('Loading, please wait...');?>';
+			m.config.lang.E01 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
 			m.config.process_url = '<?= theme_features::get_process_url([
 				'action' => __CLASS__,
 				'type' => 'incr'
@@ -865,50 +865,37 @@ class custom_post_point{
 	public static function post_btn($post_id){
 			
 		$point_img = theme_custom_point::get_point_img_url();
-		$point_values = (array)self::get_point_values();
+		$point_values = array_filter((array)self::get_point_values());
 
 		$count_point_values = count($point_values);
 		$default_point_value = $point_values[0];
 		if($count_point_values > 1){
 			sort($point_values);
 		}
-
 		?>
-		<div id="post-point-loading-ready" class="btn btn-primary btn-lg"><i class="fa fa-spinner fa-pulse fa-fw"></i> <?= ___('Loading, please wait...');?></div>
-		
-		<div id="post-point-btn-group" class="btn-group btn-group-lg">
-			<a href="javascript:;" class="post-point-btn btn btn-primary" data-post-id="<?= $post_id;?>" data-points="<?= $default_point_value;?>">
-				<?php if(empty($point_img)){ ?>
-					<i class="fa fa-diamond"></i> 
-				<?php }else{ ?>
-					<img src="<?= $point_img;?>" alt="icon">
-				<?php } ?>
-				
-				<strong class="number" id="post-point-number-<?= $post_id;?>"><?= self::get_post_points_count($post_id);?></strong>
-
-				<i> / </i>
-				
-				<?= sprintf(___('Rate %d %s'),$default_point_value,theme_custom_point::get_point_name());?>
-				
+		<div class="meta meta-post-point">
+			<a 
+				href="javascript:;" 
+				class="post-point-btn" 
+				title="<?= sprintf(__x('Rate %d %s.','E.g. Rate 3 points'),$default_point_value,theme_custom_point::get_point_name());?>" 
+				data-post-id="<?= $post_id;?>" 
+				data-points="<?= $default_point_value;?>" 
+			>
+				<div id="post-point-number-<?= $post_id;?>" class="number"><?= number_format((int)self::get_post_points_count($post_id));?></div>
+				<div class="tx"><?= ___('Rate it');?></div>
 			</a>
-			
 			<?php if($count_point_values > 1){ ?>
-				<div class="btn-group btn-group-lg">
-					<span class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="group">
-						<span class="caret"></span>
-						<span class="sr-only"><?php ___('Toggle Dropdown');?></span>
-					</span>
-					<ul class="dropdown-menu" role="menu">
-						<?php foreach($point_values as $v){ ?>
-							<li><a href="javascript:;" class="post-point-btn" data-post-id="<?= $post_id;?>" data-points="<?= $v;?>">
-								<?php 
-								echo sprintf(___('Rate %d %s'),
-									$v,
-									theme_custom_point::get_point_name()
-								);?>
-							</a></li>
-						<?php } ?>
-					</ul>
+				<div class="box">
+					<?php 
+					foreach($point_values as $v){ 
+						$class = $v == $default_point_value ? 'active' : null;
+						?><a 
+							href="javascript:;" 
+							class="post-point-btn <?= $class;?>" 
+							title="<?= sprintf(__x('Rate %d %s.','E.g. Rate 3 points'),$v,theme_custom_point::get_point_name());?>" 
+							data-post-id="<?= $post_id;?>" 
+							data-points="<?= $v;?>" 
+						><?= $v;?></a><?php } ?>
 				</div>
 			<?php } ?>
 		</div>

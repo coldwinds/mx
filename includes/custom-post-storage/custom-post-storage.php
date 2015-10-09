@@ -458,31 +458,21 @@ class theme_custom_storage{
 		$meta = self::get_post_meta($post->ID);
 		if(!$meta)
 			return;
-
-		$download_url = self::get_download_page_url($post->ID);
-
 		?>
-		<div class="post-storage">
-			<div class="btn-group btn-group-lg btn-block">
-				<a href="<?= $download_url;?>" class="download-link btn btn-success col-xs-9 col-sm-11" rel="nofollow" >
-					<i class="fa fa-cloud-download"></i>
-					<?= ___('Download now');?>
-					
-				</a>
-				<a href="<?= $download_url;?>" class="download-link btn btn-success col-xs-3 col-sm-1" rel="nofollow" target="_blank" title="<?= ___('Open in new window');?>" >
-					<i class="fa fa-external-link fa-fw"></i>
-				</a>
+		<a class="meta meta-post-storage" href="<?= self::get_download_page_url($post->ID);?>" target="_blank" title="<?= ___('Download');?>">
+			<div id="post-storage-number-<?= $post_id;?>" class="number">
+				<?php
+				if(class_exists('theme_post_views') && theme_post_views::is_enabled()){
+					echo number_format(theme_post_views::get_views($post_id) + mt_rand(1,9));
+				}
+				?>
 			</div>
-			
-		</div>
+			<div class="tx"><?= ___('Download');?></div>
+		</a>
 		<?php
 	}
 	public static function is_page(){
-		static $cache = null;
-		if($cache === null)
-			$cache = theme_cache::is_page(self::$page_slug);
-
-		return $cache;
+		return theme_cache::is_page(self::$page_slug);
 	}
 	public static function frontend_css(){
 		if(!self::is_page()) 

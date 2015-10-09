@@ -1,14 +1,14 @@
 define(function(require, exports, module){
 	'use strict';
 	var js_request = require('theme-cache-request'),
-		tools = require('modules/tools');
-
+		tools = require('modules/tools'),
+		doc = document;
+		
 	exports.config = {
 		process_url : '',
-		post_id : '',
 		lang : {
-			M00001 : 'Loading, please wait...',
-			E00001 : 'Server error.'
+			M01 : 'Loading, please wait...',
+			E01 : 'Sorry, server is busy now, can not respond your request, please try again later.'
 		}
 	}
 	exports.init = function(){
@@ -19,39 +19,39 @@ define(function(require, exports, module){
 		caches = {};
 		
 	exports.bind = function(){
-		caches.$btns = document.querySelectorAll('.post-point-btn');
-		caches.$btn_group = I('post-point-btn-group');
-		caches.$ready = I('post-point-loading-ready');
-		
+		caches.$btns = doc.querySelectorAll('.post-point-btn');
 		if(!caches.$btns[0])
 			return false;
 			
-		Array.prototype.forEach.call(caches.$btns,function($btn,i){
-			$btn.addEventListener('click',ajax, false);
-		})
+		for(var i = 0,len = caches.$btns.length; i<len; i++){
+			caches.$btns[i].addEventListener('click',event_click);
+		}
 	}
 
-	function ajax(){
-		var $btn = this;
+	function event_click(e){
+		e.preventDefault();
+		e.stopPropagation();
+		var $btn = this,
+			post_id = this.getAttribute('data-post-id'),
+			points = this.getAttribute('data-points');
 
-		config.post_id = $btn.getAttribute('data-post-id');
+		caches.$number = I('post-point-number-' + post_id);
 		
-		tools.ajax_loading_tip('loading',config.lang.M00001);
-		caches.$ready.style.display = 'inline-block';
-		caches.$btn_group.style.display = 'none';
+		tools.ajax_loading_tip('loading',config.lang.M01);
 		
-		var xhr = new XMLHttpRequest();
-		xhr.open('POST',config.process_url);
-		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;');
-		xhr.send(tools.param({
-			'post-id' : $btn.getAttribute('data-post-id'),
-			'points' : $btn.getAttribute('data-points'),
-			'theme-nonce' : js_request['theme-nonce']
-		}));
+		var xhr = new XMLHttpRequest(),
+			fd = new FormData();
+		fd.append('post-id',post_id);
+		fd.append('points',points);
+		fd.append('theme-nonce',js_request['theme-nonce']);
+		
+		xhr.open('post',config.process_url);
+		xhr.send(fd);
+		
 		xhr.onload = function(){
 			if(xhr.status >= 200 && xhr.status < 400){
 				var data;
-				try{data = JSON.parse(xhr.responseText)}catch(e){data = xhr.responseText}
+				try{data = JSON.parse(xhr.responseText)}catch(err){data = xhr.responseText}
 				
 				if(data && data.status){
 					done(data);
@@ -59,33 +59,28 @@ define(function(require, exports, module){
 					fail(data);
 				}
 			}else{
-				tools.ajax_loading_tip('error',config.lang.E00001);
+				tools.ajax_loading_tip('error',config.lang.E01);
 			}
-			always();
 		};
 		xhr.onerror = function(){
-			tools.ajax_loading_tip('error',config.lang.E00001);
+			tools.ajax_loading_tip('error',config.lang.E01);
 		};
 
-		function always(){
-			caches.$btn_group.style.display = '';
-			caches.$ready.style.display = 'none';
-		}
 		function done(data){
 			if(data.status === 'success'){
-				tools.ajax_loading_tip(data.status,data.msg,5);
+				tools.ajax_loading_tip(data.status,data.msg,3);
 				/** incre points to dom */
-				I('post-point-number-' + config.post_id).innerHTML = data.points;
+				caches.$number.innerHTML = data.points;
 			}else{
-				tools.ajax_loading_tip(data.status,data.msg);
+				tools.ajax_loading_tip(data.status,data.msg,3);
 			}
-		}
+		};
 		function fail(text){
-			tools.ajax_loading_tip('error',config.lang.E00001);
+			tools.ajax_loading_tip('error',config.lang.E01);
 		}
 		
 	}
 	function I(e){
-		return document.getElementById(e);
+		return doc.getElementById(e);
 	}
 });

@@ -560,11 +560,7 @@ class theme_functions{
 					<?php the_content();?>
 				</div>
 
-				<!-- theme_custom_post_source -->
-				<?php if(class_exists('theme_custom_post_source') && theme_custom_post_source::is_enabled()){
-					theme_custom_post_source::display_frontend($post->ID);
-				}
-				?>
+				
 				<?php
 				/**
 				 * Hook fires after_singular_post_content
@@ -572,38 +568,35 @@ class theme_functions{
 				do_action('after_singular_post_content');
 				?>
 				<?php self::the_page_pagination();?>
-				
-				<div class="row">
-					<div class="col-lg-5">
-						<?php
-						/**
-						 * post point
-						 */
-						if(class_exists('custom_post_point') && class_exists('theme_custom_point')){
-							?>
-							<div class="post-point">
-								<?php custom_post_point::post_btn($post->ID);?>
-								
-							</div>
-							<?php
-						}
-						?>						
-					</div>
-					<div class="col-lg-7">
-						<!-- theme_custom_storage -->
-						<?php if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
-							theme_custom_storage::display_frontend($post->ID);
-						}
-						?>
-						
-					</div>
+
+				<div class="post-circle-metas">
+					<?php
+					/** post points */
+					if(class_exists('custom_post_point') && class_exists('theme_custom_point')){
+						custom_post_point::post_btn($post->ID);
+					}
+					
+					/** theme_custom_storage */
+					if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
+						theme_custom_storage::display_frontend($post->ID);
+					}
+					
+					?>
+					<a class="meta meta-post-comments" href="<?= $post->comment_count == 0 ? '#respond' : '#comments' ;?>" id="post-comments-btn" title="<?= ___('Comments');?>">
+						<div id="post-comments-number-<?= $post_id;?>" class="number">
+							<?= (int)$post->comment_count;?>
+						</div>
+						<div class="tx"><?= __x('Comments','Tucao');?></div>
+					</a>
 				</div>
 
 
-			
-			</div><!-- /.row -->
-			
-			
+				<!-- theme_custom_post_source -->
+				<?php if(class_exists('theme_custom_post_source') && theme_custom_post_source::is_enabled()){
+					theme_custom_post_source::display_frontend($post->ID);
+				}
+				?>
+			</div><!-- /.panel-body -->
 			<!-- post-footer -->
 			<footer class="post-footer post-metas panel-footer clearfix">
 				
@@ -623,17 +616,6 @@ class theme_functions{
 				}
 				?>
 					
-				<?php
-				/** 
-				 * comment
-				 */
-				$comment_tx = $comment_count <= 1 ? ___('comment') : ___('comments');
-				?>
-				<a href="#comments" class="post-meta quick-comment comment-count" data-post-id="<?= $post->ID;?>">
-					<i class="fa fa-comment"></i>
-					<span class="comment-count-number"><?= $comment_count;?></span> <span class="hidden-xs"><?= $comment_tx;?></span>
-				</a>
-
 				<?php
 				/** 
 				 * post-share

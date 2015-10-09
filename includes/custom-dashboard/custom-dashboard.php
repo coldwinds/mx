@@ -8,7 +8,6 @@ add_filter('theme_includes',function($fns){
 });
 class theme_custom_dashboard{
 	
-	public static $iden = 'theme_custom_dashboard';
 	public static $page_slug = 'account';
 
 	public static function init(){	
@@ -63,7 +62,7 @@ class theme_custom_dashboard{
 		$baseurl = self::get_url();
 		$tabs = array(
 			'dashboard' => array(
-				'text' => ___('My dashboard'),
+				'text' => ___('Dashboard'),
 				'icon' => 'dashboard',
 				'url' => esc_url(add_query_arg('tab','dashboard',$baseurl)),
 				'filter_priority' => 10,
@@ -79,7 +78,7 @@ class theme_custom_dashboard{
 			return false;
 
 		wp_enqueue_style(
-			self::$iden,
+			__CLASS__,
 			theme_features::get_theme_includes_css(__DIR__),
 			'frontend',
 			theme_file_timestamp::get_timestamp()

@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: KMTF-1.0.0\n"
+"Project-Id-Version: MX\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 00:26+0800\n"
-"PO-Revision-Date: 2015-10-08 00:26+0800\n"
+"POT-Creation-Date: 2015-10-09 18:36+0800\n"
+"PO-Revision-Date: 2015-10-09 18:36+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-KeywordsList: ___;gettext;gettext_noop;__e;esc_html__;_n\n"
+"X-Poedit-KeywordsList: ___;__e;esc_html__;__n:1,2;__x:1,2c;__ex:1,2c\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.8.5\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -26,7 +26,7 @@ msgstr "《%s》的附件"
 msgid "No content yet."
 msgstr "暂无资料"
 
-#: comments.php:14 functions.php:1633
+#: comments.php:14 functions.php:585 functions.php:1636
 #: includes/custom-author-profile/custom-author-profile.php:123
 #: tpl/author-profile.php:75
 msgid "Comments"
@@ -36,7 +36,7 @@ msgstr "评论"
 msgid "Respond"
 msgstr "添加评论"
 
-#: comments.php:26 functions.php:1844 includes/clean-up/clean-up.php:226
+#: comments.php:26 functions.php:1847 includes/clean-up/clean-up.php:226
 #: includes/comment-ajax/comment-ajax.php:472
 #: includes/custom-collection/custom-collection.php:595
 #: includes/custom-contribution/custom-contribution.php:674
@@ -46,7 +46,6 @@ msgstr "添加评论"
 #: includes/custom-pm/custom-pm.php:834
 #: includes/custom-point/custom-point.php:1056
 #: includes/custom-post-point/custom-post-point.php:855
-#: includes/custom-post-point/custom-post-point.php:877
 #: includes/custom-sign/custom-sign.php:628
 #: includes/custom-slidebox/custom-slidebox.php:562
 #: includes/custom-user-settings/custom-user-settings.php:478
@@ -57,43 +56,43 @@ msgstr "添加评论"
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
 
-#: core/core-features.php:706
+#: core/core-features.php:705
 msgid "Sorry, referer is invalid."
 msgstr "抱歉，无效的来路。"
 
-#: core/core-features.php:733
+#: core/core-features.php:732
 msgid "Sorry, security code is invalid."
 msgstr "抱歉，无效的安全码。"
 
-#: core/core-features.php:1206 core/core-features.php:1271
+#: core/core-features.php:1205 core/core-features.php:1270
 msgid "&lsaquo; Previous"
 msgstr "&lsaquo;  上一页"
 
-#: core/core-features.php:1241 core/core-features.php:1272
+#: core/core-features.php:1240 core/core-features.php:1271
 msgid "Next &rsaquo;"
 msgstr "下一页 &rsaquo;"
 
-#: core/core-features.php:1270
+#: core/core-features.php:1269
 msgid "&laquo; First"
 msgstr "&laquo; 首页"
 
-#: core/core-features.php:1273
+#: core/core-features.php:1272
 msgid "Last &raquo;"
 msgstr "尾页 &raquo;"
 
-#: core/core-features.php:1592
+#: core/core-features.php:1593
 #: includes/custom-colorful-cats/custom-colorful-cats.php:103
 #: tpl/page-account-post.php:318
 msgid "Select category"
 msgstr "选择目录"
 
-#: core/core-features.php:1650 includes/custom-slidebox/custom-slidebox.php:74
+#: core/core-features.php:1651 includes/custom-slidebox/custom-slidebox.php:74
 #: includes/widget-author-posts/widget-author-posts.php:206
 #: includes/widget-rank/widget-rank.php:251
 msgid "No category, pleass go to add some categories."
 msgstr "暂无分类目录，请去添加一些分类。"
 
-#: core/core-features.php:1679
+#: core/core-features.php:1680
 msgid "Select page"
 msgstr "选择页面"
 
@@ -121,84 +120,84 @@ msgstr "%d天前"
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:674 functions.php:496 functions.php:1689
+#: core/core-functions.php:674 functions.php:496 functions.php:1692
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
-#: core/core-options.php:134
+#: core/core-options.php:133
 msgid "Saving your settings, please wait..."
 msgstr "正在保存您的设置，请稍后……"
 
-#: core/core-options.php:157
+#: core/core-options.php:156
 msgid "Your settings were saved successfully."
 msgstr "您的设置已保存成功。"
 
-#: core/core-options.php:164
+#: core/core-options.php:163
 msgid "Loading your settings, please wait..."
 msgstr "正在加载您的设置，请稍后……"
 
-#: core/core-options.php:169
+#: core/core-options.php:168
 msgid "Visit the official of theme"
 msgstr "访问主题官网"
 
-#: core/core-options.php:173
+#: core/core-options.php:172
 msgid "The theme common basic settings."
 msgstr "主题通用的基本设置。"
 
-#: core/core-options.php:175
+#: core/core-options.php:174
 msgid "Basic settings"
 msgstr "基本设置"
 
-#: core/core-options.php:178
+#: core/core-options.php:177
 msgid "You can customize the theme in this label."
 msgstr "您可以在这个标签中自定义主题。"
 
-#: core/core-options.php:180
+#: core/core-options.php:179
 msgid "Page settings"
 msgstr "页面设置"
 
-#: core/core-options.php:183
+#: core/core-options.php:182
 msgid ""
 "If the theme there are some problems, you can try to use these settings."
 msgstr "如果主题有一些问题，你可以尝试使用这些设置。"
 
-#: core/core-options.php:185
+#: core/core-options.php:184
 msgid "Advanced settings"
 msgstr "高级设置"
 
-#: core/core-options.php:188
+#: core/core-options.php:187
 msgid ""
 "This settings is for developer, if you want to debug code, you can try this."
 msgstr "此设置专为开发者，如果你想调试代码，你可以试试这个。"
 
-#: core/core-options.php:190
+#: core/core-options.php:189
 msgid "Developer settings"
 msgstr "开发者设置"
 
-#: core/core-options.php:193
+#: core/core-options.php:192
 msgid "If you in trouble, maybe this label can help you."
 msgstr "如果你陷入困境，也许这个标签可以帮助你。"
 
-#: core/core-options.php:195
+#: core/core-options.php:194
 msgid "About &amp; help"
 msgstr "关于 &amp; 帮助"
 
-#: core/core-options.php:227
+#: core/core-options.php:226
 msgid "Save all settings"
 msgstr "保存所有设置"
 
-#: core/core-options.php:229
+#: core/core-options.php:228
 msgid ""
 "Something error with theme? Try to restore. Be careful, theme options will "
 "be cleared up!"
 msgstr "主题发生了错误？试试还原数据。注意，主题选项将会被清空！"
 
-#: core/core-options.php:231
+#: core/core-options.php:230
 msgid "Restore to theme default options"
 msgstr "还原主题选项"
 
-#: core/core-options.php:318 core/core-options.php:319
-#: core/core-options.php:341
+#: core/core-options.php:317 core/core-options.php:318
+#: core/core-options.php:340
 msgid "Theme settings"
 msgstr "主题设置"
 
@@ -323,7 +322,7 @@ msgstr "顶/赞"
 msgid "Comment count"
 msgstr "评论统计"
 
-#: functions.php:300 functions.php:508 functions.php:1629
+#: functions.php:300 functions.php:508 functions.php:1632
 #: includes/post-views/post-views.php:188 tpl/page-account-edit.php:18
 msgid "Views"
 msgstr "查看数"
@@ -341,142 +340,151 @@ msgstr "作者头像"
 msgid "Category"
 msgstr "分类"
 
-#: functions.php:620
+#: functions.php:530 tpl/page-account-edit.php:37
+msgid "Edit"
+msgstr "编辑"
+
+#: functions.php:589
+msgctxt "Tucao"
+msgid "Comments"
+msgstr "吐槽"
+
+#: functions.php:623
 msgid "comment"
 msgstr "评论"
 
-#: functions.php:620
+#: functions.php:623
 msgid "comments"
 msgstr "评论"
 
-#: functions.php:705 functions.php:707
+#: functions.php:708 functions.php:710
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:720
+#: functions.php:723
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:727
+#: functions.php:730
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:745
+#: functions.php:748
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:749
+#: functions.php:752
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:755 includes/widget-author-posts/widget-author-posts.php:20
+#: functions.php:758 includes/widget-author-posts/widget-author-posts.php:20
 #: includes/widget-author-posts/widget-author-posts.php:74
 msgid "Author posts"
 msgstr "作者文章"
 
-#: functions.php:759
+#: functions.php:762
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:778
+#: functions.php:781
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:785
+#: functions.php:788
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:813
+#: functions.php:816
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:814
+#: functions.php:817
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:829
+#: functions.php:832
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:859 functions.php:1105 functions.php:1107 functions.php:1114
-#: functions.php:1116 functions.php:1490
+#: functions.php:862 functions.php:1108 functions.php:1110 functions.php:1117
+#: functions.php:1119 functions.php:1493
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:878 functions.php:884 functions.php:892
+#: functions.php:881 functions.php:887 functions.php:895
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:1007
+#: functions.php:1010
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1124 functions.php:1125 functions.php:1132 functions.php:1133
-#: functions.php:1487
+#: functions.php:1127 functions.php:1128 functions.php:1135 functions.php:1136
+#: functions.php:1490
 #: includes/custom-attachment-page/custom-attachment-page.php:73
 msgid "Next page"
 msgstr "下一页"
 
-#: functions.php:1182 functions.php:1198
+#: functions.php:1185 functions.php:1201
 msgid "Placeholder"
 msgstr "占位符"
 
-#: functions.php:1185
+#: functions.php:1188
 #, php-format
 msgid "Previous post: %s"
 msgstr "上一篇：%s"
 
-#: functions.php:1201
+#: functions.php:1204
 #, php-format
 msgid "Next post: %s"
 msgstr "下一篇：%s"
 
-#: functions.php:1292
+#: functions.php:1295
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1316
+#: functions.php:1319
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1386 includes/related-post/related-post.php:54
+#: functions.php:1389 includes/related-post/related-post.php:54
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
-#: functions.php:1419
+#: functions.php:1422
 msgid "No data."
 msgstr "暂无资料"
 
-#: functions.php:1465
+#: functions.php:1468
 msgid "No data yet"
 msgstr "此类别暂无资料"
 
-#: functions.php:1518
+#: functions.php:1521
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1548
+#: functions.php:1551
 msgid "more &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1722
+#: functions.php:1725
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1755
+#: functions.php:1758
 msgid "More"
 msgstr "更多"
 
-#: functions.php:1767 includes/widget-rank/widget-rank.php:36
+#: functions.php:1770 includes/widget-rank/widget-rank.php:36
 msgid "More &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1800 includes/custom-dashboard/dashboards.php:34
+#: functions.php:1803 includes/custom-dashboard/dashboards.php:34
 #: includes/widget-author-posts/widget-author-posts.php:59
 #: includes/widget-rank/widget-rank.php:72
 #: includes/widget-tags/widget-tags.php:85 tpl/page-account-edit.php:80
@@ -484,79 +492,79 @@ msgstr "更多 &raquo;"
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
-#: functions.php:1805
+#: functions.php:1808
 #, php-format
 msgid "More about %s"
 msgstr "更多%s"
 
-#: functions.php:1837
+#: functions.php:1840
 msgid "Leave a comment"
 msgstr "留下评论"
 
-#: functions.php:1840
+#: functions.php:1843
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1850
+#: functions.php:1853
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1851 includes/custom-point-bomb/custom-point-bomb.php:228
+#: functions.php:1854 includes/custom-point-bomb/custom-point-bomb.php:228
 #: includes/custom-point-lottery/custom-point-lottery.php:370
 msgid "log-in"
 msgstr "登录"
 
-#: functions.php:1883 tpl/author-profile.php:21
+#: functions.php:1886 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:84
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1885
+#: functions.php:1888
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1896
+#: functions.php:1899
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1898
+#: functions.php:1901
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1909
+#: functions.php:1912
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1910
+#: functions.php:1913
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1930 functions.php:1932
+#: functions.php:1933 functions.php:1935
 msgid "Post comment"
 msgstr "发表评论"
 
-#: header.php:63 header.php:164
+#: header.php:64 header.php:165
 msgid "Log-out"
 msgstr "登出"
 
-#: header.php:178
+#: header.php:179
 msgid "Your have new notification"
 msgstr "您有新的提醒"
 
-#: header.php:188
+#: header.php:189
 msgid "You have new P.M."
 msgstr "您有新的私信"
 
-#: header.php:195
+#: header.php:196
 msgid "Log-in"
 msgstr "登录"
 
-#: header.php:207
+#: header.php:208
 msgid "Search"
 msgstr "搜索"
 
-#: header.php:216
+#: header.php:217
 msgid "Please input search keyword"
 msgstr "请输入搜索关键词"
 
@@ -1480,9 +1488,9 @@ msgstr "恢复文章数据完毕，请检查。"
 msgid "The post data has saved your browser."
 msgstr "文章数据已成功保存到您的浏览器中。"
 
-#: includes/custom-dashboard/custom-dashboard.php:66
-msgid "My dashboard"
-msgstr "我的仪表盘"
+#: includes/custom-dashboard/custom-dashboard.php:65
+msgid "Dashboard"
+msgstr "仪表盘"
 
 #: includes/custom-dashboard/dashboards.php:22
 msgid "My recent reward point actives"
@@ -2507,6 +2515,12 @@ msgstr "用户积分排行"
 msgid "No matched user yet."
 msgstr "暂无匹配到的用户。"
 
+#: includes/custom-point/widget.php:73
+#, php-format
+msgctxt "eg. 20 points"
+msgid "%s %s"
+msgstr "%s 个%s"
+
 #: includes/custom-point/widget.php:95 includes/custom-point/widget.php:102
 #: includes/widget-author-posts/widget-author-posts.php:81
 #: includes/widget-author-posts/widget-author-posts.php:88
@@ -2536,7 +2550,6 @@ msgid "Recalculate all posts point"
 msgstr "重新计算所有文章积分点"
 
 #: includes/custom-post-point/custom-post-point.php:127
-#: includes/custom-post-point/custom-post-point.php:465
 msgid "Operation completed."
 msgstr "操作完成。"
 
@@ -2581,6 +2594,10 @@ msgstr "抱歉，系统无法增加文章积分统计点数。"
 #: includes/custom-post-point/custom-post-point.php:440
 msgid "System can not increase rater posts."
 msgstr "系统无法增加评分者文章。"
+
+#: includes/custom-post-point/custom-post-point.php:465
+msgid "Operation successful, thank you for your participation."
+msgstr "操作成功，感谢您的参与！"
 
 #: includes/custom-post-point/custom-post-point.php:472
 msgid "Invaild type param."
@@ -2639,15 +2656,16 @@ msgstr "您已经对此文章评过分了。"
 msgid "You did not rate this post yet."
 msgstr "您还未对次文章评分。"
 
-#: includes/custom-post-point/custom-post-point.php:891
-#: includes/custom-post-point/custom-post-point.php:905
+#: includes/custom-post-point/custom-post-point.php:880
+#: includes/custom-post-point/custom-post-point.php:895
 #, php-format
-msgid "Rate %d %s"
+msgctxt "E.g. Rate 3 points"
+msgid "Rate %d %s."
 msgstr "打赏 %d 个%s"
 
-#: includes/custom-post-point/custom-post-point.php:899
-msgid "Toggle Dropdown"
-msgstr "下拉菜单"
+#: includes/custom-post-point/custom-post-point.php:885
+msgid "Rate it"
+msgstr "打赏"
 
 #: includes/custom-post-source/custom-post-source.php:57
 #: tpl/page-account-post.php:448
@@ -2800,15 +2818,18 @@ msgid "Extract password"
 msgstr "解压密码"
 
 #: includes/custom-post-storage/custom-post-storage.php:432
-#: includes/custom-post-storage/custom-post-storage.php:469
 msgid "Download now"
 msgstr "立即下载"
 
 #: includes/custom-post-storage/custom-post-storage.php:439
-#: includes/custom-post-storage/custom-post-storage.php:472
 #: includes/custom-slidebox/custom-slidebox.php:202
 msgid "Open in new window"
 msgstr "在新窗口中打开"
+
+#: includes/custom-post-storage/custom-post-storage.php:462
+#: includes/custom-post-storage/custom-post-storage.php:470
+msgid "Download"
+msgstr "下载"
 
 #: includes/custom-sign/custom-sign.php:69
 msgid "Custom sign settings"
@@ -4721,10 +4742,6 @@ msgstr "Tag 标签"
 msgid "Click to edit"
 msgstr "点击编辑"
 
-#: tpl/page-account-edit.php:37
-msgid "Edit"
-msgstr "编辑"
-
 #: tpl/page-account-edit.php:41
 msgid "View"
 msgstr "查看"
@@ -4937,6 +4954,12 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:117
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#~ msgid "Rate the post"
+#~ msgstr "打赏"
+
+#~ msgid "Toggle Dropdown"
+#~ msgstr "下拉菜单"
 
 #~ msgid "My profile"
 #~ msgstr "我的资料"
