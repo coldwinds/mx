@@ -1,9 +1,10 @@
 
 define(function(require,exports,module){'use strict';var js_request=require('theme-cache-request'),cache={};exports.click_handler=('touchend'in document.documentElement?'touchend':'click');exports.getElementLeft=function(e){var l=e.offsetLeft,c=e.offsetParent;while(c!==null){l+=c.offsetLeft;c=c.offsetParent;}
 return l;};exports.getElementTop=function(e){var l=e.offsetTop,c=e.offsetParent;while(c!==null){l+=c.offsetTop;c=c.offsetParent;}
-return l;};exports.parseHTML=function(s){var t=document.createElement('div');t.innerHTML=s;return t.firstChild;};exports.scrollTop=function(y,callback){var interval=Math.abs(y-window.pageYOffset)/16,st;function scroll_down(){if(window.pageYOffset<y){scrollTo(0,window.pageYOffset+interval);st=setTimeout(scroll_down,16);}else{clearTimeout(st);}}
-function scroll_up(){if(window.pageYOffset>y){scrollTo(0,window.pageYOffset-interval);st=setTimeout(scroll_up,16);}else{clearTimeout(st);}}
-if(window.pageYOffset<y){scroll_down();}else{scroll_up();}};exports.ajax_loading_tip=function(t,s,timeout){var doc=document,I=function(e){return doc.getElementById(e)};if(!cache.alt)
+return l;};exports.parseHTML=function(s){var t=document.createElement('div');t.innerHTML=s;return t.firstChild;};exports.scrollTop=function(targetY,callback){cache.scroll_timer=setInterval(function(){var currentY=window.pageYOffset;var tempTargetY=currentY-(currentY-targetY)/10;if(Math.abs(tempTargetY-currentY)<1&&tempTargetY-currentY>0){tempTargetY++;}
+if(Math.abs(tempTargetY-currentY)<1&&tempTargetY-currentY<0){tempTargetY--;}
+window.scrollTo(0,tempTargetY);if(Math.abs(window.pageYOffset-targetY)<=2){clearInterval(cache.scroll_timer);window.scrollTo(0,targetY);if(callback)
+callback();}},1);};exports.ajax_loading_tip=function(t,s,timeout){var doc=document,I=function(e){return doc.getElementById(e)};if(!cache.alt)
 cache.alt={};if(!cache.alt.si)
 cache.alt.si=false;if(!cache.alt.$t_container){cache.alt.$c=doc.createElement('i');cache.alt.$c.setAttribute('class','btn-close fa fa-times fa-fw');cache.alt.$t_container=doc.createElement('div');cache.alt.$t_container.id='ajax-loading-container';cache.alt.$t=doc.createElement('div');cache.alt.$t.id='ajax-loading';cache.alt.$t_container.appendChild(cache.alt.$t)
 cache.alt.$t_container.appendChild(cache.alt.$c);doc.body.appendChild(cache.alt.$t_container);cache.alt.$c.addEventListener(exports.click_handler,function(){action_close();clearInterval(cache.alt.si);});}

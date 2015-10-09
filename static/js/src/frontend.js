@@ -18,7 +18,18 @@ define(function(require, exports, module){
 			exports.scroll_menu();
 			exports.mobile_menu();
 			exports.toggle_menu();
+			exports.back_to_top();
 		});
+	}
+	exports.back_to_top = function(){
+		var $back = document.querySelector('.back-to-top');
+		if(!$back)
+			return false;
+		function event_click(e){
+			e.preventDefault();
+			tools.scrollTop(0);
+		}
+		$back.addEventListener(tools.click_handler, event_click);
 	}
 	exports.scroll_menu = function(){
 		var $menu = document.querySelector('.main-nav'),

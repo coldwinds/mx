@@ -9,7 +9,7 @@
  */
 .theme_custom_slidebox-candy{
 	position: relative;
-	padding: 0 0 40px;
+	margin: 40px 0;
 }
 .theme_custom_slidebox-candy .area-main:after{
 	display: block;
@@ -233,8 +233,8 @@
 		position: absolute;
 		top: -40px;
 		left: 0;
-		width: 100%;
-		bottom: 0;
+		right: 0;
+		bottom: -40px;
 		-webkit-filter: blur(20px);
 		-ms-filter: blur(20px);
 		filter: blur(20px);

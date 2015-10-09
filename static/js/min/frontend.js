@@ -1,5 +1,8 @@
 
-define(function(require,exports,module){'use strict';require.async(['modules/lazyload','modules/bootstrap-without-jq'],function(_a,_b){});var tools=require('modules/tools');exports.config={is_home:false};exports.init=function(){tools.ready(function(){exports.hide_no_js();exports.search();exports.posts_nav();exports.scroll_menu();exports.mobile_menu();exports.toggle_menu();});}
+define(function(require,exports,module){'use strict';require.async(['modules/lazyload','modules/bootstrap-without-jq'],function(_a,_b){});var tools=require('modules/tools');exports.config={is_home:false};exports.init=function(){tools.ready(function(){exports.hide_no_js();exports.search();exports.posts_nav();exports.scroll_menu();exports.mobile_menu();exports.toggle_menu();exports.back_to_top();});}
+exports.back_to_top=function(){var $back=document.querySelector('.back-to-top');if(!$back)
+return false;function event_click(e){e.preventDefault();tools.scrollTop(0);}
+$back.addEventListener(tools.click_handler,event_click);}
 exports.scroll_menu=function(){var $menu=document.querySelector('.main-nav'),y=0,fold=false,st=false,uping=false;if(!$menu)
 return false;function hide(){if(!fold){$menu.classList.add('fold');$menu.classList.remove('top')
 fold=true;}}

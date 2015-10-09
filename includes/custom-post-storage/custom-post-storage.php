@@ -60,7 +60,7 @@ class theme_custom_storage{
 				<tr>
 					<th><label for="<?= __CLASS__;?>-types"><?= ___('Storage types');?></label></th>
 					<td>
-						<textarea name="<= __CLASS__;?>[types]" id="<?= __CLASS__;?>-item" cols="50" rows="5" class="widefat" placeholder="<?= ___('ID = Storage name, e.g. bdpan = Baidu storage');?>"><?= self::get_types_text();?></textarea>
+						<textarea name="<?= __CLASS__;?>[types]" id="<?= __CLASS__;?>-types" cols="50" rows="5" class="widefat" placeholder="<?= ___('ID = Storage name, e.g. bdpan = Baidu storage');?>"><?= self::get_types_text();?></textarea>
 						<p class="description"><?= ___('One item per line');?></p>
 					</td>
 				</tr>
@@ -110,6 +110,7 @@ class theme_custom_storage{
 			if(empty(trim($_POST[__CLASS__]['types']))){
 				$opts[__CLASS__]['types'] = self::options_default()[__CLASS__]['types'];
 			}else{
+				$opts[__CLASS__] = $_POST[__CLASS__];
 				$lines = explode("\n",$_POST[__CLASS__]['types']);
 				$opts[__CLASS__]['types'] = array_map(function($v){
 					$items = explode('=',$v);
@@ -117,7 +118,6 @@ class theme_custom_storage{
 						return [trim($items[0]),trim($items[1])];
 				},$lines);
 			}
-			$opts[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $opts;
 	}
@@ -131,7 +131,8 @@ class theme_custom_storage{
 		$types = self::get_options('types');
 		$lines = [];
 		foreach($types as $k => $v){
-			$lines[] = $k . ' = ' . $v;
+			$lines[] = implode(' = ',$v);
+			//$lines[] = $k . ' = ' . $v;
 		}
 		return stripslashes(implode("\n",$lines));
 	}

@@ -2,7 +2,7 @@
 define(function(require,exports,module){'use strict';var tools=require('modules/tools'),js_request=require('theme-cache-request');exports.config={fm_id:'fm-ctb',file_area_id:'ctb-file-area',file_btn_id:'ctb-file-btn',file_id:'ctb-file',file_tip_id:'ctb-file-tip',files_id:'ctb-files',edit:false,thumbnail_id:false,attachs:false,cats:false,default_size:'large',process_url:'',lang:{M01:'Loading, please wait...',M02:'Uploading {0}/{1}, please wait...',M03:'Click to delete',M04:'{0} files have been uploaded.',M05:'Source',M06:'Click to view source',M07:'Set as cover.',M08:'Optional: some description',M09:'Insert',M10:'Preview',M11:'Large size',M12:'Medium size',M13:'Small size',E01:'Sorry, server is busy now, can not respond your request, please try again later.'}}
 var config=exports.config,cache={};exports.init=function(){tools.ready(exports.bind);}
 function I(e){return document.getElementById(e);}
-exports.bind=function(){cache.$fm=I('fm-ctb');cache.$post_id=I('ctb-post-id');cache.$post_title=I('ctb-title');cache.$post_excerpt=I('ctb-excerpt');cache.$file_area=I('ctb-file-area');cache.$file_btn=I('ctb-file-btn');cache.$file=I('ctb-file');cache.$files=I('ctb-files');cache.$file_progress=I('ctb-file-progress');cache.$file_completion_tip=I('ctb-file-completion');cache.$file_progress_bar=I('ctb-file-progress-bar');cache.$file_progress_tx=I('ctb-file-progress-tx');cache.$split_number=I('ctb-split-number');if(!cache.$fm)
+exports.bind=function(){cache.$fm=I('fm-ctb');cache.$post_id=I('ctb-post-id');cache.$post_title=I('ctb-title');cache.$post_content=I('ctb-content');cache.$post_excerpt=I('ctb-excerpt');cache.$file_area=I('ctb-file-area');cache.$file_btn=I('ctb-file-btn');cache.$file=I('ctb-file');cache.$files=I('ctb-files');cache.$file_progress=I('ctb-file-progress');cache.$file_completion_tip=I('ctb-file-completion');cache.$file_progress_bar=I('ctb-file-progress-bar');cache.$file_progress_tx=I('ctb-file-progress-tx');cache.$split_number=I('ctb-split-number');if(!cache.$fm)
 return false;load_thumbnails();upload();cats();toggle_reprint_group();fm_validate(cache.$fm);exports.auto_save.bind();}
 exports.auto_save={config:{save_interval:30,lang:{M01:'You have a auto save version, do you want to restore? Auto save last time is {time}.',M02:'Restore completed.',M03:'The data has saved your browser.'}},timer:false,bind:function(){var that=this;this.save_key='auto-save-'+cache.$post_id.value;this.check_version();this.timer=setInterval(function(){that.save();},this.config.save_interval*1000);cache.$quick_save=I('ctb-quick-save');if(cache.$quick_save){cache.$quick_save.addEventListener('click',function(){that.save();tools.ajax_loading_tip('success',that.config.lang.M03,3);})}},get:function(){var data=localStorage.getItem(this.save_key);return data?JSON.parse(data):false;},check_version:function(){var data=this.get();if(!data||!data.can_restore)
 return false;var msg=this.config.lang.M01.replace('{time}',data.time);if(!confirm(msg))
@@ -10,7 +10,7 @@ return false;this.restore();tools.ajax_loading_tip('success',this.config.lang.M0
 return false;var $img_links=doc.querySelectorAll('.img-link'),$img_thumbnail_urls=doc.querySelectorAll(' .img-link img'),$thumbnail_ids=doc.querySelectorAll('.img-thumbnail-checkbox'),data={};for(var i=0,len=$insert_btns.length;i<len;i++){data[$thumbnail_ids[i].value]={'attach-page-url':$insert_btns[i].getAttribute('data-attach-page-url'),full:{url:$img_links[i].href,},large:{url:$insert_btns[i].getAttribute('data-large-url'),width:$insert_btns[i].getAttribute('data-width'),height:$insert_btns[i].getAttribute('data-height')},thumbnail:{url:$img_thumbnail_urls[i].src},'attach-id':$thumbnail_ids[i].value}}
 return data;},del:function(){localStorage.removeItem(this.save_key);clearInterval(this.timer);},save:function(){var data={can_restore:false};if(cache.$post_title.value!==''){data.title=cache.$post_title.value;data.can_restore=true;}
 if(cache.$post_excerpt.value!==''){data.excerpt=cache.$post_excerpt.value;data.can_restore=true;}
-var post_content=tinymce.editors['ctb-content'].getContent();if(post_content!==''){data.content=post_content;data.can_restore=true;}
+var post_content=get_editor_content();if(post_content!==''){data.content=post_content;data.can_restore=true;}
 if(document.querySelector('.theme_custom_storage-group')){data.storage={};cache.$storage_items=document.querySelectorAll('.theme_custom_storage-item');for(var i=0,len=cache.$storage_items.length;i<len;i++){if(!data.storage[i])
 data.storage[i]={};data.storage[i]={type:I('theme_custom_storage-'+i+'-type').value,url:I('theme_custom_storage-'+i+'-url').value,download_pwd:I('theme_custom_storage-'+i+'-download-pwd').value,extract_pwd:I('theme_custom_storage-'+i+'-extract-pwd').value};}
 data.can_restore=true;}
@@ -27,7 +27,7 @@ if(data.can_restore){var d=new Date();data.time=d.getFullYear()+'-'+d.getMonth()
 return false;if(data.title)
 cache.$post_title.value=data.title;if(data.excerpt)
 cache.$post_excerpt.value=data.excerpt;if(data.content)
-content:tinymce.editors['ctb-content'].setContent(data.content);if(data.storage){for(var i in data.storage){var $item=I('theme_custom_storage-'+i+'-type');if($item){item_option_select:{for(var j=0,len=$item.options;j<len;j++){if($item.options[j].value===data.storage[i].type){$item.options[j].selected=true;break item_option_select;}}}}
+content:set_editor_content(data.content);if(data.storage){for(var i in data.storage){var $item=I('theme_custom_storage-'+i+'-type');if($item){item_option_select:{for(var j=0,len=$item.options;j<len;j++){if($item.options[j].value===data.storage[i].type){$item.options[j].selected=true;break item_option_select;}}}}
 $item=I('theme_custom_storage-'+i+'-url');if($item)
 $item.value=data.storage[i].url;$item=I('theme_custom_storage-'+i+'-download-pwd');if($item)
 $item.value=data.storage[i].download_pwd;$item=I('theme_custom_storage-'+i+'-extract-pwd');if($item)
@@ -41,16 +41,9 @@ $reprint_url.value=data.source.reprint_url;if($reprint_url)
 $reprint_author.value=data.source.reprint_author;if($item)
 $item.checked=true;}}
 if(data.preview){for(var i in data.preview){console.log(i);var preview_args={full:{url:data.preview[i].full.url},large:{url:data.preview[i].large.url,width:data.preview[i].large.width,height:data.preview[i].large.height},thumbnail:{url:data.preview[i].thumbnail.url},'attach-id':data.preview[i]['attach-id']};if(data.cover_id){config.thumbnail_id=data.cover_id;}
-preview_args['attach-page-url']=data.preview[i]['attach-page-url'];append_tpl(preview_args);}}}};function send_to_editor(h){var ed,mce=typeof(tinymce)!='undefined',qt=typeof(QTags)!='undefined';if(!wpActiveEditor){if(mce&&tinymce.activeEditor){ed=tinymce.activeEditor;wpActiveEditor=ed.id;}else if(!qt){return false;}}else if(mce){if(tinymce.activeEditor&&(tinymce.activeEditor.id=='mce_fullscreen'||tinymce.activeEditor.id=='wp_mce_fullscreen'))
-ed=tinymce.activeEditor;else
-ed=tinymce.get(wpActiveEditor);}
-if(ed&&!ed.isHidden()){if(tinymce.isIE&&ed.windowManager.insertimagebookmark)
-ed.selection.moveToBookmark(ed.windowManager.insertimagebookmark);if(h.indexOf('[caption')!==-1){if(ed.wpSetImgCaption)
-h=ed.wpSetImgCaption(h);}else if(h.indexOf('[gallery')!==-1){if(ed.plugins.wpgallery)
-h=ed.plugins.wpgallery._do_gallery(h);}else if(h.indexOf('[embed')===0){if(ed.plugins.wordpress)
-h=ed.plugins.wordpress._setEmbed(h);}
-ed.execCommand('mceInsertContent',false,h);}else if(qt){QTags.insertContent(h);}else{document.getElementById(wpActiveEditor).value+=h;}
-try{tb_remove();}catch(e){};}
+preview_args['attach-page-url']=data.preview[i]['attach-page-url'];append_tpl(preview_args);}}}};function set_editor_content(s){var ed=tinymce.editors['ctb-content'];if(ed&&!ed.isHidden()){tinymce.editors['ctb-content'].setContent(s);}else{cache.$post_content.value=s;}}
+function get_editor_content(){return cache.$post_content.value;}
+function send_to_editor(s){var ed=tinymce.editors['ctb-content'];if(ed&&!ed.isHidden()){ed.execCommand('mceInsertContent',false,s);}else if(typeof(QTags)!='undefined'){QTags.insertContent(s);}else{cache.$post_content.value+=s;}}
 function load_thumbnails(){if(!config.edit||!config.attachs)
 return false;for(var i in config.attachs){append_tpl(config.attachs[i]);}}
 function upload(){cache.$file.addEventListener('change',file_select);cache.$file.addEventListener('drop',file_drop);cache.$file.addEventListener('dragover',dragover);}
@@ -64,9 +57,8 @@ function file_beforesend_callback(){var tx=config.lang.M02.format(cache.file_ind
 function file_error_callback(msg){msg=msg?msg:config.lang.E01;uploading_tip('error',msg);}
 function upload_started(i,file,count){var t=config.lang.M02.format(i,count);uploading_tip('loading',t);}
 function file_complete_callback(data){try{data=JSON.parse(data)}catch(error){}
-cache.file_index++;if(data&&data.status==='success'){append_tpl(data);var editor_content=send_content({attach_page_url:data['attach-page-url'],width:data.large.width,height:data.large.height,img_url:data[config.default_size].url});if(cache.$split_number.value>=1&&cache.file_index>1){if(cache.file_index%cache.$split_number.value==0)
-editor_content='<!--nextpage-->'+editor_content;}
-send_to_editor(editor_content);if(cache.file_count===cache.file_index){var tx=config.lang.M04.format(cache.file_index,cache.file_count);uploading_tip('success',tx);cache.$file.value='';}else{file_upload(cache.files[cache.file_index]);}}else{if(cache.file_index>0){}
+cache.file_index++;if(data&&data.status==='success'){append_tpl(data);var editor_content=send_content({attach_page_url:data['attach-page-url'],width:data.large.width,height:data.large.height,img_url:data[config.default_size].url});if(cache.$split_number.value>=1&&cache.file_index>0&&(cache.file_index+1)%cache.$split_number.value==0){editor_content='<!--nextpage-->'+editor_content;}
+set_editor_content(get_editor_content()+editor_content);if(cache.file_count===cache.file_index){var tx=config.lang.M04.format(cache.file_index,cache.file_count);uploading_tip('success',tx);cache.$file.value='';}else{file_upload(cache.files[cache.file_index]);}}else{if(cache.file_index>0){}
 if(cache.file_count>cache.file_index){file_upload(cache.files[cache.file_index]);}else{cache.is_uploading=false;if(data&&data.status==='error'){file_error_callback(data.msg);}else{file_error_callback(config.lang.E01);console.error(data);}
 cache.$file.value='';}}}
 function append_tpl(data){var $tpl=get_preview_tpl(data);cache.$files.style.display='block';cache.$files.appendChild($tpl);$tpl.style.display='block';}

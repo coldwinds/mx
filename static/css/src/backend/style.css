@@ -19,25 +19,26 @@
 	z-index: 100000;
 	width: 100%;
 	text-align: center;
-	padding: 10px;
+	padding: 20px;
 	font-size: 20px;
 	line-height: 30px;
-	box-shadow: 0 20px 50px rgba(0,0,0,.5);
-	-webkit-transition: all .3s;
-	-moz-transition: all .3s;
-	transition: all .3s;
+	-webkit-transition-duration: .35s;
+	transition-duration: .35s;
+	-webkit-transform: translate3d(0,-100%,0);
+	transform: translate3d(0,-100%,0);
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
+	#ajax-loading-container #ajax-loading{
+		visibility: visible;
+	}
 	#ajax-loading-container .fa{
 		vertical-align: inherit;
 	}
-	/** 
-	 * type
-	 */
-	#ajax-loading-container.closed{
-		-moz-transform: translateY(-100%);
-		-webkit-transform: translateY(-100%);
-		transform: translateY(-100%);
-		opacity: 0;
+	#ajax-loading-container.show{
+		box-shadow: 0 20px 50px rgba(0,0,0,.5);
+		-webkit-transform: translate3d(0,0,0);
+		transform: translate3d(0,0,0);
 	}
 	#ajax-loading-container.success,
 	#ajax-loading-container.green{background:#defcd5}
@@ -57,22 +58,28 @@
 
 	#ajax-loading-container .btn-close{
 		position: absolute;
-		top: 7px;
-		right: 30px;
-		padding: 2px 5px;
+		top: 0;
+		right: 0;
 		cursor: pointer;
 		font-size: 30px;
-		color: #FBEEEE;
-		border-radius: 2px;
-		box-shadow: none;
-		border-bottom: 2px solid rgba(0,0,0,.1);
-		background: #D54E21;
+		padding: 20px;
+		width: auto;
+		height: 100%;
+		color: rgb(199,80,80);
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
 	}
 		#ajax-loading-container .btn-close:hover{
-			color:#fff;
+			color: #fff;
+			background:rgb(224,67,67);
+		}
+		#ajax-loading-container .btn-close:active,
+		#ajax-loading-container .btn-close:focus{
+			color: #fff;
+			background: rgb(153,61,61);
 		}
 		#ajax-loading-container .btn-close .number{
-			font-size: 90%;
+			font-size: 50%;
 		}
 	#ajax-loading-container .tip-status{
 		display: inline;
@@ -80,11 +87,20 @@
 		background: none;
 		border: none;
 	}
-	#ajax-loading-container #ajax-loading{
-		visibility: visible;
+	#ajax-loading{
+		margin: 0 20px;
+	}
+@media( min-width: 768px ){
+	#ajax-loading-container{
+		font-size: 25px;
+	}
+	#ajax-loading{
 		margin: 0 40px;
 	}
-
+}
+.fa-spin {
+    animation: 2s cubic-bezier(.68,-0.55,.27,1.55) 0s normal none infinite running fa-spin;
+}
 /* 描述 */
 .description{
 	padding-left:1rem;

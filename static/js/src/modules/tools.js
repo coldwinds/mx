@@ -36,32 +36,28 @@ define(function(require, exports, module){
 		return t.firstChild;
 	};
 
-	exports.scrollTop = function(y,callback){
-		var interval = Math.abs(y - window.pageYOffset) / 16,
-			st;
-			//console.log(interval);
-		function scroll_down(){
-			if(window.pageYOffset < y){
-				scrollTo(0,window.pageYOffset + interval);
-				st = setTimeout(scroll_down,16);
-			}else{
-				clearTimeout(st);
-			}
-		}
-		function scroll_up(){
-			if(window.pageYOffset > y){
-				scrollTo(0,window.pageYOffset - interval);
-				st = setTimeout(scroll_up,16);
-			}else{
-				clearTimeout(st);
-			}
-		}
-		if(window.pageYOffset < y){
-			//console.log(window.pageYOffset);
-			scroll_down();
-		}else{
-			scroll_up();
-		}
+	exports.scrollTop = function(targetY,callback){
+		cache.scroll_timer = setInterval(function () {
+	        var currentY = window.pageYOffset;
+
+	        var tempTargetY = currentY - (currentY - targetY) / 10;
+	        if (Math.abs(tempTargetY - currentY) < 1 && tempTargetY - currentY > 0) {
+	            tempTargetY++;
+	        }
+	        if (Math.abs(tempTargetY - currentY) < 1 && tempTargetY - currentY < 0) {
+	            tempTargetY--;
+	        }
+	     
+	        window.scrollTo(0, tempTargetY);
+
+	        if (Math.abs(window.pageYOffset - targetY) <= 2) {
+	            clearInterval(cache.scroll_timer);
+	            window.scrollTo(0, targetY);
+
+	            if(callback)
+	            	callback();
+	        }
+	    }, 1);
 	};
 	/**
 	 * ajax_loading_tip

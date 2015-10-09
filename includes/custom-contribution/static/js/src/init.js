@@ -48,6 +48,7 @@ define(function(require, exports, module){
 		cache.$fm = 				I('fm-ctb');
 		cache.$post_id = 			I('ctb-post-id');
 		cache.$post_title = 		I('ctb-title');
+		cache.$post_content = 		I('ctb-content');
 		cache.$post_excerpt = 		I('ctb-excerpt');
 		cache.$file_area = 			I('ctb-file-area');
 		cache.$file_btn = 			I('ctb-file-btn');
@@ -181,7 +182,7 @@ define(function(require, exports, module){
 			}
 
 			/** content */
-			var post_content = tinymce.editors['ctb-content'].getContent();
+			var post_content = get_editor_content();
 			if(post_content !== ''){
 				data.content = post_content;
 				data.can_restore = true;
@@ -279,7 +280,7 @@ define(function(require, exports, module){
 
 			/** post content */
 			if(data.content)
-				content : tinymce.editors['ctb-content'].setContent(data.content);
+				content : set_editor_content(data.content);
 				
 			/** storage */
 			if(data.storage){
@@ -372,55 +373,32 @@ define(function(require, exports, module){
 		}
 	};
 	
-	
-	
+	function set_editor_content(s){
+		var ed = tinymce.editors['ctb-content'];
+		if(ed && !ed.isHidden()){
+			tinymce.editors['ctb-content'].setContent(s);
+		}else{
+			cache.$post_content.value = s;
+		}
+	}
+	function get_editor_content(){
+		return cache.$post_content.value;
+	}
 	/**
 	 * send_to_editor
 	 * 
 	 * @return 
 	 * @version 1.0.0
 	 */
-	function send_to_editor(h) {
-		var ed, mce = typeof(tinymce) != 'undefined', qt = typeof(QTags) != 'undefined';
-
-		if ( !wpActiveEditor ) {
-			if ( mce && tinymce.activeEditor ) {
-				ed = tinymce.activeEditor;
-				wpActiveEditor = ed.id;
-			} else if ( !qt ) {
-				return false;
-			}
-		} else if ( mce ) {
-			if ( tinymce.activeEditor && (tinymce.activeEditor.id == 'mce_fullscreen' || tinymce.activeEditor.id == 'wp_mce_fullscreen') )
-				ed = tinymce.activeEditor;
-			else
-				ed = tinymce.get(wpActiveEditor);
+	function send_to_editor(s) {
+		var ed = tinymce.editors['ctb-content'];
+		if(ed && !ed.isHidden()){
+			ed.execCommand('mceInsertContent', false, s);
+		}else if(typeof(QTags) != 'undefined'){
+			QTags.insertContent(s);
+		}else{
+			cache.$post_content.value += s;
 		}
-
-		if ( ed && !ed.isHidden() ) {
-			// restore caret position on IE
-			if ( tinymce.isIE && ed.windowManager.insertimagebookmark )
-				ed.selection.moveToBookmark(ed.windowManager.insertimagebookmark);
-
-			if ( h.indexOf('[caption') !== -1 ) {
-				if ( ed.wpSetImgCaption )
-					h = ed.wpSetImgCaption(h);
-			} else if ( h.indexOf('[gallery') !== -1 ) {
-				if ( ed.plugins.wpgallery )
-					h = ed.plugins.wpgallery._do_gallery(h);
-			} else if ( h.indexOf('[embed') === 0 ) {
-				if ( ed.plugins.wordpress )
-					h = ed.plugins.wordpress._setEmbed(h);
-			}
-
-			ed.execCommand('mceInsertContent', false, h);
-		} else if ( qt ) {
-			QTags.insertContent(h);
-		} else {
-			document.getElementById(wpActiveEditor).value += h;
-		}
-
-		try{tb_remove();}catch(e){};
 	}
 	function load_thumbnails(){
 		if( !config.edit || !config.attachs )
@@ -530,8 +508,10 @@ define(function(require, exports, module){
 		 * success
 		 */
 		if(data && data.status === 'success'){
+			/** append to tpl */
 			append_tpl(data);
-			/** send to editor */
+			
+			/** preset editor content */
 			var editor_content = send_content({
 				attach_page_url : data['attach-page-url'],
 				width : data.large.width,
@@ -540,11 +520,11 @@ define(function(require, exports, module){
 			});
 			
 			/** nextpage checked */
-			if(cache.$split_number.value >= 1 && cache.file_index > 1){
-				if(cache.file_index % cache.$split_number.value == 0)
-					editor_content = '<!--nextpage-->' + editor_content;
+			if(cache.$split_number.value >= 1 && cache.file_index > 0 && (cache.file_index + 1) % cache.$split_number.value == 0){
+				editor_content = '<!--nextpage-->' + editor_content;
 			}
-			send_to_editor(editor_content);
+			/** set content to editor */
+			set_editor_content(get_editor_content() + editor_content);
 		
 			/** 
 			 * check all thing has finished, if finished

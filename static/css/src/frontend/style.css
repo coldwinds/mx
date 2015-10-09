@@ -742,7 +742,7 @@ img{
  * ad
  */
 .ad-container{
-	margin: 20px 0;
+	margin-bottom: 20px;
 }
 .ad-below-post-title{
 	margin: -20px -20px 20px;
@@ -1246,7 +1246,6 @@ label.error{
  */
 .main-header{
 	min-height: 64px;
-	margin-bottom: 20px;
 }
 .main-nav-placeholder{
 	height: 64px;
@@ -2995,9 +2994,6 @@ body.menu-on #mobile-on-layer{
 	}
 	
 @media (min-width: 768px){
-	.main-nav-placeholder{
-		height: 94px;
-	}
 	.main-nav{
 		top: 0;
 	}
