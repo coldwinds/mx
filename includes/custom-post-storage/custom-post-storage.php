@@ -135,7 +135,7 @@ class theme_custom_storage{
 		$lines = [];
 		$lines = array_map(function($v){
 			return array_keys($v)[0] . ' = ' . array_values($v)[0];
-		},self::get_options('types'));
+		},self::get_types());
 		
 		return stripslashes(implode("\n",$lines));
 	}

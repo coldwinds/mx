@@ -8,18 +8,22 @@
 .screen-reader-text{
 	display: none;
 }
-
+#ctb-split-number{
+	display: inline-block;
+	width: auto;
+}
 #ctb-file-btn{
 	position: relative;
 	background: rgb(248,248,248);
 	overflow: hidden;
 	width: 100%;
-	padding: 1em 0;
-	border: 3px dashed #ccc;
+	padding: .5em 0;
+	border: 5px dashed #999;
 	text-align: center;
-	border-radius: 4px;
-	font-size: 2em;
+	border-radius: 2px;
+	font-size: 1.5em;
 	color: #666;
+	margin-bottom: 10px;
 }
 	#ctb-file-btn:hover{
 		background: #eee;
@@ -46,46 +50,29 @@
 		top: -5px;
 		left: 10px;
 	}
-	#ctb-file-progress,
+	#ctb-file-progress-container,
 	#ctb-file-completion,
 	#ctb-files{
 		display: none;
 		margin-top: 10px;
 	}
-	#ctb-file-progress{
+	#ctb-file-progress-container{
 		position: relative;
+		height: 70px;
+		overflow: hidden;
+		border-radius: 2px;
+		margin-bottom: 10px;
 	}
-	#ctb-file-progress .tip-status{
-		font-size: 2em;
-		padding: 1em 0;
-		text-align: center;
+	#ctb-file-progress{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 1px;
+		height: 100%;
+		-webkit-transition-duration: .75s;
+		transition-duration: .75s;
 	}
-		#ctb-file-progress .tip-status i{
-			
-		}
-		#ctb-file-progress-bar{
-			background: #428bca;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 10%;
-			height: 2px;
-			-webkit-transition:all .5s;
-			-moz-transition:all .5s;
-			transition:all .5s;
-		}
-			#ctb-file-progress-bar:after{
-				width: 10px;
-				height: 10px;
-				background: #428bca;
-				content: '';
-				position: absolute;
-				right: 0;
-				bottom: -4px;
-				-webkit-border-radius: 50%;
-				-moz-border-radius: 50%;
-				border-radius: 50%;
-			}
+
 	#ctb-files{
 		margin-top: 0;
 	}
@@ -107,7 +94,6 @@
 		}
 		.ctb-set-cover-btn{
 			display: block;
-			border: 1px solid #b2b2b2;
 			border-radius:2px;
 			padding: 2px 0;
 			text-align: center;

@@ -674,7 +674,7 @@ class theme_custom_contribution{
 				M01 : '<?= ___('Loading, please wait...');?>',
 				M02 : '<?= ___('Uploading {0}/{1}, please wait...');?>',
 				M03 : '<?= ___('Click to delete');?>',
-				M04 : '<?= ___('{0} files have been uploaded.');?>',
+				M04 : '<?= ___('{0} files have been uploaded, please insert to post content on demand.');?>',
 				M05 : '<?= ___('Source');?>',
 				M06 : '<?= ___('Click to view source');?>',
 				M07 : '<?= ___('Set as cover.');?>',

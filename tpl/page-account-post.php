@@ -129,22 +129,7 @@ function post_form($post_id = null){
 				?>
 			</div>
 		</div>
-		<!-- split with next-page -->
-		<div class="form-group">
-			<div class="col-sm-2 control-label">
-				<i class="fa fa-scissors"></i>
-				<?= ___('Image next-page tag');?>
-			</div>
-			<div class="col-sm-10">
-				<select id="ctb-split-number" class="form-control">
-					<option value="0"><?= ___('Do not use next-page tag');?></option>
-					<?php for($i=1;$i<=10;++$i){ ?>
-						<option value="<?= $i;?>"><?= sprintf(___('%d image(s) / page'),$i);?></option>
-					<?php } ?>
-				</select>
-				<p class="description"><?= ___('How many images to split with next-page tag?');?> <i class="fa fa-info-circle"></i> <?= ___('Please confirm before uploading image.');?></p>
-			</div>
-		</div>
+		
 		
 		<!-- upload image -->
 		<div class="form-group">
@@ -155,28 +140,45 @@ function post_form($post_id = null){
 			<div class="col-sm-10">
 				<div id="ctb-file-area">
 					<div class="" id="ctb-file-btn">
-						<i class="fa fa-image"></i>
+						<i class="fa fa-upload"></i>
 						<?= ___('Select or Drag images');?>
 						<input type="file" id="ctb-file" multiple >
 					</div>
 				</div>
 				<!-- upload progress -->
-				<div id="ctb-file-progress">
-					<div id="ctb-file-progress-tx"></div>
-					<div id="ctb-file-progress-bar"></div>
+				<div id="ctb-file-progress-container" class="progress">
+					<div id="ctb-file-progress" class="progress-bar progress-bar-success progress-bar-striped active"></div>
 				</div>
+				
+				<!-- file tool -->
+				<div id="ctb-file-tool">
+
+					<!-- batch insert -->
+					<a href="javascript:;" id="ctb-batch-insert-btn" class="btn btn-primary">
+						<i class="fa fa-plug"></i> <?= ___('Batch insert images to content');?>
+					</a>
+						
+					<select id="ctb-split-number" class="form-control" title="<?= ___('How many images to split with next-page tag?');?>">
+						<option value="0"><?= ___('Do not use next-page tag');?></option>
+						<?php for($i=1;$i<=10;++$i){ ?>
+							<option value="<?= $i;?>"><?= sprintf(___('%d image(s) / page'),$i);?></option>
+						<?php } ?>
+					</select>
+
+					
+					
+				</div>
+
+				
 				<!-- file completion -->
 				<div id="ctb-file-completion"></div>
+
+				
 				<!-- files -->
 				<div id="ctb-files" class="row"></div>
 				
 			</div>
 		</div>
-
-
-
-
-
 
 		
 <!-- storage -->

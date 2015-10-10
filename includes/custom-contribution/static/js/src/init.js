@@ -38,11 +38,11 @@ define(function(require, exports, module){
 	}
 	var config = exports.config,
 		cache = {};
-	exports.init = function(){
-		tools.ready(exports.bind);
-	}
 	function I(e){
 		return document.getElementById(e);
+	}
+	exports.init = function(){
+		tools.ready(exports.bind);
 	}
 	exports.bind = function(){
 		cache.$fm = 				I('fm-ctb');
@@ -54,12 +54,15 @@ define(function(require, exports, module){
 		cache.$file_btn = 			I('ctb-file-btn');
 		cache.$file = 				I('ctb-file');
 		cache.$files = 				I('ctb-files');
+		
+		cache.$file_progress_container = I('ctb-file-progress-container');
 		cache.$file_progress = 		I('ctb-file-progress');
+		
 		cache.$file_completion_tip = I('ctb-file-completion');
-		cache.$file_progress_bar = 	I('ctb-file-progress-bar');
-		cache.$file_progress_tx = 	I('ctb-file-progress-tx');
 		
 		cache.$split_number = 		I('ctb-split-number');
+
+		cache.$batch_insert = 		I('ctb-batch-insert-btn');
 
 		if(!cache.$fm) 
 			return false;
@@ -74,10 +77,26 @@ define(function(require, exports, module){
 		
 		fm_validate(cache.$fm);	
 
+		restore_split_number();
+		
 		/** auto save */
 		exports.auto_save.bind();
+
+		batch_insert();
+
 	}
 
+	function save_split_number(){
+		var helper = function(){
+			localStorage.setItem('ctb-split-number',this.value);
+		}
+		cache.$split_number.addEventListener('change',helper);
+	}
+	function restore_split_number(){
+		var number = parseInt(localStorage.getItem('ctb-split-number'));
+		if(number > 0)
+			cache.$split_number.value = number;
+	}
 	/**
 	 * auto save
 	 */
@@ -130,17 +149,16 @@ define(function(require, exports, module){
 		},
 		/** preview thumbnail */
 		get_data_preview : function(){
-			var doc = document,
-				$insert_btns = doc.querySelectorAll('.ctb-insert-btn');
+			var $insert_btns = document.querySelectorAll('.ctb-insert-btn');
 			if(!$insert_btns[0])
 				return false;
 				
-			var $img_links = doc.querySelectorAll('.img-link'),
-				$img_thumbnail_urls = doc.querySelectorAll(' .img-link img'),
-				$thumbnail_ids = doc.querySelectorAll('.img-thumbnail-checkbox'),
+			var $img_links = document.querySelectorAll('.img-link'),
+				$img_thumbnail_urls = document.querySelectorAll(' .img-link img'),
+				$thumbnail_ids = document.querySelectorAll('.img-thumbnail-checkbox'),
 				
 				data = {};
-			for(var i=0,len=$insert_btns.length;i<len;i++){
+			for(var i=0, len=$insert_btns.length; i<len; i++){
 				data[$thumbnail_ids[i].value] = {
 					'attach-page-url' :  $insert_btns[i].getAttribute('data-attach-page-url'),
 					full : {
@@ -280,7 +298,7 @@ define(function(require, exports, module){
 
 			/** post content */
 			if(data.content)
-				content : set_editor_content(data.content);
+				set_editor_content(data.content);
 				
 			/** storage */
 			if(data.storage){
@@ -346,33 +364,33 @@ define(function(require, exports, module){
 
 			/** Preview */
 			if(data.preview){
+				/** set cover id */
+				if(data.cover_id)
+					config.thumbnail_id = data.cover_id;
 				for(var i in data.preview){
-					console.log(i);
-					var preview_args = {
-						full : {
-							url : data.preview[i].full.url
-						},
-						large : {
-							url : data.preview[i].large.url,
-							width : data.preview[i].large.width,
-							height : data.preview[i].large.height
-						},
-						thumbnail : {
-							url : data.preview[i].thumbnail.url
-						},
-						'attach-id' : data.preview[i]['attach-id']
-					};
-					/** set cover id */
-					if(data.cover_id){
-						config.thumbnail_id = data.cover_id;
-					}
-					preview_args['attach-page-url'] = data.preview[i]['attach-page-url'];
-					append_tpl(preview_args);
+					append_tpl(convert_to_preview_tpl_args(data.preview[i]));
 				}
 			}
 		}
 	};
-	
+	function convert_to_preview_tpl_args(data){
+		var preview_args = {
+			full : {
+				url : data.full.url
+			},
+			large : {
+				url : data.large.url,
+				width : data.large.width,
+				height : data.large.height
+			},
+			thumbnail : {
+				url : data.thumbnail.url
+			},
+			'attach-id' : data['attach-id']
+		};
+		preview_args['attach-page-url'] = data['attach-page-url'];
+		return preview_args;
+	}
 	function set_editor_content(s){
 		var ed = tinymce.editors['ctb-content'];
 		if(ed && !ed.isHidden()){
@@ -382,14 +400,14 @@ define(function(require, exports, module){
 		}
 	}
 	function get_editor_content(){
-		return cache.$post_content.value;
+		var ed = tinymce.editors['ctb-content'];
+		if(ed && !ed.isHidden()){
+			return tinymce.editors['ctb-content'].getContent();
+		}else{
+			return cache.$post_content.value;
+		}
 	}
-	/**
-	 * send_to_editor
-	 * 
-	 * @return 
-	 * @version 1.0.0
-	 */
+
 	function send_to_editor(s) {
 		var ed = tinymce.editors['ctb-content'];
 		if(ed && !ed.isHidden()){
@@ -443,6 +461,8 @@ define(function(require, exports, module){
 		cache.file = cache.files[0];
 		cache.file_index = 0;
 		file_upload(cache.files[0]);
+		cache.$file_progress.style.width = '1px';
+
 	}
 	/**
 	 * file_upload
@@ -479,15 +499,14 @@ define(function(require, exports, module){
 		
 		xhr.upload.onprogress = function(e){
 			if (e.lengthComputable) {
-				var percent = e.loaded / e.total * 100;		
-				cache.$file_progress_bar.style.width = percent + '%';
+				var percent = (e.loaded * cache.file_index) / (e.total * cache.file_count) * 100;
+				cache.$file_progress.style.width = percent + '%';
 			}
 		};
 		xhr.send(fd);
 	}
 	function file_beforesend_callback(){
 		var tx = config.lang.M02.format(cache.file_index + 1,cache.file_count);
-		cache.$file_progress_bar.style.width = '10%';
 		uploading_tip('loading',tx);
 	}
 	function file_error_callback(msg){
@@ -512,19 +531,17 @@ define(function(require, exports, module){
 			append_tpl(data);
 			
 			/** preset editor content */
-			var editor_content = send_content({
-				attach_page_url : data['attach-page-url'],
-				width : data.large.width,
-				height : data.large.height,
-				img_url : data[config.default_size].url
-			});
+			//var editor_content = get_img_content_tpl({
+			//	attach_page_url : data['attach-page-url'],
+			//	width : data.large.width,
+			//	height : data.large.height,
+			//	img_url : data[config.default_size].url
+			//});
 			
-			/** nextpage checked */
-			if(cache.$split_number.value >= 1 && cache.file_index > 1 && (cache.file_index + 1) % cache.$split_number.value == 0){
-				editor_content = '<!--nextpage-->' + editor_content;
-			}
+			
+			//}
 			/** set content to editor */
-			set_editor_content(get_editor_content() + editor_content);
+			//send_to_editor(editor_content);
 		
 			/** 
 			 * check all thing has finished, if finished
@@ -612,7 +629,7 @@ define(function(require, exports, module){
 					'<img src="' + args.thumbnail.url + '" alt="' + M10 +'" >' +
 				'</a>' +
 				
-				'<a href="javascript:;" class="btn btn-primary btn-block ctb-insert-btn" id="ctb-insert-' + args['attach-id'] + '" data-size="large" data-attach-page-url="' + args['attach-page-url'] + '" data-width="' + args.large.width + '" data-height="' + args.large.height + '" data-large-url="' + args.large.url + '" ><i class="fa fa-plug"></i> ' + config.lang.M09 + '</a>' +
+				'<a href="javascript:;" class="btn btn-default btn-block ctb-insert-btn" id="ctb-insert-' + args['attach-id'] + '" data-size="large" data-attach-page-url="' + args['attach-page-url'] + '" data-width="' + args.large.width + '" data-height="' + args.large.height + '" data-large-url="' + args.large.url + '" ><i class="fa fa-plug"></i> ' + config.lang.M09 + '</a>' +
 				
 				'<input type="radio" name="ctb[thumbnail-id]" id="img-thumbnail-' + args['attach-id'] + '" value="' + args['attach-id'] + '" hidden class="img-thumbnail-checkbox" required >' +
 				
@@ -638,7 +655,7 @@ define(function(require, exports, module){
 		var $insert_btn = $tpl.querySelectorAll('.ctb-insert-btn'),
 			send_content_helper = function(){
 				/** send to editor */
-				send_to_editor(send_content({
+				send_to_editor(get_img_content_tpl({
 					attach_page_url : this.getAttribute('data-attach-page-url'),
 					width : this.getAttribute('data-width'),
 					height : this.getAttribute('data-height'),
@@ -651,7 +668,16 @@ define(function(require, exports, module){
 
 		return $tpl;
 	}
-	function send_content(data){
+	/**
+	 * 
+	data = {
+		attach_page_url : '',
+		img_url : '',
+		width : '',
+		height : ''
+	}
+	 */
+	function get_img_content_tpl(data){
 		var title = cache.$post_title == '' ? config.lang.M10 : cache.$post_title.value;
 		return '<p><a href="' + data.attach_page_url + '" title="' + title + '" target="_blank" >' + 
 			'<img src="' + data.img_url + '" alt="' + title + '" width="'+ data.width + '" height="'+ data.height + '">' +
@@ -671,21 +697,59 @@ define(function(require, exports, module){
 		 * uploading status
 		 */
 		if(!status || status === 'loading'){
-			cache.$file_progress_tx.innerHTML = tools.status_tip('loading',text);
-			cache.$file_progress.style.display = 'block';
+			tools.ajax_loading_tip(status,text);
+			//cache.$file_progress_tx.innerHTML = text;
+			cache.$file_progress_container.style.display = 'block';
 			cache.$file_area.style.display = 'none';
-			cache.$file_completion_tip.style.display = 'none';
+			//cache.$file_completion_tip.style.display = 'none';
 		/** 
 		 * success status
 		 */
 		}else{
-			cache.$file_completion_tip.innerHTML = tools.status_tip(status,text)
-			cache.$file_completion_tip.style.display = 'block';
-			cache.$file_progress.style.display = 'none';
+			tools.ajax_loading_tip(status,text);
+			//cache.$file_completion_tip.innerHTML = tools.status_tip(status,text)
+			//cache.$file_completion_tip.style.display = 'block';
+			cache.$file_progress_container.style.display = 'none';
 			cache.$file_area.style.display = 'block';
 		}
 	}/** end uploading_tip */
 
+	function batch_insert(){
+		cache.$batch_insert.addEventListener('click', event_batch_insert_imgs);
+	}
+	function event_batch_insert_imgs(){
+		var data = exports.auto_save.get_data_preview(),
+			content = [],
+			index = 0;
+			
+		if(!data)
+			return false;
+
+		var len = Object.keys(data).length;
+			
+		for(var i in data){
+			
+			content.push(get_img_content_tpl({
+				attach_page_url : data[i]['attach-page-url'],
+				img_url : data[i].large.url,
+				width : data[i].large.width,
+				height : data[i].large.height
+			}));
+
+			/** nextpage checked */
+			if(cache.$split_number.value > 0 && 
+				index > 0 && 
+				index < len - 1 && 
+				(index + 1) % cache.$split_number.value == 0
+			){
+				content.push(' <!--nextpage--> ');
+			}
+			
+			index++;
+		}
+		if(content)
+			send_to_editor(content.join(''));
+	}
 	function fm_validate($fm){
 		var m = new tools.validate();
 			m.process_url = config.process_url;

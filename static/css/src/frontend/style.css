@@ -1228,19 +1228,21 @@ label.error{
 	.tip-status-middle{font-size:1.5rem}
 	.tip-status-large{font-size:2rem}
 
+
 /**
  * .navicon
  */
-.main-nav .navicon {
+.navicon {
+	float: left;
 	margin-left: -10px;
 	color: #FF4081;
 	font-size: 2em;
 	padding: 0 20px;
 	width: auto;
 }
-	.main-nav .navicon:hover{
-		background: rgba(0,0,0,.05);
-	}
+.navicon:hover{
+	background: rgba(0,0,0,.05);
+}
 /**
  * .main-header
  */
@@ -1461,13 +1463,7 @@ body.menu-on #mobile-on-layer{
 		
 	}
 
-/**
- * .navicon
- */
-.navicon{
-	float: left;
-	line-height: 80px;
-}
+
 /**
  * .menu-header
  */
@@ -1573,12 +1569,16 @@ body.menu-on #mobile-on-layer{
 		.menu-header .sub-menu .sub-menu{
 			left: 100%;
 			top: 0;
+			-webkit-transform-origin: left;
+			-ms-transform-origin: left;
+			transform-origin: left;
 		}
 		.menu-header li:hover > .sub-menu{
 			-ms-transform: scaleY(1);
 			-webkit-transform: scaleY(1);
 			transform: scaleY(1);
 		}
+
 		.menu-header .sub-menu > .menu-item-has-children > a:after{
 			display: inline-block;
 			margin-left: 1em;
@@ -2288,6 +2288,7 @@ body.menu-on #mobile-on-layer{
 		}
 		.post-circle-metas .meta:hover .box{
 			opacity: 1;
+			-webkit-transform: translate3d(-50%,0,0);
 			transform: translate3d(-50%,0,0);
 		}
 			.post-circle-metas .box a{
