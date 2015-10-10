@@ -200,53 +200,52 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		ob_start();
 		?>
 		<div class="theme_custom_storage-item">
-			<?= var_dump(theme_custom_storage::get_types());?>
-		<select name="theme_custom_storage[<?= $placeholder;?>][type]" id="theme_custom_storage-<?= $placeholder;?>-type" class="form-control theme_custom_storage-control">
-			<?php foreach(theme_custom_storage::get_types() as $item){ ?>
-				<?php the_option_list(array_keys($item)[0],array_values($item)[0],$storage_type);?>
-			<?php } ?>
-		</select>
-		<div class="row">
-			<div class="col-sm-6">
-				<input 
-					type="url" 
-					class="form-control" 
-					name="theme_custom_storage[<?= $placeholder;?>][url]" 
-					id="theme_custom_storage-<?= $placeholder;?>-url" 
-					title="<?= ___('Download page URL (include http://)');?>" 
-					placeholder="<?= ___('Download page URL (include http://)');?>" 
-					value="<?= $storage_url;?>" 
-				>
-			</div>
-			<div class="col-sm-3">
-				<div class="input-group">
-					<label class="input-group-addon" for="theme_custom_storage-download-pwd"><i class="fa fa-key fa-fw"></i></label>
+			<select name="theme_custom_storage[<?= $placeholder;?>][type]" id="theme_custom_storage-<?= $placeholder;?>-type" class="form-control theme_custom_storage-control">
+				<?php foreach(theme_custom_storage::get_types() as $item){ ?>
+					<?php the_option_list(array_keys($item)[0],array_values($item)[0],$storage_type);?>
+				<?php } ?>
+			</select>
+			<div class="row">
+				<div class="col-sm-6">
 					<input 
-						type="text" 
+						type="url" 
 						class="form-control" 
-						name="theme_custom_storage[<?= $placeholder;?>][download-pwd]" 
-						id="theme_custom_storage-<?= $placeholder;?>-download-pwd" 
-						title="<?= ___('Download password (optional)');?>" 
-						placeholder="<?= ___('Download password (optional)');?>" 
-						value="<?= $storage_download_pwd;?>" 
+						name="theme_custom_storage[<?= $placeholder;?>][url]" 
+						id="theme_custom_storage-<?= $placeholder;?>-url" 
+						title="<?= ___('Download page URL (include http://)');?>" 
+						placeholder="<?= ___('Download page URL (include http://)');?>" 
+						value="<?= $storage_url;?>" 
 					>
 				</div>
-			</div>
-			<div class="col-sm-3">
-				<div class="input-group">
-					<label class="input-group-addon" for="theme_custom_storage-url"><i class="fa fa-unlock fa-fw"></i></label>
-					<input 
-						type="text" 
-						class="form-control" 
-						name="theme_custom_storage[<?= $placeholder;?>][extract-pwd]" 
-						id="theme_custom_storage-<?= $placeholder;?>-extract-pwd" 
-						title="<?= ___('Extract password (optional)');?>" 
-						placeholder="<?= ___('Extract password (optional)');?>" 
-						value="<?= $storage_extract_pwd;?>" 
-					>
+				<div class="col-sm-3">
+					<div class="input-group">
+						<label class="input-group-addon" for="theme_custom_storage-download-pwd"><i class="fa fa-key fa-fw"></i></label>
+						<input 
+							type="text" 
+							class="form-control" 
+							name="theme_custom_storage[<?= $placeholder;?>][download-pwd]" 
+							id="theme_custom_storage-<?= $placeholder;?>-download-pwd" 
+							title="<?= ___('Download password (optional)');?>" 
+							placeholder="<?= ___('Download password (optional)');?>" 
+							value="<?= $storage_download_pwd;?>" 
+						>
+					</div>
 				</div>
-			</div>
-		</div><!-- /.row -->
+				<div class="col-sm-3">
+					<div class="input-group">
+						<label class="input-group-addon" for="theme_custom_storage-url"><i class="fa fa-unlock fa-fw"></i></label>
+						<input 
+							type="text" 
+							class="form-control" 
+							name="theme_custom_storage[<?= $placeholder;?>][extract-pwd]" 
+							id="theme_custom_storage-<?= $placeholder;?>-extract-pwd" 
+							title="<?= ___('Extract password (optional)');?>" 
+							placeholder="<?= ___('Extract password (optional)');?>" 
+							value="<?= $storage_extract_pwd;?>" 
+						>
+					</div>
+				</div>
+			</div><!-- /.row -->
 		</div><!-- /.item -->
 		<?php
 		$html = html_minify(ob_get_contents());
