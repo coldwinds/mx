@@ -41,7 +41,7 @@ class theme_post_share{
 	public static function display($args = []){
 		global $post;
 		$opt = self::get_options();
-		$img_url = theme_features::get_thumbnail_src();
+		$img_url = theme_features::get_thumbnail_src($post->ID);
 		$defaults = array(
 			'post_title_text' => theme_cache::get_the_title($post->ID),
 			'post_url' => theme_cache::get_permalink($post->ID),

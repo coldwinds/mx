@@ -1,12 +1,8 @@
 <?php
 if( post_password_required() || !comments_open() ) 
 	return;
-	
-$have_comments = have_comments();
-
 ?>
-
-<div id="comments" class="comment-wrapper panel panel-default <?= $have_comments ? null : 'none';?>">
+<div id="comments" class="comment-wrapper panel panel-default <?= have_comments() ? null : 'none';?>">
 	<div class="panel-heading">
 		<h2 class="have-comments-title panel-title">
 			<i class="fa fa-comments"></i> 

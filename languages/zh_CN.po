@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MX\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-10 17:56+0800\n"
-"PO-Revision-Date: 2015-10-10 17:56+0800\n"
+"POT-Creation-Date: 2015-10-10 19:57+0800\n"
+"PO-Revision-Date: 2015-10-10 19:57+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -82,7 +82,7 @@ msgstr "尾页 &raquo;"
 
 #: core/core-features.php:1593
 #: includes/custom-colorful-cats/custom-colorful-cats.php:103
-#: tpl/page-account-post.php:320
+#: tpl/page-account-post.php:319
 msgid "Select category"
 msgstr "选择目录"
 
@@ -336,7 +336,7 @@ msgstr "查看 %s 目录下的所有文章"
 msgid "Author avatar"
 msgstr "作者头像"
 
-#: functions.php:489 tpl/page-account-post.php:300
+#: functions.php:489 tpl/page-account-post.php:299
 msgid "Category"
 msgstr "分类"
 
@@ -1075,7 +1075,7 @@ msgstr "已是最后一页"
 
 #: includes/custom-author-profile/custom-author-profile.php:72
 #: includes/custom-author-profile/custom-author-profile.php:76
-#: tpl/page-account-post.php:491 tpl/page-account-post.php:492
+#: tpl/page-account-post.php:490 tpl/page-account-post.php:491
 msgid "Author"
 msgstr "作者"
 
@@ -1429,7 +1429,7 @@ msgid "{0} files have been uploaded, please insert to post content on demand."
 msgstr "{0} 个文件上传成功，请按需选择插入到文章内容。"
 
 #: includes/custom-contribution/custom-contribution.php:678
-#: tpl/page-account-post.php:437
+#: tpl/page-account-post.php:436
 msgid "Source"
 msgstr "来源"
 
@@ -2660,12 +2660,12 @@ msgid "Rate it"
 msgstr "打赏"
 
 #: includes/custom-post-source/custom-post-source.php:57
-#: tpl/page-account-post.php:450
+#: tpl/page-account-post.php:449
 msgid "Original"
 msgstr "原创"
 
 #: includes/custom-post-source/custom-post-source.php:60
-#: tpl/page-account-post.php:462
+#: tpl/page-account-post.php:461
 msgid "Reprint"
 msgstr "转载"
 
@@ -2781,19 +2781,19 @@ msgstr "文件存储"
 
 #: includes/custom-post-storage/custom-post-storage.php:287
 #: includes/custom-post-storage/custom-post-storage.php:288
-#: tpl/page-account-post.php:218 tpl/page-account-post.php:219
+#: tpl/page-account-post.php:217 tpl/page-account-post.php:218
 msgid "Download page URL (include http://)"
 msgstr "下载页面的 URL (包括 http://)"
 
 #: includes/custom-post-storage/custom-post-storage.php:296
 #: includes/custom-post-storage/custom-post-storage.php:297
-#: tpl/page-account-post.php:231 tpl/page-account-post.php:232
+#: tpl/page-account-post.php:230 tpl/page-account-post.php:231
 msgid "Download password (optional)"
 msgstr "提取码（可选）"
 
 #: includes/custom-post-storage/custom-post-storage.php:305
 #: includes/custom-post-storage/custom-post-storage.php:306
-#: tpl/page-account-post.php:245 tpl/page-account-post.php:246
+#: tpl/page-account-post.php:244 tpl/page-account-post.php:245
 msgid "Extract password (optional)"
 msgstr "解压密码（可选）"
 
@@ -4697,11 +4697,11 @@ msgstr "预览专刊"
 msgid "Add new post"
 msgstr "添加新文章"
 
-#: tpl/page-account-collection.php:131 tpl/page-account-post.php:341
+#: tpl/page-account-collection.php:131 tpl/page-account-post.php:340
 msgid "Pop. tags"
 msgstr "热门标签"
 
-#: tpl/page-account-collection.php:160 tpl/page-account-post.php:410
+#: tpl/page-account-collection.php:160 tpl/page-account-post.php:409
 msgid "Custom tags"
 msgstr "自定义标签"
 
@@ -4710,11 +4710,11 @@ msgstr "自定义标签"
 msgid "tag %d"
 msgstr "标签 %d"
 
-#: tpl/page-account-collection.php:184 tpl/page-account-post.php:512
+#: tpl/page-account-collection.php:184 tpl/page-account-post.php:511
 msgid "Sending, please wait..."
 msgstr "数据发送中，请稍候…"
 
-#: tpl/page-account-collection.php:186 tpl/page-account-post.php:514
+#: tpl/page-account-collection.php:186 tpl/page-account-post.php:513
 msgid "Submit"
 msgstr "提交"
 
@@ -4855,48 +4855,48 @@ msgstr "文章内容"
 msgid "Upload preview image"
 msgstr "上传预览图"
 
-#: tpl/page-account-post.php:159
+#: tpl/page-account-post.php:158
 msgid "Batch insert images to content"
 msgstr "批量将图片插入到文章内容"
 
-#: tpl/page-account-post.php:162
+#: tpl/page-account-post.php:161
 msgid "How many images to split with next-page tag?"
 msgstr "每页显示多少张图片？"
 
-#: tpl/page-account-post.php:163
+#: tpl/page-account-post.php:162
 msgid "Do not use next-page tag"
 msgstr "不使用图片分页符"
 
-#: tpl/page-account-post.php:165
+#: tpl/page-account-post.php:164
 #, php-format
 msgid "%d image(s) / page"
 msgstr "%d 张图片 / 每页"
 
-#: tpl/page-account-post.php:266
+#: tpl/page-account-post.php:265
 msgid "Storage link"
 msgstr "网盘链接"
 
-#: tpl/page-account-post.php:416
+#: tpl/page-account-post.php:415
 #, php-format
 msgid "Custom tag %d"
 msgstr "自定义标签 %d"
 
-#: tpl/page-account-post.php:475 tpl/page-account-post.php:476
+#: tpl/page-account-post.php:474 tpl/page-account-post.php:475
 msgid "The source of work URL, includes http://"
 msgstr "作品的来源地址，包括 http://"
 
-#: tpl/page-account-post.php:506
+#: tpl/page-account-post.php:505
 msgid ""
 "The post data will be saved automatically per minute in your current "
 "borwser, you can also save it now manually."
 msgstr ""
 "该文章数据会在您当前的浏览器中，每分钟自动保存一次，您也可以手动进行保存。"
 
-#: tpl/page-account-post.php:507
+#: tpl/page-account-post.php:506
 msgid "Quick save"
 msgstr "快速保存"
 
-#: tpl/page-account-post.php:514
+#: tpl/page-account-post.php:513
 msgid "Update"
 msgstr "更新"
 
