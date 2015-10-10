@@ -57,7 +57,7 @@ function file_beforesend_callback(){var tx=config.lang.M02.format(cache.file_ind
 function file_error_callback(msg){msg=msg?msg:config.lang.E01;uploading_tip('error',msg);}
 function upload_started(i,file,count){var t=config.lang.M02.format(i,count);uploading_tip('loading',t);}
 function file_complete_callback(data){try{data=JSON.parse(data)}catch(error){}
-cache.file_index++;if(data&&data.status==='success'){append_tpl(data);var editor_content=send_content({attach_page_url:data['attach-page-url'],width:data.large.width,height:data.large.height,img_url:data[config.default_size].url});if(cache.$split_number.value>=1&&cache.file_index>0&&(cache.file_index+1)%cache.$split_number.value==0){editor_content='<!--nextpage-->'+editor_content;}
+cache.file_index++;if(data&&data.status==='success'){append_tpl(data);var editor_content=send_content({attach_page_url:data['attach-page-url'],width:data.large.width,height:data.large.height,img_url:data[config.default_size].url});if(cache.$split_number.value>=1&&cache.file_index>1&&(cache.file_index+1)%cache.$split_number.value==0){editor_content='<!--nextpage-->'+editor_content;}
 set_editor_content(get_editor_content()+editor_content);if(cache.file_count===cache.file_index){var tx=config.lang.M04.format(cache.file_index,cache.file_count);uploading_tip('success',tx);cache.$file.value='';}else{file_upload(cache.files[cache.file_index]);}}else{if(cache.file_index>0){}
 if(cache.file_count>cache.file_index){file_upload(cache.files[cache.file_index]);}else{cache.is_uploading=false;if(data&&data.status==='error'){file_error_callback(data.msg);}else{file_error_callback(config.lang.E01);console.error(data);}
 cache.$file.value='';}}}

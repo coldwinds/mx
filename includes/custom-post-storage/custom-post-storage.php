@@ -112,10 +112,14 @@ class theme_custom_storage{
 			}else{
 				$opts[__CLASS__] = $_POST[__CLASS__];
 				$lines = explode("\n",$_POST[__CLASS__]['types']);
+				
 				$opts[__CLASS__]['types'] = array_map(function($v){
 					$items = explode('=',$v);
-					if(isset($items[0],$items[1]))
-						return [trim($items[0]),trim($items[1])];
+					if(isset($items[0],$items[1])){
+						return [
+							trim($items[0]) => trim($items[1])
+						];
+					}
 				},$lines);
 			}
 		}
@@ -128,12 +132,11 @@ class theme_custom_storage{
 		return $types;
 	}
 	public static function get_types_text(){
-		$types = self::get_options('types');
 		$lines = [];
-		foreach($types as $k => $v){
-			$lines[] = implode(' = ',$v);
-			//$lines[] = $k . ' = ' . $v;
-		}
+		$lines = array_map(function($v){
+			return array_keys($v)[0] . ' = ' . array_values($v)[0];
+		},self::get_options('types'));
+		
 		return stripslashes(implode("\n",$lines));
 	}
 	public static function template_redirect(){
@@ -271,8 +274,8 @@ class theme_custom_storage{
 			<div class="<?= __CLASS__;?>">
 				<select class="widefat" name="<?= __CLASS__;?>[<?= $k;?>][type]" id="<?= __CLASS__;?>-<?= $k;?>-type">
 					<?php
-					foreach(self::get_types() as $type_id => $type_name){
-						the_option_list($type_id,self::get_types($type_id),$v['type']);
+					foreach(self::get_types() as $item){
+						the_option_list(array_keys($item)[0],array_values($item)[0],$v['type']);
 					}
 					?>
 				</select>

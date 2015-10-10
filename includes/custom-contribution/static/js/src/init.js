@@ -520,7 +520,7 @@ define(function(require, exports, module){
 			});
 			
 			/** nextpage checked */
-			if(cache.$split_number.value >= 1 && cache.file_index > 0 && (cache.file_index + 1) % cache.$split_number.value == 0){
+			if(cache.$split_number.value >= 1 && cache.file_index > 1 && (cache.file_index + 1) % cache.$split_number.value == 0){
 				editor_content = '<!--nextpage-->' + editor_content;
 			}
 			/** set content to editor */
