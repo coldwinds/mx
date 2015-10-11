@@ -8,7 +8,8 @@ callback();}},1);};exports.ajax_loading_tip=function(t,s,timeout){var doc=docume
 cache.alt={};if(!cache.alt.si)
 cache.alt.si=false;if(!cache.alt.$t_container){cache.alt.$c=doc.createElement('i');cache.alt.$c.setAttribute('class','btn-close fa fa-times fa-fw');cache.alt.$t_container=doc.createElement('div');cache.alt.$t_container.id='ajax-loading-container';cache.alt.$t=doc.createElement('div');cache.alt.$t.id='ajax-loading';cache.alt.$t_container.appendChild(cache.alt.$t)
 cache.alt.$t_container.appendChild(cache.alt.$c);doc.body.appendChild(cache.alt.$t_container);cache.alt.$c.addEventListener(exports.click_handler,function(){action_close();clearInterval(cache.alt.si);});}
-clearInterval(cache.alt.si);if(timeout>0){set_close_time(timeout);cache.alt.si=setInterval(function(){timeout--;set_close_time(timeout);if(timeout<=0){action_close();cache.alt.$c.innerHTML='';clearInterval(si);}},1000);}else{cache.alt.$c.innerHTML='';}
+clearInterval(cache.alt.si);if(timeout>0){set_close_time(timeout);cache.alt.si=setInterval(function(){timeout--;set_close_time(timeout);if(timeout<=0){action_close();cache.alt.$c.innerHTML='';if(si)
+clearInterval(si);}},1000);}else{cache.alt.$c.innerHTML='';}
 if(t==='hide'){action_close();}else{setTimeout(function(){cache.alt.$t_container.className=t+' show';},1);cache.alt.$t.innerHTML=exports.status_tip(t,s);}
 function set_close_time(t){cache.alt.$c.innerHTML='<b class="number">'+t+'</b>';}
 function action_close(){cache.alt.$t_container.classList.remove('show');}};exports.param=function(obj){return Object.keys(obj).map(function(key){return encodeURIComponent(key)+'='+encodeURIComponent(obj[key]);}).join('&');};exports.ready=function(fn){if(document.readyState!='loading'){if(typeof(fn)==='function')

@@ -22,9 +22,9 @@ $target_post = theme_custom_storage::get_decode_post();
 						the_content();
 					}
 				}
-				theme_custom_storage::download_info($target_post->ID);
 				?>
 			</div>
+			<?php theme_custom_storage::download_info($target_post->ID);?>
 		</div>
 	</div>
 </div>

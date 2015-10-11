@@ -107,7 +107,8 @@ define(function(require, exports, module){
 				if(timeout <= 0){
 					action_close();
 					cache.alt.$c.innerHTML = '';
-					clearInterval(si);
+					if(si)
+						clearInterval(si);
 				}
 			},1000);
 		}else{
