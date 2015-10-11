@@ -280,8 +280,8 @@ class theme_custom_storage{
 			<div class="<?= __CLASS__;?>">
 				<select class="widefat" name="<?= __CLASS__;?>[<?= $k;?>][type]" id="<?= __CLASS__;?>-<?= $k;?>-type">
 					<?php
-					foreach(self::get_types() as $item){
-						the_option_list(array_keys($item)[0],array_values($item)[0],$v['type']);
+					foreach(self::get_types() as $item_key => $item_name){
+						the_option_list($item_key,$item_name,$v['type']);
 					}
 					?>
 				</select>
@@ -469,8 +469,8 @@ class theme_custom_storage{
 			<div id="post-storage-number-<?= $post_id;?>" class="number">
 				<?php
 				if(class_exists('theme_post_views') && theme_post_views::is_enabled()){
-					$number = number_format(theme_post_views::get_views($post_id) * 0.5 - mt_rand(1,9));
-					echo $number <= 0 ? 0 : (int)$number;
+					$number = (int)(theme_post_views::get_views($post_id) * 0.5 - mt_rand(1,9));
+					echo $number <= 0 ? 0 : number_format($number);
 				}
 				?>
 			</div>
