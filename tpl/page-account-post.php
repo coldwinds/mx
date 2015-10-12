@@ -191,7 +191,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 	 */
 	$storage_tpl = function($placeholder) use ($storage_meta){
 		
-		$storage_type = isset($storage_meta[$placeholder]['type'][0]) ? $storage_meta[$placeholder]['type'][0] : null;
+		$storage_type = isset($storage_meta[$placeholder]['type']) ? $storage_meta[$placeholder]['type'] : null;
 		
 		$storage_url = isset($storage_meta[$placeholder]['url']) ? $storage_meta[$placeholder]['url'] : null;
 		
@@ -203,9 +203,9 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		?>
 		<div class="theme_custom_storage-item">
 			<select name="theme_custom_storage[<?= $placeholder;?>][type]" id="theme_custom_storage-<?= $placeholder;?>-type" class="form-control theme_custom_storage-control">
-				<?php foreach(theme_custom_storage::get_types() as $item){ ?>
-					<?php the_option_list(array_keys($item)[0],array_values($item)[0],$storage_type);?>
-				<?php } ?>
+				<?php foreach(theme_custom_storage::get_types() as $item_key => $item_name){
+					the_option_list($item_key,$item_name,$storage_type);
+				} ?>
 			</select>
 			<div class="row">
 				<div class="col-sm-6">
