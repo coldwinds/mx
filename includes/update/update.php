@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme_update
 Feature URI:	http://www.inn-studio.com
-Version:		3.0.0 
+Version:		3.0.1
 Description:	theme_update
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -35,7 +35,7 @@ class theme_update{
 		if(!$response)
 			return $transient;
 
-		$response = self::to_wp_format($response);
+		$response = self::to_wp_format((array)$response);
 
 		/** version compare */
 		if(version_compare($transient->checked[theme_functions::$basename], $response['new_version'], '>='))
@@ -52,6 +52,7 @@ class theme_update{
 			return $source;
 
 		$corrected_source = $remote_source . '/' . self::$last_theme . '/';
+
 		if(rename($source, $corrected_source)){
 			return $corrected_source;
 		}else{
@@ -80,6 +81,8 @@ class theme_update{
 		return $response;
 	}
 	private static function to_wp_format(array $response){
+		if(!isset($response['version'],$response['homepage'],$response['download_url']))
+			return false;
 		return [
 			'new_version' => $response['version'],
 			'url' => $response['homepage'],
