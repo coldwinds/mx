@@ -85,7 +85,7 @@ class theme_options{
 
 		?>
 		<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		<?= theme_features::get_theme_css('backend/style','normal');?>
+		<link rel="stylesheet" href="<?= theme_features::get_theme_css('backend/backend');?>">
 		<?php
 		/**
 		 * add admin_css hook 

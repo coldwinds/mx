@@ -1,12 +1,12 @@
-<!DOCTYPE html><html <?php language_attributes(); ?>><head>
-<meta charset="<?= theme_cache::get_bloginfo( 'charset' ); ?>">
+<!DOCTYPE html><html lang="<?= theme_cache::get_bloginfo('language');?>"><head>
+<meta charset="<?= theme_cache::get_bloginfo('charset');?>">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta http-equiv="Cache-Control" content="no-transform"><![endif]-->
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <meta name="author" content="INN STUDIO">
 <meta name="theme-color" content="#FF4081">
 <link rel="profile" href="http://gmpg.org/xfn/11">
-<link rel="pingback" href="<?= theme_cache::get_bloginfo('pingback_url'); ?>">
+<link rel="pingback" href="<?= theme_cache::get_bloginfo('pingback_url');?>">
 <?php wp_head();?></head>
 <body <?php body_class(); ?>>
 <?php

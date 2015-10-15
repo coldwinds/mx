@@ -1,7 +1,6 @@
-<?php
-?>
 <div class="panel panel-default">
 	<div class="panel-body">
+		<?= theme_custom_point::get_point_des();?>
 <div class="media">
 	<div class="media-left">
 		<img class="media-object" src="<?= theme_custom_point::get_point_img_url();?>" alt="">

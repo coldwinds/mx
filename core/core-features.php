@@ -1,46 +1,33 @@
 <?php
-
 /**
  * WordPress Extra Theme Features.
  *
  * Help you write a wp site quickly.
  *
  * @package KMTF
- * @version 5.0.7
+ * @version 6.0.0
  */
 class theme_features{
 	
-	public static $basedir_js 					= '/static/js/';
-	public static $basedir_js_src 				= '/static/js/src/';
-	public static $basedir_js_min				= '/static/js/min/';
-	public static $basedir_css		 			= '/static/css/';
-	public static $basedir_css_src 				= '/static/css/src/';
-	public static $basedir_css_min 				= '/static/css/min/';
-	public static $basedir_images 				= '/static/images/';
-	public static $basedir_images_src 			= '/static/images/src/';
-	public static $basedir_images_min 			= '/static/images/min/';
-	public static $basedir_includes 			= '/includes/';
-	public static $basedir_core 				= '/core/';
-	public static $basedir_languages 			= '/languages/';
-	
-	public static $iden = 'theme_features';	
+	public static $basedir_js 					= '/assets/js/';
+	public static $basedir_js_src 				= '/assets/js/src/';
+	public static $basedir_js_min				= '/assets/js/min/';
+	public static $basedir_css		 			= '/assets/css/';
+	public static $basedir_css_src 				= '/assets/css/src/';
+	public static $basedir_css_min 				= '/assets/css/min/';
+	public static $basedir_images_min 			= '/assets/images/min/';
+	public static $basedir_addons 				= '/addons/';
 	
 	public static function init(){
-		/** mt_xx encoding */
-		mb_internal_encoding('UTF-8');
-		
 		self::set_basename();
-		add_action('after_setup_theme',	__CLASS__ . '::after_setup_theme');
-		add_action('wp_footer',			__CLASS__ . '::theme_js',20);
+		add_action('after_setup_theme', __CLASS__ . '::after_setup_theme');
+		add_action('wp_footer', __CLASS__ . '::theme_js',20);
 	}
 
 	/**
 	 * theme_js
 	 * 
-	 * @return 
-	 * @example 
-	 * @version 1.1.4
-	 * @copyright Copyright (c) 2011-2013 INN STUDIO. (http://www.inn-studio.com)
+	 * @version 1.1.5
 	 **/
 	public static function theme_js(){
 		?>
@@ -73,6 +60,7 @@ class theme_features{
 		?>
 		seajs.config(<?= json_encode($config);?>);
 		<?php
+		unset($config);
 		/** Hook 'frontend_seajs_use' */
 		do_action('frontend_seajs_use');
 		?>
@@ -82,9 +70,8 @@ class theme_features{
 	/**
 	 * minify_force
 	 *
-	 * @param string
-	 * @return 
-	 * @version 1.0.2
+	 * @param string $file_or_dir
+	 * @version 2.0.0
 	 */
 	public static function minify_force($file_or_dir){
 		/** 
@@ -184,12 +171,12 @@ class theme_features{
 	 * @param string $file_basename the file name, like 'functions.js'
 	 * @param bool/string $version The file version
 	 * @return string
-	 * @version 1.2.5
+	 * @version 1.2.6
 	 * @since 3.3.0
 	 * @author INN STUDIO
 	 * 
 	 */
-	public static function get_theme_file_url($file_basename = null,$version = false){
+	public static function get_theme_file_url($file_basename = null,$mtime = null){
 
 		if(!$file_basename)
 			return self::get_template_directory_uri();
@@ -202,14 +189,12 @@ class theme_features{
 		 * get file url and path full
 		 */
 		$file_url = self::get_template_directory_uri() . $file_basename;
-		//$file_path = self::get_stylesheet_directory() . $file_basename;
 
 		/**
 		 * get file mtime
 		 */
-		if($version === true){
+		if($mtime === true)
 			$file_url = $file_url . '?v=' . theme_file_timestamp::get_timestamp();
-		}
 		
 		return $file_url;
 	}
@@ -219,7 +204,7 @@ class theme_features{
 	 * @param string 
 	 * @param string 
 	 * @return n/a
-	 * @version 1.0.2
+	 * @version 2.0.0
 	 */
 	public static function minify($file_path,$file_path_min){
 		if(!is_file($file_path)) 
@@ -228,43 +213,31 @@ class theme_features{
 		/**
 		 * minify
 		 */
-		$ext = strtolower(substr(strrchr($file_path, '.'), 1));
-		switch($ext){
-			/**
-			 * JS file
-			 */
-			case 'js':
-				if(!class_exists('theme_includes\JSMin')) 
-					include self::get_theme_includes_path('class/jsmin.php');
-					
-				$source = file_get_contents($file_path);
-				$min_dir = dirname($file_path_min);
-				if(!is_dir($min_dir))
-					mkdir($min_dir,0755,true);
-				file_put_contents($file_path_min,theme_includes\JSMin::minify($source));
-				unset($source);
-				break;
-			/**
-			 * CSS file
-			 */
+		switch(strtolower(substr(strrchr($file_path, '.'), 1))){
+			/** CSS */
 			case 'css':
-				if(!class_exists('theme_includes\CSSMin')) 
-					include self::get_theme_includes_path('class/cssmin.php');
-					
-				$source = file_get_contents($file_path);
-				$cssmin = new theme_includes\CSSMin();
+				if(!class_exists('theme_addons\CSSMin')) 
+					include self::get_theme_addons_path('class/cssmin.php');
+				$cssmin = new theme_addons\CSSMin();
 				$min_dir = dirname($file_path_min);
 				if(!is_dir($min_dir))
 					mkdir($min_dir,0755,true);
-				file_put_contents($file_path_min,$cssmin->run($source));
-				unset($source);
+				file_put_contents($file_path_min,$cssmin->run(file_get_contents($file_path)));
+				break;
+			/** JS */
+			case 'js':
+				if(!class_exists('theme_addons\JSMin')) 
+					include self::get_theme_addons_path('class/jsmin.php');
+				$min_dir = dirname($file_path_min);
+				if(!is_dir($min_dir))
+					mkdir($min_dir,0755,true);
+				file_put_contents($file_path_min,theme_addons\JSMin::minify(file_get_contents($file_path)));
 				break;
 			/**
 			 * Other
 			 */
 			default:
-				
-			
+				return false;
 		}
 	}
 	/**
@@ -274,229 +247,118 @@ class theme_features{
 	 * @version 1.2.3
 	 * @param string $file_basename js file basename, function = function.js
 	 * @param bool $url_only Only output the file src if true
-	 * @param bool/string $version The file version
+	 * @param bool/string $mtime The file version
 	 * @return string <script> tag string or js url only
 	 */
-	public static function get_theme_js($file_basename = null,$url_only = true,$version = false){
-		static $caches = [];
-		/**
-		 * cache
-		 */
-		$cache_id = md5($file_basename . $url_only . $version);
-		
-		if(isset($caches[$cache_id]))
-			return $caches[$cache_id];
-			
-		
-		$basedir = self::$basedir_js_min;
+	public static function get_theme_js($file_basename = null, $mtime = null){
 		/**
 		 * if dev mode is ON
 		 */
 		if(class_exists('theme_dev_mode') && theme_dev_mode::is_enabled()){
 			$basedir = self::$basedir_js_src;
+		}else{
+			$basedir = self::$basedir_js_min;
 		}
-		
-		/**
-		 * file_basename
-		 */
-		if(!$file_basename) return self::get_template_directory_uri() . $basedir;
-		/**
-		 * extension
-		 */
-		$extension = '.js';
-		/**
-		 * get file ext
-		 */
-		$ext = strtolower(substr(strrchr($file_basename, '.'), 1));
-		/**
-		 * redefine $file_basename
-		 */
-		$file_basename = $ext && $ext === 'js' ? $file_basename : $file_basename . $extension;
-		$file_url = self::get_theme_file_url($basedir . $file_basename,$version);
-		$caches[$cache_id] = $url_only ? $file_url : '<script src="' . esc_url($file_url) . '"></script>';
-		
-		return $caches[$cache_id];
+		if(!$file_basename) 
+			return self::get_template_directory_uri() . $basedir;
+		return self::get_theme_file_url($basedir . $file_basename . '.js', $mtime);
 	}
 	/**
 	 * theme_features::get_theme_css
 	 * 
-	 * @version 1.2.4
-	 * @param string $file_basename css file basename, style = style.css
-	 * @param mix $args
-	 * @param bool/string $version The file version
-	 * @return string url only /<link...> by $args
+	 * @version 2.0.0
+	 * @param string $file_basename css file basename, like 'style'
+	 * @param bool $mtime The file version
+	 * @return string Css url
 	 */
-	public static function get_theme_css($file_basename = null, $args = null,$version = true){
-		$basedir = self::$basedir_css_min;
+	public static function get_theme_css($file_basename = null, $mtime = false){
 		/**
 		 * if dev mode is ON
 		 */
 		if(class_exists('theme_dev_mode') && theme_dev_mode::is_enabled()){
 			$basedir = self::$basedir_css_src;
+		}else{
+			$basedir = self::$basedir_css_min;
 		}
-			
-		/**
-		 * file_basename
-		 */
 		if(!$file_basename) 
 			return self::get_template_directory_uri() . $basedir;
-		/**
-		 * extension
-		 */
-		$extension = '.css';
-	
-		/** get file ext */
-		$ext = strtolower(substr(strrchr($file_basename, '.'), 1));
-		
-		/**
-		 * redefine $file_basename
-		 */
-		if($ext){
-			$file_name = $file_basename;
-			$file_basename = basename($file_basename);
-		}else{
-			$file_name = $file_basename . $extension;
-		}
-		
-		$file_url = self::get_theme_file_url($basedir . $file_name,$version);
-		/**
-		 * check the $args
-		 */
-		if(!$args){
-			return $file_url;
-		}else if($args === 'normal'){
-			return '<link id="' . $file_basename . '" href="' . $file_url .'" rel="stylesheet" media="all"/>';
-		}else if(is_array($args)){
-			/* check the array of $args and to release */
-			$args = null;
-			foreach($args as $k => $v){
-				$args .= ' ' .$k. '="' .$v. '"';
-			}
-			return '<link id="' . $file_basename . '" href="' . $file_url .'" rel="stylesheet" ' .$args. '/>';
-		}
+		return self::get_theme_file_url($basedir . $file_basename . '.css', $mtime);
 	}
 	/**
 	 * get_theme_extension_url
 	 * 
-	 * @param array $args = [
-			'type' => 'includes/features',
-			'basedir' => null,
-			'file_basename' => null,
-			'mtime' => null,
-			'url_only' => true,
-		 ]
-	 * @return 
-	 * @version 2.0.1
-	 */
-	public static function get_theme_extension_url(array $args = []){
+	 * @param array 
 		$args = array_merge([
 			'type' => null,
 			'basedir' => null,
 			'file_basename' => null,
 			'ext' => null,
 			'mtime' => false,
-			'url_only' => true,
 		],$args);
-		
-		$dev_mode = class_exists('theme_dev_mode') && theme_dev_mode::is_enabled();
-
-
-		$file_ext = substr(strrchr($args['file_basename'], '.'), 1);
-
-		
-		$self_basedir_type = 'basedir_' . $args['type'];
-		$self_get_theme_type_url = 'get_theme_' . $args['type'] . '_url';
-
-		if($dev_mode){
+	 * @return string
+	 * @version 3.0.0
+	 */
+	public static function get_theme_extension_url(array $args){
+		if(class_exists('theme_dev_mode') && theme_dev_mode::is_enabled()){
 			$self_basedir_extension = 'basedir_' . $args['ext'] . '_src';
 		}else{
 			$self_basedir_extension = 'basedir_' . $args['ext'] . '_min';
 		}
-
-		if(!empty($args['type'])){
-			$file_path = $args['basedir'] . self::$$self_basedir_extension . $args['file_basename'];
-
-			$self_basedir = 'basedir_' . $args['type'];
-			$file_url = self::get_theme_url() . self::$$self_basedir . basename($args['basedir']) . self::$$self_basedir_extension . $args['file_basename'];
+		$self_basedir = 'basedir_' . $args['type'];
+		$file_url = self::get_theme_url() . self::$$self_basedir . basename($args['basedir']) . self::$$self_basedir_extension . $args['file_basename'] . '.' . $args['ext'];
 			
-		}
-		
-		/**
-		 * return if not url_only
-		 */
-		if($args['url_only'] === false)
-			return [
-				'path' => $file_path,
-				'url' => $file_url,
-				//'mtime' => $mtime,
-			];
-		
 		return $file_url;
 	}
 	
 	/**
-	 * get_theme_includes_js
+	 * get_theme_addons_js
 	 * 
 	 * @param string $DIR
-	 * @param string $filename
+	 * @param string $file_basename
 	 * @param bool $mtime
-	 * @return string
-	 * @version 2.0.1
+	 * @return string JS url
+	 * @version 3.0.0
 	 */
-	public static function get_theme_includes_js($DIR = null,$filename = 'init',$url_only = true){
-
-		$ext = strtolower(substr(strrchr($filename, '.'), 1));
-		
-		$file_basename = $ext !== 'js' ? $filename . '.js' : $filename;
-		
-		$args = [
-			'type' => 'includes',
+	public static function get_theme_addons_js($DIR = null,$file_basename = 'frontend', $mtime = null){
+		if($mtime === true)
+			$mtime = '?v=' . theme_file_timestamp::get_timestamp();
+			
+		return self::get_theme_extension_url([
+			'type' => 'addons',
 			'basedir' => $DIR,
 			'ext' => 'js',
 			'file_basename' => $file_basename,
-			'url_only' => $url_only,
-		];
-		
-		return self::get_theme_extension_url($args);
+		]) . $mtime;
 	}
 	/**
-	 * get_theme_includes_css
+	 * get_theme_addons_css
 	 * 
 	 * @param string $DIR
-	 * @param string $filename
+	 * @param string $file_basename
 	 * @param bool $mtime
 	 * @return string
-	 * @version 1.0.1
+	 * @version 3.0.0
 	 */
-	public static function get_theme_includes_css($DIR = null,$filename = 'style',$url_only = true, $mtime = false){
+	public static function get_theme_addons_css($DIR, $file_basename = 'frontend', $mtime = null){
+		if($mtime === true)
+			$mtime = '?v=' . theme_file_timestamp::get_timestamp();
 		
-		$ext = strtolower(substr(strrchr($filename, '.'), 1));
-		if($ext !== 'css'){
-			$file_basename = $filename . '.css';
-		}else{
-			$file_basename = $filename;
-		}
-		$args = [
-			'type' => 'includes',
+		return self::get_theme_extension_url([
+			'type' => 'addons',
 			'basedir' => $DIR,
 			'ext' => 'css',
 			'file_basename' => $file_basename,
-			'url_only' => $url_only,
-		];
-		if($mtime === true){
-			$mtime = '?v=' . theme_file_timestamp::get_timestamp();
-		}
-		return self::get_theme_extension_url($args) . $mtime;
+		]) . $mtime;
 	}
 	/**
-	 * get_theme_includes_image
+	 * get_theme_addons_image
 	 * 
 	 * @param string $DIR
 	 * @param string $filename
 	 * @return string
 	 * @version 1.0.3
 	 */
-	public static function get_theme_includes_image($DIR, $filename){
+	public static function get_theme_addons_image($DIR, $filename){
 		static $caches = [];
 		
 		$cache_id = $DIR . $filename;
@@ -505,7 +367,7 @@ class theme_features{
 			return $caches[$cache_id];
 			
 		$args = [
-			'type' => 'includes',
+			'type' => 'addons',
 			'basedir' => basename($DIR) . self::$basedir_images_min,
 			'file_basename' => $filename,
 		];
@@ -515,133 +377,17 @@ class theme_features{
 		$caches[$cache_id] = $url;
 		return $url;
 	}
-	/**
-	 * get_theme_extension_url_core
-	 * 
-	 * @param array $args
-	 * @param bool $mtime
-	 * @return string
-	 * @version 1.0.2
-	 */
-	public static function get_theme_extension_url_core($args = null){
-		/**
-		 * $args = array(
-		 *	'type' => 'includes/features',
-		 *	'basedir' => null,
-		 *	'file_basename' => null,
-		 *	'mtime' => null,
-		 * )
-		 */
-		if(!$args || !is_array($args)) return false;
-		$r = array_merge([
-			'type' => null,
-			'basedir' => null,
-			'file_basename' => null,
-			'mtime' => true,
-		],$args);
-		extract($r,EXTR_SKIP);
-		
-		
-		/**
-		 * check $basedir
-		 */
-		if(!$basedir) return self::get_theme_url();
-
-		$basedir = basename($basedir);
-		
-		if(!$file_basename) 
-			return self::get_theme_url() . '/' . $type . '/' . $basedir;
-		
-		/**
-		 * self::get_theme_includes_path / self::get_theme_features_path
-		 */
-		$self_get_theme_type_path = 'get_theme_' . $type . '_path';
-		/**
-		 * self::$basedir_includes / self::$basedir_features
-		 */
-		$self_basedir_type = 'basedir_' . $type;
-		
-		$dir_path = self::$self_get_theme_type_path('/' . $basedir . '/');
-
-		/** file ext */
-		$ext = strtolower(substr(strrchr($file_basename, '.'), 1));
-		
-		/**
-		 * file type
-		 */
-		if($ext === 'js' || $ext === 'css'){
-			/**
-			 * self::$basedir_js_src / self::$basedir_css_src
-			 */
-			$self_basedir_extension_src = 'basedir_' . $ext . '_src';
-			
-			$file_path_src = $dir_path . self::$$self_basedir_extension_src . $file_basename;
-			//if(!file_exists($file_path_src)) return false;
-			/**
-			 * file url src
-			 */
-			$file_url = self::get_theme_url() . self::$$self_basedir_type . $basedir . self::$$self_basedir_extension_src . $file_basename;
-
-			/**
-			 * if dev mode is ON
-			 */
-			if(class_exists('theme_dev_mode') && theme_dev_mode::is_enabled()){
-				$file_path = $file_path_src;
-			}else{
-				$self_basedir_extension_min = 'basedir_' . $ext . '_min';
-				$file_url = self::get_theme_url() . self::$$self_basedir_type . $basedir . self::$$self_basedir_extension_min . $file_basename;
-			}
-		}else{
-			$file_url = self::get_theme_url() . self::$$self_basedir_type . $basedir . $file_basename;
-		}
-		/**
-		 * get file mtime
-		 */
-		if($mtime === true){
-			if(file_exists($file_path_src)){
-				$file_mtime = filemtime($file_path_src);
-			}else{
-				$file_mtime = self::get_theme_info('version');
-			}
-		}
-
-		$mtime_str = $mtime ? '?v=' . $file_mtime : null;
-		return $file_url . $mtime_str;
-	}
 	
-	
-	/**
-	 * get_theme_includes_url
-	 * 
-	 * @param string $DIR
-	 * @param string $file_basename
-	 * @param bool $mtime
-	 * @return string
-	 * @version 1.0.1
-	 */
-	public static function get_theme_includes_url($DIR = null,$file_basename = null,$mtime = false){
-	
-		$args = [
-			'type' => 'includes',
-			'basedir' => basename($DIR),
-			'file_basename' => $file_basename,
-			'mtime' => $mtime,
-		];
-		return self::get_theme_extension_url_core($args);
-	}
 	/**
 	 * get_theme_images_url
 	 * 
 	 * @param string $file_basename
 	 * @param bool $mtime
 	 * @return string
-	 * @version 1.0.4
+	 * @version 2.0.0
 	 */
 	public static function get_theme_images_url($file_basename = null,$mtime = true){
-		if(!$file_basename) 
-			return self::get_template_directory_uri() . self::$basedir_images_min;
-			
-		return self::get_theme_file_url(self::$basedir_images_min . $file_basename,$mtime);
+		return $file_basename ? self::get_theme_file_url(self::$basedir_images_min . $file_basename,$mtime) : self::get_template_directory_uri() . self::$basedir_images_min;
 	}
 	/**
 	 * get the process file url of theme
@@ -692,19 +438,18 @@ class theme_features{
 	 *
 	 * @param string
 	 * @return bool
-	 * @version 1.1.1
+	 * @version 1.1.2
 	 */
 	public static function check_referer($referer = null){	
 		if(!$referer)
 			$referer = theme_cache::home_url();
 
 		if(!isset($_SERVER['HTTP_REFERER']) || stripos($_SERVER["HTTP_REFERER"],$referer) !== 0){
-			$output = array(
+			die(self::json_format([
 				'status' => 'error',
 				'code' => 'invalid_referer',
 				'msg' => ___('Sorry, referer is invalid.')
-			);
-			die(self::json_format($output));
+			]));
 		}
 	}
 	public static function create_nonce($key = 'theme-nonce',$focus = false){
@@ -726,12 +471,11 @@ class theme_features{
 	public static function check_nonce($action = 'theme-nonce',$key = 'theme-nonce'){
 		$nonce = isset($_REQUEST[$action]) ? $_REQUEST[$action] : null;
 		if(!wp_verify_nonce($nonce,$key)){
-			$output = [
+			die(self::json_format([
 				'status' => 'error',
 				'code' => 'invalid_security_code',
 				'msg' => ___('Sorry, security code is invalid.')
-			];
-			die(self::json_format($output));
+			]));
 		}
 	}
 	/**
@@ -750,26 +494,22 @@ class theme_features{
 	/**
 	 * theme_features::get_theme_path
 	 * 
-	 * @param string $file_basename
+	 * @param string $filename
 	 * @return string $file_path
-	 * @version 1.0.2
+	 * @version 2.0.0
 	 */
-	public static function get_theme_path($file_basename = null){
-		if(!$file_basename) 
-			return self::get_stylesheet_directory() . '/';
-		return $file_basename[0] === '/' ? self::get_stylesheet_directory() . $file_basename : self::get_stylesheet_directory() . '/' . $file_basename;
+	public static function get_theme_path($filename = null){
+		return $filename ? self::get_stylesheet_directory() . '/' . $filename : self::get_stylesheet_directory();
 	}
 	/**
-	 * theme_features::get_theme_includes_path
+	 * theme_features::get_theme_addons_path
 	 * 
-	 * @param string $file_basename
+	 * @param string $filename
 	 * @return string $file_path
-	 * @version 1.0.2
+	 * @version 2.0.0
 	 */
-	public static function get_theme_includes_path($file_basename = null){
-		if(!$file_basename) 
-			return self::get_stylesheet_directory() . self::$basedir_includes;
-		return $file_basename[0] === '/' ? self::get_stylesheet_directory() . self::$basedir_includes . $file_basename : self::get_stylesheet_directory() . self::$basedir_includes . $file_basename;
+	public static function get_theme_addons_path($filename = null){
+		return $filename ? self::get_stylesheet_directory() . self::$basedir_addons . $filename : self::get_stylesheet_directory() . self::$basedir_addons;
 	}
 	/**
 	 * Get post thumbnail src, if the post have not thumbnail, then get the first image from post content.
@@ -1454,19 +1194,19 @@ class theme_features{
 	}
 	
 	/**
-	 * load_includes
+	 * load_addons
 	 * Load the includes functions
 	 * 
 	 * @return 
 	 * @version 1.0.1
 	 * 
 	 */
-	private static function load_includes(){
-		$dh = opendir(self::get_theme_includes_path());
+	private static function load_addons(){
+		$dh = opendir(self::get_theme_addons_path());
 		while(($file = readdir($dh)) !== false){
 			if($file === '.' || $file === '..')
 				continue;
-			$file_path = self::get_theme_includes_path() . $file . '/' . $file . '.php';
+			$file_path = self::get_theme_addons_path() . $file . '/' . $file . '.php';
 			
 			/** start include */
 			if(is_file($file_path))
@@ -1479,7 +1219,7 @@ class theme_features{
 		 * @param array Callback function name
 		 * @return array
 		 */
-		foreach(apply_filters('theme_includes',[]) as $v){
+		foreach(apply_filters('theme_addons',[]) as $v){
 			call_user_func($v);
 		}
 		
@@ -1509,7 +1249,7 @@ class theme_features{
 		/**
 		 * Load includes functions
 		 */
-		self::load_includes();
+		self::load_addons();
 		/** 
 		 * auto_minify
 		 */
@@ -1543,21 +1283,21 @@ class theme_features{
 	 * auto_minify
 	 *
 	 * @return 
-	 * @version 1.0.5
+	 * @version 2.0.0
 	 */
 	public static function auto_minify(){
 		/** 
 		 * js and css files version
 		 */
 		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
-			ini_set('max_input_nesting_level','10000');
+			ini_set('max_input_nesting_level',10000);
 			ini_set('max_execution_time',0); 
 			
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_js_src);
 			
 			self::minify_force(self::get_stylesheet_directory() . self::$basedir_css_src);
 			
-			self::minify_force(self::get_stylesheet_directory() . self::$basedir_includes);
+			self::minify_force(self::get_stylesheet_directory() . self::$basedir_addons);
 			
 			theme_file_timestamp::set_timestamp();
 		}
