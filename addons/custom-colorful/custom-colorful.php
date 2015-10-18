@@ -2,10 +2,6 @@
 /**
  * @version
  */
-add_filter('theme_addons',function($fns){
-	//$fns[] = 'theme_custom_colorful::init';
-	return $fns;
-});
 class theme_custom_colorful{
 
 	public static function init(){
@@ -179,3 +175,7 @@ class theme_custom_colorful{
 		wp_enqueue_style(__CLASS__ . '-backend');
 	}
 }
+add_filter('theme_addons',function($fns){
+	//$fns[] = 'theme_custom_colorful::init';
+	return $fns;
+});

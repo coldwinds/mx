@@ -8,8 +8,8 @@ if(theme_custom_point::get_point_img_url()){
 	$point_icon = '<i class="fa fa-diamond fa-fw"></i>';
 }
 ?>
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<?= theme_custom_point_bomb::get_des();?>
 		<div class="page-tip" id="fm-bomb-loading"><?= status_tip('loading',___('Loading, please wait...'));?></div>
 		<form class="form-horizontal" action="post" id="fm-bomb" method="javascript:;">
@@ -85,4 +85,4 @@ if(theme_custom_point::get_point_img_url()){
 			</div>
 		</form>
 	</div>
-</div><!-- /.panel-body -->
+</div><!-- /.content -->

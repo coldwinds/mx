@@ -12,6 +12,37 @@ $redirect = get_query_var('redirect');
 
 $avatar = theme_custom_sign::get_options('avatar-url');
 
+/** log in html */
+$i_have_account_html = function(){
+	?>
+	<div class="g-phone-1-2">
+		<a class="btn btn-default btn-block" href="<?= theme_custom_sign::get_tabs('login')['url'];?>#main">
+			<i class="fa fa-<?= theme_custom_sign::get_tabs('login')['icon'];?> fa-fw"></i>
+			<?= ___('I have account');?>
+		</a>
+	</div>
+	<?php
+};
+$register_new_account_html = function(){
+	?>
+	<div class="g-phone-1-2">
+		<a class="btn btn-default btn-block" href="<?= theme_custom_sign::get_tabs('register')['url'];?>#main">
+			<i class="fa fa-<?= theme_custom_sign::get_tabs('register')['icon'];?> fa-fw"></i>
+			<?= ___('Register new account');?>
+		</a>
+	</div>
+	<?php
+};
+$forgot_my_pwd_html = function(){
+	?>
+	<div class="g-phone-1-2">
+		<a class="btn btn-default btn-block" href="<?= esc_url(theme_custom_sign::get_tabs('recover')['url']);?>#main">
+			<i class="fa fa-<?= theme_custom_sign::get_tabs('recover')['icon'];?> fa-fw"></i>
+			<?= ___('Forgot password?');?>
+		</a>
+	</div>
+	<?php
+};
 /**
  * open sign
  */
@@ -19,25 +50,28 @@ $open_sign_html = function(){
 	if(!class_exists('theme_open_sign'))
 		return;
 	?>
-	<div class="open-login btn-group btn-group-justified" >
-		<a href="<?= esc_url(theme_open_sign::get_login_url('qq'));?>" class="btn btn-primary">
-			<i class="fa fa-qq fa-fw"></i> 
-			<?= ___('Login from QQ');?>
-		</a>
-		<a href="javascript:;" class="btn btn-danger" disabled>
-			<del>
-				<i class="fa fa-weibo fa-fw"></i> 
-				<?= ___('Login from Weibo');?>
-			</del>
-		</a>
+	<div class="open-login row">
+		<div class="g-phone-1-2">
+			<a href="<?= theme_open_sign::get_login_url('qq');?>" class="btn btn-primary btn-block">
+				<i class="fa fa-qq fa-fw"></i> 
+				<?= ___('Login from QQ');?>
+			</a>
+		</div>
+		<div class="g-phone-1-2">
+			<a href="javascript:;" class="btn btn-danger btn-block" disabled>
+				<del>
+					<i class="fa fa-weibo fa-fw"></i> 
+					<?= ___('Login from Weibo');?>
+				</del>
+			</a>
+		</div>
 	</div>
 	<?php
 };
 ?>
 <?php get_header();?>
-<div class="container grid-container">
-	<div class="row">
-		<div id="main" class="main col-sm-6 col-lg-4 col-lg-offset-4 col-sm-offset-3 ">
+<div class="g">
+	<div id="main" class="main">
 		<?php
 		switch($tab_active){
 			/**
@@ -45,8 +79,8 @@ $open_sign_html = function(){
 			 */
 			case 'register':
 			?>
-<div class="<?= $avatar ? 'has-avatar' : null;?> panel panel-default mx-sign-panel mx-sign-panel-<?= $tab_active;?>">
-	<div class="panel-heading">
+<div class="<?= $avatar ? 'has-avatar' : null;?> panel mx-sign-panel mx-sign-panel-<?= $tab_active;?>">
+	<div class="heading">
 		
 		<?php if(!empty($avatar)){ ?>
 			<img class="avatar" src="<?= esc_url($avatar);?>" alt="avatar">
@@ -54,24 +88,24 @@ $open_sign_html = function(){
 		
 		<h3><?= ___('Account register');?></h3>
 	</div>
-	<div class="panel-body">
+	<div class="content">
 		<?php if(theme_cache::get_option('users_can_register')){ ?>
 			<form action="javascript:;" id="fm-sign-register" >
 				<div class="form-group">
 					<div class="input-group">
-						<label for="sign-nickname" class="input-group-addon"><i class="fa fa-user fa-fw"></i></label>
+						<label for="sign-nickname" class="addon"><i class="fa fa-user fa-fw"></i></label>
 						<input name="user[nickname]" type="text" class="form-control" id="sign-nickname" placeholder="<?= sprintf(___('Your nickname, at least %d length'),theme_custom_sign::$min_display_name_length);?>" title="<?= sprintf(___('Please type nickname, at least %d length'),theme_custom_sign::$min_display_name_length);?>" required minlength="<?= theme_custom_sign::$min_display_name_length;?>" tabindex="1" autofocus >
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="input-group">
-						<label for="sign-email" class="input-group-addon"><i class="fa fa-at fa-fw"></i></label>
+						<label for="sign-email" class="addon"><i class="fa fa-at fa-fw"></i></label>
 						<input name="user[email]" type="email" class="form-control" id="sign-email" placeholder="<?= ___('Please type email');?>" title="<?= ___('Please type email');?>" required tabindex="1">
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="input-group">
-						<label for="sign-pwd" class="input-group-addon"><i class="fa fa-key fa-fw"></i></label>
+						<label for="sign-pwd" class="addon"><i class="fa fa-key fa-fw"></i></label>
 						<input name="user[pwd]" type="password" class="form-control" id="sign-pwd" placeholder="<?= sprintf(___('Your password, at least %d length'),theme_custom_sign::$min_pwd_length);?>" title="<?= sprintf(___('Please type password, at least %d length'),theme_custom_sign::$min_pwd_length);?>" minlength="<?= theme_custom_sign::$min_pwd_length;?>" required tabindex="1">
 					</div>
 				</div>
@@ -95,20 +129,13 @@ $open_sign_html = function(){
 				<a href="javascript:history.back();" class="btn btn-success btn-block"><i class="fa fa-arrow-left"></i> <?= ___('Back');?></a>
 			</div>
 		<?php } ?>
-	</div><!-- /.panel-body -->
-</div><!-- /.panel -->
+	</div><!-- /.content -->
 <div class="form-group">
-	<div class="btn-group btn-group-justified">
-		<a class="btn btn-default" href="<?= esc_url(theme_custom_sign::get_tabs('login')['url']);?>#main">
-			<i class="fa fa-<?= theme_custom_sign::get_tabs('login')['icon'];?> fa-fw"></i>
-			<?= ___('I have account');?>
-		</a>
-		<a class="btn btn-default" role="button" href="<?= esc_url(theme_custom_sign::get_tabs('recover')['url']);?>#main">
-			<i class="fa fa-<?= theme_custom_sign::get_tabs('recover')['icon'];?> fa-fw"></i>
-			<?= ___('Forgot password?');?>
-		</a>
+	<div class="row">
+		<?php $i_have_account_html();?>
+		<?php $forgot_my_pwd_html();?>
 	</div>
-</div>
+</div><!-- /.main -->
 <?php
 /**
  * open sign
@@ -121,17 +148,17 @@ $open_sign_html();
 			 */
 			case 'recover':
 				?>
-<div class="panel panel-default mx-sign-panel mx-sign-panel-<?= $tab_active;?>">
-	<div class="panel-heading">
+<div class="panel mx-sign-panel mx-sign-panel-<?= $tab_active;?>">
+	<div class="heading">
 		<h3><?= ___('Recover password');?></h3>
 	</div>
 
-	<div class="panel-body">
+	<div class="content">
 		<form action="javascript:;" id="fm-sign-recover">
 			<div class="form-group"><?= ___('If you forgot your account password, you can recover your password by your account email. Please entry your account email, we will send a confirm email to it and reset your password.');?></div>
 			<div class="form-group">
 				<div class="input-group">
-					<label for="sign-email" class="input-group-addon"><i class="fa fa-at fa-fw"></i></label>
+					<label for="sign-email" class="addon"><i class="fa fa-at fa-fw"></i></label>
 					<input type="email" name="user[email]" id="sign-email" class="form-control" title="<?= ___('Please type email');?>" required tabindex="1" autofocus placeholder="<?= ___('Please type email');?>">
 				</div>
 			</div>
@@ -143,18 +170,12 @@ $open_sign_html();
 				<input type="hidden" name="type" value="recover">
 			</div>
 		</form>
-	</div><!-- /.panel-body -->
+	</div><!-- /.content -->
 </div><!-- /.panel -->
 <div class="form-group">
-	<div class="btn-group btn-group-justified">
-		<a class="btn btn-default" href="<?= esc_url(theme_custom_sign::get_tabs('login')['url']);?>#main">
-			<i class="fa fa-<?= theme_custom_sign::get_tabs('login')['icon'];?> fa-fw"></i>
-			<?= ___('I have account');?>
-		</a>
-		<a class="btn btn-default" href="<?= esc_url(theme_custom_sign::get_tabs('register')['url']);?>#main">
-			<i class="fa fa-<?= theme_custom_sign::get_tabs('register')['icon'];?> fa-fw"></i>
-			<?= ___('Register new account');?>
-		</a>
+	<div class="row">
+		<?php $i_have_account_html();?>
+		<?php $register_new_account_html();?>
 	</div>
 </div>
 				<?php
@@ -164,11 +185,11 @@ $open_sign_html();
 				$token = isset($_GET['token']) && is_string($_GET['token']) ? $_GET['token'] : null;
 				$decode_token = theme_custom_sign::get_decode_token($token);
 ?>
-<div class="panel panel-default mx-sign-panel mx-sign-panel-<?= $tab_active;?>">
-	<div class="panel-heading">
+<div class="panel mx-sign-panel mx-sign-panel-<?= $tab_active;?>">
+	<div class="heading">
 		<h3><?= ___('Reset my password');?></h3>
 	</div>
-	<div class="panel-body">
+	<div class="content">
 		<?php if(!isset($decode_token['user_id']) || !isset($decode_token['user_email'])){ ?>
 			<div class="page-tip">
 				<?= status_tip('error',___('Sorry, the url is expired, please recover password again.'));?>
@@ -181,13 +202,13 @@ $open_sign_html();
 			<form action="javascript:;" id="fm-sign-<?= $tab_active;?>">
 				<div class="form-group">
 					<div class="input-group">
-						<label for="sign-pwd" class="input-group-addon"><i class="fa fa-key fa-fw"></i></label>
+						<label for="sign-pwd" class="addon"><i class="fa fa-key fa-fw"></i></label>
 						<input type="password" name="user[pwd]" id="sign-pwd" class="form-control" title="<?= ___('Please type new password');?>" required tabindex="1" autofocus placeholder="<?= ___('Please type new password');?>">
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="input-group">
-						<label for="sign-pwd-again" class="input-group-addon"><i class="fa fa-key fa-fw"></i></label>
+						<label for="sign-pwd-again" class="addon"><i class="fa fa-key fa-fw"></i></label>
 						<input type="password" name="user[pwd-again]" id="sign-pwd-again" class="form-control" title="<?= ___('Retype new password');?>" required tabindex="1" placeholder="<?= ___('Retype new password');?>">
 					</div>
 				</div>
@@ -211,35 +232,36 @@ $open_sign_html();
 			case 'login':
 			default:
 				?>
-<div class="<?= $avatar ? 'has-avatar' : null;?> panel panel-default mx-sign-panel mx-sign-panel-<?= $tab_active;?>">
-	<div class="panel-heading">
+<div class="<?= $avatar ? 'has-avatar' : null;?> panel mx-sign-panel mx-sign-panel-<?= $tab_active;?>">
+	<div class="heading">
 
 		<?php if(!empty($avatar)){ ?>
 			<img class="avatar" src="<?= $avatar;?>" alt="avatar">
 		<?php } ?>
 
-		
-		<h3><?= ___('Account login');?></h3>
+		<h3>
+			<?= ___('Account login');?>
+		</h3>
 	</div>
-	<div class="panel-body">
+	<div class="content">
 		<form action="javascript:;" id="fm-sign-login">
 			<div class="form-group">
 				<div class="input-group">
-					<label for="sign-email" class="input-group-addon"><i class="fa fa-at fa-fw"></i></label>
+					<label for="sign-email" class="addon"><i class="fa fa-at fa-fw"></i></label>
 					<input name="user[email]" type="email" class="form-control" id="sign-email" placeholder="<?= ___('Please type email');?>" title="<?= ___('Please type email');?>" required tabindex="1" autofocus>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<label for="sign-pwd" class="input-group-addon"><i class="fa fa-key fa-fw"></i></label>
+					<label for="sign-pwd" class="addon"><i class="fa fa-key fa-fw"></i></label>
 					<input name="user[pwd]" type="password" class="form-control" id="sign-pwd" placeholder="<?= ___('Please type password');?>" title="<?= sprintf(___('Please type password, at least %d length'),theme_custom_sign::$min_pwd_length);?>" minlength="<?= theme_custom_sign::$min_pwd_length;?>" required tabindex="1">
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<label for="sign-remember" class="input-group-addon"><input type="checkbox" name="user[remember]" id="sign-remember" value="1" checked tabindex="1" ></label>
+					<label for="sign-remember" class="addon"><i class="fa fa-fw"></i></label>
 					<label for="sign-remember">
-						<?= ___('Remember me');?>
+						<input type="checkbox" name="user[remember]" id="sign-remember" value="1" checked tabindex="1" > <?= ___('Remember me');?>
 					</label>
 				</div>
 			</div>
@@ -251,18 +273,12 @@ $open_sign_html();
 				<input type="hidden" name="type" value="login">
 			</div>
 		</form>
-	</div><!-- /.panel-body -->
+	</div><!-- /.content -->
 </div><!-- /.panel -->
 <div class="form-group">
-	<div class="btn-group btn-group-justified">
-		<a class="btn btn-default" href="<?= esc_url(theme_custom_sign::get_tabs('register')['url']);?>#main">
-			<i class="fa fa-<?= theme_custom_sign::get_tabs('register')['icon'];?> fa-fw"></i>
-			<?= ___('Register new account');?>
-		</a>
-		<a class="btn btn-default" href="<?= esc_url(theme_custom_sign::get_tabs('recover')['url']);?>#main">
-			<i class="fa fa-<?= theme_custom_sign::get_tabs('recover')['icon'];?> fa-fw"></i>
-			<?= ___('Forgot password?');?>
-		</a>
+	<div class="row">
+		<?php $register_new_account_html();?>
+		<?php $forgot_my_pwd_html();?>
 	</div>
 </div>
 <?php

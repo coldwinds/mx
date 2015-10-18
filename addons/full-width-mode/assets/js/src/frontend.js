@@ -14,13 +14,13 @@ define(function(require, exports, module){
 		config = exports.config;
 	
 	exports.bind = function(){
-		
+		tools.ajax_loading_tip('loading','你麻痹');
 		if(!create_btn())
 			return false;
 
 		cache.$main = I('main');
 		cache.$side = I('sidebar-container');
-		cache.$btn.addEventListener('click', event_click);
+		cache.$btn.addEventListener(tools.click_handler, event_click);
 
 		if(localStorage.getItem(config.key) == 1){
 			expand();
@@ -64,7 +64,7 @@ define(function(require, exports, module){
 		}
 	}
 	function create_btn(){
-		var $container = document.querySelector('.singular-post > .panel-body');
+		var $container = document.querySelector('.singular-post');
 		if(!$container)
 			return false;
 		var $i = document.createElement('i');

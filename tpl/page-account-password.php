@@ -1,5 +1,5 @@
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 <form id="fm-change-password" class="user-form form-horizontal" method="post" action="javascript:;">
 	<!-- current password -->
 	<div class="form-group">

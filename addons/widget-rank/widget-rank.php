@@ -1,20 +1,18 @@
 <?php
 /** 
- * version 1.0.5
+ * version 1.1.0
  */
 
-add_action('widgets_init','widget_rank::register_widget' );
 class widget_rank extends WP_Widget{
-	public static $iden = 'widget_rank';
 	function __construct(){
-		$this->alt_option_name = self::$iden;
+		$this->alt_option_name = __CLASS__;
 		parent::__construct(
-			self::$iden,
-			___('Posts rank <small>(custom)</small>'),
-			array(
-				'classname' => self::$iden,
-				'description'=> ___('Posts ranking'),
-			)
+			__CLASS__,
+			___('Posts ranking') . ' - <small>' . theme_functions::$iden . '</small>',
+			[
+				'classname' => __CLASS__,
+				'description'=> ___('Display different type posts ranking.'),
+			]
 		);
 	}
 	public static function frontend_display(array $args = [],$instance){
@@ -22,44 +20,43 @@ class widget_rank extends WP_Widget{
 			'title' => ___('Posts rank'),
 			'posts_per_page' => 6,
 			'date' => 'all',
-			'orderby' => 'views',
+			'orderby' => 'latest',
 			'category__in' => [],
-			'content_type' => 'tx',
+			'content_type' => 'img',
 		],$instance);
+		
 		$title = esc_html($instance['title']);
 		echo $args['before_title'];
-		if(isset($instance['category__in'][0])){ ?>
+		if(count($instance['category__in']) === 1 && sset($instance['category__in'][0])){ ?>
 			<a class="link" href="<?= get_category_link($instance['category__in'][0]);?>" title="<?= sprintf(___('Views more about %s'),$title);?>">
 				<i class="fa fa-bar-chart"></i> 
 				<?= $title;?>
 			</a>
 			<a href="<?= get_category_link($instance['category__in'][0]);?>" title="<?= sprintf(___('Views more about %s'),$title);?>" class="more"><?= ___('More &raquo;');?></a>
 		<?php }else{ ?>
-			<i class="fa fa-bar-chart"></i> 
-			<?= $title;?>
+			<i class="fa fa-bar-chart"></i> <?= $title;?>
 		<?php } ?>
+		
 		<?php
 		echo $args['after_title'];
 		
 		global $post;
-		$query = theme_functions::get_posts_query(array(
+		$query = theme_functions::get_posts_query([
 			'category__in' => (array)$instance['category__in'],
 			'posts_per_page' => (int)$instance['posts_per_page'],
 			'date' => $instance['date'],
 			'orderby' => $instance['orderby'],
-		));
-		$content_type_class = $instance['content_type'] === 'tx' ? ' post-tx-lists ' : ' post-mixed-lists ';
-		
+		]);
 		if($query->have_posts()){
 			?>
-			<ul class="list-group <?= $content_type_class;?> widget-orderby-<?= $instance['orderby'];?>">
+			<ul class="list-group list-group-<?= $instance['content_type'];?> widget-orderby-<?= $instance['orderby'];?>">
 				<?php
 				foreach($query->posts as $post){
 					setup_postdata($post);
-					if($content_type_class === 'tx'){
-						theme_functions::widget_rank_tx_content(array(
+					if($instance['content_type'] === 'tx'){
+						theme_functions::widget_rank_tx_content([
 							'meta_type' => $instance['orderby'],
-						));
+						]);
 					}else{
 						theme_functions::widget_rank_img_content();
 					}
@@ -82,10 +79,11 @@ class widget_rank extends WP_Widget{
 	
 	function form($instance = []){
 		$instance = array_merge([
-			'title'=>___('Posts ranking'),
+			'title'=> ___('Posts rank'),
 			'posts_per_page' => 6,
+			'date' => 'all',
 			'category__in' => [],
-			'content_type' => 'tx',
+			'content_type' => 'img',
 			'orderby' => 'latest',
 		],$instance);
 		?>
@@ -113,11 +111,13 @@ class widget_rank extends WP_Widget{
 		</p>
 		<p>
 			<?= ___('Categories: ');?>
-			<?= self::get_cat_checkbox_list(
+			<?php 
+			self::get_cat_checkbox_list(
 				self::get_field_name('category__in'),
 				self::get_field_id('category__in'),
 				$instance['category__in']
-			);?>
+			);
+			?>
 		</p>
 		<!-- date -->
 		<p>
@@ -223,7 +223,6 @@ class widget_rank extends WP_Widget{
 			'hide_empty' => false,
 		));
 		
-		ob_start();
 		if($cats){
 			foreach($cats as $cat){
 				if(in_array($cat->term_id,(array)$selected_cat_ids)){
@@ -250,14 +249,12 @@ class widget_rank extends WP_Widget{
 		}else{ ?>
 			<p><?= ___('No category, pleass go to add some categories.');?></p>
 		<?php }
-		$content = ob_get_contents();
-		ob_end_clean();
-		return $content;
 	}
 	function update($new_instance,$old_instance){
 		return array_merge($old_instance,$new_instance);
 	}
 	public static function register_widget(){
-		register_widget(self::$iden);
+		register_widget(__CLASS__);
 	}
 }
+add_action('widgets_init','widget_rank::register_widget' );

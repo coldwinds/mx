@@ -1,3 +1,8 @@
+.page-template-page-sign #main{
+	max-width: 35rem;
+	margin-left: auto;
+	margin-right: auto;
+}
 /**
  * .mx-sign-panel
  */
@@ -5,13 +10,13 @@
 	overflow: inherit;
 	box-shadow: 0 5px 30px rgba(0,0,0,.3);
 }
-	.mx-sign-panel .panel-heading{
+	.mx-sign-panel .heading{
 		background: #fff;
-		padding: 30px 30px 0;
+		padding: 2rem 0 0;
 		text-align: center;
-		border: none;
 		color: #0288D1;
 		margin-bottom: 0;
+		font-size: 1.5rem;
 	}
 	.mx-sign-panel.has-avatar{
 		margin-top: 60px;
@@ -29,11 +34,11 @@
 		-moz-box-sizing: content-box;
 		box-sizing: content-box;
 	}
-	.mx-sign-panel .panel-heading h3{
+	.mx-sign-panel .heading h3{
 		font-weight: 100;
 		margin: 0;
 	}
-	.mx-sign-panel .panel-body{
+	.mx-sign-panel .content{
 		padding: 30px 30px 15px;
 		box-shadow: none;
 		border: none;

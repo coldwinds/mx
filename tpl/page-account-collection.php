@@ -25,8 +25,8 @@ if(class_exists('theme_custom_collection')){
 	$tags = get_tags($tags_args);
 }
 ?>
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<?= theme_custom_collection::get_des();?>
 		<form action="javascript:;" id="fm-clt" class="form-horizontal">
 			<div class="form-group">
@@ -165,7 +165,7 @@ if(class_exists('theme_custom_collection')){
 							<?php for($i = 0;$i<=3;++$i){ ?>
 								<div class="col-xs-6 col-sm-3">
 									<div class="input-group input-group-sm">
-										<label class="input-group-addon" for="clt-tag-<?= $i;?>"><i class="fa fa-tag fa-fw"></i></label>
+										<label class="addon" for="clt-tag-<?= $i;?>"><i class="fa fa-tag fa-fw"></i></label>
 										<input id="clt-tag-<?= $i;?>" class="custom-tag-list form-control" type="text" name="clt[tags][]" placeholder="<?= sprintf(___('tag %d'),$i+1);?>" size="10">
 									</div>
 								</div>

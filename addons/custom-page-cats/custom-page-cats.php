@@ -174,7 +174,7 @@ class theme_page_cats{
 						));
 						foreach($query->posts as $post){
 							setup_postdata($post);
-							theme_functions::archive_img_content(array(
+							theme_functions::archive_card_xs(array(
 								'classes' => array('col-xs-6 col-sm-4 col-md-3 col-lg-2'),
 							));
 						}
@@ -182,7 +182,7 @@ class theme_page_cats{
 						wp_reset_postdata();
 						?>
 					</ul>
-				</div><!-- /.panel-body -->
+				</div><!-- /.content -->
 			</div>
 			<?php
 		}

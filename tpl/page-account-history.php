@@ -1,5 +1,5 @@
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<?= theme_custom_point::get_point_des();?>
 <div class="media">
 	<div class="media-left">
@@ -11,16 +11,16 @@
 		</h4>
 	</div>
 </div>
-</div><!-- /.panel-body -->
+</div><!-- /.content -->
 <?php
 $history_list = theme_custom_point::get_history_list(array(
 	'posts_per_page' => 20,
 ));
 if(empty($history_list)){
 	?>
-	<div class="panel-body">
+	<div class="content">
 		<div class="page-tip"><?= status_tip('info',___('Your have not any history yet.')); ?></div>
-	</div><!-- /.panel-body -->
+	</div><!-- /.content -->
 	<?php
 }else{
 	echo $history_list;

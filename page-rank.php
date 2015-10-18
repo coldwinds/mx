@@ -13,7 +13,7 @@ if(!theme_page_rank::get_tabs($active_tab))
 	
 
 ?>
-<div class="container">
+<div class="g">
 	<ul class="nav nav-pills nav-justified">
 		<?php
 		foreach(theme_page_rank::get_tabs() as $k => $v){
@@ -29,14 +29,14 @@ if(!theme_page_rank::get_tabs($active_tab))
 		}
 		?>
 	</ul>
-	<div class="panel panel-default panel-rank">
+	<div class="panel-rank">
 		<?php
 		$include_filepath = __DIR__ . '/tpl/page-rank-' . $active_tab . '.php';
 		if(is_file($include_filepath)){
 			include $include_filepath;
 		}else{
 			?>
-			<div class="panel-body">
+			<div class="content">
 				<div class="page-tip">
 					<?= status_tip('error',___('Can not find the include file.'));?>
 				</div>

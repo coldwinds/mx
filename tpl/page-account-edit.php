@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel">
 	<?php
 	global $post,$wp_query;
 	$wp_query = theme_custom_edit::get_query();
@@ -76,7 +76,7 @@
 		<?php
 	}else{
 		?>
-		<div class="panel-body">
+		<div class="content">
 			<div class="page-tip"><?= status_tip('info',___('No data yet.'));?></div>
 		</div>
 		<?php
@@ -84,7 +84,7 @@
 	?>
 	<!-- pagi nav -->
 	<?php if($GLOBALS['wp_query']->max_num_pages > 1){ ?>
-		<div class="panel-footer">
+		<div class="footer">
 			<?= theme_functions::pagination();?>
 		</div>
 	<?php } ?>

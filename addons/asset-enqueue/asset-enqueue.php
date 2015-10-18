@@ -1,21 +1,12 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_asset_enqueue::init';
-	return $fns;
-});
 class theme_asset_enqueue{
-	public static $iden = 'theme_asset_enqueue';
-	
 	public static function init(){
 		
 		add_action( 'wp_enqueue_scripts', __CLASS__  . '::seajs_enqueue_scripts' ,1);
 		add_action( 'wp_enqueue_scripts', __CLASS__  . '::frontend_enqueue_css' ,1);
-	}
-	public static function is_url_enabled(){
-		
 	}
 	/**
 	 * JS
@@ -36,7 +27,6 @@ class theme_asset_enqueue{
 				isset($v['deps']) ? $v['deps'] : [],
 				self::get_version($v),
 				true
-				
 			);
 		}
 		
@@ -51,17 +41,11 @@ class theme_asset_enqueue{
 	public static function frontend_enqueue_css(){
 		$css = [
 			'frontend' => [
-				'deps' => ['bootstrap','awesome'],
-				'url' =>  theme_features::get_theme_css('frontend/frontend',false),
-			],
-			'bootstrap' => [
-				'deps' => [],
-				'url' => theme_features::get_theme_css('modules/bootstrap'),
-				//'version' => null,
+				'deps' => ['awesome'],
+				'url' =>  theme_features::get_theme_css('frontend/frontend'),
 			],
 			'awesome' => [
 				'deps' => [],
-				//'url' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css',
 				'url' => 'http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css',
 				'version' => null,
 			],
@@ -79,3 +63,7 @@ class theme_asset_enqueue{
 		}
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_asset_enqueue::init';
+	return $fns;
+});

@@ -4,19 +4,38 @@
  */
 if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('above-footer'))){
 	?>
-	<div class="container"><div class="ad-container ad-above-footer"><?= theme_adbox::display_frontend('above-footer');?></div></div>
+	<div class="g"><div class="ad-container ad-above-footer"><?= theme_adbox::display_frontend('above-footer');?></div></div>
 	<?php
 }
 ?>
 <footer id="footer">
-	<div class="container">
+	<div class="g">
+		
+		<?php if(!wp_is_mobile()){ ?>
+			<div class="widget-area row hiddex-xs">
+				<?php if(!theme_cache::dynamic_sidebar('widget-area-footer')){ ?>
+					<div class="col-xs-12">
+						<div class="panel">
+							<div class="content">
+								<div class="page-tip">
+									<?= status_tip('info', ___('Please set some widgets in footer.'));?>
+								</div>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
+			</div>
+		<?php } ?>
+
 		<!-- links -->
 		<?php if(!wp_is_mobile() && theme_cache::is_home()){ ?>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h2 class="panel-title"><i class="fa fa-link"></i> <?= ___('Links');?></h2>
+			<div class="widget panel links-container">
+				<div class="heading">
+					<h2 class="widget-title">
+						<i class="fa fa-link"></i> <?= ___('Links');?>
+					</h2>
 				</div>
-				<div class="panel-body">
+				<div class="content">
 					<?php
 					/**
 					 * links
@@ -33,25 +52,11 @@ if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('above-fo
 				</div>
 			</div>
 		<?php } ?>
-		<?php if(!wp_is_mobile()){ ?>
-			<div class="widget-area row hiddex-xs">
-				<?php if(!theme_cache::dynamic_sidebar('widget-area-footer')){ ?>
-					<div class="col-xs-12">
-						<div class="panel">
-							<div class="panel-body">
-								<div class="page-tip">
-									<?= status_tip('info', ___('Please set some widgets in footer.'));?>
-								</div>
-							</div>
-						</div>
-					</div>
-				<?php } ?>
-			</div>
-		<?php } ?>
-		<p class="footer-meta copyright text-center">
-			<?= class_exists('theme_user_code') ? theme_user_code::get_frontend_footer_code() : null;?>
-		</p>
+		
 	</div>
+	<p class="footer-meta copyright text-center">
+		<?= class_exists('theme_user_code') ? theme_user_code::get_frontend_footer_code() : null;?>
+	</p>
 </footer>
 <a href="#" class="fa fa-arrow-up fa-2x back-to-top" title="<?= ___('Back to top');?>"></a>
 <?php wp_footer();?></body></html>

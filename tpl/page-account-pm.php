@@ -1,5 +1,5 @@
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<div class="page-tip" id="pm-loading-tip"><?= status_tip('loading',___('Loading, please wait...'));?></div>
 		<div id="pm-container" class="row">
 			<div class="col-sm-2">

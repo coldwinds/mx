@@ -1,33 +1,29 @@
 <?php get_header();?>
-<div class="container">
+<div class="g">
 	<?= theme_functions::get_crumb();?>
 	<div id="main">
-		<div class="mod">
-			<div class="mod-body">
+		<?php
+		if(have_posts()){
+			?>
+			<div class="row">
 				<?php
-				if(have_posts()){
-					?>
-					<ul class="row mx-card-body post-img-lists">
-						<?php
-						$loop_i = 0;
-						foreach($wp_query->posts as $post){
-							setup_postdata($post);
-							theme_functions::archive_mixed_content(array(
-								'classes' => array('col-lg-3 col-md-4'),
-								'lazyload' => $loop_i <= 8 ? false : true,
-							));
-							++$loop_i;
-						}
-						?>
-					</ul>
-				<?php }else{ ?>
-					<?= status_tip('info',___('No content yet.'));?>
-				<?php } ?>
+				$loop_i = 0;
+				foreach($wp_query->posts as $post){
+					setup_postdata($post);
+					theme_functions::archive_card_sm([
+						'classes' => 'g-desktop-1-4 g-tablet-1-3',
+						'lazyload' => $loop_i <= 8 ? false : true,
+					]);
+					++$loop_i;
+				}
+				?>
 			</div>
-		</div>
+		<?php }else{ ?>
+			<?= status_tip('info',___('No content yet.'));?>
+		<?php } ?>
 		<div class="area-pagination">
 			<?php theme_functions::pagination();?>
 		</div>
 	</div><!-- /#main -->
-</div><!-- /.container -->
+</div><!-- /.g -->
 <?php get_footer();?>

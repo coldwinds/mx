@@ -221,7 +221,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 				</div>
 				<div class="col-sm-3">
 					<div class="input-group">
-						<label class="input-group-addon" for="theme_custom_storage-download-pwd"><i class="fa fa-key fa-fw"></i></label>
+						<label class="addon" for="theme_custom_storage-download-pwd"><i class="fa fa-key fa-fw"></i></label>
 						<input 
 							type="text" 
 							class="form-control" 
@@ -235,7 +235,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 				</div>
 				<div class="col-sm-3">
 					<div class="input-group">
-						<label class="input-group-addon" for="theme_custom_storage-url"><i class="fa fa-unlock fa-fw"></i></label>
+						<label class="addon" for="theme_custom_storage-url"><i class="fa fa-unlock fa-fw"></i></label>
 						<input 
 							type="text" 
 							class="form-control" 
@@ -463,7 +463,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 					<div class="row theme_custom_post_source-inputs" id="theme_custom_post_source-input-reprint" >
 						<div class="col-sm-7">
 							<div class="input-group">
-								<label class="input-group-addon" for="theme_custom_post_source-reprint-url">
+								<label class="addon" for="theme_custom_post_source-reprint-url">
 									<i class="fa fa-link"></i>
 								</label>
 								<input 
@@ -479,7 +479,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 						</div>
 						<div class="col-sm-5">
 							<div class="input-group">
-								<label class="input-group-addon" for="theme_custom_post_source-reprint-author">
+								<label class="addon" for="theme_custom_post_source-reprint-author">
 									<i class="fa fa-user"></i>
 								</label>
 								<input 
@@ -522,8 +522,8 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 }
 
 ?>
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<?php
 		if(isset($_GET['post']) && is_numeric($_GET['post'])){
 			post_form($_GET['post']);

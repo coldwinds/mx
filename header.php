@@ -18,7 +18,7 @@ if(wp_is_mobile()){
 		theme_cache::wp_nav_menu([
 			'theme_location'    => 'menu-mobile-login',
 			'container'         => 'nav',
-			'container_class'   => 'slide-menu menu-mobile',
+			'container_class'   => 'nav-slide menu-mobile',
 			'menu_class'        => 'menu',
 			'menu_id' 			=> 'menu-mobile',
 			'fallback_cb'       => 'custom_navwalker::fallback',
@@ -28,7 +28,7 @@ if(wp_is_mobile()){
 		theme_cache::wp_nav_menu([
 			'theme_location'    => 'menu-mobile',
 			'container'         => 'nav',
-			'container_class'   => 'slide-menu menu-mobile',
+			'container_class'   => 'nav-slide menu-mobile',
 			'menu_class'        => 'menu',
 			'menu_id' 			=> 'menu-mobile',
 			'fallback_cb'       => 'custom_navwalker::fallback',
@@ -44,8 +44,8 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 	if(!$active_tab)
 		$active_tab = 'dashboard';
 	?>
-	<div class="slide-menu header-nav-account-menu">
-		<a href="<?= theme_cache::get_author_posts_url(theme_cache::get_current_user_id());?>" class="slide-menu-header">
+	<div class="nav-slide header-nav-account-menu">
+		<a href="<?= theme_cache::get_author_posts_url(theme_cache::get_current_user_id());?>" class="nav-slide-header">
 			<img src="<?= theme_cache::get_avatar_url(theme_cache::get_current_user_id());?>" width="32" height="32" alt="avatar" class="avatar">
 			<span class="author-name"><?= theme_cache::get_the_author_meta('display_name',theme_cache::get_current_user_id());?></span>
 		</a>
@@ -66,8 +66,8 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 	</div>
 <?php } ?>
 
-<div class="main-nav top">
-	<div class="container">
+<div class="nav-main top">
+	<div class="g">
 		<?php if(wp_is_mobile()){ ?>
 			<a 
 				href="javascript:;" 
@@ -209,16 +209,14 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 			></a>
 
 		</div><!-- /.tools -->
-	</div><!-- /.container -->
 	 
-	<!-- search form -->
-	<div class="container">
+		<!-- search form -->
 		<form id="fm-search" action="<?= theme_cache::home_url();?>/" data-focus-target="#fm-search-s">
 			<input id="fm-search-s" name="s" class="form-control" placeholder="<?= ___('Please input search keyword');?>" value="<?= esc_attr(get_search_query())?>" type="search" required>
-        </form>		
-	</div>
+	    </form>	
+	</div><!--  /.g -->
 </div><!-- /.main-nav -->
-<div class="main-nav-placeholder"></div>
+<div class="nav-main-placeholder"></div>
 
 <?php
 /**
@@ -226,7 +224,7 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
  */
 if(!theme_cache::is_home() && class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('below-header-menu'))){
 	?>
-	<div class="container"><div class="ad-container ad-below-header-menu"><?= theme_adbox::display_frontend('below-header-menu');?></div></div>
+	<div class="g"><div class="ad-container ad-below-header-menu"><?= theme_adbox::display_frontend('below-header-menu');?></div></div>
 	<?php
 }
 ?>

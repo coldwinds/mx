@@ -1,5 +1,5 @@
 <?php get_header();?>
-<div class="container">
+<div class="g">
 	<?= theme_functions::get_crumb();?>
 	<div id="main">
 		<div class="mod">
@@ -18,10 +18,10 @@
 						$loop_i = 0;
 						foreach($wp_query->posts as $post){
 							setup_postdata($post);
-							theme_functions::archive_mixed_content(array(
-								'classes' => array('col-lg-3 col-md-4 col-xs-6'),
+							theme_functions::archive_card_sm([
+								'classes' => 'g-desktop-1-4 g-tablet-1-3',
 								'lazyload' => $loop_i <= 8 ? false : true,
-							));
+							]);
 							++$loop_i;
 						}
 						?>

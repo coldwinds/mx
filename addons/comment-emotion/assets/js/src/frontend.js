@@ -35,61 +35,51 @@ define(function(require, exports, module){
 			cache.$pop[cache.active_pop_i].style.display = 'none';
 			
 			cache.$comment.value = old_val.substring(0,caret_pos) + ' ' + this.getAttribute('data-content') + ' ' + old_val.substring(caret_pos);
-
-			cache.pop_hide[cache.active_pop_i] = true;
-			cache.$pop[cache.active_pop_i].style.display = 'none';
-
+			
 		}
 		for( var i = 0, len = cache.$emotion_faces.length; i < len; i++){
-			cache.$emotion_faces[i].addEventListener('click',insert_content);
+			cache.$emotion_faces[i].addEventListener(tools.click_handler,insert_content);
 		}
 	}
-	function pop(){
-		function hide_pop(e){
-			e.preventDefault();
-			if(cache.active_pop_i !== false){
-				cache.$pop[cache.active_pop_i].style.display = 'none';
-				cache.$comment.focus();
-			}
-				
-		}
-		function show_pop(e){
-			if(e)
-				e.preventDefault();
-			/**
-			 * hide other pop
-			 */
-			for( var i = 0, len = cache.$pop.length; i < len; i++){
-				if(cache.pop_hide[i] !== true){
-					cache.$pop[i].style.display = 'none';
-					cache.pop_hide[i] = true;
-				}
-				if(this == cache.$emotion_btns[i]){
-					cache.active_pop_i = i;
-					cache.pop_hide[i] = false;
-					cache.$pop[i].style.display = 'block';
-					
-				}
-			}
-			/** replace data-url to src attribute */
-			if(!cache.replaced[cache.active_pop_i]){
-				cache.replaced[cache.active_pop_i] = true;
-				var $imgs = cache.$pop[cache.active_pop_i].querySelectorAll('img');
-				for(var i = 0, len = $imgs.length; i < len; i++){
-					$imgs[i].src = $imgs[i].getAttribute('data-url');
-					$imgs[i].removeAttribute('data-url');
-				}
-			}
-		}
-		for(var i = 0, len = cache.$emotion_btns.length; i < len; i++){
-			cache.$emotion_btns[i].addEventListener('click', show_pop);
-		}
+	function hide_pop(e){
+		if(e)
+			e.stopPropagation();
+		if(cache.$last_show_pop)
+			cache.$last_show_pop.style.display = 'none';
+		document.body.removeEventListener(tools.click_handler, hide_pop);
+	}
+	function show_pop(e){
+		if(e)
+			e.stopPropagation();
 		/**
-		 * close btn
+		 * hide other pop
 		 */
-		cache.$closes = document.querySelectorAll('.comment-emotion-close');
-		for(var i = 0, len = cache.$closes.length; i < len; i++){
-			cache.$closes[i].addEventListener('click', hide_pop);
+		for( var i = 0, len = cache.$pop.length; i < len; i++){
+			if(cache.pop_hide[i] !== true){
+				cache.$pop[i].style.display = 'none';
+				cache.pop_hide[i] = true;
+			}
+			if(this == cache.$emotion_btns[i]){
+				cache.active_pop_i = i;
+				cache.pop_hide[i] = false;
+				cache.$pop[i].style.display = 'block';
+				cache.$last_show_pop = cache.$pop[i];
+			}
+		}
+		/** replace data-url to src attribute */
+		if(!cache.replaced[cache.active_pop_i]){
+			cache.replaced[cache.active_pop_i] = true;
+			var $imgs = cache.$pop[cache.active_pop_i].querySelectorAll('img');
+			for(var i = 0, len = $imgs.length; i < len; i++){
+				$imgs[i].src = $imgs[i].getAttribute('data-url');
+				$imgs[i].removeAttribute('data-url');
+			}
+		}
+		document.body.addEventListener(tools.click_handler,hide_pop);
+	}
+	function pop(){
+		for(var i = 0, len = cache.$emotion_btns.length; i < len; i++){
+			cache.$emotion_btns[i].addEventListener(tools.click_handler, show_pop);
 		}
 	}
 	function I(e){

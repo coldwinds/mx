@@ -6,7 +6,7 @@
 			<?php
 			foreach($wp_query->posts as $post){
 				setup_postdata($post);
-				theme_functions::archive_img_content(array(
+				theme_functions::archive_card_xs(array(
 					'classes' => array('col-xs-6 col-sm-3 col-md-2')
 				));
 			}

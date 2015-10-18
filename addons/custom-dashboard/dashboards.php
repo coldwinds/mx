@@ -16,8 +16,8 @@ class theme_dashboards{
 	}
 	public static function my_point(){
 		?>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="panel">
+			<div class="heading">
 				<i class="fa fa-line-chart"></i> 
 				<?= ___('My recent reward point actives');?>
 			</div>
@@ -30,7 +30,7 @@ class theme_dashboards{
 			));
 			if(!$histories){
 				?>
-				<div class="panel-body">
+				<div class="content">
 					<?= status_tip('info',___('No data yet.'));?>
 				</div>
 				<?php
@@ -47,8 +47,8 @@ class theme_dashboards{
 	public static function recent_comments_4_my_posts(){
 		?>
 		<!-- Recent comments for my posts -->
-		<div class="dashboard-recent-comments-4-my-posts panel panel-default">
-			<div class="panel-heading">
+		<div class="dashboard-recent-comments-4-my-posts panel">
+			<div class="heading">
 				<i class="fa fa-comments"></i>
 				<?= ___('Recent comments for my posts');?>
 			</div>
@@ -65,7 +65,7 @@ class theme_dashboards{
 			]);
 			if(empty($comments)){
 				?>
-				<div class="panel-body">
+				<div class="content">
 					<?= status_tip('info',___('No comment for your post yet'));?>
 				</div>
 				<?php
@@ -127,12 +127,12 @@ class theme_dashboards{
 	public static function my_statistics(){
 		$current_user_id = theme_cache::get_current_user_id();
 		?>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="panel">
+			<div class="heading">
 				<i class="fa fa-pie-chart"></i>
 				<?= ___('My statistics');?>
 			</div>
-			<div class="panel-body">
+			<div class="content">
 				<a class="media" href="<?= theme_custom_user_settings::get_tabs('history')['url'];?>" title="<?= ___('Views my histories');?>">
 					<div class="media-left">
 						<img class="media-object" src="<?= theme_custom_point::get_point_img_url();?>" alt="">
@@ -185,8 +185,8 @@ class theme_dashboards{
 	public static function recent_posts(){
 		$posts_per_page = 5;
 		?>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="panel">
+			<div class="heading">
 				<i class="fa fa-clock-o"></i>
 				<?= ___('My recent posts');?>
 			</div>
@@ -215,7 +215,7 @@ class theme_dashboards{
 				<?php
 			}else{
 				?>
-				<div class="panel-body"><?= status_tip('info',___('No posts yet'));?></div>
+				<div class="content"><?= status_tip('info',___('No posts yet'));?></div>
 				<?php
 			}
 			

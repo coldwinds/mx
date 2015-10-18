@@ -2,8 +2,8 @@
 global $current_user;
 get_currentuserinfo();
 ?>
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<?php
 		/**
 		 * consume points to modify settings

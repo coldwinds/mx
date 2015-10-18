@@ -1,7 +1,7 @@
 <?php
 global $author;
 ?>
-<div class="panel-body">
+<div class="content">
 	<fieldset class="author-profile">
 		<legend>
 			<i class="fa fa-newspaper-o"></i> 

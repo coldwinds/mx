@@ -47,7 +47,7 @@ class widget_point_rank extends WP_Widget{
 		$count = count($users);
 		if($count < 2){
 			?>
-			<div class="panel-body">
+			<div class="content">
 				<div class="page-tip"><?= status_tip('info',___('No matched user yet.'));?></div>
 			</div>
 			<?php
@@ -61,7 +61,7 @@ class widget_point_rank extends WP_Widget{
 			$rand_users = (array)array_rand($users,$instance['rand_number']);
 			
 			?>
-			<div class="panel-body">
+			<div class="content">
 				<div class="user-lists row">
 					<?php
 					$user = null;

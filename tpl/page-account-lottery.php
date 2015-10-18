@@ -1,5 +1,5 @@
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<?= theme_point_lottery::get_des();?>
 		<form action="javascript:;" method="post" id="fm-lottery">
 			<div class="form-group my-info">

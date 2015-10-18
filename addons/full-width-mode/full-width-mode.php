@@ -9,7 +9,7 @@ add_filter('theme_addons',function($fns){
 class theme_full_width_mode{
 
 	public static function init(){
-		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
+		//add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
 		add_filter('frontend_seajs_alias' , __CLASS__ . '::frontend_seajs_alias');
 		add_action('frontend_seajs_use' , __CLASS__ . '::frontend_seajs_use');
 		add_action('page_settings', __CLASS__ . '::display_backend');

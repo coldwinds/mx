@@ -1,4 +1,4 @@
-<div id="sidebar-container" class="col-md-3 col-sm-12">
+<div id="sidebar-container" class="g-desktop-1-4">
 <div id="sidebar" class="widget-area" role="complementary">
 	<?php
 	/** 
@@ -6,8 +6,8 @@
 	 */
 	if(theme_cache::is_home() && !theme_cache::dynamic_sidebar('widget-area-home')){
 		?>
-		<div class="panel panel-default">
-			<div class="panel-body">
+		<div class="panel">
+			<div class="content">
 				<div class="page-tip">
 					<?= status_tip('info', ___('Please set some widgets in homepage.'));?>
 				</div>
@@ -19,23 +19,10 @@
 	 */
 	}else if((theme_cache::is_category() || theme_cache::is_archive() || theme_cache::is_search()) && !theme_cache::dynamic_sidebar('widget-area-archive')){
 		?>
-		<div class="panel panel-default">
-			<div class="panel-body">
+		<div class="panel">
+			<div class="content">
 				<div class="page-tip">
 					<?= status_tip('info', ___('Please set some widgets in archive.'));?>
-				</div>
-			</div>
-		</div>
-		<?php
-	/** 
-	 * post widget
-	 */
-	}else if(theme_cache::is_singular('post') && !theme_cache::dynamic_sidebar('widget-area-post')){
-		?>
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<div class="page-tip">
-					<?= status_tip('info', ___('Please set some widgets in singular post.'));?>
 				</div>
 			</div>
 		</div>
@@ -45,8 +32,8 @@
 	 */
 	}else if(theme_cache::is_page() && !theme_cache::dynamic_sidebar('widget-area-page')){
 		?>
-		<div class="panel panel-default">
-			<div class="panel-body">
+		<div class="panel">
+			<div class="content">
 				<div class="page-tip">
 					<?= status_tip('info', ___('Please set some widgets in singular page.'));?>
 				</div>
@@ -58,8 +45,8 @@
 	 */
 	}else if(theme_cache::is_404() && !theme_cache::dynamic_sidebar('widget-area-404')){
 		?>
-		<div class="panel panel-default">
-			<div class="panel-body">
+		<div class="panel">
+			<div class="content">
 				<div class="page-tip">
 					<?= status_tip('info', ___('Please set some widgets in 404 page.'));?>
 				</div>

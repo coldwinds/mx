@@ -1,4 +1,4 @@
-<div class="panel-body">
+<div class="content">
 	<div class="btn-group btn-group-sm tab-filter">
 		<?php
 		$active_filter_tab = get_query_var('filter');

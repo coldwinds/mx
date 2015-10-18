@@ -34,39 +34,39 @@ class theme_widget_author extends WP_Widget{
 		$description = theme_cache::get_the_author_meta('description',$author_id);
 		?>
 	
-		<div id="widget-author-card" class="widget-container panel-body">
-			<a href="<?= $author_url;?>" class="media" title="<?= ___('Views the author information detail');?>">
-				<div class="media-left">
-					<?= theme_cache::get_avatar($author_id,'100');?>
-				</div>
-				<div class="media-body">
-					<h4 class="media-heading author-card-name">
-						<?= theme_cache::get_the_author_meta('display_name',$author_id);?>
-						<?php if(class_exists('theme_custom_author_profile')){ ?>
-							<small class="label label-<?= theme_custom_author_profile::get_roles($author_id)['label'];?>"><?= theme_custom_author_profile::get_roles($author_id)['name'];?></small>
-						<?php } ?>
-					</h4>
-					<p class="author-card-description" <?= empty($description) ? null : ' title="' . $description . '"';?> >
-						<?php
-						if(empty($description)){
-							echo ___('The author is lazy, nothing writes here.');
-						}else{
-							echo str_sub($description,30);
-						}
-						?>
-					</p>
-				</div>
-			</a><!-- ./media -->
+		<div id="widget-author-card" class="widget-container content">
+			<a href="<?= $author_url;?>" class="author-link" title="<?= ___('Views the author information detail');?>">
+				<?= theme_cache::get_avatar($author_id,100);?>
+				
+				<h3 class="author-card-name">
+					<?= theme_cache::get_the_author_meta('display_name',$author_id);?>
+				</h3>
+				
+				<?php if(class_exists('theme_custom_author_profile')){ ?>
+					<small class="label label-<?= theme_custom_author_profile::get_roles($author_id)['label'];?>"><?= theme_custom_author_profile::get_roles($author_id)['name'];?></small>
+				<?php } ?>
+			</a><!-- ./author-link -->
+			
+			<p class="author-card-description" title="<?= $description;?>" >
+				<?php
+				if(empty($description)){
+					echo ___('The author is lazy, nothing writes here.');
+				}else{
+					echo $description;
+				}
+				?>
+			</p>
+			
 			<?php if(class_exists('theme_custom_author_profile')){ ?>
 				<div class="author-card-meta-links">
 					<!-- works count -->
 					<a href="<?= theme_custom_author_profile::get_tabs('works',$author_id)['url'];?>" title="<?= ___('Views author posts');?>">
-						<span class="tx"><i class="fa fa-<?= theme_custom_author_profile::get_tabs('works',$author_id)['icon'];?>"></i> <?= theme_custom_author_profile::get_tabs('works',$author_id)['text'];?></span>
+						<span class="tx"><i class="fa fa-fw fa-<?= theme_custom_author_profile::get_tabs('works',$author_id)['icon'];?>"></i></span>
 						<span class="count"><?= (int)theme_custom_author_profile::get_tabs('works',$author_id)['count'];?></span>
 					</a>
 					<!-- comments count -->
 					<a href="<?= theme_custom_author_profile::get_tabs('comments',$author_id)['url'];?>" title="<?= ___('Views author comments');?>">
-						<span class="tx"><i class="fa fa-<?= theme_custom_author_profile::get_tabs('comments',$author_id)['icon'];?>"></i> <?= theme_custom_author_profile::get_tabs('comments',$author_id)['text'];?></span>
+						<span class="tx"><i class="fa fa-fw fa-<?= theme_custom_author_profile::get_tabs('comments',$author_id)['icon'];?>"></i></span>
 						<span class="count"><?= (int)theme_custom_author_profile::get_tabs('comments',$author_id)['count'];?></span>
 					</a>
 					<!-- point -->
@@ -80,7 +80,7 @@ class theme_widget_author extends WP_Widget{
 						?>
 						<!-- followers count -->
 						<a href="<?= theme_custom_point_bomb::get_tabs('bomb',$target_id)['url'];?>" rel="nofollow" title="<?= ___('Bomb!');?>">
-							<span class="tx"><i class="fa fa-bomb"></i> <?= theme_custom_point::get_point_name();?></span>
+							<span class="tx"><i class="fa fa-fw fa-bomb"></i></span>
 							<span class="count"><?= theme_custom_point::get_point($author_id);?></span>
 						</a>
 					<?php } ?>
@@ -88,7 +88,7 @@ class theme_widget_author extends WP_Widget{
 					<!-- pm -->
 					<?php if(class_exists('theme_custom_pm')){ ?>
 						<a target="_blank" href="<?= theme_custom_pm::get_user_pm_url($author_id);?>" title="<?= ___('Send a private message.');?>">
-							<span class="tx"><i class="fa fa-<?= theme_custom_pm::get_tabs('pm')['icon'];?>"></i> <?= ___('P.M.');?></span>
+							<span class="tx"><i class="fa fa-<?= theme_custom_pm::get_tabs('pm')['icon'];?>"></i></span><span class="count"><?= __x('P.M.','Widget author card PM.');?></span>
 						</a>
 					<?php } ?>
 				</div>

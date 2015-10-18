@@ -1,0 +1,101 @@
+.nav-slide{
+	position: fixed;
+	background: #fff;
+	top: 0;
+	left: 0;
+	width: 60%;
+	height: 100%;
+	overflow-y: scroll;
+	visibility: collapse;
+	-webkit-overflow-scrolling: touch;
+	@include transition-duration($global-transition-duration);
+	@include transform-origin(left);
+	@include scale3d(0,1,1);
+	z-index: 100;
+	&.on{
+		visibility: visible;
+		@include scale3d(1,1,1);
+	}
+
+	ul{
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	.menu{
+		margin: 1rem;
+		.menu-item-has-children > a{
+			color: #333;
+			font-size: 1.2rem;
+			padding: .5rem 0;
+			background: #f8f8f8;
+		}
+		li > a:hover,
+		li:hover > a,
+		.header-nav-account-menu li > a:hover,
+		.header-nav-account-menu li:hover > a{
+			background: #eee;
+			color: #000;
+		}
+		& > li{
+			border-bottom: 1px solid #eee;
+		}
+	}
+	a{
+		display: block;
+		padding: 1rem 0;
+		color: $title-color;
+		white-space: nowrap;
+	}
+	.sub-menu{
+		overflow: hidden;
+		a{
+			padding: .5rem 0 .5rem 2rem;
+		}
+	}
+	.menu-item-has-children > a:after{
+		display: inline-block;
+		margin-left: 1rem;
+		font-family: FontAwesome;
+		content:"\f0d7";
+	}
+}
+.nav-slide-header{
+	background: #f8f8f8;
+	font-size: 20px;
+	text-indent: 10px;
+}
+.admin-bar .nav-slide{
+	padding-top: 46px;
+}
+
+/**
+ * .menu-mobile
+ */
+body{
+	&.menu-on{
+		overflow: hidden;
+		#mobile-on-layer{
+			visibility: visible;
+			opacity: .5;
+		}
+	}
+}
+/**
+ * layer
+ */
+#mobile-on-layer{
+	position: fixed;
+	background: #000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+
+	visibility: collapse;
+	
+	@include transition-duration($global-transition-duration);
+	
+	z-index: 99;
+}

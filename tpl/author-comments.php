@@ -6,7 +6,7 @@ $comments = get_comments(array(
 ));
 ?>
 	<?php if(empty($comments)){ ?>
-		<div class="panel-body">
+		<div class="content">
 			<div class="page-tip"><?= status_tip('info',___('No comment yet.')); ?></div>
 		</div>
 		<?php 

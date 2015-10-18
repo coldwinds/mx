@@ -1,11 +1,7 @@
 <?php
 /**
- * @version 1.0.1
+ * @version 1.0.2
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_post_source::init';
-	return $fns;
-});
 class theme_custom_post_source{
 	public static $post_meta_key = array(
 		'key' => '_theme_custom_post_source'
@@ -171,60 +167,60 @@ class theme_custom_post_source{
 		if(!isset($meta['source']))
 			return false;
 			
-		?>
-		<ul class="post-source hidden-xs">
-			<?php
-			switch($meta['source']){
-				case 'original':
-					?>
-					<li><?php 
-					echo sprintf(
-						___('This article is %1$s member %2$s\'s original work.'),
-						
-						'<a href="' . theme_cache::home_url() . '">' .theme_cache::get_bloginfo('name') . '</a>',
-						
-						'<a href="' . theme_cache::get_author_posts_url($post->post_author) . '">' . theme_cache::get_the_author_meta('display_name',$post->post_author) . '</a>'
-						
-						);
-						
-					?></li>
-					<li><?php 
-					$permalink = theme_cache::get_permalink($post->ID);
-					echo sprintf(
-						___('Welcome to reprint but must indicate the source url %1$s.'),
-						'<a href="' . $permalink . '" target="_blank" rel="nofollow">' . $permalink . '</a>'
-					);?></li>
-					<?php
-					break;
-				case 'reprint':
-					$reprint_author = isset($meta['reprint']['author']) && !empty($meta['reprint']['author']) ? trim($meta['reprint']['author']) : ___('Unkown');
+		switch($meta['source']){
+			case 'original':
+				?>
+				<li><?php 
+				echo sprintf(
+					___('This article is %1$s member %2$s\'s original work.'),
 					
-					$reprint_url = isset($meta['reprint']['url']) && !empty($meta['reprint']['url']) ? '<a href="' . esc_url($meta['reprint']['url']) . '" target="_blank" rel="nofollow">' . esc_url($meta['reprint']['url']) . '</a>' : ___('Unkown');
+					'<a href="' . theme_cache::home_url() . '">' .theme_cache::get_bloginfo('name') . '</a>',
+					
+					'<a href="' . theme_cache::get_author_posts_url($post->post_author) . '">' . theme_cache::get_the_author_meta('display_name',$post->post_author) . '</a>'
+					
+					);
+					
+				?></li>
+				<li><?php 
+				$permalink = theme_cache::get_permalink($post->ID);
+				echo sprintf(
+					___('Welcome to reprint but must indicate the source url %1$s.'),
+					'<a href="' . $permalink . '" target="_blank" rel="nofollow">' . $permalink . '</a>'
+				);?></li>
+				<?php
+				break;
+			case 'reprint':
+				$reprint_url = isset($meta['reprint']['url']) && !empty($meta['reprint']['url']) ? esc_url($meta['reprint']['url']) : null;
+				
+				$reprint_url = $reprint_url ? '<a href="' . $reprint_url . '" target="_blank" rel="nofollow">' . $reprint_url . '</a>' : ___('Unkown');
+				
+				$reprint_author = isset($meta['reprint']['author']) && !empty($meta['reprint']['author']) ? trim($meta['reprint']['author']) : ___('Unkown');
+				
+				?>
+				<li><?php 
+				echo sprintf(
+					___('This article is %1$s member %2$s\'s reprint work.'),
+					
+					'<a href="' . theme_cache::home_url() . '">' .theme_cache::get_bloginfo('name') . '</a>',
+					
+					'<a href="' . theme_cache::get_author_posts_url($post->post_author) . '">' . theme_cache::get_the_author_meta('display_name',$post->post_author) . '</a>'
+					
+					);
+					
+				?></li>
+				<li>
+					<?= sprintf(
+					___('Source: %1$s, author: %2$s'),
+					$reprint_url,
+					$reprint_author);
 					?>
-					<li><?php 
-					echo sprintf(
-						___('This article is %1$s member %2$s\'s reprint work.'),
-						
-						'<a href="' . theme_cache::home_url() . '">' .theme_cache::get_bloginfo('name') . '</a>',
-						
-						'<a href="' . theme_cache::get_author_posts_url($post->post_author) . '">' . theme_cache::get_the_author_meta('display_name',$post->post_author) . '</a>'
-						
-						);
-						
-					?></li>
-					<li>
-						<?= sprintf(
-						___('Source: %s, author: %s.'),
-						$reprint_url,
-						$reprint_author);
-						?>
-					</li>
-					<?php
-					break;
-			}
-			?>
-		</ul>
-		<?php
+				</li>
+				<?php
+				break;
+		}
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_post_source::init';
+	return $fns;
+});

@@ -32,7 +32,7 @@ define(function(require, exports, module){
 		$back.addEventListener(tools.click_handler, event_click);
 	}
 	exports.scroll_menu = function(){
-		var $menu = document.querySelector('.main-nav'),
+		var $menu = document.querySelector('.nav-main'),
 			y = 0,
 			fold = false,
 			st = false,

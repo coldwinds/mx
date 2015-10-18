@@ -1,0 +1,297 @@
+
+/* from poi menu-core.css */
+/*csslint adjoining-classes:false, outline-none:false*/
+/*TODO: Remove this lint rule override after a refactor of this code.*/ 
+
+.poi-menu ul {
+    position: absolute;
+    visibility: hidden;
+}
+
+.poi-menu.poi-menu-open {
+    visibility: visible;
+    z-index: 2;
+    width: 100%;
+}
+
+.poi-menu ul {
+    left: -10000px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    top: -10000px;
+    z-index: 1;
+}
+
+.poi-menu > ul { position: relative; }
+
+.poi-menu-open > ul {
+    left: 0;
+    top: 0;
+    visibility: visible;
+}
+
+.poi-menu-open > ul:focus {
+    outline: 0;
+}
+
+.poi-menu li {
+    position: relative;
+}
+
+.poi-menu a, .poi-menu .poi-menu-heading {
+    display: block;
+    color: inherit;
+    line-height: 1.5em;
+    padding: $menu-item-padding;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.poi-menu.poi-menu-horizontal > .poi-menu-heading {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    margin: 0;
+    vertical-align: middle;
+}
+.poi-menu.poi-menu-horizontal > ul {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: middle;
+    /* height: 2.4em; removed for Skin Builder */
+}
+
+.poi-menu li a { padding: $menu-item-padding; }
+
+.poi-menu-can-have-children > .poi-menu-label:after {
+    content: '\25B8';
+    float: right;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif; /* These specific fonts have the Unicode char we need. */
+    margin-right: -20px;
+    margin-top: -1px;
+}
+
+.poi-menu-can-have-children > .poi-menu-label {
+    padding-right: 30px;
+}
+
+.poi-menu-separator {
+    background-color: $separator;
+    display: block;
+    height: 1px;
+    font-size: 0;
+    margin: 7px 2px;
+    overflow: hidden;
+}
+
+.poi-menu-hidden {
+    display: none;
+}
+
+/* FIXED MENU */
+.poi-menu-fixed {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+}
+
+
+/* HORIZONTAL MENU CODE */
+
+/* Initial menus should be inline-block so that they are horizontal */
+.poi-menu-horizontal li {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: middle;
+}
+
+/* Submenus should still be display:block; */
+.poi-menu-horizontal li li {
+    display: block;
+}
+
+/* Content after should be down arrow */
+.poi-menu-horizontal > .poi-menu-children > .poi-menu-can-have-children > .poi-menu-label:after {
+    content: "\25BE";
+}
+/*Add extra padding to elements that have the arrow so that the hover looks nice */
+.poi-menu-horizontal > .poi-menu-children > .poi-menu-can-have-children > .poi-menu-label {
+    padding-right: 30px;
+}
+
+/* Adjusting separator for vertical menus */
+.poi-menu-horizontal li.poi-menu-separator {
+    height: 50%;
+    width: 1px;
+    margin: 0 7px;
+}
+
+/* Submenus should be horizontal separator again */
+.poi-menu-horizontal li li.poi-menu-separator {
+height: 1px;
+width: auto;
+margin: 7px 2px;
+}
+
+
+/* end from yuicss/menu-core.css *******************************************/
+/* from yuicss menu-paginator.css */
+/*csslint box-model:false*/
+/*TODO: Remove this lint rule override after a refactor of this code.*/ 
+
+.poi-paginator {
+
+    /* `poi-g` Grid styles */
+    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */
+    *letter-spacing: normal; /* reset IE < 8 */
+    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */
+    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */
+
+    /* `poi-paginator` Specific styles */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.opera-only :-o-prefocus,
+.poi-paginator {
+    word-spacing: -0.43em;
+}
+
+/* `poi-u` Grid styles */
+.poi-paginator li {
+    display: inline-block;
+    *display: inline; /* IE < 8: fake inline-block */
+    zoom: 1;
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+    text-rendering: auto;
+}
+.poi-paginator .poi-button {
+    border-radius: 0;
+    padding: 0.8em 1.4em;
+    vertical-align: top;
+    height: 1.1em;
+}
+.poi-paginator .poi-button:focus,
+.poi-paginator .poi-button:active {
+    outline-style: none;
+}
+.poi-paginator .prev,
+.poi-paginator .next {
+    /*color: #C0C1C3; allow .poi-button to color text*/
+}
+.poi-paginator .prev {
+    border-radius: $paginator-radius-prev;
+}
+.poi-paginator .next {
+    border-radius: $paginator-radius-next;
+}
+/* end from poi menu-paginator.css ******************************/
+/* from poi menu.css *******************************************/
+/* MAIN MENU STYLING */
+/*csslint adjoining-classes:false*/
+/*TODO: Remove this lint rule override after a refactor of this code.*/ 
+
+.poi-menu.poi-menu-open,
+.poi-menu.poi-menu-horizontal li .poi-menu-children {
+    background: $menu-background; /* Old browsers */
+    border: 1px solid $menu-border;
+}
+
+/* remove borders for horizontal menus */
+.poi-menu.poi-menu-horizontal,
+.poi-menu.poi-menu-horizontal .poi-menu-heading {
+    border: none;
+}
+
+
+/* LINK STYLES */
+
+.poi-menu a {
+    border: 1px solid transparent;
+    border-left: none;
+    border-right: none;
+
+}
+
+.poi-menu a,
+.poi-menu .poi-menu-can-have-children > li:after {
+    color: $menu-text;
+}
+
+.poi-menu .poi-menu-can-have-children > li:hover:after {
+    color: $menu-hover-text;
+}
+
+/* Focus style for a dropdown menu-item when the parent has been opened */
+.poi-menu .poi-menu-open {
+    background: $menu-hover-background;
+}
+
+.poi-menu li a:hover,
+.poi-menu li a:focus {
+    background: $menu-hover-background;
+}
+
+/* DISABLED STATES */
+.poi-menu li.poi-menu-disabled a:hover,
+.poi-menu li.poi-menu-disabled a:focus {
+    background: $menu-background;
+    color: $menu-text-disabled;
+}
+
+.poi-menu .poi-menu-disabled > a {
+    background-image: none;
+    border-color: transparent;
+    cursor: default;
+}
+
+.poi-menu .poi-menu-disabled > a,
+.poi-menu .poi-menu-can-have-children.poi-menu-disabled > a:after {
+    color: $menu-text-disabled;
+}
+
+/* HEADINGS */
+.poi-menu .poi-menu-heading {
+    color: $heading-text;
+    text-transform: uppercase;
+    font-size: 90%;
+    margin-top: 0.5em;
+    border-bottom: solid 1px $fixed-menu-border-bottom;
+}
+
+
+/* SELECTED MENU ITEM */
+.poi-menu li.poi-menu-selected a {
+    background-color: $menu-selected-background;
+    color: $menu-selected-text;
+}
+
+/* FIXED MENU */
+.poi-menu.poi-menu-open.poi-menu-fixed {
+    border: none;
+    border-bottom: 1px solid $fixed-menu-border-bottom;
+}
+/* end from poi menu.css ***********************************/
+/* from poi menu-responsive.css ****************************/
+/* RESPONSIVE */
+
+@media (max-width: 480px) {
+
+    .poi-menu-horizontal {
+        width:100%;
+    }
+
+    .poi-menu-children li {
+        display: block;
+        border-bottom:1px solid $menu-border;
+    }
+
+}
+/* end from menu-responsive.css ******************/
+

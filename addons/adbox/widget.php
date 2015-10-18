@@ -2,7 +2,6 @@
 /**
  * @version 1.0.2
  */
-add_action('widgets_init','widget_adbox::register_widget');
 class widget_adbox extends WP_Widget{
 	function __construct(){
 		$this->alt_option_name = __CLASS__;
@@ -70,3 +69,4 @@ class widget_adbox extends WP_Widget{
 	}
 
 }
+add_action('widgets_init','widget_adbox::register_widget');

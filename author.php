@@ -9,7 +9,7 @@ if(empty($tab_active) || !isset($tabs[$tab_active]))
 	$tab_active = 'profile';
 	
 ?>
-<div class="container">
+<div class="g">
 	<h3 class="crumb-title">
 		<?= theme_cache::get_avatar($author);?>
 		<?= theme_cache::get_the_author_meta('display_name',$author);?> - <?= $tabs[$tab_active]['text'];?>
@@ -27,7 +27,7 @@ if(empty($tab_active) || !isset($tabs[$tab_active]))
 			</li>
 		<?php } ?>					
 	</ul>	
-	<div class="panel panel-default">
+	<div class="panel">
 		<?php include __DIR__ . '/tpl/author-' . $tab_active . '.php';?>
 	</div>
 </div>

@@ -12,8 +12,6 @@ add_filter('theme_addons',function($fns){
 	return $fns;
 });
 class theme_comment_emotion{
-	public static $iden = 'theme_comment_emotion';
-
 	public static function init(){
 		add_filter('theme_options_save',__CLASS__ . '::options_save');
 		add_filter('theme_options_default',__CLASS__ . '::options_default');
@@ -21,12 +19,14 @@ class theme_comment_emotion{
 		add_action('frontend_seajs_alias',__CLASS__ . '::frontend_seajs_alias');
 		add_action('page_settings',__CLASS__ . '::display_backend');
 
-		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
+		//add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
 
 		add_filter('pre_comment_content', __CLASS__ . '::filter_pre_comment_content');
+
+		add_action('wp_footer', __CLASS__ . '::wp_footer');
 	}
 	public static function options_default(array $opts = []){
-		$opts[self::$iden] = [
+		$opts[__CLASS__] = [
 			'kaomoji' => [
 				'enabled' => 1,
 				'items' => [
@@ -56,34 +56,34 @@ class theme_comment_emotion{
 				]
 			]
 		];
-		$opts[self::$iden]['kaomoji']['text'] = implode("\n",$opts[self::$iden]['kaomoji']['items']);
+		$opts[__CLASS__]['kaomoji']['text'] = implode("\n",$opts[__CLASS__]['kaomoji']['items']);
 
 		$items = [];
-		foreach($opts[self::$iden]['img']['items'] as $name => $url){
+		foreach($opts[__CLASS__]['img']['items'] as $name => $url){
 			$items[] = $name . ' = ' . $url;
 		}
-		$opts[self::$iden]['img']['text'] = implode("\n",$items);
+		$opts[__CLASS__]['img']['text'] = implode("\n",$items);
 		
 		return $opts;
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[self::$iden])){
-			$opts[self::$iden] = $_POST[self::$iden];
+		if(isset($_POST[__CLASS__])){
+			$opts[__CLASS__] = $_POST[__CLASS__];
 			/**
 			 * kaomoji
 			 */
-			if(!empty($_POST[self::$iden]['kaomoji']['text'])){
-				$opts[self::$iden]['kaomoji']['items'] = 
+			if(!empty($_POST[__CLASS__]['kaomoji']['text'])){
+				$opts[__CLASS__]['kaomoji']['items'] = 
 					array_map(function($v){
 						return str_replace("\r",'',trim($v));
-					},explode("\n",$opts[self::$iden]['kaomoji']['text']));
+					},explode("\n",$opts[__CLASS__]['kaomoji']['text']));
 			}
 			
 			/**
 			 * img
 			 */
-			if(!empty($_POST[self::$iden]['img']['text'])){
-				$lines = array_filter(explode("\n",$opts[self::$iden]['img']['text']));
+			if(!empty($_POST[__CLASS__]['img']['text'])){
+				$lines = array_filter(explode("\n",$opts[__CLASS__]['img']['text']));
 				$items = [];
 				foreach($lines as $v){
 					if(trim($v) === '')
@@ -91,7 +91,7 @@ class theme_comment_emotion{
 					$line = explode('=',$v);
 					$items[trim($line[0])] = trim($line[1]);
 				}
-				$opts[self::$iden]['img']['items'] = $items;
+				$opts[__CLASS__]['img']['items'] = $items;
 			}
 		}
 		return $opts;
@@ -99,7 +99,7 @@ class theme_comment_emotion{
 	public static function get_options($key = null){
 		static $caches = null;
 		if($caches === null)
-			$caches = (array)theme_options::get_options(self::$iden);
+			$caches = (array)theme_options::get_options(__CLASS__);
 		if($key)
 			return isset($caches[$key]) ? $caches[$key] : false;
 		return $caches;
@@ -115,13 +115,13 @@ class theme_comment_emotion{
 						<th scope="row"><?= ___('Kaomoji emoticon');?></th>
 						<td>
 							<p>
-								<label for="<?= self::$iden;?>-kaomoji-enabled">
-									<input type="checkbox" name="<?= self::$iden;?>[kaomoji][enabled]" id="<?= self::$iden;?>-kaomoji-enabled" value="1" <?= self::is_enabled('kaomoji') ? 'checked' : null;?> > 
+								<label for="<?= __CLASS__;?>-kaomoji-enabled">
+									<input type="checkbox" name="<?= __CLASS__;?>[kaomoji][enabled]" id="<?= __CLASS__;?>-kaomoji-enabled" value="1" <?= self::is_enabled('kaomoji') ? 'checked' : null;?> > 
 									<?= ___('Enable');?>
 								</label>
 							</p>
 							<p>
-								<textarea name="<?= self::$iden;?>[kaomoji][text]" id="<?= self::$iden;?>-kaomoji-text" rows="5" class="widefat"><?= self::get_ems('kaomoji','text');?></textarea>
+								<textarea name="<?= __CLASS__;?>[kaomoji][text]" id="<?= __CLASS__;?>-kaomoji-text" rows="5" class="widefat"><?= self::get_ems('kaomoji','text');?></textarea>
 							</p>
 							<p class="description"><?= ___('One per line.');?></p>
 						</td>
@@ -130,13 +130,13 @@ class theme_comment_emotion{
 						<th scope="row"><?= ___('Image emoticon');?></th>
 						<td>
 							<p>
-								<label for="<?= self::$iden;?>-img-enabled">
-									<input type="checkbox" name="<?= self::$iden;?>[img][enabled]" id="<?= self::$iden;?>-img-enabled" value="1" <?= self::is_enabled('img') ? 'checked' : null;?> > 
+								<label for="<?= __CLASS__;?>-img-enabled">
+									<input type="checkbox" name="<?= __CLASS__;?>[img][enabled]" id="<?= __CLASS__;?>-img-enabled" value="1" <?= self::is_enabled('img') ? 'checked' : null;?> > 
 									<?= ___('Enable');?>
 								</label>
 							</p>
 							<p>
-								<textarea name="<?= self::$iden;?>[img][text]" id="<?= self::$iden;?>-img-text" rows="5" class="widefat" placeholder="<?= ___('E.g. img01 = http://exmaple.com/img01.jpg');?>"><?= self::get_ems('img','text');?></textarea>
+								<textarea name="<?= __CLASS__;?>[img][text]" id="<?= __CLASS__;?>-img-text" rows="5" class="widefat" placeholder="<?= ___('E.g. img01 = http://exmaple.com/img01.jpg');?>"><?= self::get_ems('img','text');?></textarea>
 							</p>
 							<p class="description"><?= ___('One per line.');?></p>
 						</td>
@@ -161,11 +161,10 @@ class theme_comment_emotion{
 			case 'pop-btn':
 				?>
 				<?php if(self::is_enabled('kaomoji')){ ?>
-					<a href="javascript:;" class="comment-emotion-pop-btn btn btn-default" data-target="#<?= self::$iden;?>-kaomoji"><i class="fa fa-font"></i><span class="hidden-xs"> <?= ___('Kaomoji');?></span></a>
+					<a href="javascript:;" class="comment-emotion-pop-btn" data-target="#<?= __CLASS__;?>-kaomoji" title="<?= ___('Kaomoji');?>"><i class="fa fa-font"></i></a>
 				<?php } ?>
 				<?php if(self::is_enabled('img')){ ?>
-					<a href="javascript:;" class="comment-emotion-pop-btn btn btn-default" data-target="#<?= self::$iden;?>-img"><i class="fa fa-smile-o"></i><span class="hidden-xs"> <?= ___('Image emoticon');?></span></a>
-					
+					<a href="javascript:;" class="comment-emotion-pop-btn" data-target="#<?= __CLASS__;?>-img" title="<?= ___('Image emoticon');?>"><i class="fa fa-smile-o"></i></a>
 				<?php } ?>
 				<?php
 				break;
@@ -173,8 +172,7 @@ class theme_comment_emotion{
 				?>
 				<div class="comment-emotion-area-pop">
 					<?php if(self::is_enabled('kaomoji')){ ?>
-						<div id="<?= self::$iden;?>-kaomoji" class="pop">
-							<div class="comment-emotion-close">&times;</div>
+						<div id="<?= __CLASS__;?>-kaomoji" class="pop">
 							<?php
 							foreach(self::get_ems('kaomoji','items') as $name => $item){
 								$item = esc_html($item);
@@ -184,8 +182,7 @@ class theme_comment_emotion{
 						</div>
 					<?php } ?>
 					<?php if(self::is_enabled('img')){ ?>
-						<div id="<?= self::$iden;?>-img" class="pop">
-							<div class="comment-emotion-close">&times;</div>
+						<div id="<?= __CLASS__;?>-img" class="pop">
 							<?php foreach(self::get_ems('img','items') as $name => $url){ ?>
 								<a href="javascript:;" data-content="<?= '[',$name,']';?>"><img data-url="<?= esc_url($url);?>" alt="<?= esc_html($name);?>"></a>
 							<?php } ?>
@@ -221,7 +218,7 @@ class theme_comment_emotion{
 			return false;
 			
 		wp_enqueue_style(
-			self::$iden,
+			__CLASS__,
 			theme_features::get_theme_addons_css(__DIR__),
 			'frontend',
 			theme_file_timestamp::get_timestamp()
@@ -229,9 +226,16 @@ class theme_comment_emotion{
 	}
 	public static function frontend_seajs_alias(array $alias = []){
 		if(self::can_show()){
-			$alias[self::$iden] =  theme_features::get_theme_addons_js(__DIR__);
+			$alias[__CLASS__] =  theme_features::get_theme_addons_js(__DIR__);
 		}
 		return $alias;
+	}
+	public static function wp_footer(){
+		if(self::can_show()){
+			?>
+			<div id="layer-coment-emotion"></div>
+			<?php
+		}
 	}
 	public static function frontend_seajs_use(){
 		if(!self::can_show()) 
@@ -240,7 +244,7 @@ class theme_comment_emotion{
 		global $post;
 		
 		?>
-		seajs.use(['<?= self::$iden;?>'],function(m){
+		seajs.use(['<?= __CLASS__;?>'],function(m){
 			m.init();
 		});
 		<?php
