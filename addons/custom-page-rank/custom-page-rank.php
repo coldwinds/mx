@@ -346,13 +346,13 @@ class theme_page_rank{
 					<div class="extra">
 						<div class="metas row">
 							<!-- author -->
-							<div class="author meta col-xs-6 col-sm-2">
+							<div class="author meta col-xs-6 g-tablet-1-6">
 								<i class="fa fa-user"></i> 
 								<?= theme_cache::get_the_author_meta('display_name',$post->post_author);?>
 							</div>
 							
 							<!-- category -->
-							<div class="category meta col-xs-6 col-sm-2">
+							<div class="category meta col-xs-6 g-tablet-1-6">
 								<i class="fa fa-folder-open"></i> 
 								<?php
 								$cats = array_map(function($v){
@@ -364,14 +364,14 @@ class theme_page_rank{
 
 							<!-- views -->
 							<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
-								<div class="view meta col-xs-6 col-sm-2">
+								<div class="view meta col-xs-6 g-tablet-1-6">
 									<i class="fa fa-play-circle"></i> 
 									<?= theme_post_views::get_views();?>
 								</div>
 							<?php } ?>
 
 							<?php if(!wp_is_mobile()){ ?>
-								<div class="comments meta col-xs-6 col-sm-2 hidden-xs">
+								<div class="comments meta col-xs-6 g-tablet-1-6 hidden-xs">
 									<i class="fa fa-comment"></i>
 									<?= (int)$post->comment_count;?>
 								</div>
@@ -383,7 +383,7 @@ class theme_page_rank{
 							 */
 							if(class_exists('custom_post_point')){
 								?>
-								<div class="point meta col-xs-6 col-sm-2">
+								<div class="point meta col-xs-6 g-tablet-1-6">
 									<i class="fa fa-paw"></i>
 									<?= (int)custom_post_point::get_post_points_count($post->ID);?>
 								</div>

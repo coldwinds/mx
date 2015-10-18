@@ -7,7 +7,7 @@
 	theme_custom_slidebox::display_frontend();
 //} 
 ?>
-<div class="container">
+<div class="g">
 
 	<?php if(!wp_is_mobile()){ ?>
 		<div class="recomm-container hidden-sm">
@@ -23,7 +23,7 @@
 	<?php } ?>
 
 	<div class="row">
-		<div id="main" class="col-md-9 col-sm-12">
+		<div id="main" class="g-desktop-3-4">
 			
 			<?php 
 			/**

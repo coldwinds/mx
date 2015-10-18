@@ -8,13 +8,13 @@ if(theme_custom_point::get_point_img_url()){
 	$point_icon = '<i class="fa fa-diamond fa-fw"></i>';
 }
 ?>
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<?= theme_custom_point_bomb::get_des();?>
 		<div class="page-tip" id="fm-bomb-loading"><?= status_tip('loading',___('Loading, please wait...'));?></div>
 		<form class="form-horizontal" action="post" id="fm-bomb" method="javascript:;">
 			<div class="form-group">
-				<div class="col-sm-5">
+				<div class="g-tablet-2-5">
 					<div class="bomb-area bomb-area-attacker">
 						<p>
 							<img id="bomb-attacker-avatar" src="<?= theme_cache::get_avatar_url($current_user->ID);?>" alt="<?= ___('Avatar');?>" class="avatar" width="100" height="100" >
@@ -31,7 +31,7 @@ if(theme_custom_point::get_point_img_url()){
 					</div>					
 				</div><!-- .col-sm-5 -->
 			
-				<div class="col-sm-2 bomb-area-points">
+				<div class="g-tablet-1-5 bomb-area-points">
 					<h4><?= ___('Bomb number');?></h4>
 					<?php
 					$points = theme_custom_point_bomb::get_point_values();
@@ -47,7 +47,7 @@ if(theme_custom_point::get_point_img_url()){
 						</label>
 					<?php } ?>
 				</div>
-				<div class="col-sm-5">
+				<div class="g-tablet-2-5">
 					<div class="bomb-area bomb-area-target">
 						<p>
 							<img id="bomb-target-avatar" src="<?= theme_functions::$avatar_placeholder;?>" alt="<?= ___('Avatar');?>" class="avatar" width="100" height="100" >
@@ -70,12 +70,12 @@ if(theme_custom_point::get_point_img_url()){
 				</div><!-- .row -->
 			</div><!-- .form-group -->
 			<div class="form-group">
-				<div class="col-sm-12">
+				<div class="g-desktop-1-1">
 					<input type="text" class="form-control text-center" name="says" id="bomb-says" placeholder="<?= ___('Say something to target?');?>" maxlength="30">
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-12">
+				<div class="g-desktop-1-1">
 					<input type="hidden" name="type" value="bomb">
 					<button class="submit btn btn-success btn-lg btn-block" type="submit" data-loading-tx="<?= ___('Bombing...');?>" disabled>
 						<i class="fa fa-bomb"></i> 
@@ -85,4 +85,4 @@ if(theme_custom_point::get_point_img_url()){
 			</div>
 		</form>
 	</div>
-</div><!-- /.panel-body -->
+</div><!-- /.content -->

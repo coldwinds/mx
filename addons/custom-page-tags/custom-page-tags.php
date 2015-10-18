@@ -271,7 +271,7 @@ class theme_page_tags{
 						<small> - <?= ___('Pinyin initial');?></small>
 					</h4>
 				</div>
-				<div class="panel-body">
+				<div class="content">
 					<div class="row">
 						<?php foreach($tags as $tag_id => $tag){ ?>
 							<div class="col-xs-6 col-sm-4 col-md-3">

@@ -1,16 +1,16 @@
 <?php get_header();?>
-<div class="container grid-container">
+<div class="g grid-container">
 	<div class="row">
 		<?php
 		if(have_posts()){
 			while(have_posts()){
 				the_post();
 				?>
-				<div id="main" class="main col-md-8 col-sm-12">
+				<div id="main" class="main g-desktop-3-4">
 					<?php theme_functions::singular_content();?>
-					<div class="np-posts">
-						<?php theme_functions::the_post_pagination();?>
-					</div>
+					
+					<?php theme_functions::adjacent_posts();?>
+					
 					<?php
 					/**
 					 * ad
@@ -21,7 +21,7 @@
 						<?php
 					}
 					?>
-					<?php theme_functions::the_related_posts_plus();?>
+					<?php theme_functions::the_related_posts();?>
 					<?php comments_template();?>
 				</div>
 				<?php include __DIR__ . '/sidebar-post.php';?>

@@ -1,0 +1,14 @@
+//body{
+//	background-color: $background;
+//}
+a{
+	color: $link-color;
+	&:hover,
+	&.hover{
+		color: $link-color-hover;
+	}
+	&:active,
+	&.active{
+		color: $link-color-active;
+	}
+}

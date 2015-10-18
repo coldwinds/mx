@@ -16,13 +16,10 @@
 	}
 	#homebox-nav a{
 		position: relative;
-		padding: 5px;
+		padding: .5rem;
 		color: #999;
 		transition: none;
 		border-bottom: 1px solid rgba(0,0,0,.07);
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box;
 	}
 	#homebox-nav a:after{
 		display: none;

@@ -3,16 +3,17 @@ define(function(require,exports,module){'use strict';require.async(['modules/laz
 exports.back_to_top=function(){var $back=document.querySelector('.back-to-top');if(!$back)
 return false;function event_click(e){e.preventDefault();tools.scrollTop(0);}
 $back.addEventListener(tools.click_handler,event_click);}
-exports.scroll_menu=function(){var $menu=document.querySelector('.main-nav'),y=0,fold=false,st=false,uping=false;if(!$menu)
+exports.scroll_menu=function(){var $menu=document.querySelector('.nav-main'),y=0,fold=false,st=false,uping=false;if(!$menu)
 return false;function hide(){if(!fold){$menu.classList.add('fold');$menu.classList.remove('top')
 fold=true;}}
 function show(){if(fold){$menu.classList.remove('fold');fold=false;}}
 function dely_clearst(){clearTimeout(st);}
 function delay_show(){if(uping){show();}else{if(uping)
 clearTimeout(st);st=setTimeout(function(){if(!uping){uping=true;}},500);}}
-window.addEventListener('scroll',function(){if(this.pageYOffset===0){show();$menu.classList.add('top');}else if(y<=this.pageYOffset){hide();if(uping)
+function event_win_scroll(scroll_y){if(scroll_y===0){show();$menu.classList.add('top');}else if(y<=scroll_y){hide();if(uping)
 uping=false;}else{delay_show();}
-y=this.pageYOffset;},false);}
+y=scroll_y;}
+tools.scroll_callback(event_win_scroll);}
 exports.toggle_menu=function(){var $toggles=document.querySelectorAll('a[data-toggle-target]');if(!$toggles[0])
 return;function Q(e){return document.querySelector(e);}
 var $last_click_btn,$last_target;function show_menu(){var icon_active=$last_click_btn.getAttribute('data-icon-active'),icon_original=$last_click_btn.getAttribute('data-icon-original');$last_target.classList.add('on');if(icon_active&&icon_original){$last_click_btn.classList.remove(icon_original);$last_click_btn.classList.add(icon_active);}

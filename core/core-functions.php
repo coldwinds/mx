@@ -387,7 +387,7 @@ function status_tip(){
 			$icon = $type;
 	}
 	
-	return '<' . $wrapper . ' class="tip-status tip-status-' . $size . ' tip-status-' . $type . '"><i class="fa fa-' . $icon . '"></i> ' . $content . '</' . $wrapper . '>';
+	return '<' . $wrapper . ' class="tip-status tip-status-' . $size . ' tip-status-' . $type . '"><i class="fa fa-' . $icon . ' fa-fw"></i> ' . $content . '</' . $wrapper . '>';
 }
 
 /**

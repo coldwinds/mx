@@ -331,7 +331,7 @@ class theme_custom_slidebox{
 		/** ad */
 		if(!empty(self::display_frontend_ad('below'))){
 			?>
-			<div class="container <?= __CLASS__;?>-ad-below"><?= self::display_frontend_ad('below');?></div>
+			<div class="g <?= __CLASS__;?>-ad-below"><?= self::display_frontend_ad('below');?></div>
 			<?php
 		}
 		$cache[$device] = html_minify(ob_get_contents());
@@ -443,7 +443,7 @@ class theme_custom_slidebox{
 		<div class="item <?= $i === 1 ? 'active' : null;?>" style="background-image:url(<?= $box['img-url'];?>)"></div>
 	<?php } ?>
 </div>
-<div id="<?= __CLASS__;?>" class="container hidden-xs">
+<div id="<?= __CLASS__;?>" class="g">
 	<div class="area-main">
 		<?php
 		$i = 0;

@@ -5,8 +5,9 @@ define(function(require,exports,module){
 
 	var cache = {
 		is_fixed : false,
-		offset_top_sets : {},
-		$items : []
+		target_datas : [],
+		$items : [],
+		main_nav_gutter : 70
 	};
 	
 	exports.init = function(){
@@ -26,12 +27,12 @@ define(function(require,exports,module){
 		bind_window_scroll();
 	}
 	function bind_window_scroll(){
-		window.addEventListener('scroll', function (e) {
+		function event_on_scroll(scrollY){
 			/** fixed */
-			if(this.pageYOffset >= cache.ori_offset_top - 100){
+			if(scrollY >= cache.target_datas[0].offset_top){
 				if(!cache.is_fixed){
 					cache.$nav.style.position = 'fixed';
-					cache.$nav.style.top = '100px';
+					cache.$nav.style.top = cache.main_nav_gutter + 'px';
 					cache.is_fixed = true;
 				}
 			}else{
@@ -41,19 +42,15 @@ define(function(require,exports,module){
 					cache.is_fixed = false;
 				}
 			}
-			for( var i in cache.offset_top_sets ){
-				if(this.pageYOffset >= i - 100){
-					if(cache.$last_item){
-						if(cache.$last_item.classList.contains('active'))
-							cache.$last_item.classList.remove('active');
-						if(!cache.$last_item.classList.contains('active'))
-							cache.$items[cache.offset_top_sets[i]].classList.add('active');
-					}
-					if(cache.$last_item != cache.$items[cache.offset_top_sets[i]])
-						cache.$last_item = cache.$items[cache.offset_top_sets[i]];
+			for( var i = 0, len = cache.target_datas.length; i < len; i++ ){
+				if(scrollY >= cache.target_datas[i].offset_top && scrollY < cache.target_datas[i].offset_top + cache.target_datas[i].height){
+					cache.$items[i].classList.add('active');
+				}else{
+					cache.$items[i].classList.remove('active');
 				}
 			}
-		});
+		}
+		tools.scroll_callback(event_on_scroll);
 	}
 	function set_nav_style(){
 		cache.$nav.style.left = cache.ori_offset_left + 'px';
@@ -61,15 +58,14 @@ define(function(require,exports,module){
 	}
 	function scroll_to(e){
 		e.preventDefault();
-		//scrollTo(0,this.getAttribute('data-scroll-top'));
 		tools.scrollTop(this.getAttribute('data-scroll-top'));
 	}
 	function append_content_nav(){
 		for( var i = 0, len = cache.$boxes.length; i < len; i++ ){
-			var $title = cache.$boxes[i].querySelector('.mod-title a'),
+			var $title = cache.$boxes[i].querySelector('.title a'),
 				title = $title.textContent,
 				$i = $title.querySelector('i'),
-				offsetTop = tools.getElementTop(cache.$boxes[i]) - 100,
+				offsetTop = tools.getElementTop(cache.$boxes[i]) - cache.main_nav_gutter,
 				$item = document.createElement('a');
 				
 			if(!$i)
@@ -77,8 +73,11 @@ define(function(require,exports,module){
 				
 			var icon_class = $i.getAttribute('class');
 			
-			/** offset top sets */
-			cache.offset_top_sets[offsetTop] = i;
+			/** save target datas */
+			cache.target_datas[i] = {
+				offset_top : offsetTop,
+				height : parseInt(getComputedStyle(cache.$boxes[i]).marginBottom) + cache.$boxes[i].clientHeight
+			};
 			
 			$item.setAttribute('data-scroll-top',offsetTop);
 			$item.href = '#' + cache.$boxes[i].id;

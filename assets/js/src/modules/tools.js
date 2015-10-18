@@ -6,6 +6,26 @@ define(function(require, exports, module){
 
 
 	exports.click_handler = ('touchend' in document.documentElement ? 'touchend' : 'click');
+
+	exports.scroll_callback = function(fnc){
+		var last_y = window.pageYOffset,
+			ticking = false;
+		function on_scroll(){
+			last_y = window.pageYOffset;
+			request_ticking();
+		}
+		function request_ticking(){
+			if(!ticking){
+				requestAnimationFrame(update);
+				ticking = true;
+			}
+		}
+		function update(){
+			fnc(last_y);
+			ticking = false;
+		}
+		window.addEventListener('scroll',on_scroll);
+	};
 	/**
 	 * get ele offset left
 	 */
@@ -35,29 +55,59 @@ define(function(require, exports, module){
 		t.innerHTML = s;
 		return t.firstChild;
 	};
+	
+	exports.scrollTop = function(ele_top, callback){
+		// ease in out function thanks to:
+		// http://blog.greweb.fr/2012/02/bezier-curve-based-easing-functions-from-concept-to-implementation/
+		var easeInOutCubic = function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 }
+	
+		// calculate the scroll position we should be in
+		// given the start and end point of the scroll
+		// the time elapsed from the beginning of the scroll
+		// and the total duration of the scroll (default 500ms)
+		var position = function(start, end, elapsed, duration) {
+		    if (elapsed > duration) return end;
+		    return start + (end - start) * easeInOutCubic(elapsed / duration); // <-- you can change the easing funtion there
+		    // return start + (end - start) * (elapsed / duration); // <-- this would give a linear scroll
+		}
 
-	exports.scrollTop = function(targetY,callback){
-		cache.scroll_timer = setInterval(function () {
-	        var currentY = window.pageYOffset;
+		// we use requestAnimationFrame to be called by the browser before every repaint
+		// if the first argument is an element then scroll to the top of this element
+		// if the first argument is numeric then scroll to this location
+		// if the callback exist, it is called when the scrolling is finished
+		// if context is set then scroll that element, else scroll window 
+		var smoothScroll = function(el, duration, callback, context){
+		    duration = duration || 500;
+		    context = context || window;
+		    var start = window.pageYOffset;
 
-	        var tempTargetY = currentY - (currentY - targetY) / 10;
-	        if (Math.abs(tempTargetY - currentY) < 1 && tempTargetY - currentY > 0) {
-	            tempTargetY++;
-	        }
-	        if (Math.abs(tempTargetY - currentY) < 1 && tempTargetY - currentY < 0) {
-	            tempTargetY--;
-	        }
-	     
-	        window.scrollTo(0, tempTargetY);
+		    var end = parseInt(ele_top);
 
-	        if (Math.abs(window.pageYOffset - targetY) <= 2) {
-	            clearInterval(cache.scroll_timer);
-	            window.scrollTo(0, targetY);
+		    var clock = Date.now();
+		    var requestAnimationFrame = window.requestAnimationFrame ||
+		        window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame ||
+		        function(fn){window.setTimeout(fn, 15);};
 
-	            if(callback)
-	            	callback();
-	        }
-	    }, 1);
+		    var step = function(){
+		        var elapsed = Date.now() - clock;
+		        if (context !== window) {
+		        	context.scrollTop = position(start, end, elapsed, duration);
+		        }
+		        else {
+		        	window.scroll(0, position(start, end, elapsed, duration));
+		        }
+
+		        if (elapsed > duration) {
+		            if (typeof callback === 'function') {
+		                callback(el);
+		            }
+		        } else {
+		            requestAnimationFrame(step);
+		        }
+		    }
+		    step();
+	    };
+	    smoothScroll(ele_top);
 	};
 	/**
 	 * ajax_loading_tip
@@ -107,8 +157,8 @@ define(function(require, exports, module){
 				if(timeout <= 0){
 					action_close();
 					cache.alt.$c.innerHTML = '';
-					if(si)
-						clearInterval(si);
+					if(cache.alt.si)
+						clearInterval(cache.alt.si);
 				}
 			},1000);
 		}else{
@@ -393,7 +443,7 @@ define(function(require, exports, module){
 				icon = type;
 		}
 
-		return '<' + wrapper + ' class="tip-status tip-status-' + size + ' tip-status-' + type + '"><i class="fa fa-' + icon + '"></i> ' + content + '</' + wrapper + '>';
+		return '<' + wrapper + ' class="tip-status tip-status-' + size + ' tip-status-' + type + '"><i class="fa fa-' + icon + ' fa-fw"></i> ' + content + '</' + wrapper + '>';
 	};
 	/** 
 	 * cookie

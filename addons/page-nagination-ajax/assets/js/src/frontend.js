@@ -44,7 +44,9 @@ define(function(require, exports, module){
 			
 			if(!cache.$post || !cache.$nagi)
 				return;
-				
+
+			cache.last_scroll_y = window.pageOffsetY;
+			cache.ticking = false;
 			cache.post_top;
 			cache.max_bottom;
 			cache.is_hide = false;
@@ -53,8 +55,6 @@ define(function(require, exports, module){
 				that.reset_nagi_style();
 			});
 
-			cache.$nagi.style.display = 'block';
-
 			this.bind();
 		},
 		bind : function(rebind){
@@ -62,12 +62,33 @@ define(function(require, exports, module){
 				cache.$nagi = document.querySelector('.page-pagination');
 			}
 			this.reset_nagi_style();
+			this.bind_scroll();
 		},
 		reset_nagi_style : function(){
 			cache.post_top = this.getElementTop(cache.$post);
-			cache.max_bottom = cache.post_top + cache.$post.querySelector('.panel-body').clientHeight;
+			cache.post_height = cache.$post.querySelector('.entry-body').clientHeight;
+			cache.max_bottom = cache.post_top + cache.post_height;
 			cache.$nagi.style.left = this.getElementLeft(cache.$post) + 'px';
 			cache.$nagi.style.width = cache.$post.clientWidth + 'px';
+		},
+		bind_scroll : function(){
+			
+			var is_fixed = false;
+			function event_scroll(y){
+				/** pos absolute */
+				if(y >= cache.max_bottom - 250){
+					if(is_fixed){
+						cache.$nagi.classList.remove('fixed');
+						is_fixed = false;
+					}
+				}else{
+					if(!is_fixed){
+						cache.$nagi.classList.add('fixed');
+						is_fixed = true;
+					}
+				}
+			}
+			tools.scroll_callback(event_scroll);
 		},
 		getElementLeft : function(e){
 			var l = e.offsetLeft,
@@ -103,20 +124,20 @@ define(function(require, exports, module){
 		for(var i = 0; i < len; i++){
 			var $parent = $imgs[i].parentNode;
 			$parent.href = 'javascript:;';
-			$parent.addEventListener('click',event_img_click);
+			$parent.addEventListener(tools.click_handler,event_img_click);
 		}
 	}
 	exports.pagi_ajax = function(){
 		if(!cache.$nagi)
 			return;
 			
-		cache.$post_content = document.querySelector('.post-content');
+		cache.$post_content = document.querySelector('.entry-content');
 		cache.$as = cache.$nagi.querySelectorAll('a');
 		/**
 		 * bind click event
 		 */
 		for( var i = 0, len = cache.$as.length; i < len; i++){
-			cache.$as[i].addEventListener('click',event_click);
+			cache.$as[i].addEventListener(tools.click_handler,event_click);
 		}
 		
 		/** save current post content to cache */

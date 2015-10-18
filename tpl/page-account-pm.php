@@ -1,8 +1,8 @@
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<div class="page-tip" id="pm-loading-tip"><?= status_tip('loading',___('Loading, please wait...'));?></div>
 		<div id="pm-container" class="row">
-			<div class="col-sm-2">
+			<div class="g-tablet-1-6">
 				<nav id="pm-tab" class="pm-tab">
 					<a id="pm-tab-new" href="javascript:;" data-uid="new" class="active">
 						<i class="fa fa-plus fa-fw"></i>&nbsp;<?= ___('New P.M.');?>
@@ -10,7 +10,7 @@
 					<?php theme_custom_pm::the_tabs();?>
 				</nav>
 			</div>
-			<div class="col-sm-10">
+			<div class="g-tablet-5-6">
 				<div class="pm-dialog-container">
 					<!-- pm-new -->
 					<form action="javascript:;" id="pm-dialog-new" class="pm-dialog">

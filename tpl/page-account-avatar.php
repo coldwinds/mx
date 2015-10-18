@@ -2,8 +2,8 @@
 global $current_user;
 get_currentuserinfo();
 ?>
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<?php
 		/**
 		 * consume points to modify avatar
@@ -51,10 +51,10 @@ get_currentuserinfo();
 	<fieldset <?= $disabled;?>>
 	<!-- current avatar -->
 	<div class="form-group">
-		<div class="control-label col-sm-2">
+		<div class="control-label g-tablet-1-6">
 			<?= ___('Current avatar');?>
 		</div>
-		<div class="col-sm-10">
+		<div class="g-tablet-5-6">
 			<div class="current-avatar">
 				<?= theme_cache::get_avatar($current_user->ID,100);?>
 			</div>
@@ -62,15 +62,15 @@ get_currentuserinfo();
 	</div>
 	<!-- new avatar -->
 	<div class="form-group">
-		<div class="control-label col-sm-2">
+		<div class="control-label g-tablet-1-6">
 			<?= ___('New avatar');?>
 		</div>
-		<div class="col-sm-10">
+		<div class="g-tablet-5-6">
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="g-tablet-1-2">
 					<div id="cropper-container"></div>
 				</div>
-				<div class="col-sm-6">
+				<div class="g-tablet-1-2">
 					<div id="avatar-preview"></div>
 				</div>
 			</div>

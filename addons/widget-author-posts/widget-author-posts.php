@@ -39,21 +39,21 @@ class widget_author_posts extends WP_Widget{
 			'ignore_sticky_posts' => true,
 		]);
 		?>
-		<div class="panel-body">
+		<div class="card-container">
 			<?php
 			if($query->have_posts()){
 				?>
-				<ul class="row post-img-lists widget-author-post-<?= $instance['orderby'];?>">
+				<div class="row widget-author-post-<?= $instance['orderby'];?>">
 					<?php
 					foreach($query->posts as $post){
 						setup_postdata($post);
-						theme_functions::archive_img_content([
-							'classes' => ['col-xs-6 col-sm-4 col-md-6']
+						theme_functions::archive_card_xs([
+							'classes' => 'g-phone-1-2',
 						]);
 					}
 					wp_reset_postdata();
 					?>
-				</ul>
+				</div>
 			<?php }else{ ?>
 				<div class="page-tip not-found">
 					<?= status_tip('info',___('No data yet.'));?>

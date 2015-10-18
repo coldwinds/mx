@@ -1,4 +1,4 @@
-.wp-editor-container{
+f.wp-editor-container{
 	border: 1px solid #e5e5e5;
 	
 }
@@ -153,6 +153,7 @@
 }
 
 #fm-ctb .form-group:nth-child(2n){
+	padding: 1rem 0;
 	background: #F8F8F8; 
 }
 /**
@@ -186,8 +187,14 @@
  * .checkbox-select
  */
 #fm-ctb .checkbox-select{
-	font-size: 1.3em;
 }
+	.ctb-tag{
+		display: inline-block;
+		margin-bottom: .5rem;
+	}
+	.ctb-tag .label{
+		font-weight: normal;
+	}
 	.ctb-tag input:checked + .label{
 		background: #4cae4c;
 		color: #fff;
@@ -215,10 +222,15 @@
 .theme_custom_post_source-inputs{
 	display: none;
 }
+html .wp-editor-area{
+	border: 1px solid #eee;
+	border-bottom-width: 2px;
+}
+label[for="ctb-content"]{
+	display: block;
+	margin: 0 0 -2rem;
+}
 @media (min-width: 768px){
-	label[for="ctb-content"]{
-		margin-top: 30px;
-	}
 	.wp-editor-wrap{
 		margin-top: 0;
 	}

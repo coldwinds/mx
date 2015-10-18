@@ -32,11 +32,10 @@ define(function(require, exports, module){
 		$back.addEventListener(tools.click_handler, event_click);
 	}
 	exports.scroll_menu = function(){
-		var $menu = document.querySelector('.main-nav'),
-			y = 0,
-			fold = false,
-			st = false,
-			uping = false;
+		var $menu = document.querySelector('.nav-main'),
+			menu_height = $menu.offsetHeight,
+			y = window.pageOffsetY,
+			fold = false;
 		if(!$menu)
 			return false;
 
@@ -56,43 +55,24 @@ define(function(require, exports, module){
 		function dely_clearst(){
 			clearTimeout(st);
 		}
-		function delay_show(){
-			if(uping){
-				show();
-			}else{
-				if(uping)
-					clearTimeout(st);
-					
-				st = setTimeout(function(){
-					if(!uping){
-						uping = true;
-					}
-				},500);
-			}
-			
-			
-		}
-		window.addEventListener('scroll', function () {
-			
-			if(this.pageYOffset === 0){
+		function event_win_scroll(scroll_y){
+			if(scroll_y <= menu_height){
 				show();
 				$menu.classList.add('top');
 			/**
 			 * scroll down
 			 */
-			}else if( y <= this.pageYOffset ){
+			}else if( y <= scroll_y ){
 				hide();
-				if(uping)
-					uping = false;
 			/**
-			 * scroll up
+			 * scroll up and delay show
 			 */
-			}else{
-				delay_show();
+			}else if(y - scroll_y < 100){
+				show();
 			}
-			y = this.pageYOffset;
-			
-		}, false);
+			y = scroll_y;
+		}
+		tools.scroll_callback(event_win_scroll);
 	}
 	exports.toggle_menu = function(){
 		var $toggles = document.querySelectorAll('a[data-toggle-target]');

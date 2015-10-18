@@ -83,10 +83,10 @@ function post_form($post_id = null){
 	
 	<form action="javascript:;" id="fm-ctb" class="form-horizontal">
 		<div class="form-group">
-			<label for="ctb-title" class="col-sm-2 control-label">
+			<label for="ctb-title" class="g-tablet-1-6 control-label">
 				<?= ___('Post title');?>
 			</label>
-			<div class="col-sm-10">
+			<div class="g-tablet-5-6">
 				<input 
 					type="text" 
 					name="ctb[post-title]"
@@ -102,19 +102,19 @@ function post_form($post_id = null){
 		</div>
 		<!-- post excerpt -->
 		<div class="form-group">
-			<label for="ctb-excerpt" class="col-sm-2 control-label">
+			<label for="ctb-excerpt" class="g-tablet-1-6 control-label">
 				<?= ___('Post excerpt');?>
 			</label>
-			<div class="col-sm-10">
+			<div class="g-tablet-5-6">
 				<textarea name="ctb[post-excerpt]" id="ctb-excerpt" rows="3" class="form-control" placeholder="<?= ___('Your can write the post excerpt here, it will show every page nagination header.');?>"><?= $post_excerpt;?></textarea>
 			</div>
 		</div>
 		<!-- post content -->
 		<div class="form-group">
-			<label for="ctb-content" class="col-sm-2 control-label">
+			<div class="g-tablet-1-1">
+			<label for="ctb-content" >
 				<?= ___('Post content');?>
 			</label>
-			<div class="col-sm-10">
 				<?php 
 				wp_editor(
 					$post_content,
@@ -124,6 +124,7 @@ function post_form($post_id = null){
 						'drag_drop_upload' => true,
 						'teeny' => true,
 						'media_buttons' => false,
+						'editor_class' => 'form-control',
 					]
 				);
 				?>
@@ -133,11 +134,11 @@ function post_form($post_id = null){
 		
 		<!-- upload image -->
 		<div class="form-group">
-			<div class="col-sm-2 control-label">
+			<div class="g-tablet-1-6 control-label">
 				<i class="fa fa-image"></i>
 				<?= ___('Upload preview image');?>
 			</div>
-			<div class="col-sm-10">
+			<div class="g-tablet-5-6">
 				<div id="ctb-file-area">
 					<div class="" id="ctb-file-btn">
 						<i class="fa fa-upload"></i>
@@ -208,7 +209,7 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 				} ?>
 			</select>
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="g-tablet-2-4">
 					<input 
 						type="url" 
 						class="form-control" 
@@ -219,9 +220,9 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 						value="<?= $storage_url;?>" 
 					>
 				</div>
-				<div class="col-sm-3">
+				<div class="g-tablet-1-4">
 					<div class="input-group">
-						<label class="input-group-addon" for="theme_custom_storage-download-pwd"><i class="fa fa-key fa-fw"></i></label>
+						<label class="addon" for="theme_custom_storage-download-pwd"><i class="fa fa-key fa-fw"></i></label>
 						<input 
 							type="text" 
 							class="form-control" 
@@ -233,9 +234,9 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 						>
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="g-tablet-1-4">
 					<div class="input-group">
-						<label class="input-group-addon" for="theme_custom_storage-url"><i class="fa fa-unlock fa-fw"></i></label>
+						<label class="addon" for="theme_custom_storage-url"><i class="fa fa-unlock fa-fw"></i></label>
 						<input 
 							type="text" 
 							class="form-control" 
@@ -260,11 +261,11 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 	
 	?>
 	<div class="form-group theme_custom_storage-group" data-tpl="<?= esc_attr($storage_tpl(0));?>">
-		<div class="col-sm-2 control-label">
+		<div class="g-tablet-1-6 control-label">
 			<i class="fa fa-cloud-download"></i>
 			<?= ___('Storage link');?>
 		</div>
-		<div class="col-sm-10">
+		<div class="g-tablet-5-6">
 			<?php
 			/** is edit */
 			if($post_id && $storage_meta){
@@ -294,11 +295,11 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		
 		<!-- cats -->
 		<div class="form-group">
-			<div class="col-sm-2 control-label">
+			<div class="g-tablet-1-6 control-label">
 				<i class="fa fa-folder-open"></i>
 				<?= ___('Category');?>
 			</div>
-			<div class="col-sm-10">
+			<div class="g-tablet-5-6">
 				<?php
 				if($edit){
 					$selected_cat_id = 0;
@@ -335,11 +336,11 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		
 		<!-- tags -->
 		<div class="form-group">
-			<div class="col-sm-2 control-label">
+			<div class="g-tablet-1-6 control-label">
 				<i class="fa fa-tags"></i> 
 				<?= ___('Pop. tags');?>
 			</div>
-			<div class="col-sm-10">
+			<div class="g-tablet-5-6">
 				<div class="checkbox-select">
 					<?php
 					$tags_args = [
@@ -404,14 +405,14 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		
 		<!-- custom tags -->
 		<div class="form-group">
-			<div class="col-sm-2 control-label">
+			<div class="g-tablet-1-6 control-label">
 				<i class="fa fa-tag"></i> 
 				<?= ___('Custom tags');?>
 			</div>
-			<div class="col-sm-10">
+			<div class="g-tablet-5-6">
 				<div class="row">
 					<?php for($i = 0;$i<=3;++$i){ ?>
-						<div class="col-xs-6 col-sm-3">
+						<div class="g-phone-1-2 g-tablet-1-4">
 							<input id="ctb-custom-tag-<?= $i;?>" class="ctb-custom-tag form-control" type="text" name="ctb[tags][]" placeholder="<?= sprintf(___('Custom tag %d'),$i+1);?>" >
 						</div>
 					<?php } ?>
@@ -431,11 +432,11 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 			
 			?>
 			<div class="form-group">
-				<div class="col-sm-2 control-label">
+				<div class="g-tablet-1-6 control-label">
 					<i class="fa fa-truck"></i> 
 					<?= ___('Source');?>
 				</div>
-				<div class="col-sm-10">
+				<div class="g-tablet-5-6">
 					<label class="radio-inline" for="theme_custom_post_source-source-original">
 						<input 
 							type="radio" 
@@ -461,9 +462,9 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 						<?= ___('Reprint');?>
 					</label>
 					<div class="row theme_custom_post_source-inputs" id="theme_custom_post_source-input-reprint" >
-						<div class="col-sm-7">
+						<div class="g-tablet-1-2">
 							<div class="input-group">
-								<label class="input-group-addon" for="theme_custom_post_source-reprint-url">
+								<label class="addon" for="theme_custom_post_source-reprint-url">
 									<i class="fa fa-link"></i>
 								</label>
 								<input 
@@ -477,9 +478,9 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 								>
 							</div>
 						</div>
-						<div class="col-sm-5">
+						<div class="g-tablet-1-2">
 							<div class="input-group">
-								<label class="input-group-addon" for="theme_custom_post_source-reprint-author">
+								<label class="addon" for="theme_custom_post_source-reprint-author">
 									<i class="fa fa-user"></i>
 								</label>
 								<input 
@@ -501,12 +502,12 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 		
 		<!-- submit -->
 		<div class="form-group">
-			<div class="col-sm-2">
+			<div class="g-tablet-1-6">
 				<a href="javascript:;" id="ctb-quick-save" class="btn btn-block btn-default btn-lg" title="<?= ___('The post data will be saved automatically per minute in your current borwser, you can also save it now manually.');?>">
 					<i class="fa fa-save"></i> <?= ___('Quick save');?>
 				</a>
 			</div>
-			<div class="col-sm-10">
+			<div class="g-tablet-5-6">
 				
 				<button type="submit" class="btn btn-lg btn-success btn-block submit" data-loading-text="<?= ___('Sending, please wait...');?>">
 					<i class="fa fa-check"></i> 
@@ -522,8 +523,8 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 }
 
 ?>
-<div class="panel panel-default">
-	<div class="panel-body">
+<div class="panel">
+	<div class="content">
 		<?php
 		if(isset($_GET['post']) && is_numeric($_GET['post'])){
 			post_form($_GET['post']);

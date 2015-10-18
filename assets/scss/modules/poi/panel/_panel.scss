@@ -1,0 +1,35 @@
+%panel-content{
+	background: #fff;
+	border: 1px solid $panel-border-color;
+	padding: $panel-content-gutter $panel-content-gutter $panel-content-gutter/2 $panel-content-gutter;
+	border-bottom-width: 2px;
+}
+%panel-not-content{
+	& > *:last-child{
+		border: none;
+		background: none;
+		padding: 0;
+		border-radius: 0;
+	}
+}
+.panel{
+	border-radius: $global-border-radius;
+	margin-bottom: 2rem;
+	
+	.heading{
+		margin-bottom: 1rem;
+		.title{
+			display: inline-block;
+			font-size: 1rem;
+			margin: 0;
+		}
+	}
+	.content{
+		@extend %panel-content;
+	}
+	.footer{
+		margin-top: -2px;
+		border: 1px solid $panel-border-color;
+		border-top-width: 0;
+	}
+}

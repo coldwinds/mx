@@ -8,16 +8,24 @@
 }
 
 #new-avatar-btn{
+	position: relative;
 	padding: 40px 0;
 	border: 5px dashed #ccc;
 	background: rgb(245,245,245);
 	font-size: 1.5em;
+	overflow: hidden;
 }
 	#new-avatar-btn:hover{
 		background: rgb(240,240,240);
 		border-color: #777;
 	}
-
+	#new-avatar-btn input[type="file"]{
+		opacity: 0;
+		position: absolute;
+		right: -1rem;
+		top: -1rem;
+		font-size: 10em;
+	}
 #avatar-loading-tip,
 #cropper-container,
 #cropper-done-btn{

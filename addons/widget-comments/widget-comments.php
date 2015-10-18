@@ -90,7 +90,7 @@ class widget_comments extends WP_Widget{
 			<?php 
 			$comment = $comment_bak;
 		}else{ ?>
-			<div class="panel-body">
+			<div class="content">
 				<div class="page-tip"><?= status_tip('info',___('No any comment yet.'));?></div>
 			</div>
 		<?php

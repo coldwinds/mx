@@ -2,16 +2,16 @@
 	<?php
 	if(have_posts()){
 		?>
-		<ul class="row post-img-lists">
+		<div class="row">
 			<?php
 			foreach($wp_query->posts as $post){
 				setup_postdata($post);
-				theme_functions::archive_img_content(array(
-					'classes' => array('col-xs-6 col-sm-3 col-md-2')
-				));
+				theme_functions::archive_card_lg([
+					'classes' => 'g-phone-1-2 g-tablet-1-3 g-desktop-1-4',
+				]);
 			}
 			?>
-		</ul>
+		</div>
 	<?php }else{ ?>
 		<div class="page-tip"><?= status_tip('info',___('No post yet.')); ?></div>
 	<?php } ?>

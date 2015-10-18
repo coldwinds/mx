@@ -9,25 +9,23 @@ if(empty($tab_active) || !isset($tabs[$tab_active]))
 	$tab_active = 'profile';
 	
 ?>
-<div class="container">
+<div class="g">
 	<h3 class="crumb-title">
 		<?= theme_cache::get_avatar($author);?>
-		<?= theme_cache::get_the_author_meta('display_name',$author);?> - <?= $tabs[$tab_active]['text'];?>
+		<?= theme_cache::get_the_author_meta('display_name',$author);?> - <small><?= $tabs[$tab_active]['text'];?></small>
 	</h3>
-	<ul class="nav nav-pills nav-justified">
+	<nav class="nav">
 		<?php 
 		foreach($tabs as $k => $v){
 			$class_active = $tab_active === $k ? ' active ' : null;
 			?>
-			<li role="presentation" class="<?= $class_active;?>">
-				<a href="<?= esc_url($v['url']);?>">
-					<i class="fa fa-<?= $v['icon'];?> fa-fw"></i> 
-					<?= $v['text'];?>
-				</a>
-			</li>
+			<a class="<?= $class_active;?>" href="<?= $v['url'];?>">
+				<i class="fa fa-<?= $v['icon'];?> fa-fw"></i> 
+				<?= $v['text'];?>
+			</a>
 		<?php } ?>					
-	</ul>	
-	<div class="panel panel-default">
+	</nav>
+	<div class="panel">
 		<?php include __DIR__ . '/tpl/author-' . $tab_active . '.php';?>
 	</div>
 </div>

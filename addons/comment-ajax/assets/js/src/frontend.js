@@ -189,7 +189,7 @@ define(function(require, exports, module){
 				
 			_cache.$pagi = document.createElement('div');
 			_cache.$pagi.id = _that.id;
-			_cache.$pagi.setAttribute('class','comment-pagination btn-group btn-group-sm');
+			_cache.$pagi.setAttribute('class','comment-pagination');
 
 			_cache.$pagi.appendChild(create_prev());
 			_cache.$pagi.appendChild(create_next());
@@ -231,7 +231,7 @@ define(function(require, exports, module){
 		function create_next(){
 			var next_class = _that.cpage > _that.pages - 1 ? 'disabled' : '',
 				attrs = {
-					'class' : 'next btn btn-success ' + next_class,
+					'class' : 'next btn btn-default ' + next_class,
 					'href' : 'javascript:;'
 				};
 			_cache.$next = document.createElement('a');

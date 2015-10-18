@@ -16,8 +16,8 @@ class theme_dashboards{
 	}
 	public static function my_point(){
 		?>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="panel">
+			<div class="heading">
 				<i class="fa fa-line-chart"></i> 
 				<?= ___('My recent reward point actives');?>
 			</div>
@@ -30,7 +30,7 @@ class theme_dashboards{
 			));
 			if(!$histories){
 				?>
-				<div class="panel-body">
+				<div class="content">
 					<?= status_tip('info',___('No data yet.'));?>
 				</div>
 				<?php
@@ -47,8 +47,8 @@ class theme_dashboards{
 	public static function recent_comments_4_my_posts(){
 		?>
 		<!-- Recent comments for my posts -->
-		<div class="dashboard-recent-comments-4-my-posts panel panel-default">
-			<div class="panel-heading">
+		<div class="dashboard-recent-comments-4-my-posts panel">
+			<div class="heading">
 				<i class="fa fa-comments"></i>
 				<?= ___('Recent comments for my posts');?>
 			</div>
@@ -65,7 +65,7 @@ class theme_dashboards{
 			]);
 			if(empty($comments)){
 				?>
-				<div class="panel-body">
+				<div class="content">
 					<?= status_tip('info',___('No comment for your post yet'));?>
 				</div>
 				<?php
@@ -127,29 +127,29 @@ class theme_dashboards{
 	public static function my_statistics(){
 		$current_user_id = theme_cache::get_current_user_id();
 		?>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="panel">
+			<div class="heading">
 				<i class="fa fa-pie-chart"></i>
 				<?= ___('My statistics');?>
 			</div>
-			<div class="panel-body">
+			<div class="content">
 				<a class="media" href="<?= theme_custom_user_settings::get_tabs('history')['url'];?>" title="<?= ___('Views my histories');?>">
 					<div class="media-left">
 						<img class="media-object" src="<?= theme_custom_point::get_point_img_url();?>" alt="">
 					</div>
 					<div class="media-body">
-						<h4 class="media-heading"><strong class="total-point"><?= theme_custom_point::get_point($current_user_id);?> </strong></h4>
+						<h4 class="media-heading"><strong class="total-point"><?= number_format(theme_custom_point::get_point($current_user_id));?></strong></h4>
 					</div>
 				</a>
 				<div class="row">
 					<!-- posts count -->
-					<div class="col-xs-6">
+					<div class="g-phone-1-2">
 						<?php
 						echo sprintf(___('My posts: %s'),'<a href="' . theme_cache::get_author_posts_url($current_user_id) . '">' . theme_custom_author_profile::get_count('works',$current_user_id) . '</a>');
 						?>
 					</div>
 					<!-- comments count -->
-					<div class="col-xs-6">
+					<div class="g-phone-1-2">
 						<?php
 						echo sprintf(
 							___('My comments: %s'),
@@ -158,7 +158,7 @@ class theme_dashboards{
 						?>
 					</div>
 					<!-- followers count -->
-					<div class="col-xs-6">
+					<div class="g-phone-1-2">
 						<?php
 						echo sprintf(
 							___('My followers: %s'),
@@ -167,7 +167,7 @@ class theme_dashboards{
 						?>
 					</div>
 					<!-- following count -->
-					<div class="col-xs-6">
+					<div class="g-tablet-1-2 g-desktop-1-3">
 						<?php
 						echo sprintf(
 							___('My following: %s'),
@@ -185,8 +185,8 @@ class theme_dashboards{
 	public static function recent_posts(){
 		$posts_per_page = 5;
 		?>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="panel">
+			<div class="heading">
 				<i class="fa fa-clock-o"></i>
 				<?= ___('My recent posts');?>
 			</div>
@@ -204,8 +204,8 @@ class theme_dashboards{
 					setup_postdata($post);
 					?>
 					<li class="list-group-item">
-						<a href="<?php the_permalink();?>"><?php the_title();?></a>
-						<small><?= esc_html(friendly_date((get_the_time('U'))));?></small>
+						<a href="<?= theme_cache::get_permalink($post->ID);?>"><?= theme_cache::get_the_title($post->ID);?> <small><?= friendly_date((get_the_time('U')));?></small></a>
+						
 					</li>
 					<?php
 				}
@@ -215,7 +215,7 @@ class theme_dashboards{
 				<?php
 			}else{
 				?>
-				<div class="panel-body"><?= status_tip('info',___('No posts yet'));?></div>
+				<div class="content"><?= status_tip('info',___('No posts yet'));?></div>
 				<?php
 			}
 			

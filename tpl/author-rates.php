@@ -20,9 +20,9 @@
 				<?php
 				foreach($wp_query->posts as $post){
 					setup_postdata($post);
-					theme_functions::archive_stick_content(array(
-						'classes' => array('col-sm-4 col-md-3')
-					));
+					theme_functions::archive_card_lg([
+						'classes' => 'g-phone-1-2 g-tablet-1-3 g-desktop-1-4',
+					]);
 				}
 				?>
 			</ul>

@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel">
 	<?php
 	$current_user_id = theme_cache::get_current_user_id();
 	$notis = theme_notification::get_notifications(array(
@@ -31,7 +31,7 @@
 		<?php
 	}else{
 		?>
-		<div class="panel-body">
+		<div class="content">
 			<div class="page-tip"><?= status_tip('info',___('You have not any notification yet'));?></div>
 		</div>
 		<?php

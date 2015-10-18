@@ -1,8 +1,8 @@
 <div class="row">
 	<?php 
 	$dashboards = array(
-		'left' => 'col-md-4 col-lg-4',
-		'right' => 'col-md-8 col-lg-8',
+		'left' => 'g-tablet-1-3',
+		'right' => 'g-tablet-2-3',
 		
 	);
 	foreach($dashboards as $k => $v){ ?>

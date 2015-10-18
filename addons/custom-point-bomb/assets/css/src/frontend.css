@@ -25,7 +25,7 @@
 	text-align: center;
 }
 .bomb-area-points h4{
-	font-size: 16px;
+	margin-top: 0;
 }
 .bomb-area-points label{
 	display: block;
