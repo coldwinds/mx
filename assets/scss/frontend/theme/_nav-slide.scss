@@ -1,3 +1,7 @@
+%nav-slide-hover{
+	background: #eee;
+	color: #000;
+}
 .nav-slide{
 	position: fixed;
 	background: #fff;
@@ -16,34 +20,36 @@
 		visibility: visible;
 		@include scale3d(1,1,1);
 	}
-
+	.nav-slide-header{
+		padding: 2rem 1rem;
+	}
 	ul{
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
 	}
 	.menu{
-		margin: 1rem;
 		.menu-item-has-children > a{
 			color: #333;
 			font-size: 1.2rem;
-			padding: .5rem 0;
 			background: #f8f8f8;
 		}
 		li > a:hover,
 		li:hover > a,
 		.header-nav-account-menu li > a:hover,
 		.header-nav-account-menu li:hover > a{
-			background: #eee;
-			color: #000;
+			@extend %nav-slide-hover;
 		}
 		& > li{
 			border-bottom: 1px solid #eee;
 		}
+		li[class *= "current"] > a{
+			@extend %nav-slide-hover;
+		}
 	}
 	a{
 		display: block;
-		padding: 1rem 0;
+		padding: .5rem 1rem;;
 		color: $title-color;
 		white-space: nowrap;
 	}

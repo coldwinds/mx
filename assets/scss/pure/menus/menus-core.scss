@@ -1,0 +1,111 @@
+.poi-menu ul {
+    position: absolute;
+    visibility: hidden;
+}
+
+.poi-menu.poi-menu-open {
+    visibility: visible;
+    z-index: 2;
+    width: 100%;
+}
+
+.poi-menu ul {
+    left: -10000px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    top: -10000px;
+    z-index: 1;
+}
+
+.poi-menu > ul { position: relative; }
+
+.poi-menu-open > ul {
+    left: 0;
+    top: 0;
+    visibility: visible;
+}
+
+.poi-menu li { position: relative; }
+
+.poi-menu a, .poi-menu .poi-menu-heading {
+    display: block;
+    color: inherit;
+    line-height: 1.5em;
+    padding: 5px 20px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.poi-menu.poi-menu-horizontal > .poi-menu-heading {
+    display: inline-block;
+    margin: 0;
+    zoom: 1;
+    *display: inline;
+    vertical-align: middle;
+}
+.poi-menu.poi-menu-horizontal > ul {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    vertical-align: middle;
+}
+
+.poi-menu li a { padding: 5px 20px; }
+
+.poi-menu-can-have-children > .poi-menu-label:after {
+    content: '\25B8';
+    float: right;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif; /* These specific fonts have the Unicode char we need. */
+    margin-right: -20px;
+    margin-top: -1px;
+}
+
+.poi-menu-can-have-children > .poi-menu-label {
+    padding-right:30px;
+}
+
+.poi-menu-separator {
+    background-color: #dfdfdf;
+    display: block;
+    height: 1px;
+    font-size: 0;
+    margin: 7px 2px;
+    overflow: hidden;
+}
+
+.poi-menu-hidden { display: none; }
+
+/* FIXED MENU */
+.poi-menu-fixed {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+}
+
+
+/* HORIZONTAL MENU CODE */
+
+/* Initial menus should be inline-block so that they are horizontal */
+.poi-menu-horizontal li {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    vertical-align: middle;
+}
+
+/* Submenus should still be display:block; */
+.poi-menu-horizontal li li {
+    display: block;
+}
+
+/* Content after should be down arrow */
+.poi-menu-horizontal > .poi-menu-children > .poi-menu-can-have-children > .poi-menu-label:after {
+    content: "\25BE";
+}
+/*Add extra padding to elements that have the arrow so that the hover looks nice */
+.poi-menu-horizontal > .poi-menu-children > .poi-menu-can-have-children > .poi-menu-label {
+    padding-right:30px;
+}
+

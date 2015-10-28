@@ -20,8 +20,6 @@ class theme_custom_point{
 		
 		add_action('page_settings',__CLASS__ . '::display_backend');
 
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
-		
 		add_action('comment_post',__CLASS__ . '::action_add_history_wp_new_comment_comment_publish',10,2);
 		
 		add_action('transition_comment_status',__CLASS__ . '::action_add_history_transition_comment_status_comment_publish',10,3);
@@ -1034,17 +1032,7 @@ class theme_custom_point{
 		$old_point = self::get_point($post->post_author);
 		update_user_meta($post->post_author,self::$user_meta_key['point'],$old_point + (int)theme_options::get_options(__CLASS__)['points']['post-publish']);
 	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
-			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-	}
+
 	public static function backend_seajs_alias(array $alias = []){
 		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__,'backend');
 		return $alias;

@@ -14,21 +14,17 @@ if(!theme_page_rank::get_tabs($active_tab))
 
 ?>
 <div class="g">
-	<ul class="nav nav-pills nav-justified">
+	<nav class="nav">
 		<?php
 		foreach(theme_page_rank::get_tabs() as $k => $v){
 			$active_class = $active_tab === $k ? 'class="active"' : null;
 			?>
-			<li role="presentation" <?= $active_class;?> >
-				<a href="<?= theme_page_rank::get_tabs($k)['url'];?>">
-					<i class="fa fa-<?= theme_page_rank::get_tabs($k)['icon'];?>"></i> 
-					<?= theme_page_rank::get_tabs($k)['tx'];?>
-				</a>
-			</li>
-			<?php
-		}
-		?>
-	</ul>
+			<a <?= $active_class;?> href="<?= theme_page_rank::get_tabs($k)['url'];?>">
+				<i class="fa fa-<?= theme_page_rank::get_tabs($k)['icon'];?>"></i> 
+				<?= theme_page_rank::get_tabs($k)['tx'];?>
+			</a>
+		<?php } ?>
+	</nav>
 	<div class="panel-rank">
 		<?php
 		$include_filepath = __DIR__ . '/tpl/page-rank-' . $active_tab . '.php';

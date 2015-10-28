@@ -15,7 +15,6 @@ class theme_custom_attachment{
 		 */
 		add_action('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
 		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
-		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
 	}
 	public static function filter_the_content($content){
 		if(!theme_cache::is_attachment())
@@ -109,15 +108,5 @@ class theme_custom_attachment{
 			m.init();
 		});
 		<?php
-	}
-	public static function frontend_css(){
-		if(!theme_cache::is_attachment())
-			return false;
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
 	}
 }

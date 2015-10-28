@@ -30,12 +30,12 @@ $font-size-html-phone: 87.5% !default;
 $body-font-size: 14px !default;
 $body-line-height: 1.5 !default;
 
-//poi grid
+//grid
 $grid-g-desktop-gutter: 6rem !default;
 $grid-g-phone-gutter: 1rem !default;
 $grid-g-gutter: 2rem !default;
-$grid-g-mobile-gutter: 1rem !default;
-$mobile-min-width: 768px !default;
+$grid-g-phone-gutter: 1rem !default;
+$phone-min-width: 768px !default;
 $grid-max-width-desktop: 1366px !default;
 
 $grid-column: 6 !default;
@@ -52,12 +52,13 @@ $link-color-visited: #ff6fa2 !default;
 $link-color-hover: #ff6fa2 !default;
 $link-color-active: #FF4081 !default;
 
+//color
 $accent-color: #ff6fa2 !default;
 $title-color: #535353 !default;
 $excerpt-color: #959595 !default;
 
 $global-transition-duration: .75 !default;
-$transition-duration-fast: .2 !default;
+$transition-duration-fast: .3 !default;
 
 //panel
 $panel-bg-color: #fff !default;
@@ -152,7 +153,7 @@ $mod-title-font-size: 1.3rem !default;
 	$entry-excerpt-font-size: 1.5rem !default;
 	$entry-excerpt-bg-color: $card-bg-color-hover !default;
 
-	$entry-meta-circle-size-phone: 8rem !default;
+	$entry-meta-circle-size-phone: 6rem !default;
 	$entry-meta-circle-size-not-phone: 10rem !default;
 	$entry-meta-circle-font-size: 2rem !default;
 

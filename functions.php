@@ -1715,10 +1715,26 @@ class theme_functions{
 		</h2>
 		<div class="extra">
 			<?php if(!empty($v['keywords'])){ ?>
-				<div class="keywords hidden-xs">
-					<?php foreach(theme_custom_homebox::keywords_to_html($v['keywords']) as $kw){ ?>
-						<a href="<?= esc_url($kw['url']);?>"><?= $kw['name'];?></a>
-					<?php } ?>
+				<div class="keywords">
+					<?php 
+					if(wp_is_mobile()){
+						$keyword_i = 0;
+						foreach(theme_custom_homebox::keywords_to_html($v['keywords']) as $kw){ 
+							if($keyword_i == 3)
+								break;
+							?>
+							<a href="<?= esc_url($kw['url']);?>"><?= $kw['name'];?></a>
+							<?php 
+							++$keyword_i;
+						}
+					}else{
+						foreach(theme_custom_homebox::keywords_to_html($v['keywords']) as $kw){ 
+							?>
+								<a href="<?= esc_url($kw['url']);?>"><?= $kw['name'];?></a>
+							<?php 
+						}
+					}
+					?>
 				</div>
 			<?php } ?>
 		</div>
@@ -1797,11 +1813,12 @@ class theme_functions{
 			method="post" 
 			class="comment-form media none"
 		>
+		<div class="media">
 			<input type="hidden" name="comment_post_ID" id="comment_post_ID" value="<?= $post->ID;?>">
 			<input type="hidden" name="comment_parent" id="comment_parent" value="0">
 			
-			<div class="media-left media-top hidden-xs">
-				<img id="respond-avatar" src="<?= theme_functions::$avatar_placeholder;?>" alt="Avatar" class="media-object avatar" width="80" height="80">
+			<div class="media-left hidden-phone">
+				<img id="respond-avatar" src="<?= theme_functions::$avatar_placeholder;?>" alt="avatar" class="media-object avatar" width="100" height="100">
 			</div>
 			<div class="media-body">
 				<?php
@@ -1872,6 +1889,7 @@ class theme_functions{
 					</button>
 				</div><!-- .form-group -->
 			</div><!-- /.media-body -->
+		</div><!-- /.media -->
 		</form>
 	</div>
 </div>

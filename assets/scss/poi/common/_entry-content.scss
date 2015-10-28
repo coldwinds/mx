@@ -1,0 +1,9 @@
+.entry-content{
+	font-size: $entry-content-font-size;
+	text-indent: 0;
+	overflow: hidden;
+	img{
+		max-width: 100%;
+		height: auto;
+	}
+}

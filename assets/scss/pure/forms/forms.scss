@@ -1,0 +1,167 @@
+.poi-form input,
+.poi-form select {
+  padding: 0.5em 0.6em;
+  display: inline-block;
+  border: 1px solid #ccc;
+  font-size: 0.8em;
+  box-shadow: inset 0 1px 3px #ddd;
+  border-radius: 4px;
+  -webkit-transition: 0.3s linear border;
+  -moz-transition: 0.3s linear border;
+  -ms-transition: 0.3s linear border;
+  -o-transition: 0.3s linear border;
+  transition: 0.3s linear border;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+.poi-form input:focus,
+.poi-form select:focus {
+  outline: 0;
+  outline: thin dotted \9; /* IE6-9 */
+  border-color: #129FEA;
+}
+.poi-form .poi-checkbox,
+.poi-form .poi-radio {
+  margin: 0.5em 0;
+  display: block;
+}
+.poi-form input[disabled],
+.poi-form select[disabled],
+.poi-form textarea[disabled],
+.poi-form input[readonly],
+.poi-form select[readonly],
+.poi-form textarea[readonly] {
+  cursor: not-allowed;
+  background-color: #eaeded;
+  color: #cad2d3;
+  border-color: transparent;
+}
+.poi-form input:focus:invalid,
+.poi-form textarea:focus:invalid,
+.poi-form select:focus:invalid {
+  color: #b94a48;
+  border: 1px solid #ee5f5b;
+}
+.poi-form input:focus:invalid:focus,
+.poi-form textarea:focus:invalid:focus,
+.poi-form select:focus:invalid:focus {
+  border-color: #e9322d;
+}
+.poi-form select {
+  border: 1px solid #ccc;
+  background-color: white;
+}
+.poi-form select[multiple] {
+  height: auto;
+}
+.poi-form label {
+  margin: 0.5em 0 0.2em;
+  color: #999;
+  font-size:90%;
+}
+.poi-form fieldset {
+  margin: 0;
+  padding: 0.35em 0 0.75em;
+  border: 0;
+}
+.poi-form legend {
+  display: block;
+  width: 100%;
+  padding: 0.3em 0;
+  margin-bottom: 0.3em;
+  font-size: 125%;
+  color: #333;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.poi-form.poi-form-stacked input[type='text'],
+.poi-form.poi-form-stacked select,
+.poi-form.poi-form-stacked label {
+  display: block;
+}
+
+.poi-form-aligned input,
+.poi-form-aligned textarea,
+.poi-form-aligned select,
+.poi-form-aligned .poi-help-inline {
+  display: inline-block;
+  *display: inline; /* IE7 inline-block hack */
+  *zoom: 1;
+  vertical-align: middle;
+}
+
+/* aligned Forms */
+.poi-form-aligned .poi-control-group {
+  margin-bottom: 0.5em;
+}
+.poi-form-aligned .poi-control-group label {
+  text-align: right;
+  display: inline-block;
+  vertical-align: middle;
+  width: 10em;
+  margin: 0 1em 0 0;
+}
+.poi-form-aligned .poi-controls {
+  margin: 1.5em 0 0 10em;
+}
+
+/* Rounded Inputs */
+.poi-form .poi-input-rounded {
+  border-radius: 20px;
+  padding-left:1em;
+}
+
+/* Grouped Inputs */
+.poi-form .poi-group fieldset {
+  margin-bottom: 10px;
+}
+.poi-form .poi-group input {
+  display: block;
+  padding: 10px;
+  margin: 0;
+  border-radius: 0;
+  position: relative;
+  top: -1px;
+}
+.poi-form .poi-group input:focus {
+  z-index: 2;
+}
+.poi-form .poi-group input:first-child {
+  top: 1px;
+  border-radius: 4px 4px 0 0;
+}
+.poi-form .poi-group input:last-child {
+  top: -2px;
+  border-radius: 0 0 4px 4px;
+}
+.poi-form .poi-group button {
+  margin: 0.35em 0;
+}
+
+.poi-form .poi-input-1 {
+  width: 100%;
+}
+.poi-form .poi-input-2-3 {
+  width: 66%;
+}
+.poi-form .poi-input-1-2 {
+  width: 50%;
+}
+.poi-form .poi-input-1-3 {
+  width: 33%;
+}
+.poi-form .poi-input-1-4 {
+  width: 25%;
+}
+
+/* Inline help for forms */
+.poi-form .poi-help-inline {
+  display: inline-block;
+  padding-left: 0.3em;
+  color: #666;
+  vertical-align: middle;
+  font-size: 90%;
+}

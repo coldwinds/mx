@@ -17,7 +17,7 @@ class theme_page_tags{
 	
 	public static function init(){
 		add_action('init',					__CLASS__ . '::page_create');
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
+
 		add_action('page_settings', 		__CLASS__ . '::display_backend');
 		
 		add_filter('theme_options_save', 	__CLASS__ . '::options_save');
@@ -264,23 +264,23 @@ class theme_page_tags{
 		foreach($pinyin_tags as $initial => $tags){
 			//var_dump($tags);die;
 			?>
-			<div class="panel-tags-index mod">
-				<div class="mod-heading">
-					<h4 class="mod-title">
-						<span class="tx"><?= strtoupper($initial);?></span>
-						<small> - <?= ___('Pinyin initial');?></small>
-					</h4>
+			<div class="panel-tags-index mod panel">
+				<div class="heading">
+					<h2 class="title">
+						<span class="bg">
+							<span class="tx"><?= strtoupper($initial);?></span>
+							<small> - <?= ___('Pinyin initial');?></small>
+						</span>
+					</h2>
 				</div>
-				<div class="content">
-					<div class="row">
-						<?php foreach($tags as $tag_id => $tag){ ?>
-							<div class="col-xs-6 col-sm-4 col-md-3">
-								<a href="<?= esc_url(get_tag_link($tag_id));?>" class="tags-title" target="_blank"><?= $tag['name'];?></a> 
-								<small>(<?= count($tag['post_ids']);?>)</small>
-							</div>
-						<?php } ?>
-					</div>
-				</div> <!-- /.panel-bbody -->
+				<div class="row">
+					<?php foreach($tags as $tag_id => $tag){ ?>
+						<div class="g-phone-1-2 g-tablet-1-3 g-desktop-1-4">
+							<a href="<?= esc_url(get_tag_link($tag_id));?>" class="tags-title" target="_blank"><?= $tag['name'];?></a> 
+							<small>(<?= count($tag['post_ids']);?>)</small>
+						</div>
+					<?php } ?>
+				</div>
 			</div>
 			<?php
 		}
@@ -320,16 +320,4 @@ class theme_page_tags{
 		return $cache;
 	}
 	
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
-
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-
-	}
 }

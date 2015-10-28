@@ -1,5 +1,5 @@
 <div class="content">
-	<div class="btn-group btn-group-sm tab-filter">
+	<div class="tab-filter">
 		<?php
 		$active_filter_tab = get_query_var('filter');
 		$filter_tabs = theme_page_rank::get_tabs('popular')['filters'];

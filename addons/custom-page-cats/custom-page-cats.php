@@ -157,32 +157,32 @@ class theme_page_cats{
 		ksort($slugs);
 		foreach($slugs as $k => $post_ids){
 		?>
-			<div class="panel-tags-index mod">
-				<div class="mod-heading">
-					<h4 class="mod-title">
-						<span class="tx"><?= strtoupper($k);?></span>
-						<small> - <?= ___('Initial');?></small>
-					</h4>
+			<div class="panel-tags-index mod panel">
+				<div class="heading">
+					<h2 class="title">
+						<span class="bg">
+							<span class="tx"><?= strtoupper($k);?></span>
+							<small> - <?= ___('Initial');?></small>
+						</span>
+					</h2>
 				</div>
-				<div class="mod-body">
-					<ul class="row post-img-lists">
-						<?php
-						$query = new WP_Query(array(
-							'nopaging' => true,
-							'post__in' => $post_ids,
-							'ignore_sticky_posts' => true,
-						));
-						foreach($query->posts as $post){
-							setup_postdata($post);
-							theme_functions::archive_card_xs(array(
-								'classes' => array('col-xs-6 col-sm-4 col-md-3 col-lg-2'),
-							));
-						}
-						unset($query);
-						wp_reset_postdata();
-						?>
-					</ul>
-				</div><!-- /.content -->
+				<div class="row">
+					<?php
+					$query = new WP_Query(array(
+						'nopaging' => true,
+						'post__in' => $post_ids,
+						'ignore_sticky_posts' => true,
+					));
+					foreach($query->posts as $post){
+						setup_postdata($post);
+						theme_functions::archive_card_xs([
+							'classes' => 'g-phone-1-2 g-tablet-1-3 g-desktop-1-4',
+						]);
+					}
+					unset($query);
+					wp_reset_postdata();
+					?>
+				</div>
 			</div>
 			<?php
 		}

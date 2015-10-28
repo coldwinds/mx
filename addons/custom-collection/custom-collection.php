@@ -145,11 +145,15 @@ class theme_custom_collection{
 
 <p class="list-group-item">
 	<a href="<?= $href;?>" title="<?= $attr_title;?>">
-		<span class="thumbnail-container" >
-			<img src="<?= $args['thumbnail'];?>" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>" alt="<?= $args['title'];?>" class="collection-list-thumbnail">
+		<span class="row">
+			<span class="thumbnail-container" >
+				<img src="<?= $args['thumbnail'];?>" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>" alt="<?= $args['title'];?>" class="collection-list-thumbnail">
+			</span>
+			<span class="list-group-body">
+				<span class="list-group-item-heading"><?= $args['title'];?></span>
+				<span class="list-group-item-text"><?= $args['content'];?></span>
+			</span>
 		</span>
-		<span class="list-group-item-heading"><?= $args['title'];?></span>
-		<span class="list-group-item-text"><?= $args['content'];?></span>
 	</a>
 </p>
 		<?php
@@ -255,9 +259,9 @@ class theme_custom_collection{
 	}
 	private static function wp_get_attachment_image_src(){
 		static $caches = [];
-		$cache_id = md5(serialize(func_get_arg()));
+		$cache_id = md5(serialize(func_get_args()));
 		if(!isset($caches[$cache_id]))
-			$caches[$cache_id] = call_user_func_array('wp_get_attachment_image_src',func_get_arg());
+			$caches[$cache_id] = call_user_func_array('wp_get_attachment_image_src',func_get_args());
 		return $caches[$cache_id];
 	}
 	public static function process(){
@@ -471,7 +475,7 @@ class theme_custom_collection{
 						]
 					],
 					'title' 	=> theme_cache::get_the_title($post_id),
-					'excerpt' 	=> str_sub(strip_tags(trim($post->post_content)),120,'...'),
+					'excerpt' 	=> html_minify(str_sub(strip_tags(trim($post->post_content)),120,'...')),
 				];
 				wp_reset_postdata();
 				die(theme_features::json_format($output));

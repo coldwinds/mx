@@ -1,0 +1,13 @@
+.widget {
+	margin-bottom: $panel-content-gutter;
+	
+	.widget-title{
+		padding: 0 0 0 1rem;
+		font-size: 1rem;
+		color: $title-color;
+		margin-bottom: 1rem;
+	}
+	& > *:last-child{
+		@extend %panel-content;
+	}
+}

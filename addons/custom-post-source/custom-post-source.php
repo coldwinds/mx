@@ -22,8 +22,72 @@ class theme_custom_post_source{
 		return self::get_options('enabled') == 1;
 	}
 	public static function options_default(array $opts = []){
+		$reprint_prefix = sprintf(
+			___('This article is %1$s member %2$s\'s reprint work.'),
+			'<a href="%site_url%">%site_name%</a>',
+			'<a href="%post_author_url%">%post_author_name%</a>'
+		);
+		/** START text-original */
+		ob_start();
+		?>
+<li><?= 
+	sprintf(
+	___('This article is %1$s member %2$s\'s original work.'),
+		'<a href="%site_url%">%site_name%</a>',
+		'<a href="%post_author_url%">%post_author_name%</a>'
+	);
+	?></li>
+<li><?= 
+	sprintf(
+		___('Welcome to reprint but must indicate the source url %1$s.'),
+		'<a href="%post_url%" target="_blank" rel="nofollow">%post_url%</a>'
+	);
+	?></li>
+	<?php
+		$text_original = ob_get_contents();
+		ob_end_clean();
+		/** END text-original *******************************/
+
+		
+		/** START text-reprint *******************************/
+		ob_start();
+		?>
+<li><?= $reprint_prefix;?></li>
+<li><?= ___('Source: unkown, author: unkown');?></li>
+<?php
+		$text_reprint = ob_get_contents();
+		ob_end_clean();
+		/** END text-reprint *******************************/
+		
+		/** START text-reprint-author *******************************/
+		ob_start();
+		?>
+<li><?= $reprint_prefix;?></li>
+<li><?= sprintf(___('Source: %s, author: unkown'),'%source_author_name%');?></li>
+<?php
+		$text_reprint_author = ob_get_contents();
+		ob_end_clean();
+		/** END text-reprint-author *******************************/
+		
+		/** START text-reprint-author-url *******************************/
+		ob_start();
+		?>
+<li><?= $reprint_prefix;?></li>
+<li><?= sprintf(___('Source: %1$s, author: %2$s'),
+		'<a href="%source_url%" target="_blank" rel="nofollow">%source_url%</a>',
+		'%source_author_name%'
+	);?></li>
+<?php
+		$text_reprint_author_url = ob_get_contents();
+		ob_end_clean();
+		/** END text-reprint-author-url *******************************/
+		
 		$opts[__CLASS__] = [
 			'enabled' => 1,
+			'text-original' => $text_original,
+			'text-reprint' => $text_reprint,
+			'text-reprint-author' => $text_reprint_author,
+			'text-reprint-author-url' => $text_reprint_author_url,
 		];
 		return $opts;
 	}
@@ -48,14 +112,14 @@ class theme_custom_post_source{
 		return $opts;
 	}
 	public static function get_types($key = null){
-		$types = array(
-			'original' => array(
+		$types = [
+			'original' => [
 				'text' => ___('Original')
-			),
-			'reprint' => array(
+			],
+			'reprint' => [
 				'text' => ___('Reprint'),
-			)
-		);
+			]
+		];
 		if($key)
 			return isset($types[$key]) ? $types[$key] : null;
 		return $types;
@@ -140,11 +204,30 @@ class theme_custom_post_source{
 		</div>			
 		<?php
 	}
+	public static function get_text($type){
+		return stripslashes(self::get_options($type));
+	}
 	public static function display_backend(){
 		?>
 		<fieldset>
 			<legend><?= ___('Post source settings');?></legend>
-			<p class="description"><?= ___('The post source will display below the main content.');?></p>
+			<p class="description"><?= ___('The post source will display below the main content. Here are some keywords to use.');?></p>
+
+			
+			<input type="text" class="small-text text-select" value="%site_name%" title="<?= ___('Site name');?>" readonly>
+			
+			<input type="text" class="small-text text-select" value="%site_url%" title="<?= ___('Site URL');?>" readonly>
+			
+			<input type="text" class="small-text text-select" value="%post_author_name%" title="<?= ___('Post author name');?>" readonly>
+			
+			<input type="text" class="small-text text-select" value="%post_author_url%" title="<?= ___('Post author URL');?>" readonly>
+			
+			<input type="text" class="small-text text-select" value="%post_url%" title="<?= ___('Post URL');?>" readonly>
+			
+			<input type="text" class="small-text text-select" value="%source_url%" title="<?= ___('Source URL');?>" readonly>
+			
+			<input type="text" class="small-text text-select" value="%source_author_name%" title="<?= ___('Source author name');?>" readonly>
+			
 			<table class="form-table">
 				<tbody>
 				<tr>
@@ -156,66 +239,98 @@ class theme_custom_post_source{
 						</select>
 					</td>
 				</tr>
+				<!-- original -->
+				<tr>
+					<th><label for="<?= __CLASS__;?>-text-original"><?= ___('HTML: if the post is original');?></label></th>
+					<td>
+						<textarea name="<?= __CLASS__;?>[text-original]" id="<?= __CLASS__;?>-text-original" rows="5" class="widefat"><?= self::get_text('text-original');?></textarea>
+					</td>
+				</tr>
+				
+				<!-- reprint author and url -->
+				<tr>
+					<th><label for="<?= __CLASS__;?>-text-reprint-author-url"><?= ___('HTML: if the post is reprint and has original author and URL');?></label></th>
+					<td>
+						<textarea name="<?= __CLASS__;?>[text-reprint-author-url]" id="<?= __CLASS__;?>-text-reprint-author-url" rows="5" class="widefat"><?= self::get_text('text-reprint-author-url');?></textarea>
+					</td>
+				</tr>
+				
+				<!-- reprint author and url -->
+				<tr>
+					<th><label for="<?= __CLASS__;?>-text-reprint-author"><?= ___('HTML: if the post is reprint and has original author but no URL');?></label></th>
+					<td>
+						<textarea name="<?= __CLASS__;?>[text-reprint-author]" id="<?= __CLASS__;?>-text-reprint-author" rows="5" class="widefat"><?= self::get_text('text-reprint-author');?></textarea>
+					</td>
+				</tr>
+				
+				<!-- reprint no author and no url -->
+				<tr>
+					<th><label for="<?= __CLASS__;?>-text-reprint"><?= ___('HTML: if the post is reprint but no original and no URL');?></label></th>
+					<td>
+						<textarea name="<?= __CLASS__;?>[text-reprint]" id="<?= __CLASS__;?>-text-reprint" rows="5" class="widefat"><?= self::get_text('text-reprint');?></textarea>
+					</td>
+				</tr>
+				
 				</tbody>
 			</table>
 		</fieldset>
 		<?php
 	}
+	public static function keywords_convert($content){
+		global $post;
+		$meta = self::get_post_meta($post->ID);
+		$source_url = isset($meta['reprint']['url']) ? esc_url($meta['reprint']['url']) : ___('unkown');
+		$source_author_name = isset($meta['reprint']['author']) ? esc_html($meta['reprint']['author']) : ___('unkown');
+		 
+		return str_replace(
+			[
+				'%site_name%',
+				'%site_url%',
+				'%post_author_name%',
+				'%post_author_url%',
+				'%post_url%',
+				'%source_url%',
+				'%source_author_name%'
+			],[
+				theme_cache::get_bloginfo('name'),
+				theme_cache::home_url(),
+				theme_cache::get_the_author_meta('display_name',$post->post_author),
+				theme_cache::get_author_posts_url($post->post_author),
+				theme_cache::get_permalink($post->ID),
+				$source_url,
+				$source_author_name
+			],
+			$content
+		);
+	}
 	public static function display_frontend(){
 		global $post;
 		$meta = self::get_post_meta($post->ID);
+		
 		if(!isset($meta['source']))
 			return false;
 			
 		switch($meta['source']){
 			case 'original':
-				?>
-				<li><?php 
-				echo sprintf(
-					___('This article is %1$s member %2$s\'s original work.'),
-					
-					'<a href="' . theme_cache::home_url() . '">' .theme_cache::get_bloginfo('name') . '</a>',
-					
-					'<a href="' . theme_cache::get_author_posts_url($post->post_author) . '">' . theme_cache::get_the_author_meta('display_name',$post->post_author) . '</a>'
-					
-					);
-					
-				?></li>
-				<li><?php 
-				$permalink = theme_cache::get_permalink($post->ID);
-				echo sprintf(
-					___('Welcome to reprint but must indicate the source url %1$s.'),
-					'<a href="' . $permalink . '" target="_blank" rel="nofollow">' . $permalink . '</a>'
-				);?></li>
-				<?php
+				echo self::keywords_convert(self::get_text('text-original'));
 				break;
 			case 'reprint':
-				$reprint_url = isset($meta['reprint']['url']) && !empty($meta['reprint']['url']) ? esc_url($meta['reprint']['url']) : null;
-				
-				$reprint_url = $reprint_url ? '<a href="' . $reprint_url . '" target="_blank" rel="nofollow">' . $reprint_url . '</a>' : ___('Unkown');
-				
-				$reprint_author = isset($meta['reprint']['author']) && !empty($meta['reprint']['author']) ? trim($meta['reprint']['author']) : ___('Unkown');
-				
-				?>
-				<li><?php 
-				echo sprintf(
-					___('This article is %1$s member %2$s\'s reprint work.'),
+				/** not author and url */
+				if(
+					(!isset($meta['reprint']['author']) || empty($meta['reprint']['author']))
+					&& 
+					(!isset($meta['reprint']['url']) || empty($meta['reprint']['url']))
+				){
+					echo self::keywords_convert(self::get_text('text-reprint'));
 					
-					'<a href="' . theme_cache::home_url() . '">' .theme_cache::get_bloginfo('name') . '</a>',
+				/** only author */
+				}else if((isset($meta['reprint']['author']) && !empty($meta['reprint']['author'])) && (!isset($meta['reprint']['url']) || empty($meta['reprint']['url']))){
+					echo self::keywords_convert(self::get_text('text-reprint-author'));
 					
-					'<a href="' . theme_cache::get_author_posts_url($post->post_author) . '">' . theme_cache::get_the_author_meta('display_name',$post->post_author) . '</a>'
-					
-					);
-					
-				?></li>
-				<li>
-					<?= sprintf(
-					___('Source: %1$s, author: %2$s'),
-					$reprint_url,
-					$reprint_author);
-					?>
-				</li>
-				<?php
+				/** author and url */
+				}else{
+					echo self::keywords_convert(self::get_text('text-reprint-author-url'));
+				}
 				break;
 		}
 	}

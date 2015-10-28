@@ -15,7 +15,7 @@ class theme_page_rank{
 	public static function init(){
 		add_action('init', __CLASS__ . '::page_create');
 
-		add_action('wp_enqueue_scripts', __CLASS__  . '::frontend_enqueue_css');
+		//add_action('wp_enqueue_scripts', __CLASS__  . '::frontend_enqueue_css');
 
 		add_filter('query_vars', __CLASS__ . '::filter_query_vars');
 		
@@ -310,6 +310,7 @@ class theme_page_rank{
 			'lazyload' => true,
 			'excerpt' => true,
 			'index' => false,
+			'target' => '_blank',
 		],$args);
 
 		$post_title = theme_cache::get_the_title($post->ID);
@@ -321,58 +322,59 @@ class theme_page_rank{
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
 
 		?>
-		<a class="list-group-item <?= $args['classes'];?>" href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title;?>">
+		<div class="list-group-item <?= $args['classes'];?>">
 			<div class="row">
-				<div class="col-sm-12 col-md-4 col-lg-3">
-					<div class="thumbnail-container">
-						<img src="<?= theme_functions::$thumbnail_placeholder;?>" alt="<?= $post_title;?>" class="media-object placeholder">
+				<div class="g-tablet-1-6">
+					<a href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title;?>" target="<?= $args['target'];?>" class="thumbnail-container">
 						<?php if($args['lazyload'] === true){ ?>
-							<img class="post-list-img" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>"/>
+							<img class="thumbnail" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>">
 						<?php }else{ ?>
-							<img class="post-list-img" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>"/>
+							<img class="thumbnail" src="<?= $thumbnail_real_src;?>" alt="<?= $post_title;?>" width="<?= theme_functions::$thumbnail_size[1];?>" height="<?= theme_functions::$thumbnail_size[2];?>">
 						<?php } ?>
-					</div>
+					</a>
 				</div>
-				<div class="col-sm-12 col-md-8 col-lg-9">
-					<h4 class="media-heading"><?= $post_title;?></h4>
+				<div class="g-tablet-5-6">
+					<h3 class="media-heading">
+						<a href="<?= theme_cache::get_permalink($post->ID);?>" title="<?= $post_title;?>" target="<?= $args['target'];?>" ><?= $post_title;?></a>
+					</h3>
 					<?php
 					/**
 					 * output excerpt
 					 */
 					if($args['excerpt'] === true){
 						?>
-						<div class="excerpt hidden-xs"><?= str_sub(strip_tags($excerpt),200);?></div>
+						<div class="excerpt"><?= str_sub(strip_tags($excerpt),200);?></div>
 					<?php } ?>
 					<div class="extra">
 						<div class="metas row">
 							<!-- author -->
-							<div class="author meta col-xs-6 g-tablet-1-6">
-								<i class="fa fa-user"></i> 
+							<a class="author meta g-phone-1-2 g-tablet-1-4 g-desktop-1-5" href="<?= theme_cache::get_author_posts_url($post->post_author);?>" target="<?= $args['target'];?>" >
+								<img src="<?= theme_functions::$avatar_placeholder;?>" data-src="<?= theme_cache::get_avatar_url($post->post_author);?>" alt="avatar" width="16" height="16" class="avatar"> 
 								<?= theme_cache::get_the_author_meta('display_name',$post->post_author);?>
-							</div>
+							</a>
 							
 							<!-- category -->
-							<div class="category meta col-xs-6 g-tablet-1-6">
-								<i class="fa fa-folder-open"></i> 
+							<div class="category meta g-phone-1-2 g-tablet-1-4 g-desktop-1-5">
 								<?php
-								$cats = array_map(function($v){
-									return $v->name;
-								},get_the_category($post->ID));
-								echo implode(' / ',$cats);
-								?>
+								$cats = get_the_category_list('<i class="split"> / </i> ');
+								if(!empty($cats)){
+									?>
+									<i class="fa fa-folder-open"></i> 
+									<?= $cats;?>
+								<?php } ?>
 							</div>
 
 							<!-- views -->
 							<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
-								<div class="view meta col-xs-6 g-tablet-1-6">
+								<div class="view meta g-phone-1-2 g-tablet-1-4 g-desktop-1-5">
 									<i class="fa fa-play-circle"></i> 
 									<?= theme_post_views::get_views();?>
 								</div>
 							<?php } ?>
 
 							<?php if(!wp_is_mobile()){ ?>
-								<div class="comments meta col-xs-6 g-tablet-1-6 hidden-xs">
-									<i class="fa fa-comment"></i>
+								<div class="comments meta g-phone-1-2 g-tablet-1-4 g-desktop-1-5">
+									<i class="fa fa-comment"></i> 
 									<?= (int)$post->comment_count;?>
 								</div>
 							<?php } ?>
@@ -383,7 +385,7 @@ class theme_page_rank{
 							 */
 							if(class_exists('custom_post_point')){
 								?>
-								<div class="point meta col-xs-6 g-tablet-1-6">
+								<div class="point meta g-phone-1-2 g-tablet-1-4 g-desktop-1-5">
 									<i class="fa fa-paw"></i>
 									<?= (int)custom_post_point::get_post_points_count($post->ID);?>
 								</div>
@@ -399,7 +401,7 @@ class theme_page_rank{
 					<?php } ?>					
 				</div>
 			</div>
-		</a>
+		</div>
 		<?php
 	}
 	public static function frontend_enqueue_css(){

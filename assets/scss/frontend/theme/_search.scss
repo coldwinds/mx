@@ -7,8 +7,8 @@
 	position: relative;
 	margin-top: 1rem;
 	visibility: collapse;
-	@include transition-duration(.3);
 	@include transform-origin(top);
+	@include transition-duration(.3);
 	@include scale3d(1,0,0);
 	clear: both;
 	&.on{
@@ -17,11 +17,11 @@
 		@include scale3d(1,1,1);
 	}
 	input{
-		border: 3px solid $link-color-hover;
+		border: 2px solid $link-color-hover;
 		text-align: center;
 		background: #fff;
 		padding: 1rem 0;
-		font-size: 3rem;
+		font-size: 2rem;
 		border-radius: 5rem;
 		box-shadow: $nav-main-shadow;
 	}

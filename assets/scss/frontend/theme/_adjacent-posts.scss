@@ -5,14 +5,12 @@
 		display: block;
 		height: 10rem;
 		border-radius: $global-border-radius;
+		margin-bottom: $grid-g-gutter;
 		overflow: hidden;
 		&:hover img,
 		&.hover img{
 			@include translate3d(0,-50%,0);
 		}
-	}
-	.left{
-		margin-bottom: 2rem;
 	}
 	img{
 		position: absolute;

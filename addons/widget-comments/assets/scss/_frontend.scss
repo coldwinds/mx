@@ -1,3 +1,6 @@
 .widget_comments{
 	@extend %panel-not-content;
+	a{
+		color: $excerpt-color;
+	}
 }

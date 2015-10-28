@@ -5,7 +5,8 @@ table{
 	th{
 		padding: 1rem;
 	}
-	th{
+	thead,
+	tfoot{
 		background: $card-bg-color-active;
 	}
 }

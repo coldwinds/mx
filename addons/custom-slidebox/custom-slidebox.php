@@ -26,7 +26,7 @@ class theme_custom_slidebox{
 		 */
 		add_action('frontend_seajs_alias',__CLASS__ . '::frontend_seajs_alias');
 		add_action('frontend_seajs_use',__CLASS__ . '::frontend_seajs_use');
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
+		//add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
 	}
 	public static function options_save(array $opts = []){
 		if(isset($_POST[__CLASS__])){

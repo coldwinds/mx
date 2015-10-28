@@ -2,18 +2,12 @@
 /*
 Feature Name:	Post Share
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.2
+Version:		2.0.3
 Description:	
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_post_share::init';
-	return $fns;
-});
 class theme_post_share{
-	public static $iden = 'theme_post_share';
-
 	public static function init(){
 		add_filter('theme_options_default',__CLASS__ . '::options_default');
 		add_filter('theme_options_save',__CLASS__ . '::options_save');
@@ -27,12 +21,11 @@ class theme_post_share{
 				
 		add_action('frontend_seajs_use',__CLASS__ . '::frontend_seajs_use');
 
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
 	}
 	public static function get_options($key = null){
 		static $caches = [];
 		if(!$caches)
-			$caches = (array)theme_options::get_options(self::$iden);
+			$caches = (array)theme_options::get_options(__CLASS__);
 		if($key){
 			return isset($caches[$key]) ? $caches[$key] : null;
 		}
@@ -94,19 +87,19 @@ class theme_post_share{
 			<table class="form-table">
 				<tbody>
 					<tr>
-						<th scope="row"><label for="<?= self::$iden;?>_on"><?= ___('Enable or not?');?></label></th>
-						<td><input type="checkbox" name="<?= self::$iden;?>[on]" id="<?= self::$iden;?>_on" value="1" <?= $is_checked;?> /><label for="<?= self::$iden;?>_on"><?= ___('Enable');?></label></td>
+						<th scope="row"><label for="<?= __CLASS__;?>_on"><?= ___('Enable or not?');?></label></th>
+						<td><input type="checkbox" name="<?= __CLASS__;?>[on]" id="<?= __CLASS__;?>_on" value="1" <?= $is_checked;?> /><label for="<?= __CLASS__;?>_on"><?= ___('Enable');?></label></td>
 					</tr>
 					<tr>
 						<th scope="row"><?= ___('HTML codes');?></th>
-						<td><textarea id="<?= self::$iden;?>_code" name="<?= self::$iden;?>[code]" class="widefat" cols="30" rows="10"><?= stripslashes($opt['code']);?></textarea>
+						<td><textarea id="<?= __CLASS__;?>_code" name="<?= __CLASS__;?>[code]" class="widefat" cols="30" rows="10"><?= stripslashes($opt['code']);?></textarea>
 						</td>
 					</tr>
 					<tr>
 						<th scope="row"><?= esc_html(___('Restore'));?></th>
 						<td>
-							<label for="<?= self::$iden;?>_restore">
-								<input type="checkbox" id="<?= self::$iden;?>_restore" name="<?= self::$iden;?>[restore]" value="1"/>
+							<label for="<?= __CLASS__;?>_restore">
+								<input type="checkbox" id="<?= __CLASS__;?>_restore" name="<?= __CLASS__;?>[restore]" value="1"/>
 								<?= ___('Restore the post share settings');?>
 							</label>
 						</td>
@@ -137,7 +130,7 @@ class theme_post_share{
 		$content = ob_get_contents();
 		ob_end_clean();
 
-		$opts[self::$iden] = array(
+		$opts[__CLASS__] = array(
 			'on' => 1,
 			'code' => $content,
 		);
@@ -148,37 +141,29 @@ class theme_post_share{
 		return self::get_options('on') == 1 ? true : false;
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[self::$iden]) && !isset($_POST[self::$iden]['restore'])){
-			$opts[self::$iden] = $_POST[self::$iden];
+		if(isset($_POST[__CLASS__]) && !isset($_POST[__CLASS__]['restore'])){
+			$opts[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $opts;
-	}
-	public static function frontend_css(){
-		if(!theme_cache::is_singular())
-			return false;
-			
-		wp_enqueue_style(
-			self::$iden,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
 	}
 	public static function frontend_seajs_alias(array $alias = []){
 		if(!theme_cache::is_singular())
 			return $alias;
 			
-		$alias[self::$iden] = theme_features::get_theme_addons_js(__DIR__);
+		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
 		return $alias;
 	} 
 	public static function frontend_seajs_use(){
 		if(!theme_cache::is_singular())
 			return false;
 		?>
-		seajs.use('<?= self::$iden;?>',function(m){
+		seajs.use('<?= __CLASS__;?>',function(m){
 			m.init();
 		});
 		<?php
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_post_share::init';
+	return $fns;
+});

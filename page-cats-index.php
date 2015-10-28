@@ -4,7 +4,7 @@
  */
 ?>
 <?php get_header();?>
-<div class="container grid-container">
+<div class="g">
 	<div class="content-reset">
 		<?php the_content();?>
 	</div>

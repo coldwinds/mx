@@ -1,7 +1,7 @@
 define(function(require, exports, module){
 	'use strict';
 
-	require.async(['modules/lazyload','modules/bootstrap-without-jq'],function(_a,_b){});
+	require.async(['modules/lazyload'],function(_a,_b){});
 	
 	var tools = require('modules/tools');
 	
@@ -97,7 +97,9 @@ define(function(require, exports, module){
 			if(focus_target){
 				var $focus_target = Q(focus_target);
 				if($focus_target){
-					$focus_target.focus();
+					setTimeout(function(){
+						$focus_target.focus();
+					},500);
 				}
 			}
 		}

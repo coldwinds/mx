@@ -17,8 +17,6 @@ class theme_custom_account{
 		add_filter('query_vars',			__CLASS__ . '::filter_query_vars');
 		
 		add_action('template_redirect',		__CLASS__ . '::template_redirect');
-		
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
 
 	}
 	public static function filter_query_vars($vars){
@@ -82,16 +80,5 @@ class theme_custom_account{
 		foreach($page_slugs as $k => $v){
 			theme_cache::get_page_by_path($k) || wp_insert_post(array_merge($defaults,$v));
 		}
-	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
-
-		wp_enqueue_style(
-			self::$iden,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
 	}
 }

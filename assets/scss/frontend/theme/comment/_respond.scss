@@ -32,7 +32,7 @@ $comment-emotion-close-size: 2rem;
 		width: 100%;
 		& > *{
 			display: table-cell;
-			padding: $btn-gutter;
+			padding: ($btn-gutter / 2) $btn-gutter;
 			width: 1%;
 		}
 		.submit{

@@ -219,16 +219,15 @@ define(function(require, exports, module){
 				cache.legend_tops[cache.active_i] = [];
 			cache.legend_tops[cache.active_i][j] = parseInt(tools.getElementTop(cache.$tab_legends[cache.active_i][j]));
 		}
-		window.addEventListener('scroll', function (e) {
-			event_tab_nav_fixed();
-			event_legends_scroll();
+		tools.scroll_callback(function(scroll_y){
+			event_tab_nav_fixed(scroll_y);
+			event_legends_scroll(scroll_y);
 		});
 		
 		/** set actived */
 		cache.actived.push(cache.active_i);
 	}
-	function event_legends_scroll(){
-		var wot = parseInt(window.pageYOffset);
+	function event_legends_scroll(wot){
 
 		var len = cache.legend_tops[cache.active_i].length;
 		for(var i=0; i<len; i++){
@@ -244,8 +243,8 @@ define(function(require, exports, module){
 			}
 		}
 	}
-	function event_tab_nav_fixed(){
-		if(window.pageYOffset >= cache.nav_ori_top){
+	function event_tab_nav_fixed(y){
+		if(y >= cache.nav_ori_top){
 			if(!cache.is_fixed){
 				cache.$tab_nav[cache.active_i].style.top = cache.admin_bar_height + 'px';
 				cache.$tab_nav[cache.active_i].style.position = 'fixed';

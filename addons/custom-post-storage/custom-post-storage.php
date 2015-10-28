@@ -18,7 +18,7 @@ class theme_custom_storage{
 
 		add_action('template_redirect',		__CLASS__ . '::template_redirect');
 		
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
+		//add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
 		
 		//add_shortcode('post-stroage-download',__CLASS__ . '::add_shortcode');
 		
@@ -428,25 +428,15 @@ class theme_custom_storage{
 
 				<?php if(isset($v['url']) && !empty($v['url'])){ ?>
 					<div class="form-group">
-						<div class="btn-group btn-group-lg btn-block">
-							<a 
-								href="<?= $v['url'];?>" 
-								class="btn btn-success col-xs-9 g-tablet-1-6" 
-								rel="nofollow"
-							>
-									<i class="fa fa-cloud-download"></i> 
-									<?= ___('Download now');?>
-								</a>
-							<a 
-								href="<?= $v['url'];?>" 
-								class="btn btn-success col-xs-3 g-tablet-1-6" 
-								target="_blank" 
-								rel="nofollow"
-								title="<?= ___('Open in new window');?>" 
-							>
-								<i class="fa fa-external-link"></i>
-							</a>
-						</div>
+						<a 
+							href="<?= $v['url'];?>" 
+							class="btn btn-lg btn-success btn-block" 
+							rel="nofollow"
+							target="_blank" 
+						>
+							<i class="fa fa-cloud-download"></i> 
+							<?= ___('Download now');?>
+						</a>
 					</div>
 				<?php } ?>
 			</div><!-- /.fieldset-content -->
@@ -454,10 +444,6 @@ class theme_custom_storage{
 	<?php } ?>
 </div><!-- /.post-download -->
 		<?php
-		//wp_reset_postdata();
-		//$content = ob_get_contents();
-		//ob_end_clean();
-		//return $content;
 	}
 	public static function display_frontend(){
 		global $post;
@@ -480,18 +466,6 @@ class theme_custom_storage{
 	}
 	public static function is_page(){
 		return theme_cache::is_page(self::$page_slug);
-	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
-
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-
 	}
 }
 ?>

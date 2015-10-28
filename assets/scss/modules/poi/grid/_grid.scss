@@ -5,9 +5,9 @@
 	padding-right: $grid-gutter;
 }
 @mixin grid($width){
-    @extend %grid;
     width: percentage($width);
 }
+
 .g{
 	@extend .clearfix;
 	margin-left: auto;
@@ -16,16 +16,12 @@
 	padding-right: $grid-g-gutter;
 }
 
-$device-lists: phone, tablet, desktop;
-@each $device in $device-lists{
-	@for $total-i from 1 through $grid-column{
-		@for $i from 1 through $total-i{
-			.g-#{$device}-#{$i}-#{$total-i} {
-				@include grid($i / $total-i);
-			}
-		}
-	}
+[class *= "g-desktop"],
+[class *= "g-table"],
+[class *= "g-phone"]{
+	@extend %grid;
 }
+
 
 .row{
 	padding-left: 0;
@@ -35,37 +31,74 @@ $device-lists: phone, tablet, desktop;
 	@extend .clearfix;
 }
 
+//phone first
+@mixin make_grid($type){
+	@for $total-i from 1 through $grid-column{
+		@for $i from 1 through $total-i{
+			.g-#{$type}-#{$i}-#{$total-i} {
+				@include grid($i / $total-i);
+			}
+		}
+	}
+}
+@include make_grid(phone);
+
+//only phone
 @include view-phone{
 	.hidden-phone,
 	.visible-desktop,
 	.visible-tablet{
 		display: none;
 	}
-	[class *= "g-tablet"],
-    [class *= "g-desktop"] {
+	[class *= "g-tablet"]:not([class *= "g-phone"]),
+    [class *= "g-desktop"]:not([class *= "g-phone"]){
         width: 100%;
     }
-    [class *= "g-table"],
-    [class *= "g-desktop"],
-    [class *= "g-phone"]{
-	    padding-left: $grid-g-mobile-gutter;
-	    padding-right: $grid-g-mobile-gutter;
-    }
+  
     .g{
 		padding-right: $grid-g-phone-gutter;
 		padding-left: $grid-g-phone-gutter;
 	}
+
+	[class *= "g-desktop"],
+	[class *= "g-table"],
+	[class *= "g-phone"]{
+	    padding-left: $grid-g-phone-gutter;
+	    padding-right: $grid-g-phone-gutter;
+	}
 }
+
+//on tablet and desktop
+@include view-not-phone{
+	.g{
+		padding-right: $grid-g-desktop-gutter;
+		padding-left: $grid-g-desktop-gutter;
+	}
+	@include make_grid(tablet);
+}
+
+//noly tablet
 @include view-tablet{
 	.visible-desktop,
 	.visible-phone,
-	.hidden-table{
+	.hidden-tablet{
 		display: none;
 	}
-    [class *= "g-desktop"] {
+	
+	@for $total-i from 1 through $grid-column{
+		@for $i from 1 through $total-i{
+			.g-tablet-#{$i}-#{$total-i} {
+				@include grid($i / $total-i);
+			}
+		}
+	}
+	
+    [class *= "g-desktop"]:not([class *= "g-tablet"]){
         width: 100%;
     }
 }
+
+//only desktop
 @include view-desktop{
 	.g{
 		max-width: $grid-max-width-desktop;
@@ -75,10 +108,6 @@ $device-lists: phone, tablet, desktop;
 	.hidden-desktop{
 		display: none;
 	}
-}
-@include view-not-phone{
-	.g{
-		padding-right: $grid-g-desktop-gutter;
-		padding-left: $grid-g-desktop-gutter;
-	}
+	
+	@include make_grid(desktop);
 }

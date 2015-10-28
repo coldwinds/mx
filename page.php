@@ -1,5 +1,5 @@
 <?php get_header();?>
-<div class="g grid-container">
+<div class="g">
 	<div class="row">
 		<?php
 		if(have_posts()){

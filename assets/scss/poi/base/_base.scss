@@ -1,0 +1,25 @@
+*{
+	box-sizing: border-box;
+}
+html{
+	font-size: $font-size-html;
+}
+@include view-phone{
+	html{
+		font-size: $font-size-html-phone;
+	}
+}
+body{
+	line-height: $body-line-height;
+}
+a{
+	text-decoration:none;
+}
+p{
+	margin-top: 0;
+}
+.hide,
+.none,
+[hidden]{
+	display: none;
+}

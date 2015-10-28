@@ -47,15 +47,13 @@
 	}
 		
 	.list-group-item-text{
-		color:#666;
-		margin-bottom: .5rem;
-		line-height: 1.5;
+		color:$excerpt-color;
 	}
 	.collection-list-thumbnail-container{
 		display: block;
 		position: relative;
 		overflow: hidden;
-		margin-bottom: 1rem;
+		margin-bottom: ($grid-g-gutter / 2);
 	}
 	.collection-list-thumbnail{
 		position: absolute;
@@ -70,8 +68,24 @@
 	}
 	//new version
 	.thumbnail-container{
-		@extend %thumbnail-container;
-		margin-bottom: $grid-g-gutter;
-		width: 10rem;
+		position: relative;
+		margin-bottom: ($grid-g-gutter / 2);
+		@extend .g-tablet-1-5;
+		img{
+			position: relative;
+			width: 100%;
+			height: auto;
+		}
+	}
+	.list-group-body{
+		@extend .g-tablet-4-5;
+	}
+}
+@include view-phone{
+	.collection-list{
+		.thumbnail-container,
+		.list-group-body{
+			width: 100%;
+		}
 	}
 }

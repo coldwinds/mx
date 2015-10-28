@@ -1,5 +1,5 @@
 <?php get_header();?>
-<div class="container grid-container">
+<div class="g">
 		<?php
 		if(have_posts()){
 			while(have_posts()){
@@ -7,18 +7,15 @@
 				?>
 				<div id="main" class="main">
 					<article id="post-<?= $post->ID;?>" <?php post_class(['singular-post panel']);?>>
-						<div class="heading">
-							<h2 class="entry-title title">
-								<?= sprintf(___('The attachment of %s'),'<a href="' . theme_cache::get_permalink($post->post_parent) . '">' . theme_cache::get_the_title($post->post_parent) . '</a>');?>
-							</h2>
-						</div>
+						<h2 class="entry-title">
+							<?= sprintf(___('The attachment of %s'),'<a href="' . theme_cache::get_permalink($post->post_parent) . '">' . theme_cache::get_the_title($post->post_parent) . '</a>');?>
+						</h2>
 
-						<div class="content">
-							<div class="post-content content-reset">
-								<?php the_content();?>
-							</div>
+						<div class="entry-content content-reset">
+							<?php the_content();?>
 						</div>
-						<footer class="post-footer post-metas footer clearfix">
+						
+						<footer class="entry-footer">
 							<?php
 							/** 
 							 * post-share
