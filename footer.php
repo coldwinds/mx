@@ -12,9 +12,9 @@ if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('above-fo
 	<?php if(!wp_is_mobile()){ ?>
 		
 		<div class="g">
-			<div class="widget-area row hiddex-xs">
+			<div class="widget-area row">
 				<?php if(!theme_cache::dynamic_sidebar('widget-area-footer')){ ?>
-					<div class="col-xs-12">
+					<div class="g-desktop-1-1">
 						<div class="panel">
 							<div class="content">
 								<div class="page-tip">

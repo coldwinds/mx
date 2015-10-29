@@ -216,7 +216,7 @@ input[type="checkbox"], input[type="radio"] {
   box-sizing: border-box; }
 
 html {
-  font-size: 87.5%; }
+  font-size: 82.5%; }
 
 @media (max-width: 767px) {
   html {
@@ -1026,11 +1026,16 @@ img {
   vertical-align: middle; }
 
 .widget .media-left .thumbnail-container {
-  width: 5rem; }
+  width: 6rem; }
 .widget .media-heading {
-  font-size: 1.1rem; }
+  font-size: 1.1rem;
+  max-height: 3rem;
+  overflow: hidden; }
+  @media (min-width: 960px) {
+    .widget .media-heading {
+      font-size: 1rem; } }
 .widget .media-body .metas {
-  font-size: 1rem;
+  font-size: .8rem;
   color: #959595; }
 
 .widget .media-left .thumbnail-container, .card .thumbnail-container {
@@ -1116,8 +1121,9 @@ img {
   color: #fff; }
   .card.sm .card-title h2,
   .card.sm .card-title h3 {
-    font-size: 1.1rem;
-    margin: 0; }
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.2; }
 .card.sm .avatar {
   position: absolute;
   left: 0.5rem;
@@ -2137,9 +2143,8 @@ body.menu-on {
   opacity: .3; }
 .widget_rank .list-group-item:hover:before, .widget_rank .list-group-item.hover:before {
   opacity: 1; }
-.widget_rank .list-group-item img {
-  width: 100%;
-  height: auto; }
+.widget_rank .list-group-item .thumbnail {
+  width: 5rem; }
 .widget_rank .list-group-item a {
   color: #959595; }
 .widget_rank .list-group-item:nth-child(2):before {
@@ -2333,7 +2338,7 @@ body.menu-on {
 .widget_point_rank .author {
   margin: .5rem 0 0;
   font-weight: normal;
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-align: center; }
 .widget_point_rank .extra {
   /*display: none;*/

@@ -2,15 +2,20 @@
 	.media-left{
 		.thumbnail-container{
 			@extend %thumbnail-container;
-			width: 5rem;
+			width: 6rem;
 		}
 	}
 	.media-heading{
 		font-size: 1.1rem;
+		max-height: 3rem;
+		overflow: hidden;
+		@include view-desktop{
+			font-size: 1rem;
+		}
 	}
 	.media-body{
 		.metas{
-			font-size: 1rem;
+			font-size: .8rem;
 			color: $excerpt-color;
 		}
 	}

@@ -29,7 +29,7 @@ if(theme_custom_point::get_point_img_url()){
 							<?= esc_html($current_user->display_name);?>
 						</p>
 					</div>					
-				</div><!-- .col-sm-5 -->
+				</div><!-- .g-tablet-2-5 -->
 			
 				<div class="g-tablet-1-5 bomb-area-points">
 					<h4><?= ___('Bomb number');?></h4>
