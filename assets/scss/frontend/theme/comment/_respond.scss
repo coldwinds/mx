@@ -2,7 +2,9 @@
 	#respond{
 		border: 2px solid $link-color-hover;
 		border-radius: $global-border-radius;
-
+		.content{
+			border: none;
+		}
 		&:before{
 			position:absolute;
 			content: '';
@@ -20,6 +22,9 @@
 $comment-emotion-close-size: 2rem;
 #respond {
 	position: relative;
+	.content{
+		padding: $panel-content-gutter;
+	}
 	.heading{
 		height: 0;
 	}
@@ -30,6 +35,7 @@ $comment-emotion-close-size: 2rem;
 		position: relative;
 		display: table;
 		width: 100%;
+		margin-bottom: 0;
 		& > *{
 			display: table-cell;
 			padding: ($btn-gutter / 2) $btn-gutter;

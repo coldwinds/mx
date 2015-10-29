@@ -160,7 +160,7 @@ define(function(require, exports, module){
 				
 			/** scroll to top */
 			cache.$tab_legends[i][j].addEventListener('click',function(){
-				scrollTo(0,0);
+				tools.scrollTop(0);
 			});
 			
 			/** set legend id */
@@ -185,7 +185,7 @@ define(function(require, exports, module){
 		var $legend = cache.$tab_legends[this.getAttribute('data-i')][this.getAttribute('data-j')],
 			$parent = $legend.parentNode;
 			
-		scrollTo(0,tools.getElementTop($legend) - cache.admin_bar_height);
+		tools.scrollTop(tools.getElementTop($legend) - cache.admin_bar_height);
 		
 		history.pushState(null, null, '#' + this.getAttribute('data-hash'));
 		

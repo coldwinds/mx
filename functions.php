@@ -313,39 +313,33 @@ class theme_functions{
 		?>
 		<li class="list-group-item <?= $args['classes'];?>">
 			<a 
-				class="list-group-item-bg media" 
+				class="list-group-item-bg" 
 				href="<?= theme_cache::get_permalink($post->ID);?>" 
 				title="<?= $post_title;?>" 
 				target="<?= $args['target'];?>" 
 			>
-				<div class="media-left">
-					<div class="thumbnail-container">
-						<img 
-							class="media-object" 
-							src="<?= theme_functions::$thumbnail_placeholder;?>" 
-							data-src="<?= $thumbnail_real_src;?>" 
-							alt="<?= $post_title;?>" 
-							width="<?= theme_functions::$thumbnail_size[1];?>" 
-							height="<?= theme_functions::$thumbnail_size[2];?>" 
-						>
-					</div>
-				</div>
-				<div class="media-body">
-					<h3 class="media-heading"><?= $post_title;?></h3>
-					<div class="metas row">
-						<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
-							<div class="view meta g-phone-1-2">
-								<i class="fa fa-play-circle"></i> 
-								<?= theme_post_views::get_views();?>
-							</div>
-						<?php } ?>
-
-						<div class="comments meta g-phone-1-2">
-							<i class="fa fa-comment"></i> 
-							<?= (int)$post->comment_count;?>
+				<img 
+					class="thumbnail" 
+					src="<?= theme_functions::$thumbnail_placeholder;?>" 
+					data-src="<?= $thumbnail_real_src;?>" 
+					alt="<?= $post_title;?>" 
+					width="<?= theme_functions::$thumbnail_size[1];?>" 
+					height="<?= theme_functions::$thumbnail_size[2];?>" 
+				>
+				<h3 class="media-heading"><?= $post_title;?></h3>
+				<div class="metas row">
+					<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
+						<div class="view meta g-phone-1-3">
+							<i class="fa fa-play-circle"></i> 
+							<?= theme_post_views::get_views();?>
 						</div>
-					</div>					
-				</div>
+					<?php } ?>
+
+					<div class="comments meta g-phone-1-3">
+						<i class="fa fa-comment"></i> 
+						<?= (int)$post->comment_count;?>
+					</div>
+				</div>					
 			</a>
 		</li>
 		<?php
@@ -483,21 +477,7 @@ class theme_functions{
 					</a>
 				<?php } ?>
 				
-				<?php
-					/** 
-					 * tags
-					 */
-					$tags = get_the_tags();
-					if(!empty($tags)){
-						?>
-						<div class="entry-tags">
-							<?php
-							the_tags('<i class="fa fa-tag"></i> ');
-							?>
-						</div>
-						<?php
-					}
-					?>
+				
 			</header>
 			<div class="entry-body">
 				<?php
@@ -557,6 +537,19 @@ class theme_functions{
 					
 				<!-- post-footer -->
 				<footer class="entry-footer">
+					<?php
+					/** 
+					 * tags
+					 */
+					$tags = get_the_tags();
+					if(!empty($tags)){
+						?>
+						<div class="entry-tags">
+							<?php the_tags('',''); ?>
+						</div>
+						<?php
+					}
+					?>
 					<?php
 					/** 
 					 * post-share
@@ -1300,7 +1293,7 @@ class theme_functions{
 		}
 		
 		$defaults = [
-			'posts_per_page' => 16,
+			'posts_per_page' => 8,
 			'orderby' => 'latest',
 		];
 		$query_args = [

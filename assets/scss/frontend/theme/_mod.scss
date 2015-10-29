@@ -1,5 +1,5 @@
 .mod{
-	margin-bottom: 5rem;
+	margin-bottom: $grid-g-gutter;
 	& > .heading{
 		position: relative;
 		padding-left: 1rem;
@@ -23,8 +23,6 @@
 		.extra{
 			display: inline-block;
 			a{
-				font-weight: bold;
-				
 				&:after{
 					display: inline-block;
 					padding: 0 .5rem;

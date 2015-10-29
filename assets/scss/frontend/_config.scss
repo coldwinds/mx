@@ -25,8 +25,8 @@ $color: #666 !default;
 
 
 //poi settings
-$font-size-html: 75% !default;
-$font-size-html-phone: 87.5% !default;
+$font-size-html: 87.5% !default;
+$font-size-html-phone: 100% !default;
 $body-font-size: 14px !default;
 $body-line-height: 1.5 !default;
 
@@ -139,7 +139,7 @@ $mod-title-font-size: 1.3rem !default;
 	//nav-main
 	$nav-main-duration: .5 !default;
 	$admin-height: 32px !default;
-	$nav-main-shadow: 0 1px 10px rgba(#000,.3) !default;
+	$nav-main-shadow: 0 1px 10px rgba(#000,.1) !default;
 	$nav-main-height: 50px !default;
 	$nav-main-bg-color: rgba(#fff,.95) !default;
 	$nav-main-top-bg-color: rgba(#fff,.6) !default;
@@ -153,9 +153,9 @@ $mod-title-font-size: 1.3rem !default;
 	$entry-excerpt-font-size: 1.5rem !default;
 	$entry-excerpt-bg-color: $card-bg-color-hover !default;
 
-	$entry-meta-circle-size-phone: 6rem !default;
+	$entry-meta-circle-size-phone: 5rem !default;
 	$entry-meta-circle-size-not-phone: 10rem !default;
 	$entry-meta-circle-font-size: 2rem !default;
 
 	//comment
-	$cancel-comment-reply-link-size: 4rem !default;
+	$cancel-comment-reply-link-size: 3rem !default;

@@ -2,12 +2,11 @@
 .entry-circle{
 	text-align: center;
 	margin: 2rem -2rem;
-	font-size: $entry-meta-circle-font-size / 1.3;
+	font-size: $entry-meta-circle-font-size / 2;
 	.meta{
 		position: relative;
 		background: #FA8546;
 		display: inline-block;
-		margin: .5rem;
 		width: $entry-meta-circle-size-phone;
 		height: $entry-meta-circle-size-phone;
 		border-radius: 50%;

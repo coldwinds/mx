@@ -1,8 +1,5 @@
 .card{
 	&.xs{
-		.card-bg{
-			@extend %card-hover-active;
-		}
 		.title{
 			margin: 0;
 			font-weight: normal;
@@ -11,20 +8,14 @@
 			font-size: $card-xs-title-font-size;
 			overflow: hidden;
 			color: $title-color;
+			@include view-not-desktop{
+				@include text-overflow;
+				height: auto;
+			}
 		}
 		&:hover .title,
 		&.hover .title{
 			color: $link-color-hover;
-		}
-	}
-}
-@include view-not-desktop{
-	.card{
-		&.xs{
-			.title{
-				@include text-overflow;
-				height: auto;
-			}
 		}
 	}
 }

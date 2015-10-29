@@ -638,7 +638,7 @@ define(function(require, exports, module){
 				'<input type="hidden" name="ctb[attach-ids][]" value="' + args['attach-id'] + '" >';
 				
 		$tpl.id = 'img-' + args['attach-id'];
-		$tpl.setAttribute('class','thumbnail-tpl col-xs-6 col-sm-3 col-md-2');
+		$tpl.setAttribute('class','thumbnail-tpl g-phone-1-2 g-tablet-1-3 g-desktop-1-4');
 		$tpl.innerHTML = content;
 		$tpl.style.display = 'none';
 		

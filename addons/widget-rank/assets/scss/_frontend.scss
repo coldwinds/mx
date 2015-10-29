@@ -16,6 +16,13 @@
 		&.hover:before{
 			opacity: 1;
 		}
+		img{
+			width: 100%;
+			height: auto;
+		}
+		a{
+			color: $excerpt-color;
+		}
 		@for $i from 2 through 20 {
 			&:nth-child(#{$i}):before{content:'#{$i}'}
 		}

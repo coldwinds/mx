@@ -9,7 +9,6 @@ $meta-left: $card-avatar-left * 2 + $card-avatar-width;
 			padding-bottom: $card-bg-bottom-gutter;
 			font-size: 1rem;
 			overflow: hidden;
-			@extend %card-hover-active;
 		}
 		.card-cat{
 			position: absolute;
@@ -26,7 +25,7 @@ $meta-left: $card-avatar-left * 2 + $card-avatar-width;
 			}
 		}
 		.card-title{
-			@include linear-gradient(transparent,rgba(0,0,0,.3));
+			@extend %card-title-bg;
 			position: absolute;
 			margin: 0;
 			bottom: $card-bg-bottom-gutter;
@@ -67,6 +66,9 @@ $meta-left: $card-avatar-left * 2 + $card-avatar-width;
 						display: inline-block;
 						max-width: 6rem;
 						@extend %text-overflow;
+						@include view-phone{
+							max-width: none;
+						}
 					}
 				}
 			}

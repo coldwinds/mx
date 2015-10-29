@@ -1,17 +1,5 @@
-
 .card{
 	&.lg{
-		.card-bg{
-			@include transition(box-shadow #{$transition-duration-fast}s);
-			&:hover,
-			&.hover{
-				box-shadow: $card-shadow-hover;
-			}
-			&:active,
-			&.active{
-				background: $card-bg-color-active;
-			}
-		}
 		.card-cat{
 			position: absolute;
 			bottom: 0;
@@ -42,8 +30,8 @@
 			display: table;
 			table-layout: fixed;
 			text-align: center;
-			font-size: 1rem;
-			line-height: 4rem;
+			padding: 1rem 0;
+			line-height: 2rem;
 			white-space: nowrap;
 			.meta{
 				display: table-cell;
@@ -52,10 +40,13 @@
 			.avatar{
 				width: 2rem;
 				height: 2rem;
-				vertical-align: sub;
+				vertical-align: middle;
 			}
 			.author{
 				.tx{
+					display: inline-block;
+					max-width: 6em;
+					vertical-align: middle;
 					@extend %text-overflow;
 				}
 			}

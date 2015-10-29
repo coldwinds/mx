@@ -53,7 +53,27 @@
 		}
 	}
 	.entry-footer{
-		padding-top: 1rem;
+		padding-top: 1.5rem;
 		border-top: 1px solid $panel-border-color;
+		@extend .clearfix;
+		& > *{
+			float: left;
+			margin: 0 2rem .5rem 0;
+		}
+		.entry-tags{
+			a{
+				background: $link-color-hover;
+				padding: .2rem .8rem;
+				border-radius: 5rem;
+				margin-right: .5rem;
+				color: #fff;
+				border: 1px solid $link-color-hover;
+				&:hover,
+				&.hover{
+					background: none;
+					color: $link-color-hover;
+				}
+			}
+		}
 	}
 }
