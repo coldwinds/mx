@@ -121,8 +121,8 @@ function post_form($post_id = null){
 					'ctb-content', 
 					[
 						'textarea_name' => 'ctb[post-content]',
-						'drag_drop_upload' => true,
-						'teeny' => true,
+						'drag_drop_upload' => false,
+						'teeny' => false,
 						'media_buttons' => false,
 						'editor_class' => 'form-control',
 					]

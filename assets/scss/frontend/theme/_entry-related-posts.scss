@@ -10,9 +10,5 @@
 		display: inline-block;
 		width: 15rem;
 		padding: 0 $grid-gutter;
-		.title{
-			height: auto;
-			@extend %text-overflow;
-		}
 	}
 }

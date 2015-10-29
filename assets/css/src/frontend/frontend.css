@@ -9,7 +9,7 @@
   -webkit-transition-duration: 0.75s;
   transition-duration: 0.75s; }
 
-.card.sm .card-meta .meta.author .tx, .card.lg .card-meta .author .tx, .tools .tool-me .box a, .related-posts .card .title, .widget_point_rank .author {
+.card.sm .card-meta .meta.author .tx, .card.lg .card-meta .author .tx, .tools .tool-me .box a, .widget_point_rank .author {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
@@ -1015,6 +1015,10 @@ fieldset {
 
   #ajax-loading {
     margin: 0 40px; } }
+* {
+  word-wrap: break-word;
+  word-break: break-all; }
+
 a {
   color: #4083a9; }
   a:hover, a.hover {
@@ -1808,8 +1812,6 @@ body.menu-on {
   display: inline-block;
   width: 15rem;
   padding: 0 1rem; }
-  .related-posts .card .title {
-    height: auto; }
 
 .comment-loading .tip-status,
 #respond-loading-ready .tip-status {

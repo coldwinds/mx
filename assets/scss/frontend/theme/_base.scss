@@ -1,6 +1,10 @@
 //body{
 //	background-color: $background;
 //}
+*{
+	word-wrap:break-word;
+	word-break:break-all
+}
 a{
 	color: $link-color;
 	&:hover,
