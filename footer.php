@@ -51,10 +51,10 @@ if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('above-fo
 					</div>
 				</div>
 			<?php } ?>
-			<p class="footer-meta copyright">
-				<?= class_exists('theme_user_code') ? theme_user_code::get_frontend_footer_code() : null;?>
-			</p>
 		</div><!-- /.g -->
+		<p class="footer-meta copyright">
+			<?= class_exists('theme_user_code') ? theme_user_code::get_frontend_footer_code() : null;?>
+		</p>
 	<?php }else{ ?>
 		<div class="g"><p><?= class_exists('theme_user_code') ? theme_user_code::get_frontend_footer_code() : null;?></p></div>
 	<?php } ?>
