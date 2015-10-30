@@ -117,7 +117,7 @@ class theme_functions{
 				'description' 	=> ___('Appears on archive page in the sidebar.'),
 			],
 			'widget-area-footer' => [
-				'name' 			=> ___('Home widget area'),
+				'name' 			=> ___('Footer widget area'),
 				'description' 	=> ___('Appears on all page in the footer.'),
 				'before_widget' => '<div class="g-desktop-1-4"><aside id="%1$s"><div class="widget %2$s">',
 				'after_widget'		=> '</div></aside></div>',

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MX\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 18:45+0800\n"
-"PO-Revision-Date: 2015-10-28 18:51+0800\n"
+"POT-Creation-Date: 2015-10-30 09:41+0800\n"
+"PO-Revision-Date: 2015-10-30 09:41+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: addons/_comment-notify/comment-notify.php:43
@@ -378,7 +378,7 @@ msgstr "数据库已在 %s 秒内更新。"
 #: addons/custom-user-settings/custom-user-settings.php:489
 #: addons/mailer/mailer.php:216
 #: addons/page-nagination-ajax/page-nagination-ajax.php:99 comments.php:18
-#: functions.php:1782 tpl/page-account-bomb.php:14 tpl/page-account-pm.php:3
+#: functions.php:1797 tpl/page-account-bomb.php:14 tpl/page-account-pm.php:3
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
 
@@ -541,13 +541,13 @@ msgstr "抱歉，文章不存在。"
 msgid "Sorry, the type param is invaild."
 msgstr "抱歉，缺少类型参数。"
 
-#: addons/custom-attachment-page/custom-attachment-page.php:70
+#: addons/custom-attachment-page/custom-attachment-page.php:69
 msgid "Already last page"
 msgstr "已是最后一页"
 
-#: addons/custom-attachment-page/custom-attachment-page.php:73
-#: functions.php:1070 functions.php:1071 functions.php:1078 functions.php:1079
-#: functions.php:1384
+#: addons/custom-attachment-page/custom-attachment-page.php:72
+#: functions.php:1069 functions.php:1070 functions.php:1077 functions.php:1078
+#: functions.php:1383
 msgid "Next page"
 msgstr "下一页"
 
@@ -576,7 +576,7 @@ msgid "Works"
 msgstr "作品"
 
 #: addons/custom-author-profile/custom-author-profile.php:123 comments.php:12
-#: functions.php:385 functions.php:389 functions.php:543 functions.php:1549
+#: functions.php:385 functions.php:389 functions.php:529 functions.php:1548
 #: tpl/author-profile.php:75
 msgid "Comments"
 msgstr "评论"
@@ -1030,7 +1030,7 @@ msgstr "我最近的积分动态"
 #: addons/custom-dashboard/dashboards.php:34
 #: addons/widget-author-posts/widget-author-posts.php:59
 #: addons/widget-rank/widget-rank.php:69 addons/widget-tags/widget-tags.php:85
-#: functions.php:1746 tpl/page-account-edit.php:82 tpl/page-rank-popular.php:22
+#: functions.php:1761 tpl/page-account-edit.php:82 tpl/page-rank-popular.php:22
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
@@ -1232,7 +1232,7 @@ msgstr "分类索引"
 msgid "No cagtegory yet."
 msgstr "暂无分类。"
 
-#: addons/custom-page-cats/custom-page-cats.php:164
+#: addons/custom-page-cats/custom-page-cats.php:165
 msgid "Initial"
 msgstr "首字"
 
@@ -1302,7 +1302,7 @@ msgstr "用户列表：%s"
 msgid "Tags index"
 msgstr "标签索引"
 
-#: addons/custom-page-tags/custom-page-tags.php:271
+#: addons/custom-page-tags/custom-page-tags.php:272
 msgid "Pinyin initial"
 msgstr "拼音首字母"
 
@@ -1484,7 +1484,7 @@ msgid "Sorry, please %s."
 msgstr "抱歉，请先%s。"
 
 #: addons/custom-point-bomb/custom-point-bomb.php:228
-#: addons/custom-point-lottery/custom-point-lottery.php:370 functions.php:1789
+#: addons/custom-point-lottery/custom-point-lottery.php:370 functions.php:1804
 msgid "log-in"
 msgstr "登录"
 
@@ -2209,19 +2209,16 @@ msgid "Rate it"
 msgstr "打赏"
 
 #: addons/custom-post-source/custom-post-source.php:26
-#: addons/custom-post-source/custom-post-source.php:317
 #, php-format
 msgid "This article is %1$s member %2$s's reprint work."
 msgstr "本作品是由 %1$s 会员 %2$s 的搬运作品。"
 
 #: addons/custom-post-source/custom-post-source.php:35
-#: addons/custom-post-source/custom-post-source.php:290
 #, php-format
 msgid "This article is %1$s member %2$s's original work."
 msgstr "本作品是由 %1$s 会员 %2$s 的投递作品。"
 
 #: addons/custom-post-source/custom-post-source.php:42
-#: addons/custom-post-source/custom-post-source.php:302
 #, php-format
 msgid "Welcome to reprint but must indicate the source url %1$s."
 msgstr "欢迎转载，但请务必注明来源地址：%1$s。"
@@ -2236,7 +2233,6 @@ msgid "Source: %s, author: unkown"
 msgstr "来源：%s，作者：不详"
 
 #: addons/custom-post-source/custom-post-source.php:76
-#: addons/custom-post-source/custom-post-source.php:328
 #, php-format
 msgid "Source: %1$s, author: %2$s"
 msgstr "来源: %1$s，作者: %2$s"
@@ -2321,9 +2317,10 @@ msgstr "HTML：如果是转载作品，有来源作者但无 URL 地址"
 msgid "HTML: if the post is reprint but no original and no URL"
 msgstr "HTML：如果是转载作品，无来源作者和 URL 地址"
 
-#: addons/custom-post-source/custom-post-source.php:310
-#: addons/custom-post-source/custom-post-source.php:312
-msgid "Unkown"
+#: addons/custom-post-source/custom-post-source.php:282
+#: addons/custom-post-source/custom-post-source.php:283
+#, fuzzy
+msgid "unkown"
 msgstr "不详"
 
 #: addons/custom-post-storage/custom-post-storage.php:39
@@ -2423,13 +2420,8 @@ msgstr "解压密码"
 msgid "Download now"
 msgstr "立即下载"
 
-#: addons/custom-post-storage/custom-post-storage.php:445
-#: addons/custom-slidebox/custom-slidebox.php:202
-msgid "Open in new window"
-msgstr "在新窗口中打开"
-
-#: addons/custom-post-storage/custom-post-storage.php:468
-#: addons/custom-post-storage/custom-post-storage.php:477
+#: addons/custom-post-storage/custom-post-storage.php:454
+#: addons/custom-post-storage/custom-post-storage.php:463
 msgid "Download"
 msgstr "下载"
 
@@ -2664,6 +2656,10 @@ msgstr "附加选项"
 #: addons/custom-slidebox/custom-slidebox.php:198
 msgid "Nofollow link"
 msgstr "Nofollow 链接"
+
+#: addons/custom-slidebox/custom-slidebox.php:202
+msgid "Open in new window"
+msgstr "在新窗口中打开"
 
 #: addons/custom-slidebox/custom-slidebox.php:217
 msgid "Candy"
@@ -3441,7 +3437,7 @@ msgstr ""
 "使用缓存提高性能。当每篇文章查看数大于最大储存次数后，查看数会写入到数据库保"
 "存。"
 
-#: addons/post-views/post-views.php:188 functions.php:460 functions.php:1545
+#: addons/post-views/post-views.php:188 functions.php:460 functions.php:1544
 #: tpl/page-account-edit.php:19
 msgid "Views"
 msgstr "查看数"
@@ -3513,7 +3509,7 @@ msgstr "显示数量"
 msgid "For example: 10"
 msgstr "例如：10"
 
-#: addons/related-post/related-post.php:54 functions.php:1321
+#: addons/related-post/related-post.php:54 functions.php:1320
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
@@ -3876,7 +3872,7 @@ msgid "Display author posts on singular page."
 msgstr "在单页面中显示作者文章"
 
 #: addons/widget-author-posts/widget-author-posts.php:20
-#: addons/widget-author-posts/widget-author-posts.php:74 functions.php:680
+#: addons/widget-author-posts/widget-author-posts.php:74 functions.php:679
 msgid "Author posts"
 msgstr "作者文章"
 
@@ -4022,7 +4018,7 @@ msgstr "标签数量（必填）"
 msgid "Sticky tags (optional, one tag per line)"
 msgstr "固定标签（可选，一行一个）"
 
-#: attachment.php:12
+#: attachment.php:11
 #, php-format
 msgid "The attachment of %s"
 msgstr "《%s》的附件"
@@ -4087,7 +4083,7 @@ msgstr "%d天前"
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:674 functions.php:448 functions.php:1637
+#: core/core-functions.php:674 functions.php:448 functions.php:1636
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
@@ -4172,11 +4168,11 @@ msgstr "主题设置"
 msgid "Please set some widgets in footer."
 msgstr "请放一些小工具到底部栏目"
 
-#: footer.php:35
+#: footer.php:34
 msgid "Links"
 msgstr "友情链接"
 
-#: footer.php:61
+#: footer.php:63
 msgid "Back to top"
 msgstr "返回顶部"
 
@@ -4232,7 +4228,7 @@ msgstr "顶栏菜单（已登录状态）"
 msgid "Footer links"
 msgstr "底部友情链接"
 
-#: functions.php:112 functions.php:120
+#: functions.php:112
 msgid "Home widget area"
 msgstr "首页小工具区域"
 
@@ -4247,6 +4243,10 @@ msgstr "归档页面小工具区域"
 #: functions.php:117
 msgid "Appears on archive page in the sidebar."
 msgstr "显示在归档页面的边栏中。"
+
+#: functions.php:120
+msgid "Footer widget area"
+msgstr "底部 小工具区域"
 
 #: functions.php:121
 msgid "Appears on all page in the footer."
@@ -4289,152 +4289,152 @@ msgstr "查看 %s 目录下的所有文章"
 msgid "Edit"
 msgstr "编辑"
 
-#: functions.php:547
+#: functions.php:533
 msgctxt "Tucao"
 msgid "Comments"
 msgstr "吐槽"
 
-#: functions.php:630 functions.php:632
+#: functions.php:629 functions.php:631
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:645
+#: functions.php:644
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:652
+#: functions.php:651
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:670
+#: functions.php:669
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:674
+#: functions.php:673
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:684
+#: functions.php:683
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:703
+#: functions.php:702
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:710
+#: functions.php:709
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:738
+#: functions.php:737
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:739
+#: functions.php:738
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:754
+#: functions.php:753
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:784 functions.php:1051 functions.php:1053 functions.php:1060
-#: functions.php:1062 functions.php:1387
+#: functions.php:783 functions.php:1050 functions.php:1052 functions.php:1059
+#: functions.php:1061 functions.php:1386
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:802 functions.php:808 functions.php:816
+#: functions.php:801 functions.php:807 functions.php:815
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:930
+#: functions.php:929
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1127 functions.php:1145
+#: functions.php:1126 functions.php:1144
 #, php-format
 msgid "Random: %s"
 msgstr "随机：%s"
 
-#: functions.php:1127
+#: functions.php:1126
 #, php-format
 msgid "Previous post: %s"
 msgstr "上一篇：%s"
 
-#: functions.php:1145
+#: functions.php:1144
 #, php-format
 msgid "Next post: %s"
 msgstr "下一篇：%s"
 
-#: functions.php:1229
+#: functions.php:1228
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1253
+#: functions.php:1252
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1354
+#: functions.php:1353
 msgid "No data."
 msgstr "暂无资料"
 
-#: functions.php:1415
+#: functions.php:1414
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1447
+#: functions.php:1446
 msgid "more &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1670
+#: functions.php:1669
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1705 functions.php:1751
+#: functions.php:1704 functions.php:1766
 #, php-format
 msgid "More about %s"
 msgstr "更多%s"
 
-#: functions.php:1779
+#: functions.php:1794
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1788
+#: functions.php:1803
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1822 tpl/author-profile.php:21
+#: functions.php:1837 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:85
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1824
+#: functions.php:1839
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1835
+#: functions.php:1850
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1837
+#: functions.php:1852
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1848
+#: functions.php:1863
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1849
+#: functions.php:1864
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1870 functions.php:1872
+#: functions.php:1885 functions.php:1887
 msgid "Post comment"
 msgstr "发表评论"
 
@@ -5029,9 +5029,6 @@ msgstr "保存我的设置"
 
 #~ msgid "Respond"
 #~ msgstr "添加评论"
-
-#~ msgid "Footer widget area"
-#~ msgstr "底部 小工具区域"
 
 #~ msgid "Comment count"
 #~ msgstr "评论统计"
