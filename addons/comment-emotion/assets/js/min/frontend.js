@@ -1,5 +1,5 @@
 
-define(function(require,exports,module){'use strict';var tools=require('modules/tools');exports.config={}
+define(function(require,exports){'use strict';var tools=require('modules/tools');exports.config={}
 exports.init=function(){tools.ready(exports.bind);}
 var cache={},config=exports.config;exports.bind=function(){cache.$emotion_btns=document.querySelectorAll('.comment-emotion-pop-btn');cache.$pop=document.querySelectorAll('.comment-emotion-area-pop .pop');cache.$comment=I('comment-form-comment');cache.$emotion_faces=document.querySelectorAll('.comment-emotion-area-pop a');if(!cache.$emotion_btns||!cache.$emotion_btns[0])
 return;cache.pop_hide=[];cache.replaced=[];pop();insert();}

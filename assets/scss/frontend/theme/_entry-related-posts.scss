@@ -10,5 +10,9 @@
 		display: inline-block;
 		width: 15rem;
 		padding: 0 $grid-gutter;
+		.title{
+			white-space: normal;
+		}
 	}
+	
 }

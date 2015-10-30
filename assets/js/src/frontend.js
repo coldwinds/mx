@@ -1,4 +1,4 @@
-define(function(require, exports, module){
+define(function(require, exports){
 	'use strict';
 
 	require.async(['modules/lazyload'],function(_a,_b){});

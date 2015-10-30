@@ -1,5 +1,5 @@
 
-define(function(require,exports,module){'use strict';var tools=require('modules/tools');exports.init=function(){tools.ready(function(){bind();check_redeem();});}
+define(function(require,exports){'use strict';var tools=require('modules/tools');exports.init=function(){tools.ready(function(){bind();check_redeem();});}
 exports.config={process_url:'',prefix_item_id:'theme_point_lottery-item-',items_id:'.theme_point_lottery-item',add_id:'theme_point_lottery-add',control_container_id:'theme_point_lottery-control',tpl:'',lang:{M01:'Loading, please wait...',E01:'Server error, please try again later.'}}
 var cache={},config=exports.config;function bind(){add();del(jQuery(config.items_id));}
 function I(e,j){if(!j)

@@ -1,7 +1,7 @@
 /**
  * UA module Ckeck the client's UA
  */
-define(function(require, exports, module){
+define(function(require, exports){
 	module.exports = (function(){
 		function getVersion(ua, regExp, index, defVal){
 			var result = ua.match(regExp);

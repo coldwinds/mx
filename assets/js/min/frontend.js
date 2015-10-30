@@ -1,5 +1,5 @@
 
-define(function(require,exports,module){'use strict';require.async(['modules/lazyload'],function(_a,_b){});var tools=require('modules/tools');exports.config={is_home:false};exports.init=function(){tools.ready(function(){exports.hide_no_js();exports.search();exports.posts_nav();exports.scroll_menu();exports.mobile_menu();exports.toggle_menu();exports.back_to_top();});}
+define(function(require,exports){'use strict';require.async(['modules/lazyload'],function(_a,_b){});var tools=require('modules/tools');exports.config={is_home:false};exports.init=function(){tools.ready(function(){exports.hide_no_js();exports.search();exports.posts_nav();exports.scroll_menu();exports.mobile_menu();exports.toggle_menu();exports.back_to_top();});}
 exports.back_to_top=function(){var $back=document.querySelector('.back-to-top');if(!$back)
 return false;function event_click(e){e.preventDefault();tools.scrollTop(0);}
 $back.addEventListener(tools.click_handler,event_click);}

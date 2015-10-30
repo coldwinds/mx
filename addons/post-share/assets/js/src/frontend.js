@@ -1,7 +1,7 @@
 /**
  * @version 1.0.0
  */
-define(function(require, exports, module){
+define(function(require, exports){
 	'use strict';
 	var tools = require('modules/tools');
 

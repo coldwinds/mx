@@ -1812,6 +1812,8 @@ body.menu-on {
   display: inline-block;
   width: 15rem;
   padding: 0 1rem; }
+  .related-posts .card .title {
+    white-space: normal; }
 
 .comment-loading .tip-status,
 #respond-loading-ready .tip-status {

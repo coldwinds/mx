@@ -1,4 +1,4 @@
-define(function(require, exports, module){
+define(function(require, exports){
 	
 	exports.init = function(){
 		var that = exports;

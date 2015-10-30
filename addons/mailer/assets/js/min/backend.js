@@ -1,5 +1,5 @@
 
-define(function(require,exports,module){'use strict';var tools=require('modules/tools');exports.config={process_url:'',lang:{M01:'Loading, please wait...',E01:'Server error or network is disconnected.'}}
+define(function(require,exports){'use strict';var tools=require('modules/tools');exports.config={process_url:'',lang:{M01:'Loading, please wait...',E01:'Server error or network is disconnected.'}}
 var cache={},config=exports.config;exports.init=function(){tools.ready(exports.bind);}
 exports.bind=function(){cache.$test_btn=I('theme_mailer-test-btn');cache.$test_mail=I('theme_mailer-test-mail');cache.$area=I('theme_mailer-area-btn');cache.$tip=I('theme_mailer-tip');if(!cache.$test_btn||!cache.$test_mail||!cache.$tip||!cache.$area)
 return false;cache.$test_btn.addEventListener('click',send_mail,false);}

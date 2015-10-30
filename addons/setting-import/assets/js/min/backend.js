@@ -1,5 +1,5 @@
 
-define(function(require,exports,module){'use strict';var tools=require('modules/tools'),js_request=require('theme-cache-request');exports.config={lang:{M00001:'Loading, please wait...',E00001:'Error, please try again later.'},process_url:''}
+define(function(require,exports){'use strict';var tools=require('modules/tools'),js_request=require('theme-cache-request');exports.config={lang:{M00001:'Loading, please wait...',E00001:'Error, please try again later.'},process_url:''}
 exports.init=function(){tools.ready(function(){exports.import();exports.export();});}
 var cache={},config=exports.config,I=function(e){return document.getElementById(e);};exports.import=function(){cache.$file=I('theme_import_settings-file');cache.$tip=I('theme_import_settings-tip');if(!cache.$file)
 return false;cache.$file.addEventListener('change',select,false);cache.$file.addEventListener('drop',select,false);function select(e){e.stopPropagation();e.preventDefault();cache.files=e.target.files.length?e.target.files:e.originalEvent.dataTransfer.files;cache.file_count=cache.files.length;cache.file=cache.files[0];cache.file_index=0;file_upload(cache.files[0]);}

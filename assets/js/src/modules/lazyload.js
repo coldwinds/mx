@@ -1,4 +1,4 @@
-define(function(require, exports, module){
+define(function(require, exports){
 /*!
  * Lazy Load Images without jQuery
  * http://kaizau.github.com/Lazy-Load-Images-without-jQuery/

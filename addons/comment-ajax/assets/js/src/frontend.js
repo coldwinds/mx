@@ -3,7 +3,7 @@
  *
  * @version 3.0.0
  */
-define(function(require, exports, module){
+define('theme_comment_ajax', function(require, exports){
 	'use strict';
 
 	var js_request 	= require('theme-cache-request'),

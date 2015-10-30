@@ -1,5 +1,5 @@
 
-define(function(require,exports,module){'use strict';var tools=require('modules/tools'),js_request=require('theme-cache-request')
+define(function(require,exports){'use strict';var tools=require('modules/tools'),js_request=require('theme-cache-request')
 exports.config={process_url:'',lang:{M01:'Loading, please wait...',E01:'Sorry, server is busy now, can not respond your request, please try again later.'}};var cache={},config=exports.config;exports.init=function(){tools.ready(function(){exports.bind();});}
 exports.bind=function(){cache.$hgihlight_point=I('modify-count');cache.$point_count=I('point-count');cache.$fm=I('fm-lottery');if(!cache.$fm)
 return false;exports.submit();}

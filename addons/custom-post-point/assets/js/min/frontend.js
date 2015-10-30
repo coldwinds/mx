@@ -1,5 +1,5 @@
 
-define(function(require,exports,module){'use strict';var js_request=require('theme-cache-request'),tools=require('modules/tools'),doc=document;exports.config={process_url:'',lang:{M01:'Loading, please wait...',E01:'Sorry, server is busy now, can not respond your request, please try again later.'}}
+define(function(require,exports){'use strict';var js_request=require('theme-cache-request'),tools=require('modules/tools'),doc=document;exports.config={process_url:'',lang:{M01:'Loading, please wait...',E01:'Sorry, server is busy now, can not respond your request, please try again later.'}}
 exports.init=function(){tools.ready(exports.bind);}
 var config=exports.config,caches={};exports.bind=function(){caches.$btns=doc.querySelectorAll('.post-point-btn');if(!caches.$btns[0])
 return false;for(var i=0,len=caches.$btns.length;i<len;i++){caches.$btns[i].addEventListener('click',event_click);}}

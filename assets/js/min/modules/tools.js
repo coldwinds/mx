@@ -1,5 +1,5 @@
 
-define(function(require,exports,module){'use strict';var js_request=require('theme-cache-request'),cache={};exports.click_handler=('touchend'in document.documentElement?'touchend':'click');exports.scroll_callback=function(fnc){var last_y=window.pageYOffset,ticking=false;function on_scroll(){last_y=window.pageYOffset;request_ticking();}
+define(function(require,exports){'use strict';var js_request=require('theme-cache-request'),cache={};exports.click_handler=('touchend'in document.documentElement?'touchend':'click');exports.scroll_callback=function(fnc){var last_y=window.pageYOffset,ticking=false;function on_scroll(){last_y=window.pageYOffset;request_ticking();}
 function request_ticking(){if(!ticking){requestAnimationFrame(update);ticking=true;}}
 function update(){fnc(last_y);ticking=false;}
 window.addEventListener('scroll',on_scroll);};exports.getElementLeft=function(e){var l=e.offsetLeft,c=e.offsetParent;while(c!==null){l+=c.offsetLeft;c=c.offsetParent;}

@@ -1,5 +1,5 @@
 
-define(function(require,exports,module){'use strict';var tools=require('modules/tools');exports.config={key:'full-width-mode',lang:{M01:'Full width mode'}};exports.init=function(){tools.ready(exports.bind);}
+define(function(require,exports){'use strict';var tools=require('modules/tools');exports.config={key:'full-width-mode',lang:{M01:'Full width mode'}};exports.init=function(){tools.ready(exports.bind);}
 var cache={},config=exports.config;exports.bind=function(){if(!create_btn())
 return false;cache.$main=I('main');cache.$side=I('sidebar-container');cache.$btn.addEventListener(tools.click_handler,event_click);if(localStorage.getItem(config.key)==1){expand();}}
 function reset_media(){if(window.jQuery){jQuery(window).resize();}

@@ -1,4 +1,4 @@
-define(function(require, exports, module){
+define(function(require, exports){
 	'use strict';
 
 	var js_request 	= require('theme-cache-request'),

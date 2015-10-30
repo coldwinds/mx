@@ -1,5 +1,5 @@
 /* js action filter */
-define(function(require, exports, module){
+define(function(require, exports){
 
 	module.exports = (function(ns){
 	
