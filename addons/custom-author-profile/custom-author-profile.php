@@ -1,13 +1,8 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_author_profile::init';
-	return $fns;
-});
 class theme_custom_author_profile{
-	public static $iden = 'theme_custom_author_profile';
 	public static $cache_expire = 3600*12;
 
 	public static $user_meta_key = array(
@@ -155,4 +150,7 @@ class theme_custom_author_profile{
 	}
 
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_author_profile::init';
+	return $fns;
+});

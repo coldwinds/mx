@@ -19,7 +19,8 @@ class theme_api{
 		
 		$type = isset($_REQUEST['type']) && is_string($_REQUEST['type']) ? $_REQUEST['type'] : null;
 
-		
+		/** hook theme_api */
+		do_action(__CLASS__, $type);
 
 		switch($type){
 			/**

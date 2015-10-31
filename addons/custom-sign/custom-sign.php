@@ -35,12 +35,74 @@ class theme_custom_sign{
 		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
 
 		add_filter('cache_request',			__CLASS__ . '::cache_request');
+
+		/**
+		 * api
+		 */
+		add_action('theme_api',	__CLASS__ . '::process_theme_api');
 		
 		/**
 		 * backend
 		 */
 		add_action('page_settings' , __CLASS__ . '::display_backend');
 		add_filter('theme_options_save' , __CLASS__ . '::options_save');
+	}
+	public static function process_theme_api($type){
+		
+		$type = isset($_REQUEST['type']) && is_string($_REQUEST['type']) ? $_REQUEST['type'] : false;
+		switch($type){
+			case 'login':
+				/** if logged */
+				if(theme_cache::is_user_logged_in()){
+					die(theme_features::json_format([
+						'status' => 'error',
+						'code' => 'logged',
+						'msg' => ___('Sorry, you logged.'),
+					]));
+				}
+				/** email */
+				$email = isset($_REQUEST['user_email']) ? filter_var($_REQUEST['user_email'],FILTER_VALIDATE_EMAIL) : false;
+				if(!$email){
+					die(theme_features::json_format([
+						'status' => 'error',
+						'code' => 'invaild_email',
+						'msg' => ___('Sorry, the email is invaild, please try again.'),
+					]));
+				}
+				/** check password */
+				$pwd = isset($_REQUEST['user_pwd']) && is_string($_REQUEST['user_pwd']) ? $_REQUEST['user_pwd'] : false;
+				if(!$pwd){
+					die(theme_features::json_format([
+						'status' => 'error',
+						'code' => 'invaild_pwd',
+						'msg' => ___('Sorry, the password is invaild, please try again.'),
+					]));
+				}
+
+				$user = self::user_login(array(
+					'email' => $email,
+					'pwd' => $pwd,
+					'remember' => isset($user['remember']) ? true : false,
+				));
+				if($user['status'] === 'success'){
+					$output = [
+						'status' => 'success',
+						'msg' => ___('Login successfully'),
+						'user' => [
+							'avatar_url' => theme_cache::get_avatar_url($user['user-id']),
+							'display_name' => theme_cache::get_the_author_meta('display_name',$user['user-id']),
+						],
+					];
+					/** filter theme_api */
+					$output['user'] = apply_filter('theme_api_' . __CLASS__ . '_after_login_user_data',$output['user'],$user->ID);
+					
+					die(theme_features::json_format($output));
+					
+				}else{
+					die(theme_features::json_format($user));
+				}
+				break;
+		}
 	}
 	public static function options_save(array $options = []){
 		if(isset($_POST[__CLASS__])){
@@ -276,6 +338,7 @@ class theme_custom_sign{
 				$output['code'] = 'email_pwd_not_match';
 				$output['msg'] = ___('Sorry, your email and password do not match, please try again.');
 			}else{
+				$output['user-id'] = $user->ID;
 				$output['status'] = 'success';
 			}
 		}

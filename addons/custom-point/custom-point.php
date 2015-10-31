@@ -42,6 +42,9 @@ class theme_custom_point{
 		/** ajax */
 		add_action('wp_ajax_' . __CLASS__,__CLASS__ . '::process');
 
+
+		add_filter('theme_api_theme_custom_sign_after_login', __CLASS__ . '::filter_theme_api_theme_custom_sign_after_login',10,2);
+
 		add_action('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
 		add_action('after_backend_tab_init',__CLASS__ . '::backend_seajs_use');
 
@@ -374,6 +377,10 @@ class theme_custom_point{
 			}
 		}
 		return $opts;
+	}
+	public static function filter_theme_api_theme_custom_sign_after_login(array $user = [],$user_id){
+		$user['points'] = self::get_point($user_id);
+		return $user;
 	}
 	/**
 	 * get point name

@@ -64,6 +64,7 @@ f.wp-editor-container{
 		margin-bottom: 10px;
 	}
 	#ctb-file-progress{
+		background: #2495d5;
 		position: absolute;
 		left: 0;
 		top: 0;
@@ -199,7 +200,9 @@ f.wp-editor-container{
 		background: #4cae4c;
 		color: #fff;
 	}
-
+#fm-ctb .img-link img{
+	width: 100%;
+}
 /**
  * #custom-tag
  */

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MX\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-30 09:41+0800\n"
-"PO-Revision-Date: 2015-10-30 09:41+0800\n"
+"POT-Creation-Date: 2015-10-31 08:19+0800\n"
+"PO-Revision-Date: 2015-10-31 08:20+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -109,7 +109,7 @@ msgstr "我的提醒"
 
 #: addons/account-notification/account-notification.php:251
 #: addons/account-notification/account-notification.php:252
-#: addons/custom-point/custom-point.php:763
+#: addons/custom-point/custom-point.php:770
 msgid "Special event"
 msgstr "特别事件"
 
@@ -250,7 +250,7 @@ msgstr "点击之前保存设置。"
 #: addons/custom-page-tags/custom-page-tags.php:70
 #: addons/custom-pm/custom-pm.php:159
 #: addons/custom-point-lottery/custom-point-lottery.php:234
-#: addons/custom-point/custom-point.php:140
+#: addons/custom-point/custom-point.php:143
 #: addons/custom-post-storage/custom-post-storage.php:68
 #: addons/custom-slidebox/custom-slidebox.php:282
 #: addons/file-timestamp/file-timestamp.php:58
@@ -370,9 +370,9 @@ msgstr "数据库已在 %s 秒内更新。"
 #: addons/custom-follow/custom-follow.php:140
 #: addons/custom-page-cats/custom-page-cats.php:203
 #: addons/custom-page-tags/custom-page-tags.php:310
-#: addons/custom-pm/custom-pm.php:834 addons/custom-point/custom-point.php:1044
+#: addons/custom-pm/custom-pm.php:834 addons/custom-point/custom-point.php:1051
 #: addons/custom-post-point/custom-post-point.php:855
-#: addons/custom-sign/custom-sign.php:628
+#: addons/custom-sign/custom-sign.php:691
 #: addons/custom-slidebox/custom-slidebox.php:562
 #: addons/custom-user-settings/custom-user-settings.php:478
 #: addons/custom-user-settings/custom-user-settings.php:489
@@ -382,7 +382,7 @@ msgstr "数据库已在 %s 秒内更新。"
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
 
-#: addons/clean-up/clean-up.php:227 addons/custom-point/custom-point.php:1045
+#: addons/clean-up/clean-up.php:227 addons/custom-point/custom-point.php:1052
 #: addons/custom-slidebox/custom-slidebox.php:563 addons/mailer/mailer.php:217
 msgid "Server error or network is disconnected."
 msgstr "服务器错误或网络未连接。"
@@ -477,7 +477,7 @@ msgstr "第 {n} 页"
 #: addons/custom-point-lottery/custom-point-lottery.php:750
 #: addons/custom-point-lottery/custom-point-lottery.php:772
 #: addons/custom-post-point/custom-post-point.php:856
-#: addons/custom-sign/custom-sign.php:629
+#: addons/custom-sign/custom-sign.php:692
 #: addons/custom-user-settings/custom-user-settings.php:479
 #: addons/custom-user-settings/custom-user-settings.php:490
 #: addons/page-nagination-ajax/page-nagination-ajax.php:103
@@ -524,19 +524,19 @@ msgstr "表情"
 msgid "Account"
 msgstr "会员帐号"
 
-#: addons/custom-api/custom-api.php:123
+#: addons/custom-api/custom-api.php:124
 msgid "Sorry, no content found."
 msgstr "抱歉，没有内容发现。"
 
-#: addons/custom-api/custom-api.php:142
+#: addons/custom-api/custom-api.php:143
 msgid "Sorry, post ID is invaild."
 msgstr "抱歉，文章 ID 编号无效。"
 
-#: addons/custom-api/custom-api.php:161
+#: addons/custom-api/custom-api.php:162
 msgid "Sorry, the post do not exist."
 msgstr "抱歉，文章不存在。"
 
-#: addons/custom-api/custom-api.php:176
+#: addons/custom-api/custom-api.php:177
 #: addons/custom-user-settings/custom-user-settings.php:328
 msgid "Sorry, the type param is invaild."
 msgstr "抱歉，缺少类型参数。"
@@ -551,37 +551,37 @@ msgstr "已是最后一页"
 msgid "Next page"
 msgstr "下一页"
 
-#: addons/custom-author-profile/custom-author-profile.php:72
-#: addons/custom-author-profile/custom-author-profile.php:76
+#: addons/custom-author-profile/custom-author-profile.php:67
+#: addons/custom-author-profile/custom-author-profile.php:71
 #: tpl/page-account-post.php:491 tpl/page-account-post.php:492
 msgid "Author"
 msgstr "作者"
 
-#: addons/custom-author-profile/custom-author-profile.php:80
+#: addons/custom-author-profile/custom-author-profile.php:75
 msgid "Certification Author"
 msgstr "认证作者"
 
-#: addons/custom-author-profile/custom-author-profile.php:84
-#: addons/custom-author-profile/custom-author-profile.php:88
+#: addons/custom-author-profile/custom-author-profile.php:79
+#: addons/custom-author-profile/custom-author-profile.php:83
 msgid "Editor"
 msgstr "编辑"
 
-#: addons/custom-author-profile/custom-author-profile.php:112
+#: addons/custom-author-profile/custom-author-profile.php:107
 msgid "Profile"
 msgstr "资料"
 
-#: addons/custom-author-profile/custom-author-profile.php:117
+#: addons/custom-author-profile/custom-author-profile.php:112
 #: tpl/author-profile.php:66
 msgid "Works"
 msgstr "作品"
 
-#: addons/custom-author-profile/custom-author-profile.php:123 comments.php:12
+#: addons/custom-author-profile/custom-author-profile.php:118 comments.php:12
 #: functions.php:385 functions.php:389 functions.php:529 functions.php:1548
 #: tpl/author-profile.php:75
 msgid "Comments"
 msgstr "评论"
 
-#: addons/custom-author-profile/custom-author-profile.php:144
+#: addons/custom-author-profile/custom-author-profile.php:139
 msgid "Rates"
 msgstr "评分集"
 
@@ -1695,7 +1695,7 @@ msgid "Check redeem code"
 msgstr "检查兑换码"
 
 #: addons/custom-point-lottery/custom-point-lottery.php:248
-#: addons/custom-point/custom-point.php:120
+#: addons/custom-point/custom-point.php:123
 msgid "User ID"
 msgstr "用户 ID"
 
@@ -1851,192 +1851,192 @@ msgstr "封面图"
 msgid "Per hundred views"
 msgstr "每百查看数"
 
-#: addons/custom-point/custom-point.php:67
+#: addons/custom-point/custom-point.php:70
 msgid "User point settings"
 msgstr "用户积分设置"
 
-#: addons/custom-point/custom-point.php:68
+#: addons/custom-point/custom-point.php:71
 msgid "About user point settings."
 msgstr "关于用户积分设置。"
 
-#: addons/custom-point/custom-point.php:72
+#: addons/custom-point/custom-point.php:75
 msgid "Point name"
 msgstr "积分名称"
 
-#: addons/custom-point/custom-point.php:96
+#: addons/custom-point/custom-point.php:99
 msgid "Description on point history page"
 msgstr "关于历史积分记录的描述"
 
-#: addons/custom-point/custom-point.php:103
+#: addons/custom-point/custom-point.php:106
 msgid "Point image url"
 msgstr "积分图像 URL"
 
-#: addons/custom-point/custom-point.php:116
+#: addons/custom-point/custom-point.php:119
 msgid "Add/Reduce point for user - special event"
 msgstr "增加/削减用户积分 - 特别事件"
 
-#: addons/custom-point/custom-point.php:127
+#: addons/custom-point/custom-point.php:130
 msgid "How many point to add/reduce"
 msgstr "增/减用户多少积分"
 
-#: addons/custom-point/custom-point.php:134
+#: addons/custom-point/custom-point.php:137
 msgid "Event description"
 msgstr "事件描述"
 
-#: addons/custom-point/custom-point.php:144
+#: addons/custom-point/custom-point.php:147
 msgid "Add/Reduce"
 msgstr "增加/削减"
 
-#: addons/custom-point/custom-point.php:154
+#: addons/custom-point/custom-point.php:157
 msgid "Restore point options"
 msgstr "还原至积分默认选项"
 
-#: addons/custom-point/custom-point.php:155
+#: addons/custom-point/custom-point.php:158
 msgid "You can restore the point options when you want."
 msgstr "当你想要的时候，您可以恢复至积分默认选项。"
 
-#: addons/custom-point/custom-point.php:159
-#: addons/custom-point/custom-point.php:163
+#: addons/custom-point/custom-point.php:162
+#: addons/custom-point/custom-point.php:166
 #: addons/post-copyright/post-copyright.php:54
 #: addons/post-share/post-share.php:99
 msgid "Restore"
 msgstr "还原"
 
-#: addons/custom-point/custom-point.php:165
+#: addons/custom-point/custom-point.php:168
 msgid "Check the box and save all settings to restore point options."
 msgstr "选中的复选框并保存所有的设置恢复至默认积分选项。"
 
-#: addons/custom-point/custom-point.php:204
+#: addons/custom-point/custom-point.php:207
 msgid "Invaild user id."
 msgstr "无效的用户 ID。"
 
-#: addons/custom-point/custom-point.php:211
+#: addons/custom-point/custom-point.php:214
 msgid "User does not exist."
 msgstr "用户不存在。"
 
-#: addons/custom-point/custom-point.php:216
+#: addons/custom-point/custom-point.php:219
 #, php-format
 msgid "The user has %d points now."
 msgstr "该用户当前积分为 %d。"
 
-#: addons/custom-point/custom-point.php:225
+#: addons/custom-point/custom-point.php:228
 msgid "Your are not enough permission to modify user."
 msgstr "你有没有足够的权限来修改用户。"
 
-#: addons/custom-point/custom-point.php:232
+#: addons/custom-point/custom-point.php:235
 #: addons/custom-user-settings/custom-user-settings.php:137
 msgid "Invaild param."
 msgstr "无效的参数。"
 
-#: addons/custom-point/custom-point.php:237
+#: addons/custom-point/custom-point.php:240
 msgid "Invaild user ID."
 msgstr "无效的用户 ID。"
 
-#: addons/custom-point/custom-point.php:241
+#: addons/custom-point/custom-point.php:244
 msgid "Invaild point."
 msgstr "无效的积分。"
 
-#: addons/custom-point/custom-point.php:245
+#: addons/custom-point/custom-point.php:248
 msgid "Invaild event."
 msgstr "无效的事件。"
 
-#: addons/custom-point/custom-point.php:264
+#: addons/custom-point/custom-point.php:267
 msgid "Fuck you man, the user is not exist"
 msgstr "用户不存在。"
 
-#: addons/custom-point/custom-point.php:275
+#: addons/custom-point/custom-point.php:278
 #, php-format
 msgid "The user %s(%d) point has set to %s."
 msgstr "用户 %s（%d）积分已设置为 %s。"
 
-#: addons/custom-point/custom-point.php:298
+#: addons/custom-point/custom-point.php:301
 msgid "When sign-up"
 msgstr "当注册时"
 
-#: addons/custom-point/custom-point.php:302
+#: addons/custom-point/custom-point.php:305
 msgid "When sign-in daily"
 msgstr "当每天登录时"
 
-#: addons/custom-point/custom-point.php:306
+#: addons/custom-point/custom-point.php:309
 msgid "When publish comment"
 msgstr "当发表评论时"
 
-#: addons/custom-point/custom-point.php:310
+#: addons/custom-point/custom-point.php:313
 msgid "When delete comment"
 msgstr "当删除评论时"
 
-#: addons/custom-point/custom-point.php:314
+#: addons/custom-point/custom-point.php:317
 msgid "When publish post"
 msgstr "当发表文章时"
 
-#: addons/custom-point/custom-point.php:318
+#: addons/custom-point/custom-point.php:321
 msgid "When reply post"
 msgstr "当文章被回复时"
 
-#: addons/custom-point/custom-point.php:322
+#: addons/custom-point/custom-point.php:325
 msgid "When delete post"
 msgstr "当文章被删除时"
 
-#: addons/custom-point/custom-point.php:326
+#: addons/custom-point/custom-point.php:329
 msgid "When aff sign-up"
 msgstr "当推广注册时"
 
-#: addons/custom-point/custom-point.php:339
-#: addons/custom-point/custom-point.php:382
+#: addons/custom-point/custom-point.php:342
+#: addons/custom-point/custom-point.php:389
 msgid "Cat-paw"
 msgstr "喵爪"
 
-#: addons/custom-point/custom-point.php:340
+#: addons/custom-point/custom-point.php:343
 msgid "Point can exchange many things."
 msgstr "积分能换许多东西哦。"
 
-#: addons/custom-point/custom-point.php:484
+#: addons/custom-point/custom-point.php:491
 #, php-format
 msgid "One special event happened: %s"
 msgstr "一个特别事件发生了：%s"
 
-#: addons/custom-point/custom-point.php:500
+#: addons/custom-point/custom-point.php:507
 #, php-format
 msgid "Your post \"%s\" has been deleted."
 msgstr "你的文章 \"%s\" 已被删除。"
 
-#: addons/custom-point/custom-point.php:517
+#: addons/custom-point/custom-point.php:524
 #, php-format
 msgid "You registered %s."
 msgstr "你注册了 %s。"
 
-#: addons/custom-point/custom-point.php:536
-#: addons/custom-point/custom-point.php:585
+#: addons/custom-point/custom-point.php:543
+#: addons/custom-point/custom-point.php:592
 msgid "The comment has been deleted."
 msgstr "该评论已被删除。"
 
-#: addons/custom-point/custom-point.php:538
+#: addons/custom-point/custom-point.php:545
 #, php-format
 msgid "You published a comment in %1$s."
 msgstr "你在 %1$s 中发表了一篇评论。"
 
-#: addons/custom-point/custom-point.php:562
-#: addons/custom-point/custom-point.php:589
+#: addons/custom-point/custom-point.php:569
+#: addons/custom-point/custom-point.php:596
 #: addons/custom-post-point/custom-post-point.php:491
 #: addons/custom-post-point/custom-post-point.php:519
 msgid "The post has been deleted."
 msgstr "该文章被删除。"
 
-#: addons/custom-point/custom-point.php:564
+#: addons/custom-point/custom-point.php:571
 #, php-format
 msgid "You published a post %s."
 msgstr "您发布了一篇文章 %s。"
 
-#: addons/custom-point/custom-point.php:591
+#: addons/custom-point/custom-point.php:598
 #, php-format
 msgid "Your post %1$s has a new comment by %2$s."
 msgstr "%2$s 评论了您的文章 %1$s。"
 
-#: addons/custom-point/custom-point.php:615
+#: addons/custom-point/custom-point.php:622
 msgid "Log-in daily reward."
 msgstr "每天登录奖励。"
 
-#: addons/custom-point/custom-point.php:666
+#: addons/custom-point/custom-point.php:673
 #, php-format
 msgid "Sign-in daily points: +%s"
 msgstr "当每天登录奖励：+%s"
@@ -2425,113 +2425,129 @@ msgstr "立即下载"
 msgid "Download"
 msgstr "下载"
 
+#: addons/custom-sign/custom-sign.php:60
+msgid "Sorry, you logged."
+msgstr "抱歉，您已经登录了。"
+
 #: addons/custom-sign/custom-sign.php:69
+msgid "Sorry, the email is invaild, please try again."
+msgstr "抱歉，邮箱无效，请重试。"
+
+#: addons/custom-sign/custom-sign.php:78
+msgid "Sorry, the password is invaild, please try again."
+msgstr "抱歉，密码无效，请再试一次。"
+
+#: addons/custom-sign/custom-sign.php:90
+msgid "Login successfully"
+msgstr "登录成功"
+
+#: addons/custom-sign/custom-sign.php:131
 msgid "Custom sign settings"
 msgstr "自定义登录设置"
 
-#: addons/custom-sign/custom-sign.php:70
+#: addons/custom-sign/custom-sign.php:132
 msgid "You can custom the sign page here."
 msgstr "您可以在这里定制登录页面。"
 
-#: addons/custom-sign/custom-sign.php:75
+#: addons/custom-sign/custom-sign.php:137
 msgid "Sign-in avatar URL"
 msgstr "登录的头像图片 URL"
 
-#: addons/custom-sign/custom-sign.php:82
+#: addons/custom-sign/custom-sign.php:144
 msgid "Recommend 100x100 px image."
 msgstr "建议 100x100 象素的图片。"
 
-#: addons/custom-sign/custom-sign.php:86
+#: addons/custom-sign/custom-sign.php:148
 msgid "Terms of service page URL"
 msgstr "服务协议页面 URL"
 
-#: addons/custom-sign/custom-sign.php:163 page-sign.php:271
+#: addons/custom-sign/custom-sign.php:225 page-sign.php:271
 msgid "Login"
 msgstr "登录"
 
-#: addons/custom-sign/custom-sign.php:170
+#: addons/custom-sign/custom-sign.php:232
 msgid "Register"
 msgstr "注册"
 
-#: addons/custom-sign/custom-sign.php:177 page-sign.php:153 page-sign.php:198
+#: addons/custom-sign/custom-sign.php:239 page-sign.php:153 page-sign.php:198
 msgid "Recover password"
 msgstr "找回密码"
 
-#: addons/custom-sign/custom-sign.php:184
+#: addons/custom-sign/custom-sign.php:246
 msgid "Reset password"
 msgstr "重设密码"
 
-#: addons/custom-sign/custom-sign.php:217
+#: addons/custom-sign/custom-sign.php:279
 msgid "Sign"
 msgstr "登录"
 
-#: addons/custom-sign/custom-sign.php:262
-#: addons/custom-sign/custom-sign.php:298
+#: addons/custom-sign/custom-sign.php:324
+#: addons/custom-sign/custom-sign.php:361
 msgid "Sorry, password is invalid, please try again."
 msgstr "抱歉，密码无效，请重试。"
 
-#: addons/custom-sign/custom-sign.php:266
-#: addons/custom-sign/custom-sign.php:302
+#: addons/custom-sign/custom-sign.php:328
+#: addons/custom-sign/custom-sign.php:365
 msgid "Sorry, email is invalid, please try again."
 msgstr "抱歉，邮箱无效，请重试。"
 
-#: addons/custom-sign/custom-sign.php:277
+#: addons/custom-sign/custom-sign.php:339
 msgid "Sorry, your email and password do not match, please try again."
 msgstr "抱歉，您的邮箱和密码不匹配，请重试。"
 
-#: addons/custom-sign/custom-sign.php:307
+#: addons/custom-sign/custom-sign.php:370
 msgid "Sorry, nickname is invalid, please try again."
 msgstr "抱歉，昵称无效，请输入另一个后重试。"
 
-#: addons/custom-sign/custom-sign.php:314
+#: addons/custom-sign/custom-sign.php:377
 msgid "Sorry, email already exists, please change another one and try again."
 msgstr "抱歉，邮箱已经存在，请输入另一个再尝试。"
 
-#: addons/custom-sign/custom-sign.php:370
+#: addons/custom-sign/custom-sign.php:433
 msgid "Login successfully, page is refreshing, please wait..."
 msgstr "登录成功，页面正在刷新，请稍候…"
 
-#: addons/custom-sign/custom-sign.php:386 page-sign.php:126
+#: addons/custom-sign/custom-sign.php:449 page-sign.php:126
 msgid "Sorry, it is not the time, the site is temporarily closed registration."
 msgstr "真抱歉，来的不是时候，目前网站暂时关闭了注册。"
 
-#: addons/custom-sign/custom-sign.php:397
+#: addons/custom-sign/custom-sign.php:460
 #, php-format
 msgid ""
 "Sorry, you nick name is invalid, at least %d characters in length, please "
 "try again."
 msgstr "抱歉，您的昵称长度太短，至少需要 %d 个字符，请重试。"
 
-#: addons/custom-sign/custom-sign.php:406
+#: addons/custom-sign/custom-sign.php:469
 #, php-format
 msgid ""
 "Sorry, you password is invalid, at least %d characters in length, please try "
 "again."
 msgstr "抱歉，您的密码无效，至少需要 %d 个字符，请重试。"
 
-#: addons/custom-sign/custom-sign.php:415
-#: addons/custom-sign/custom-sign.php:454
+#: addons/custom-sign/custom-sign.php:478
+#: addons/custom-sign/custom-sign.php:517
 msgid "Sorry, your email address is invalid, please check it and try again."
 msgstr "抱歉，您的邮箱地址不正确，请检查并再尝试。"
 
-#: addons/custom-sign/custom-sign.php:428
+#: addons/custom-sign/custom-sign.php:491
 msgid "Sorry, the nickname has been used, please change another one."
 msgstr "抱歉，该昵称已被使用，请更换另一个试试。"
 
-#: addons/custom-sign/custom-sign.php:443
+#: addons/custom-sign/custom-sign.php:506
 msgid "Register successfully, page is refreshing, please wait..."
 msgstr "注册成功，页面正在刷新，请稍候…"
 
-#: addons/custom-sign/custom-sign.php:464
+#: addons/custom-sign/custom-sign.php:527
 msgid "Sorry, the email does not exist."
 msgstr "抱歉，该邮箱不存在。"
 
-#: addons/custom-sign/custom-sign.php:482
+#: addons/custom-sign/custom-sign.php:545
 #, php-format
 msgid "Dear %s!"
 msgstr "亲爱的 %s！"
 
-#: addons/custom-sign/custom-sign.php:484
+#: addons/custom-sign/custom-sign.php:547
 #, php-format
 msgid ""
 "You are receiving this email because you forgot your password. We already "
@@ -2541,60 +2557,60 @@ msgstr ""
 "您接收到这封邮件是因为您忘记了密码。我们已为您创建了一个地址，您可以在 3 小时"
 "内，访问此链接地址（ %s ）登录并修改您的密码。"
 
-#: addons/custom-sign/custom-sign.php:486
+#: addons/custom-sign/custom-sign.php:549
 #, php-format
 msgid "-- From %s"
 msgstr "—— 来自 %s"
 
-#: addons/custom-sign/custom-sign.php:488
+#: addons/custom-sign/custom-sign.php:551
 msgid "You are applying to reset your password."
 msgstr "您正在申请重设密码。"
 
-#: addons/custom-sign/custom-sign.php:504
+#: addons/custom-sign/custom-sign.php:567
 msgid ""
 "Success, we sent an email that includes how to retrieve your password, "
 "please check it out in 3 hours."
 msgstr "成功，我们已发送了一封包括如何找回密码的邮件，请您在 3 小时内查收。"
 
-#: addons/custom-sign/custom-sign.php:509
+#: addons/custom-sign/custom-sign.php:572
 msgid "Error, server can not send email, please contact the administrator."
 msgstr "抱歉，服务器无法发送邮件，请联系管理员。"
 
-#: addons/custom-sign/custom-sign.php:519
+#: addons/custom-sign/custom-sign.php:582
 msgid "Sorry, the param is invalid."
 msgstr "对不起，参数无效。"
 
-#: addons/custom-sign/custom-sign.php:526
+#: addons/custom-sign/custom-sign.php:589
 msgid "Sorry, the token is invaild."
 msgstr "抱歉，令牌无效或已经过期。"
 
-#: addons/custom-sign/custom-sign.php:534
+#: addons/custom-sign/custom-sign.php:597
 msgid "Sorry, twice password is invaild, please try again."
 msgstr "抱歉，两次密码无效，请再试一次。"
 
-#: addons/custom-sign/custom-sign.php:543
+#: addons/custom-sign/custom-sign.php:606
 msgid "Sorry, the token is expired."
 msgstr "抱歉，令牌无效或已经过期"
 
-#: addons/custom-sign/custom-sign.php:553
+#: addons/custom-sign/custom-sign.php:616
 msgid "Sorry, the token email and you account email do not match."
 msgstr "抱歉，令牌的邮箱与帐号邮箱不匹配。"
 
-#: addons/custom-sign/custom-sign.php:562
+#: addons/custom-sign/custom-sign.php:625
 msgid "Sorry, your account email is not exist."
 msgstr "抱歉，您张帐号电子邮件不存在。"
 
-#: addons/custom-sign/custom-sign.php:569
+#: addons/custom-sign/custom-sign.php:632
 msgid "Sorry, the user do not apply recover yet."
 msgstr "抱歉，该用户未申请密码寻回。"
 
-#: addons/custom-sign/custom-sign.php:578
+#: addons/custom-sign/custom-sign.php:641
 msgid ""
 "Congratulation, your account has been recovered! Password has been updated. "
 "Redirecting home page, please wait..."
 msgstr "恭喜，您的帐号已成功寻回！密码已更新。正在跳转到首页，请稍候……"
 
-#: addons/custom-sign/custom-sign.php:584
+#: addons/custom-sign/custom-sign.php:647
 msgid "Invalid type."
 msgstr "抱歉，无效的类型。"
 
