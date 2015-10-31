@@ -33,6 +33,7 @@
 	}
 	.author{
 		margin: .5rem 0 0;
+		color: $title-color;
 		font-weight: normal;
 		font-size: 1rem;
 		@extend %text-overflow;

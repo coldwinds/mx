@@ -7,6 +7,7 @@
 	}
 }
 %h-title{
+	line-height: 2;
 	border-bottom: 1px solid $panel-border-color;
 }
 .entry-content{
@@ -175,9 +176,6 @@
 	cite{
 		font-style:italic;
 	}
-	blockquote cite{
-		font-style:normal;
-	}
 	blockquote,
 	pre{
 		background: $card-bg-color-hover;
@@ -187,9 +185,8 @@
 	}
 	blockquote{
 		border-left: 5px solid $panel-border-color;
-		background: none;
-		padding: 0 1rem;
-		font-style: italic;
+		background: $card-bg-color-hover;
+		padding: ($grid-g-gutter / 2) $grid-g-gutter;
 	}
 	pre {
 		border:1px solid $panel-border-color;

@@ -1094,6 +1094,9 @@ img {
     color: #959595; }
     .card .meta.author .tx {
       color: #4083a9; }
+      @media (max-width: 767px) {
+        .card .meta.author .tx {
+          max-width: none; } }
       .card .meta.author .tx:hover, .card .meta.author .tx.hover {
         color: #ff6fa2; }
 
@@ -1134,7 +1137,7 @@ img {
   top: -1.5rem;
   width: 3rem;
   height: 3rem;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   overflow: hidden; }
 .card.sm .card-meta {
   position: absolute;
@@ -1213,9 +1216,6 @@ img {
 .card.xs:hover .title, .card.xs.hover .title {
   color: #ff6fa2; }
 
-@media (max-width: 767px) {
-  .card .meta.author .tx {
-    max-width: none; } }
 .avatar {
   background-color: #fff;
   vertical-align: middle;
@@ -1687,6 +1687,7 @@ body.menu-on {
   margin-right: 1rem; }
 
 .content-reset h6, .content-reset h5, .content-reset h4, .content-reset h3, .content-reset h2, .content-reset h1 {
+  line-height: 2;
   border-bottom: 1px solid #eee; }
 
 .entry-content {
@@ -1823,8 +1824,6 @@ body.menu-on {
   max-width: 100%; }
 .content-reset cite {
   font-style: italic; }
-.content-reset blockquote cite {
-  font-style: normal; }
 .content-reset blockquote,
 .content-reset pre {
   background: #F8F8F8;
@@ -1833,9 +1832,8 @@ body.menu-on {
   margin: 1rem 0; }
 .content-reset blockquote {
   border-left: 5px solid #eee;
-  background: none;
-  padding: 0 1rem;
-  font-style: italic; }
+  background: #F8F8F8;
+  padding: 1rem 2rem; }
 .content-reset pre {
   border: 1px solid #eee;
   overflow: auto; }
@@ -2192,7 +2190,7 @@ body.menu-on {
       background: #ffa2c3;
       content: ''; }
     .mod > .heading a {
-      color: #959595; }
+      color: #535353; }
       .mod > .heading a:hover, .mod > .heading a.hover {
         color: #ff6fa2; }
     .mod > .heading .extra {
@@ -2272,7 +2270,12 @@ body.menu-on {
     margin: 0 1rem 1rem 0;
     width: auto; }
 
+.widget_comments .author {
+  font-weight: bold; }
 .widget_comments a {
+  color: #535353; }
+.widget_comments small {
+  margin-left: 1rem;
   color: #959595; }
 
 .widget_author_posts {
@@ -2376,9 +2379,11 @@ body.menu-on {
 
 .widget_hot_tags .hot-tag {
   display: inline-block;
-  padding: 0 .5rem; }
+  padding: 0 .5rem;
+  border-radius: 4px; }
   .widget_hot_tags .hot-tag:hover, .widget_hot_tags .hot-tag.hover {
-    text-decoration: underline; }
+    color: #fff !important;
+    background: #ff6fa2; }
 
 #homebox-nav {
   position: absolute;
@@ -2525,6 +2530,7 @@ body.menu-on {
     background: #ff6fa2; }
 .widget_point_rank .author {
   margin: .5rem 0 0;
+  color: #535353;
   font-weight: normal;
   font-size: 1rem;
   text-align: center; }

@@ -50,6 +50,9 @@
 		&.author{
 			.tx{
 				color: $link-color;
+				@include view-phone{
+					max-width: none;
+				}
 				&:hover,
 				&.hover{
 					color: $link-color-hover;
@@ -62,14 +65,3 @@
 @import "card-sm";
 @import "card-lg";
 @import "card-xs";
-@include view-phone{
-	.card{
-		.meta{
-			&.author{
-				.tx{
-					max-width: none;
-				}
-			}
-		}
-	}
-}
