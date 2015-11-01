@@ -4,6 +4,10 @@
 	}
 	.list-group-item{
 		position: relative;
+		&:hover,
+		&.hover{
+			background: $card-bg-color-hover;
+		}
 	}
 	img.thumbnail{
 		width: 100%;

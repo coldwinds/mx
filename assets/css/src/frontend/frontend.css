@@ -2980,6 +2980,8 @@ html .bdshare_popup_box {
     overflow: hidden; } }
 .panel-rank .list-group-item {
   position: relative; }
+  .panel-rank .list-group-item:hover, .panel-rank .list-group-item.hover {
+    background: #F8F8F8; }
 .panel-rank img.thumbnail {
   width: 100%; }
 .panel-rank .media-heading a {
