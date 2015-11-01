@@ -27,7 +27,7 @@ class widget_rank extends WP_Widget{
 		
 		$title = esc_html($instance['title']);
 		echo $args['before_title'];
-		if(count($instance['category__in']) === 1 && sset($instance['category__in'][0])){ ?>
+		if(count($instance['category__in']) === 1 && isset($instance['category__in'][0])){ ?>
 			<a class="link" href="<?= get_category_link($instance['category__in'][0]);?>" title="<?= sprintf(___('Views more about %s'),$title);?>">
 				<i class="fa fa-bar-chart"></i> 
 				<?= $title;?>

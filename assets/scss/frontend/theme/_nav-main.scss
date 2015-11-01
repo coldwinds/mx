@@ -125,6 +125,8 @@
 		@include transition-duration($nav-main-duration);
 		z-index: 10;
 		.sub-menu{
+			left: 100%;
+			top: 0;
 			@include transform-origin(left);
 			@include scale3d(0,1,1);
 		}

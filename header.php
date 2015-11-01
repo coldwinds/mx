@@ -69,13 +69,7 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 <div class="nav-main top">
 	<div class="g">
 		<?php if(wp_is_mobile()){ ?>
-			<a 
-				href="javascript:;" 
-				class="navicon toggle fa fa-navicon fa-fw" 
-				data-mobile-target=".menu-mobile" 
-				data-icon-active="fa-arrow-left" 
-				data-icon-original="fa-navicon"
-			></a>
+			<a href="javascript:;" class="navicon toggle fa fa-navicon fa-fw" data-mobile-target=".menu-mobile" data-icon-active="fa-arrow-left" data-icon-original="fa-navicon"></a>
 		<?php } ?>
 		<?php
 		/** 
@@ -213,9 +207,9 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 		<!-- search form -->
 		<form id="fm-search" action="<?= theme_cache::home_url();?>/" data-focus-target="#fm-search-s">
 			<input id="fm-search-s" name="s" class="form-control" placeholder="<?= ___('Please input search keyword');?>" value="<?= esc_attr(get_search_query())?>" type="search" required>
-	    </form>	
+	    </form>
 	</div><!--  /.g -->
-</div><!-- /.main-nav -->
+</div><!-- /.nav-main -->
 <div class="nav-main-placeholder"></div>
 
 <?php

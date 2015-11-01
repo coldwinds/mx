@@ -541,6 +541,7 @@ class theme_features{
 		/**
 		 * have not thumbnail, get first img from post content
 		 */
+		$post = theme_cache::get_post($post_id);
 		$caches[$cache_id] = get_img_source($post->post_content);
 		if($caches[$cache_id])
 			return $caches[$cache_id];

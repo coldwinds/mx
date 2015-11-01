@@ -761,8 +761,7 @@ a.media {
 .crumb {
   position: relative;
   color: #959595;
-  margin: 1rem 0;
-  font-size: 1.5rem; }
+  margin-bottom: 2rem; }
   .crumb .home .tx {
     display: none; }
   .crumb a {
@@ -1252,7 +1251,11 @@ img {
     padding: 0 0 0 1rem;
     font-size: 1rem;
     color: #535353;
-    margin-bottom: 1rem; }
+    margin: 0 0 1rem; }
+    .widget .widget-title a {
+      color: #535353; }
+    .widget .widget-title .more {
+      float: right; }
 
 .widget .list-group-item {
   position: relative; }
@@ -1389,6 +1392,8 @@ img {
     transition-duration: 0.5s;
     z-index: 10; }
     .nav-main .sub-menu .sub-menu {
+      left: 100%;
+      top: 0;
       -ms-transform-origin: left;
       -webkit-transform-origin: left;
       transform-origin: left;
