@@ -1,25 +1,79 @@
 <?php
 /**
- * @version 1.0.2
+ * @version 2.0.0
  */
 class theme_asset_enqueue{
 	public static function init(){
+		/** frontend */
+		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_enqueue_scripts', 999);
+		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_enqueue_css');
 		
-		add_action( 'wp_enqueue_scripts', __CLASS__  . '::seajs_enqueue_scripts' ,1);
-		add_action( 'wp_enqueue_scripts', __CLASS__  . '::frontend_enqueue_css' ,1);
+		/** admin */
+		add_action('admin_enqueue_scripts', __CLASS__ . '::backend_enqueue_scripts', 999);
+		add_action('admin_enqueue_scripts', __CLASS__ . '::backend_enqueue_css');
 	}
 	/**
-	 * JS
+	 * backend css
 	 */
-	public static function seajs_enqueue_scripts(){
-		$js = [
-			'frontend-seajs' => [
+	public static function backend_enqueue_css(){
+		if(!theme_options::is_options_page())
+			return;
+		$css = [
+			'backend' => [
+				'deps' => ['awesome'],
+				'url' =>  theme_features::get_theme_css('backend'),
+			],
+			'awesome' => [
 				'deps' => [],
-				'url' => theme_features::get_theme_js('seajs/sea'),
+				'url' => theme_features::get_theme_css('modules/awesome/4.4.0/css/font-awesome'),
 			],
 			
 		];
+
+		foreach($css as $k => $v){
+			wp_enqueue_style(
+				$k,
+				$v['url'],
+				isset($v['deps']) ? $v['deps'] : [],
+				self::get_version($v)
+			);
+		}
+	}
+	/**
+	 * backend js
+	 */
+	public static function backend_enqueue_scripts(){
+		if(!theme_options::is_options_page())
+			return;
+			
+		$js = [
+			'frontend' => [
+				'deps' => [],
+				'url' => theme_features::get_theme_js('backend-entry'),
+			],
+			
+		];
+		foreach($js as $k => $v){
+			wp_enqueue_script(
+				$k,
+				$v['url'],
+				isset($v['deps']) ? $v['deps'] : [],
+				self::get_version($v),
+				true
+			);
+		}
 		
+	}
+	/** frontend js */
+	public static function frontend_enqueue_scripts(){
+		$frontend_js = theme_cache::is_user_logged_in() ? 'frontend-logged' : 'frontend-entry';
+		$js = [
+			'frontend' => [
+				'deps' => [],
+				'url' => theme_features::get_theme_js($frontend_js),
+			],
+			
+		];
 		foreach($js as $k => $v){
 			wp_enqueue_script(
 				$k,
@@ -36,23 +90,24 @@ class theme_asset_enqueue{
 		return array_key_exists('version', $v) ? $v['version'] : theme_file_timestamp::get_timestamp();
 	}
 	/**
-	 * CSS
+	 * frontend css
 	 */
 	public static function frontend_enqueue_css(){
+		$frontend_css = theme_cache::is_user_logged_in() ? 'frontend-logged' : 'frontend';
 		$css = [
 			'frontend' => [
 				'deps' => ['awesome'],
-				'url' =>  theme_features::get_theme_css('frontend/frontend'),
-			],
-			'awesome' => [
-				'deps' => [],
-				'url' => 'http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css',
-				'version' => null,
+				'url' =>  theme_features::get_theme_css($frontend_css),
 			],
 			//'awesome' => [
 			//	'deps' => [],
-			//	'url' => theme_features::get_theme_css('modules/awesome/4.4.0/css/font-awesome'),
+			//	'url' => '//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css',
+			//	'version' => null,
 			//],
+			'awesome' => [
+				'deps' => [],
+				'url' => theme_features::get_theme_css('modules/awesome/4.4.0/css/font-awesome'),
+			],
 			
 		];
 

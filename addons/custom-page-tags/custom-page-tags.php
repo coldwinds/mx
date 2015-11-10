@@ -25,9 +25,7 @@ class theme_page_tags{
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
 
-		add_action('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
-
-		add_action('after_backend_tab_init',__CLASS__ . '::backend_seajs_use'); 
+		add_filter('backend_js_config', __CLASS__ . '::backend_js_config'); 
 	}
 	public static function get_options($key = null){
 		static $caches = null;
@@ -47,8 +45,8 @@ class theme_page_tags{
 		$opt = self::get_options();
 		?>
 		<fieldset>
-			<legend><?= ___('Tags index settings');?></legend>
-			<p class="description"><?= ___('Display posts chinese pinyin title index on tags index page.')?></p>
+			<legend><i class="fa fa-fw fa-tags"></i> <?= ___('Tags index settings');?></legend>
+			<p class="description"><?= ___('Display Chinese pinyin tag name index on tags index page.')?></p>
 			<table class="form-table">
 				<tbody>
 				<tr>
@@ -69,8 +67,7 @@ class theme_page_tags{
 				<tr>
 					<th><?= ___('Control');?></th>
 					<td>
-						<div id="<?= __CLASS__;?>-tip-clean-cache"></div>
-						<p><a href="javascript:;" class="button" id="<?= __CLASS__;?>-clean-cache" data-tip-target="<?= __CLASS__;?>-tip-clean-cache"><i class="fa fa-refresh"></i> <?= ___('Flush cache');?></a></p>
+						<a href="javascript:;" class="button" id="<?= __CLASS__;?>-clean-cache"><i class="fa fa-refresh"></i> <?= ___('Flush cache');?></a>
 					</td>
 				</tr>
 				</tbody>
@@ -296,21 +293,14 @@ class theme_page_tags{
 		<div class="page-tip"><?= status_tip('info',$msg);?></div>
 		<?php
 	}
-	public static function backend_seajs_alias(array $alias = []){
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__,'backend');
-		return $alias;
-	}
-	public static function backend_seajs_use(){
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array(
+	public static function backend_js_config(array $config){
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url([
 				'action'=>__CLASS__,
 				'type' => 'clean-cache',
-			));?>';
-			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-			m.init();
-		});
-		<?php
+			]),
+		];
+		return $config;
 	}
 	public static function is_page(){
 		static $cache = null;

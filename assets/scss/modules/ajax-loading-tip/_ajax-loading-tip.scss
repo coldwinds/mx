@@ -1,7 +1,8 @@
 %gutter{
-	padding: 1.5rem;
+	padding: 1rem;
 }
 #ajax-loading-container{
+	background: #fff;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -9,8 +10,8 @@
 	width: 100%;
 	text-align: center;
 	@extend %gutter;
-	font-size: 1.5rem;
-	box-shadow: 0 20px 50px rgba(0,0,0,.5);
+	font-size: 1rem;
+	box-shadow: 0 20px 50px rgba(0,0,0,.3);
 	
 	@include transform-origin(top);
 	@include transition-duration($transition-duration-fast);
@@ -21,27 +22,6 @@
 	}
 	&.show{
 		@include scale3d(1,1,1);
-	}
-	&.success,
-	&.green{
-		background: #defcd5;
-	}
-	&.error,
-	&.ban{
-		background: #f1d7d7;
-	}
-	&.warning{
-		background: #f6f3d5;
-	}
-	&.help,
-	&.blue,
-	&.info{
-		background: #e6f4f9;
-	}
-	&.question,
-	&.spinner,
-	&.loading{
-		background: #FBEC88;
 	}
 	.btn-close{
 		position: absolute;
@@ -83,7 +63,7 @@
 
 @media( min-width: 768px ){
 	#ajax-loading-container{
-		font-size: 2rem;
+		font-size: 1.2rem;
 	}
 	#ajax-loading{
 		margin: 0 40px;

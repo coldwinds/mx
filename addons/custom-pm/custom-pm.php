@@ -2,10 +2,6 @@
 /**
  * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_pm::init';
-	return $fns;
-});
 class theme_custom_pm{
 	public static $page_slug = 'account';
 	public static $metas = [];
@@ -28,26 +24,24 @@ class theme_custom_pm{
 			]);
 		}
 		
-		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
+		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
 		
 		add_filter('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 		
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
-		add_filter('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
 
-		add_filter('js_cache_request', __CLASS__ . '::js_cache_request');
-		add_filter('cache_request' , __CLASS__ . '::cache_request');
+		add_filter('dynamic_request', __CLASS__ . '::dynamic_request');
+		add_filter('dynamic_request_process', __CLASS__ . '::dynamic_request_process');
 		
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
-			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
+			add_filter('account_navs', __CLASS__ . "::$nav_fn",$v['filter_priority']);
 		}
 
-		add_action('base_settings', 		__CLASS__ . '::display_backend');
-		add_action('theme_options_save', 		__CLASS__ . '::options_save');
+		add_action('base_settings', __CLASS__ . '::display_backend');
+		add_action('theme_options_save', __CLASS__ . '::options_save');
 		
-		add_action('wp_footer'		,__CLASS__ . '::wp_footer');
+		add_action('wp_footer' ,__CLASS__ . '::wp_footer');
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 
@@ -151,7 +145,7 @@ class theme_custom_pm{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('Private message settings');?></legend>
+			<legend><i class="fa fa-fw fa-envelope-o"></i> <?= ___('P.M. settings');?></legend>
 			<p class="description"><?= ___('User can send private message to other user.');?></p>
 			<table class="form-table">
 				<tbody>
@@ -806,7 +800,7 @@ class theme_custom_pm{
 		<?php
 		}
 	}
-	public static function cache_request(array $alias = []){
+	public static function dynamic_request_process(array $alias = []){
 		if(isset($_GET[__CLASS__]) && $_GET[__CLASS__] == 1){
 			$alias[__CLASS__] = [
 				'timestamp' => self::get_timestamp(theme_cache::get_current_user_id())
@@ -814,53 +808,42 @@ class theme_custom_pm{
 		}
 		return $alias;
 	}
-	public static function js_cache_request(array $alias = []){
+	public static function dynamic_request(array $alias = []){
 		if(self::is_page()){
 			$alias[__CLASS__] = 1;
 		}
 		return $alias;
 	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(self::is_page()){
-			$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		}
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(!self::is_page()) 
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.lang.M01 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.M02 = '<?= ___('Enter to send P.M.');?>';
-			m.config.lang.M03 = '<?= ___('P.M. content');?>';
-			m.config.lang.M04 = '<?= ___('Send P.M.');?>';
-			m.config.lang.M05 = '<?= ___('Hello, I am %name%, welcome to chat with me what do you want.');?>';
-			m.config.lang.M06 = '<?= ___('P.M. is sending, please wait...');?>';
-			m.config.lang.M07 = '<?= ___('Me');?>';
-			m.config.lang.E01 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-	
-			m.config.process_url = '<?= theme_features::get_process_url([
+			return $config;
+
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url([
 				'action' => __CLASS__,
-			]);?>';
-			m.config.my_uid = <?= self::get_niceid(theme_cache::get_current_user_id());?>;
-			m.config.userdata.me = {
-				name : '<?= ___('Me');?>',
-				url : '<?= theme_cache::get_author_posts_url(theme_cache::get_current_user_id());?>'
-			};
-			m.init();
-		});
-		<?php
-	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
-			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
+			]),
+			'lang' => [
+				'M01' => ___('Loading, please wait...'),
+				'M02' => ___('Enter to send P.M.'),
+				'M03' => ___('P.M. content'),
+				'M04' => ___('Send P.M.'),
+				'M05' => ___('Hello, I am %name%, welcome to chat with me what do you want.'),
+				'M06' => ___('P.M. is sending, please wait...'),
+				'M07' => ___('Me'),
+				'E01' => ___('Sorry, server is busy now, can not respond your request, please try again later.'),
+			],
+			'my_uid' => self::get_niceid(theme_cache::get_current_user_id()),
+			'userdata' => [
+				'me' => [
+					'name' => ___('Me'),
+					'url' => theme_cache::get_author_posts_url(theme_cache::get_current_user_id())
+				],
+			],
+		];
+		return $config;
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_pm::init';
+	return $fns;
+});

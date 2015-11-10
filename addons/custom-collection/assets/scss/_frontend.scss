@@ -5,6 +5,11 @@
 		position: relative;
 		display: block;
 	}
+	.row > *{
+		float: left;
+		padding-left: $grid-gutter;
+		padding-right: $grid-gutter;
+	}
 	span{
 		display: block;
 	}

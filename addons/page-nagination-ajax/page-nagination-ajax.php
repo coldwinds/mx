@@ -1,15 +1,10 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 2.0.0
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_page_nagination_ajax::init';
-	return $fns;
-});
 class theme_page_nagination_ajax{
 	public static function init(){
-		add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
-		add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
+		add_filter('frontend_js_config',	__CLASS__ . '::frontend_js_config');
 		
 		add_action('wp_ajax_' . __CLASS__,	__CLASS__ . '::process');
 		add_action('wp_ajax_nopriv_' . __CLASS__,	__CLASS__ . '::process');
@@ -70,42 +65,35 @@ class theme_page_nagination_ajax{
 			'content' => $content,
 		]));
 	}
-	
-	public static function frontend_seajs_alias(array $alias = []){
-		if(self::is_enabled()){
-			$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		}
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(!self::is_enabled())
-			return false;
+			return $config;
 		global $post,$page,$numpages;
 			if($page < 1)
 				$page = 1;
 			if($page > $numpages)
 				$page = $numpages;
-			
-			?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url([
+
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url([
 				'action' => __CLASS__,
 				'post-id' => $post->ID,
-			]);?>';
-			m.config.post_id = <?= $post->ID;?>;
-			m.config.numpages = <?= $numpages;?>;
-			m.config.page = <?= $page;?>;
-			m.config.url_tpl = <?= json_encode(theme_features::get_link_page_url(9999));?>;
-			m.config.lang.M01 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.M02 = '<?= ___('Content loaded.');?>';
-			m.config.lang.M03 = '<?= ___('Already first page.');?>'
-			m.config.lang.M04 = '<?= ___('Already last page.');?>'
-			m.config.lang.E01 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-			m.init();
-		});
-		<?php
+			]),
+			'post_id' => $post->ID,
+			'numpages' => $numpages,
+			'page' => $page,
+			'url_tpl' => json_encode(theme_features::get_link_page_url(9999)),
+			'lang' => [
+				'M02' => ___('Content loaded.'),
+				'M03' => ___('Already first page.'),
+				'M04' => ___('Already last page.'),
+				'E01' => ___('Sorry, server is busy now, can not respond your request, please try again later.'),
+			],
+		];
+		return $config;
 	}
-
 }
-
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_page_nagination_ajax::init';
+	return $fns;
+});

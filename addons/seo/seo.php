@@ -5,10 +5,7 @@ Feature URI:	http://www.inn-studio.com
 Version:		1.4.5
 Description:	Improve the seo friendly
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_seo_plus::init';
-	return $fns;
-});
+
 class theme_seo_plus{
 	private static $keywords_split = ',';
 	public static function init(){
@@ -36,7 +33,7 @@ class theme_seo_plus{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('SEO settings');?></legend>
+			<legend><i class="fa fa-google fa-fw"></i> <?= ___('SEO settings');?></legend>
 			<p class="description"><?= sprintf(___('Fill in the appropriate keywords, can improve search engine friendliness. Use different key words in English comma (%s) to separate.'),self::$keywords_split);?></p>
 			<table class="form-table">
 				<tbody>
@@ -155,4 +152,7 @@ class theme_seo_plus{
 		}
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_seo_plus::init';
+	return $fns;
+});

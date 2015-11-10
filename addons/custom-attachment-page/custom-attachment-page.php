@@ -1,28 +1,18 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_attachment::init';
-	return $fns;
-});
 class theme_custom_attachment{
 
 	public static function init(){
 		add_filter('the_content', __CLASS__ . '::filter_the_content');
-		/**
-		 * frontend
-		 */
-		add_action('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
 	}
 	public static function filter_the_content($content){
 		if(!theme_cache::is_attachment())
 			return $content;
 			
 		global $post;
-		//var_dump($post);
-		//die;
+
 		$post_title = theme_cache::get_the_title($post->post_parent);
 		if(!wp_attachment_is_image($post->ID))
 			return $content;
@@ -92,21 +82,8 @@ class theme_custom_attachment{
 		ob_end_clean();
 		return $content;
 	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(!theme_cache::is_attachment())
-			return $alias;
-			
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
-		if(!theme_cache::is_attachment())
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.init();
-		});
-		<?php
-	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_attachment::init';
+	return $fns;
+});

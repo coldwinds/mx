@@ -53,7 +53,7 @@ class theme_custom_post_source{
 		ob_start();
 		?>
 <li><?= $reprint_prefix;?></li>
-<li><?= ___('Source: unkown, author: unkown');?></li>
+<li><?= ___('Source: unknow, author: unknow');?></li>
 <?php
 		$text_reprint = ob_get_contents();
 		ob_end_clean();
@@ -63,7 +63,7 @@ class theme_custom_post_source{
 		ob_start();
 		?>
 <li><?= $reprint_prefix;?></li>
-<li><?= sprintf(___('Source: %s, author: unkown'),'%source_author_name%');?></li>
+<li><?= sprintf(___('Source: %s, author: unknow'),'%source_author_name%');?></li>
 <?php
 		$text_reprint_author = ob_get_contents();
 		ob_end_clean();
@@ -210,7 +210,7 @@ class theme_custom_post_source{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('Post source settings');?></legend>
+			<legend><i class="fa fa-fw fa-truck"></i> <?= ___('Post source settings');?></legend>
 			<p class="description"><?= ___('The post source will display below the main content. Here are some keywords to use.');?></p>
 
 			
@@ -279,8 +279,8 @@ class theme_custom_post_source{
 	public static function keywords_convert($content){
 		global $post;
 		$meta = self::get_post_meta($post->ID);
-		$source_url = isset($meta['reprint']['url']) ? esc_url($meta['reprint']['url']) : ___('unkown');
-		$source_author_name = isset($meta['reprint']['author']) ? esc_html($meta['reprint']['author']) : ___('unkown');
+		$source_url = isset($meta['reprint']['url']) ? esc_url($meta['reprint']['url']) : ___('unknow');
+		$source_author_name = isset($meta['reprint']['author']) ? esc_html($meta['reprint']['author']) : ___('unknow');
 		 
 		return str_replace(
 			[

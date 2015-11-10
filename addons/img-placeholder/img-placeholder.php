@@ -2,12 +2,8 @@
 /**
  * img placeholder
  *
- * @version 2.2.2
+ * @version 2.2.3
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_img_placeholder::init';
-	return $fns;
-},5);
 class theme_img_placeholder{
 	public static function init(){
 		add_filter('theme_options_save', __CLASS__ . '::options_save');
@@ -47,7 +43,7 @@ class theme_img_placeholder{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('Default image placeholder settings');?></legend>
+			<legend><i class="fa fa-picture-o fa-fw"></i> <?= ___('Image placeholder settings');?></legend>
 			<p class="description"><?= ___('You can custom the image placeholder here.');?></p>
 			<table class="form-table">
 				<tr>
@@ -79,3 +75,7 @@ class theme_img_placeholder{
 		<?php
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_img_placeholder::init';
+	return $fns;
+},5);

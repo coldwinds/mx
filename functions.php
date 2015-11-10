@@ -67,10 +67,6 @@ class theme_functions{
 			'links-footer'			=> ___('Footer links'),
 		]);
 		/** 
-		 * frontend_seajs_use
-		 */
-		add_action('frontend_seajs_use',__CLASS__ . '::frontend_seajs_use',1);
-		/** 
 		 * other
 		 */
 		add_action('widgets_init',__CLASS__ . '::widget_init');
@@ -94,14 +90,6 @@ class theme_functions{
 			'default-attachment'	=> 'fixed',
 			'wp-head-callback'		=> 'theme_features::_fix_custom_background_cb',
 		]);
-	}
-	
-	public static function frontend_seajs_use(){
-		?>
-		seajs.use('frontend',function(m){
-			m.init();
-		});
-		<?php
 	}
 	/** 
 	 * widget_init
@@ -278,22 +266,14 @@ class theme_functions{
 		
 		$post_title =  theme_cache::get_the_title($post->ID);
 		?>
-		<li class="<?= $classes;?>">
+		<li class="<?= $args['classes'];?>">
 			<a href="<?= theme_cache::get_permalink($post->ID);?>" title="<?=$post_title;?>">
-				<?php
-				if(empty($meta_type)){
-					echo $post_title;
-				}else{
-					?>
-					<span class="tx"><?= $post_title;?></span>
-				<?php } ?>
+				<?= $post_title;?>
 			</a>
 		</li>
 		<?php
-		
 	}
 	
-
 	public static function widget_rank_tx_content($args){
 		self::archive_tx_content($args);
 	}
@@ -1859,7 +1839,7 @@ class theme_functions{
 						name="comment" 
 						id="comment-form-comment" 
 						class="form-control" 
-						rows="2" 
+						rows="3" 
 						placeholder="<?= ___('Hi, have something to say?');?>" 
 						title="<?= ___('Nothing to say?');?>" 
 						required 

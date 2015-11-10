@@ -9,9 +9,7 @@ add_filter('theme_addons',function($fns){
 class theme_full_width_mode{
 
 	public static function init(){
-		//add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
-		add_filter('frontend_seajs_alias' , __CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use' , __CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_js_config' , __CLASS__ . '::frontend_js_config');
 		add_action('page_settings', __CLASS__ . '::display_backend');
 		add_filter('theme_options_save', __CLASS__ . '::options_save');
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
@@ -46,7 +44,7 @@ class theme_full_width_mode{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('Full width mode setings');?></legend>
+			<legend><i class="fa fa-fw fa-angle-right"></i> <?= ___('Full width mode setings');?></legend>
 			<p class="description"><?= ___('In singular post page, you can enable the full-width-mode button if you want.');?></p>
 			<table class="form-table">
 			<tbody>
@@ -63,20 +61,15 @@ class theme_full_width_mode{
 		</fieldset>
 		<?php
 	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(theme_cache::is_singular('post') && self::is_enabled())
-			$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(!theme_cache::is_singular('post') || !self::is_enabled()) 
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.lang.M01 = '<?= ___('Full width mode');?>';
-			m.init();
-		});
-		<?php
+			return $config;
+		$config[__CLASS__] = [
+			'lang' => [
+				'M01' => ___('Full width mode'),
+			],
+		];
+		return $config;
 	}
 	public static function frontend_css(){
 		if(!theme_cache::is_singular('post') || !self::is_enabled()) 

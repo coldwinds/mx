@@ -2,20 +2,13 @@
 /**
  * @version 1.0.0
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_point_lottery::init';
-	return $fns;
-});
 class theme_point_lottery{
-
 	public static $page_slug = 'account';
 	public static $user_meta_key = [
 		'redeem' => 'lottery_redeems',
 	];
 	
 	public static function init(){
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
-		
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
@@ -27,14 +20,11 @@ class theme_point_lottery{
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
 		
-		add_filter('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+		add_filter('backend_js_config', __CLASS__ . '::backend_js_config');
 
 		add_action('page_settings' , __CLASS__ . '::display_backend');
 		
-		add_filter('after_backend_tab_init',__CLASS__ . '::after_backend_tab_init');
-		add_filter('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
-		add_action('backend_css', __CLASS__ . '::backend_css'); 
 		/**
 		 * list history
 		 */
@@ -194,7 +184,7 @@ class theme_point_lottery{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('Lottery settings');?></legend>
+			<legend><i class="fa fa-fw fa-yelp"></i> <?= ___('Lottery settings');?></legend>
 			<p class="description"><?= ___('You can add/edit lottery items, here are some keywords for replace.');?></p>
 			
 			<input type="text" class="text-select" value="%redeem%" title="<?= ___('Redeem code');?>" readonly > 
@@ -735,54 +725,29 @@ class theme_point_lottery{
 		</li>
 		<?php
 	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(self::is_page()){
-			$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		}
-		return $alias;
+	public static function backend_js_config(array $config){
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url([
+				'action' => __CLASS__
+			]),
+			'tpl' => self::get_box_tpl('%placeholder%'),
+		];
+		return $config;
 	}
-	public static function after_backend_tab_init(){
-		?>
-		seajs.use('<?= __CLASS__;?>',function(_m){
-			_m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
-			_m.config.tpl = <?= json_encode(self::get_box_tpl('%placeholder%'));?>;
-			_m.config.lang.M01 = '<?= ___('Results coming soon...');?>';
-			_m.config.lang.E01 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-			_m.init();
-		});
-		<?php
-	
-	}
-	public static function backend_seajs_alias(array $alias = []){
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__,'backend');
-		return $alias;
-	}
-	public static function backend_css(){
-		?>
-		<link href="<?= theme_features::get_theme_addons_css(__DIR__,'backend',true);?>" rel="stylesheet"  media="all"/>
-		<?php
-	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(!self::is_page()) 
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
-			m.config.lang.M01 = '<?= ___('Results coming soon...');?>';
-			m.config.lang.E01 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-			m.init();
-		});
-		<?php
-	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
+			return $config;
 			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url(array('action' => __CLASS__)),
+			'lang' => [
+				'M01' => ___('Results coming soon...'),
+			],
+		];
+		return $config;
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_point_lottery::init';
+	return $fns;
+});

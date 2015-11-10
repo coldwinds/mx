@@ -49,6 +49,7 @@ get_currentuserinfo();
 		?>
 <form id="fm-change-avatar" class="user-form form-horizontal" method="post" action="javascript:;">
 	<fieldset <?= $disabled;?>>
+		<legend class="label label-<?= $disabled ? 'default' : 'success';?>"><?= ___('Change my avatar');?></legend>
 	<!-- current avatar -->
 	<div class="form-group">
 		<div class="control-label g-tablet-1-6">

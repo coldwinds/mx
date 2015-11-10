@@ -7,22 +7,17 @@ Description:	optimizate your database
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_clean_up::init';
-	return $fns;
-});
 class theme_clean_up{
 	public static function init(){
-		add_action('advanced_settings',		__CLASS__ . '::display_backend',20);
-		add_action('wp_ajax_' . __CLASS__ ,__CLASS__ . '::process');
-		add_action('after_backend_tab_init',__CLASS__ . '::backend_seajs_use');
-		add_action('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
+		add_action('advanced_settings', __CLASS__ . '::display_backend',20);
+		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		add_action('backend_js_config', __CLASS__ . '::backend_js_config');
 	}
 	public static function display_backend(){
 				
 		?>
 		<fieldset>
-			<legend><?= ___('Database Optimization');?></legend>
+			<legend><i class="fa fa-fw fa-database"></i> <?= ___('Database Optimization');?></legend>
 			<p class="description"><?= ___('If your site works for a long time, maybe will have some redundant data in the database, they will reduce the operating speed of the your site, recommend to clean them regularly.');?></p>
 			<p class="description"><strong><?= ___('Attention: this action will be auto clean up all theme cache.');?></strong></p>
 			<table class="form-table">
@@ -38,7 +33,6 @@ class theme_clean_up{
 									data-tip-target="<?= __CLASS__;?>-redundant-posts"
 								><?= ___('Delete revision &amp; draft &amp; auto-draft &amp; trash posts');?></a>
 							</p>
-							<div id="<?= __CLASS__;?>-redundant-posts"></div>
 							<p>
 								<a 
 									href="javascript:;"
@@ -47,7 +41,6 @@ class theme_clean_up{
 									data-tip-target="<?= __CLASS__;?>-tip-orphan-postmeta"
 								><?= ___('Delete orphan post meta');?></a>
 							</p>
-							<div id="<?= __CLASS__;?>-orphan-postmeta"></div>
 						</td>
 					</tr>
 					<tr>
@@ -59,14 +52,12 @@ class theme_clean_up{
 								data-action="redundant-comments"
 								data-tip-target="<?= __CLASS__;?>-tip-redundant-comments"
 							><?= ___('Delete moderated &amp; spam &amp; trash comments');?></a></p>
-							<div id="<?= __CLASS__;?>-tip-redundant-comments"></div>
 							<p><a 
 								href="javascript:;"
 								class="button <?= __CLASS__;?>-btn" 
 								data-action="orphan-commentmeta"
 								data-tip-target="<?= __CLASS__;?>-tip-orphan-commentmeta"
 							><?= ___('Delete orphan comment meta');?></a></p>
-							<div id="<?= __CLASS__;?>-tip-orphan-commentmeta"></div>
 						</td>
 					</tr>
 					<tr>
@@ -77,7 +68,6 @@ class theme_clean_up{
 								data-action="orphan-relationships"
 								data-tip-target="<?= __CLASS__;?>-tip-orphan-relationships"
 							><?= ___('Delete orphan relationship');?></a></p>
-							<div id="<?= __CLASS__;?>-tip-orphan-relationships"></div>
 						</td>
 					</tr>
 					<tr>
@@ -88,7 +78,6 @@ class theme_clean_up{
 								data-action="optimizate"
 								data-tip-target="<?= __CLASS__;?>-tip-database-optimization"
 							><?= ___('Optimizate Now');?></a></p>
-							<div id="<?= __CLASS__;?>-tip-database-optimization"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -98,6 +87,9 @@ class theme_clean_up{
 	}
 	
 	public static function process(){
+
+		theme_features::check_referer();
+		
 		$output = [];
 		
 		$type = isset($_GET['type']) ? $_GET['type'] : null;
@@ -215,20 +207,14 @@ class theme_clean_up{
 		
 		die(theme_features::json_format($output));
 	}
-	public static function backend_seajs_alias(array $alias = []){
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		return $alias;
+	public static function backend_js_config(array $config){
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url(array('action'=>__CLASS__)),
+		];
+		return $config;
 	}
-	public static function backend_seajs_use(){
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action'=>__CLASS__));?>';
-			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.E00001 = '<?= ___('Server error or network is disconnected.');?>';
-			m.init();
-		});
-		<?php
-	}
-
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_clean_up::init';
+	return $fns;
+});

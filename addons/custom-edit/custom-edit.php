@@ -12,28 +12,13 @@ class theme_custom_edit{
 	public static $pages = [];
 
 	public static function init(){
-		//add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
 	
-		//add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
-
-		//add_filter('theme_options_save', 	__CLASS__ . '::options_save');
-		//add_filter('theme_options_default', 	__CLASS__ . '::options_default');
-		
-		
-		//add_action('wp_ajax_' . self::$iden, __CLASS__ . '::process');
-		
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
-
-		
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
 		}
-		//add_filter('account_navs',__CLASS__ . "::filter_nav_edit", 22);
 		
 		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
-
-		//add_action('page_settings',			__CLASS__ . '::display_backend');
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 
@@ -99,16 +84,5 @@ class theme_custom_edit{
 			$cache = theme_cache::is_page(self::$page_slug) && self::get_tabs(get_query_var('tab'));
 			
 		return $cache;
-	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
-			
-		wp_enqueue_style(
-			self::$iden,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
 	}
 }

@@ -29,7 +29,7 @@ class theme_user_code{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('User custom code settings');?></legend>
+			<legend><i class="fa fa-fw fa-code"></i> <?= ___('User code settings');?></legend>
 			<p class="description"><?= ___('You can write some HTML code for your frontend page. Including javascript or css code.');?></p>
 			<table class="form-table">
 				<tbody>

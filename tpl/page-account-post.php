@@ -289,17 +289,13 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 
 
 
-
-
-
-		
 		<!-- cats -->
 		<div class="form-group">
 			<div class="g-tablet-1-6 control-label">
 				<i class="fa fa-folder-open"></i>
 				<?= ___('Category');?>
 			</div>
-			<div class="g-tablet-5-6">
+			<div class="g-tablet-5-6" id="ctb-cat-container">
 				<?php
 				if($edit){
 					$selected_cat_id = 0;
@@ -322,8 +318,6 @@ if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
 						'hide_empty' => false,
 						'include' => (array)theme_custom_contribution::get_cat_ids(),
 					]); 
-				}else{
-					theme_custom_contribution::output_cats();
 				}
 				?>
 			</div>

@@ -20,15 +20,23 @@
 [class *= "g-table"],
 [class *= "g-phone"]{
 	@extend %grid;
+	@include view-phone{
+		padding-left: $grid-g-phone-gutter;
+		padding-right: $grid-g-phone-gutter;
+	}
 }
 
 
 .row{
 	padding-left: 0;
 	padding-right: 0;
-	margin-left: -$grid-gutter;
-	margin-right: -$grid-gutter;
+	margin-left: -$grid-g-gutter / 2;
+	margin-right: -$grid-g-gutter / 2;
 	@extend .clearfix;
+	@include view-phone{
+		margin-left: -$grid-g-phone-gutter / 2;
+		margin-right: -$grid-g-phone-gutter / 2;
+	}
 }
 
 //phone first
@@ -63,8 +71,8 @@
 	[class *= "g-desktop"],
 	[class *= "g-table"],
 	[class *= "g-phone"]{
-	    padding-left: $grid-g-phone-gutter;
-	    padding-right: $grid-g-phone-gutter;
+	    padding-left: $grid-g-phone-gutter / 2;
+	    padding-right: $grid-g-phone-gutter / 2;
 	}
 }
 

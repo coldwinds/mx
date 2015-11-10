@@ -3,18 +3,11 @@
  * Theme Options
  * the theme options and show admin control planel
  * 
- * @version 5.1.0
+ * @version 6.0.0
  * 
  */
 class theme_options{
-	public static $iden = 'theme_options';
 	public static $opts = [];
-	/**
-	 * init
-	 * 
-	 * @return 
-	 * @version 2.0.0
-	 */
 	public static function init(){
 		add_action('admin_menu', __CLASS__ . '::add_page');
 		add_action('admin_bar_menu', __CLASS__ . '::add_bar',61);
@@ -24,19 +17,8 @@ class theme_options{
 	public static function admin_init(){
 		if(!self::is_options_page())
 			return false;
-		add_action('admin_head', __CLASS__ . '::backend_css');
-		add_action('admin_footer', __CLASS__ . '::backend_js');
-		add_action('backend_seajs_alias', __CLASS__ . '::backend_seajs_alias');
+		add_action('admin_footer', __CLASS__ . '::backend_js',1);
 	}
-	/**
-	 * get the theme options from the features default value or DB.
-	 * 
-	 * @usedby theme_options::get_options()
-	 * @return array
-	 * @version 2.0.0
-	 * @since 3.1.0
-	 * 
-	 */
 	public static function get_options($key = null){
 		static $mod = null;
 		if($mod === null)
@@ -75,88 +57,42 @@ class theme_options{
 			$cache = admin_url('themes.php?page=core-options');
 		return $cache;
 	}
-	public static function backend_css(){
-		if(!theme_cache::current_user_can('manage_options'))
-			return false;
-
-
-		if(!self::is_options_page())
-			return false;
-
-		?>
-		<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="<?= theme_features::get_theme_css('backend/backend');?>">
-		<?php
-		/**
-		 * add admin_css hook 
-		 */
-		do_action('backend_css');
-	}
 	public static function backend_js(){
 		if(!theme_cache::current_user_can('manage_options'))
-			return false;
+			return;
 
 		if(!self::is_options_page())
-			return false;
+			return;
 
-		?><script id="seajsnode" src="<?= theme_features::get_theme_js('seajs/sea');?>"></script>
-		<script>
-		<?php
-		$config = [];
-		$config['base'] = theme_features::get_theme_js();
-		$config['paths'] = array(
-			'theme_js' => theme_features::get_theme_js(),
-			'theme_css' => theme_features::get_theme_css(),
-		);
-		$config['vars'] = array(
-			'locale' => str_replace('-','_',theme_cache::get_bloginfo('language')),
-			'theme_js' => theme_features::get_theme_js(),
-			'theme_css' => theme_features::get_theme_css(),
-			'process_url' => theme_features::get_process_url(),
-		);
-		$config['map'] = array(
-			['.css','.css?v=' . theme_file_timestamp::get_timestamp()],
-			['.js','.js?v=' . theme_file_timestamp::get_timestamp()]
-		);
-		/** 
-		 * seajs hook
-		 */
-		$config['paths'] = apply_filters('backend_seajs_paths',$config['paths']);
-		$config['alias'] = apply_filters('backend_seajs_alias',[]);
-		$config['vars'] = apply_filters('backend_seajs_vars',$config['vars']);
-		$config['map'] = apply_filters('backend_seajs_map',$config['map']);
-
+		$config = [
+			'vars' => [
+				'locale' => str_replace('-','_',theme_cache::get_bloginfo('language')),
+				'theme_js' => theme_features::get_theme_js(),
+				'theme_css' => theme_features::get_theme_css(),
+				'theme_images' => theme_features::get_theme_images_url(),
+				'process_url' => theme_features::get_process_url(),
+				'timestamp' => theme_file_timestamp::get_timestamp(),
+			],
+			'lang' => [
+				'M01' => ___('Loading, please wait...'),
+				'E01' => ___('Sorry, server is busy now, can not respond your request, please try again later.'),
+			],
+		];
+		/** Hook 'backend_js_config' */
 		?>
-		seajs.config(<?= json_encode($config);?>);
-		<?php do_action('before_backend_tab_init');?>
-		seajs.use('backend',function(backend_m){
-			backend_m.config.lang.M01 = '<?= ___('Saving your settings, please wait...');?>';
-			backend_m.init();
-			<?php do_action('after_backend_tab_init');?>
-		});
+		<script>
+		window.THEME_CONFIG = <?= json_encode(apply_filters('backend_js_config',(array)$config));?>;
 		</script>
-		<?php	
+		<?php
 	}
 	public static function backend_seajs_alias(array $alias = []){
 		$alias['backend'] = theme_features::get_theme_js('backend');
 		return $alias;
 	}
-	/**
-	 * show the options settings for admin theme setting page.
-	 * 
-	 * @return string html string for options
-	 * @version 3.2.0
-	 * 
-	 */
 	public static function display_backend(){
 		?>
 		<div class="wrap">
-			<?php if(isset($_GET['updated'])){?>
-				<div id="settings-updated">
-					<?= status_tip('success',___('Your settings were saved successfully.'));?>
-				</div>
-			<?php } ?>
-			<form id="backend-options-frm" method="post" action="<?= theme_features::get_process_url([
+			<form id="backend-options-fm" method="post" action="<?= theme_features::get_process_url([
 				'action' => __CLASS__,
 			]);?>">
 				
@@ -234,12 +170,6 @@ class theme_options{
 		</div>
 		<?php
 	}
-	/**
-	 * Save Options
-	 * 
-	 * @version 2.0.0
-	 * 
-	 */
 	private static function options_save(){
 		if(!theme_cache::current_user_can('manage_options'))
 			return false;
@@ -254,27 +184,12 @@ class theme_options{
 			set_theme_mod(__CLASS__,$opts_new);
 		}
 	}
-	/**
-	 * set_options
-	 *
-	 * @param string options key
-	 * @param mixd
-	 * @return array options
-	 * @version 1.0.2
-	 */
 	public static function set_options($key,$data){
 		self::$opts = self::get_options();		
 		self::$opts[$key] = $data;
 		set_theme_mod(__CLASS__,self::$opts);
 		return self::$opts;
 	}
-	/**
-	 * delete_options
-	 *
-	 * @param string
-	 * @return 
-	 * @version 1.0.2
-	 */
 	public static function delete_options($key){
 		self::$opts = self::get_options();
 		if(!isset(self::$opts[$key]))
@@ -284,31 +199,11 @@ class theme_options{
 		set_theme_mod(__CLASS__,self::$opts);
 		return self::$opts;
 	}
-	/**
-	 * is_options_page
-	 * 
-	 * @return bool
-	 * @version 1.0.1
-	 */
 	public static function is_options_page(){
 		if(!theme_cache::current_user_can('manage_options'))
 			return false;
-			
-		if(is_admin() && isset($_GET['page']) && $_GET['page'] === 'core-options'){
-			return true;
-		}else{
-			return false;
-		}
+		return is_admin() && isset($_GET['page']) && $_GET['page'] === 'core-options';
 	}
-
-	/**
-	 * Add to page
-	 * 
-	 * 
-	 * @return n/a
-	 * @version 1.0.0
-	 * 
-	 */
 	public static function add_page(){
 		if(!theme_cache::current_user_can('manage_options'))
 			return false;
@@ -321,14 +216,6 @@ class theme_options{
 			__CLASS__ . '::display_backend'
 		);
 	}
-	/**
-	 * Add admin bar
-	 * 
-	 * 
-	 * @return 
-	 * @version 1.0.1
-	 * 
-	 */
 	public static function add_bar(){
 		if(!theme_cache::current_user_can('manage_options'))
 			return false;

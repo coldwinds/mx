@@ -18,11 +18,7 @@ class theme_custom_user_settings{
 		
 		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
 
-		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
-		
-		add_filter('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
-
-		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
 		
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 
@@ -257,8 +253,8 @@ class theme_custom_user_settings{
 						]));
 					}
 				}
-				$base64 = isset($_POST['base64']) && is_string($_POST['base64']) ? explode(',',$_POST['base64']) : null;
-				if(isset($base64[0]) && strpos($base64[0],'jpeg') === false){
+				$base64 = isset($_POST['b4']) && is_string($_POST['b4']) ? explode(',',$_POST['b4']) : null;
+				if(!isset($base64[0]) && strpos($base64[0],'jpeg') === false){
 					$output['status'] = 'error';
 					$output['code'] = 'invaild_format';
 					$output['msg'] = ___('Sorry, your file is invaild format, please check it again.');
@@ -447,53 +443,23 @@ class theme_custom_user_settings{
 		$tabs = self::get_tabs();
 		$tab_active = get_query_var('tab');
 		if($tab_active === 'avatar'){
-			wp_enqueue_script('jquery-core');
+			wp_enqueue_script(
+				__CLASS__ . '-cropper',
+				theme_features::get_theme_addons_js(__DIR__,'cropper.min'),
+				null,
+				theme_file_timestamp::get_timestamp(),
+				true
+			);
 		}
 	}
-	public static function frontend_seajs_alias(array $alias = []){
+	public static function frontend_js_config(array $config){
 		if(!self::is_page()) 
-			return $alias;
-			
-		foreach(self::get_tabs() as $k => $v){
-			$alias[__CLASS__ . '-' . $k] = theme_features::get_theme_addons_js(__DIR__,$k);
-			if($k === 'avatar'){
-				$alias[__CLASS__ . '-' . $k . '-cropper'] = theme_features::get_theme_addons_js(__DIR__,'cropper');
-			}
-		}
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
-		if(!self::is_page()) 
-			return false;
+			return $config;
 		
-		$tabs = self::get_tabs();
-		$tab_active = get_query_var('tab');
-
-		switch($tab_active){
-			case 'password':
-			case 'settings':
-				?>
-				seajs.use('<?= __CLASS__,'-settings';?>',function(m){
-					m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
-					m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-					m.config.lang.E00001 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-					
-					m.init();
-				});				
-				<?php
-				break;
-			case 'avatar':
-				?>
-				seajs.use('<?= __CLASS__,'-',$tab_active;?>',function(m){
-					m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
-					m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-					m.config.lang.E00001 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-					
-					m.init();
-				});				
-				<?php
-				break;
-		}
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url(['action' => __CLASS__]),
+		];
+		return $config;
 	}
 	public static function frontend_css(){
 		if(!self::is_page())

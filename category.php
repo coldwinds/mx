@@ -21,7 +21,7 @@
 		<?php }else{ ?>
 			<?= status_tip('info',___('No content yet.'));?>
 		<?php } ?>
-		<div class="area-pagination">
+		<div class="area-pagination archive-pagination">
 			<?php theme_functions::pagination();?>
 		</div>
 	</div><!-- /#main -->

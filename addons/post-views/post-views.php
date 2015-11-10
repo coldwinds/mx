@@ -2,15 +2,11 @@
 /*
 Feature Name:	Post Views
 Feature URI:	http://www.inn-studio.com
-Version:		3.0.2
+Version:		3.0.3
 Description:	Count the post views.
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_post_views::init';
-	return $fns;
-});
 class theme_post_views{
 	public static $post_meta_key = 'views';
 	public static $cache_key = array(
@@ -32,12 +28,11 @@ class theme_post_views{
 		if(!self::is_enabled())
 			return;
 
-		add_filter('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
 
 		
-		add_filter('cache_request', __CLASS__ . '::process_cache_request');
-		add_filter('js_cache_request', __CLASS__ . '::js_cache_request');
+		add_filter('dynamic_request_process', __CLASS__ . '::process_dynamic_request_process');
+		add_filter('dynamic_request', __CLASS__ . '::dynamic_request');
 
 
 		/** admin post/page css */
@@ -55,7 +50,7 @@ class theme_post_views{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('Post views settings');?></legend>
+			<legend><i class="fa fa-fw fa-eye"></i> <?= ___('Post views settings');?></legend>
 			<table class="form-table">
 				<tbody>
 					<tr>
@@ -196,7 +191,7 @@ class theme_post_views{
 	public static function admin_css(){
 		?><style>.fixed .column-views{width:3em}</style><?php
 	}
-	public static function process_cache_request(array $output = []){
+	public static function process_dynamic_request_process(array $output){
 		$id = isset($_GET[__CLASS__]) && is_numeric($_GET[__CLASS__]) ? (int)$_GET[__CLASS__] : null;
 		
 		if(!$id)
@@ -208,7 +203,7 @@ class theme_post_views{
 			$views = self::get_views($id);
 		}
 		
-		$output['views'] = [
+		$output[__CLASS__] = [
 			$id => $views
 		];
 		return $output;
@@ -238,27 +233,21 @@ class theme_post_views{
 	public static function is_viewed($post_id){
 		return !self::set_viewed_ids($post_id);
 	}
-	public static function js_cache_request(array $alias = []){
+	public static function dynamic_request(array $output){
 		if(!theme_cache::is_singular('post'))
-			return $alias;
-		$alias[__CLASS__] = get_the_ID();
-		return $alias;
+			return $output;
+		$output[__CLASS__] = get_the_ID();
+		return $output;
 	}
-	public static function frontend_seajs_alias(array $alias = []){
+	public static function frontend_js_config(array $config){
 		if(!theme_cache::is_singular('post'))
-			return $alias;
+			return $config;
 
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
-		if(!theme_cache::is_singular('post'))
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.init();
-		});
-		<?php
+		$config[__CLASS__] = 1;
+		return $config;
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_post_views::init';
+	return $fns;
+});

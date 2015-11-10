@@ -9,18 +9,9 @@ Author URI:		http://www.inn-studio.com
 */
 class theme_post_share{
 	public static function init(){
-		add_filter('theme_options_default',__CLASS__ . '::options_default');
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
-		add_action('page_settings',__CLASS__ . '::backend_display');
-
-		
-		if(!self::is_enabled()) 
-			return false;
-
-		add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
-				
-		add_action('frontend_seajs_use',__CLASS__ . '::frontend_seajs_use');
-
+		add_filter('theme_options_default', __CLASS__ . '::options_default');
+		add_filter('theme_options_save', __CLASS__ . '::options_save');
+		add_action('page_settings', __CLASS__ . '::backend_display');
 	}
 	public static function get_options($key = null){
 		static $caches = [];
@@ -64,14 +55,12 @@ class theme_post_share{
 	}
 	
 	public static function backend_display(){
-
 		
 		$opt = self::get_options();
 		
-		$is_checked = self::is_enabled() ? ' checked ' : null;
 		?>
 		<fieldset>
-			<legend><?= ___('Posts share settings');?></legend>
+			<legend><i class="fa fa-fa fa-share-alt"></i> <?= ___('Posts share settings');?></legend>
 			<p class="description">
 				<?= ___('Share your post to everywhere. Here are some keywords that can be used:');?>
 			</p>
@@ -87,8 +76,13 @@ class theme_post_share{
 			<table class="form-table">
 				<tbody>
 					<tr>
-						<th scope="row"><label for="<?= __CLASS__;?>_on"><?= ___('Enable or not?');?></label></th>
-						<td><input type="checkbox" name="<?= __CLASS__;?>[on]" id="<?= __CLASS__;?>_on" value="1" <?= $is_checked;?> /><label for="<?= __CLASS__;?>_on"><?= ___('Enable');?></label></td>
+						<th><label for="<?= __CLASS__;?>-enabled"><?= ___('Enable or not?');?></label></th>
+						<td>
+							<select name="<?= __CLASS__;?>[enabled]" id="<?= __CLASS__;?>-enabled" class="widefat">
+								<?php the_option_list(-1,___('Disable'),self::get_options('enabled'));?>
+								<?php the_option_list(1,___('Enable'),self::get_options('enabled'));?>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row"><?= ___('HTML codes');?></th>
@@ -131,36 +125,20 @@ class theme_post_share{
 		ob_end_clean();
 
 		$opts[__CLASS__] = array(
-			'on' => 1,
+			'enabled' => 1,
 			'code' => $content,
 		);
 
 		return $opts;
 	}
 	public static function is_enabled(){
-		return self::get_options('on') == 1 ? true : false;
+		return true;
 	}
 	public static function options_save(array $opts = []){
 		if(isset($_POST[__CLASS__]) && !isset($_POST[__CLASS__]['restore'])){
 			$opts[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $opts;
-	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(!theme_cache::is_singular())
-			return $alias;
-			
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		return $alias;
-	} 
-	public static function frontend_seajs_use(){
-		if(!theme_cache::is_singular())
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.init();
-		});
-		<?php
 	}
 }
 add_filter('theme_addons',function($fns){

@@ -10,18 +10,14 @@
 class theme_features{
 	
 	public static $basedir_js 					= '/assets/js/';
-	public static $basedir_js_src 				= '/assets/js/src/';
-	public static $basedir_js_min				= '/assets/js/min/';
 	public static $basedir_css		 			= '/assets/css/';
-	public static $basedir_css_src 				= '/assets/css/src/';
-	public static $basedir_css_min 				= '/assets/css/min/';
-	public static $basedir_images_min 			= '/assets/images/min/';
+	public static $basedir_images 				= '/assets/images/';
 	public static $basedir_addons 				= '/addons/';
 	
 	public static function init(){
 		self::set_basename();
 		add_action('after_setup_theme', __CLASS__ . '::after_setup_theme');
-		add_action('wp_footer', __CLASS__ . '::theme_js',20);
+		add_action('wp_footer', __CLASS__ . '::theme_js',1);
 	}
 
 	/**
@@ -30,83 +26,26 @@ class theme_features{
 	 * @version 1.1.5
 	 **/
 	public static function theme_js(){
+		$config = [
+			'vars' => [
+				'locale' => str_replace('-','_',theme_cache::get_bloginfo('language')),
+				'theme_js' => self::get_theme_js(),
+				'theme_css' => self::get_theme_css(),
+				'theme_images' => self::get_theme_images_url(),
+				'process_url' => self::get_process_url(),
+				'timestamp' => theme_file_timestamp::get_timestamp(),
+			],
+			'lang' => [
+				'M01' => ___('Loading, please wait...'),
+				'E01' => ___('Sorry, server is busy now, can not respond your request, please try again later.'),
+			],
+		];
+		/** Hook 'frontend_js_config' */
 		?>
 		<script>
-		<?php
-		$config = [];
-		$config['base'] = self::get_theme_js();
-		$config['paths'] = array(
-			'theme_js' => self::get_theme_js(),
-			'theme_css' => self::get_theme_css(),
-		);
-		$config['vars'] = array(
-			'locale' => str_replace('-','_',theme_cache::get_bloginfo('language')),
-			'theme_js' => self::get_theme_js(),
-			'theme_css' => self::get_theme_css(),
-			'theme_images' => self::get_theme_images_url(),
-			'process_url' => self::get_process_url(),
-		);
-		$config['map'] = [
-			['.css','.css?v=' . theme_file_timestamp::get_timestamp()],
-			['.js','.js?v=' . theme_file_timestamp::get_timestamp()],
-		];
-		/** 
-		 * seajs hook
-		 */
-		$config['paths'] = apply_filters('frontend_seajs_paths',$config['paths']);
-		$config['alias'] = apply_filters('frontend_seajs_alias',[]);
-		$config['vars'] = apply_filters('frontend_seajs_vars',$config['vars']);
-		$config['map'] = apply_filters('frontend_seajs_map',$config['map']);
-		?>
-		seajs.config(<?= json_encode($config);?>);
-		<?php
-		unset($config);
-		/** Hook 'frontend_seajs_use' */
-		do_action('frontend_seajs_use');
-		?>
+		window.THEME_CONFIG = <?= json_encode(apply_filters('frontend_js_config',(array)$config));?>;
 		</script>
 		<?php
-	}
-	/**
-	 * minify_force
-	 *
-	 * @param string $file_or_dir
-	 * @version 2.0.0
-	 */
-	public static function minify_force($file_or_dir){
-		/** 
-		 * is dir
-		 */
-		if(is_dir($file_or_dir)){
-			$files = glob($file_or_dir . '/*');
-			if(!empty($files)){
-				foreach($files as $file){
-					self::minify_force($file);
-				}
-			}
-		/** 
-		 * is file
-		 */
-		}else{
-			$file = $file_or_dir;
-			$ext = strtolower(substr(strrchr($file, '.'), 1));
-			/** 
-			 * not js or css ,return
-			 */
-			if($ext !== 'js' && $ext !== 'css') 
-				return;
-		
-			/** 
-			 * check has /src/ keyword and minify
-			 */
-			$self_basedir_src = 'basedir_' . $ext . '_src';
-			$self_basedir_min = 'basedir_' . $ext . '_min';
-			$found = strstr($file,self::$$self_basedir_src);
-			if($found !== false){
-				$file_min = str_replace(self::$$self_basedir_src,self::$$self_basedir_min,$file);
-				self::minify($file,$file_min);
-			}
-		}
 	}
 	/**
 	 * get_theme_info
@@ -199,48 +138,6 @@ class theme_features{
 		return $file_url;
 	}
 	/**
-	 * minify
-	 * 
-	 * @param string 
-	 * @param string 
-	 * @return n/a
-	 * @version 2.0.0
-	 */
-	public static function minify($file_path,$file_path_min){
-		if(!is_file($file_path)) 
-			return false;
-			
-		/**
-		 * minify
-		 */
-		switch(strtolower(substr(strrchr($file_path, '.'), 1))){
-			/** CSS */
-			case 'css':
-				if(!class_exists('theme_addons\CSSMin')) 
-					include self::get_theme_addons_path('class/cssmin.php');
-				$cssmin = new theme_addons\CSSMin();
-				$min_dir = dirname($file_path_min);
-				if(!is_dir($min_dir))
-					mkdir($min_dir,0755,true);
-				file_put_contents($file_path_min,$cssmin->run(file_get_contents($file_path)));
-				break;
-			/** JS */
-			case 'js':
-				if(!class_exists('theme_addons\JSMin')) 
-					include self::get_theme_addons_path('class/jsmin.php');
-				$min_dir = dirname($file_path_min);
-				if(!is_dir($min_dir))
-					mkdir($min_dir,0755,true);
-				file_put_contents($file_path_min,theme_addons\JSMin::minify(file_get_contents($file_path)));
-				break;
-			/**
-			 * Other
-			 */
-			default:
-				return false;
-		}
-	}
-	/**
 	 * theme_features::get_theme_js
 	 * 
 	 * @since 3.2.0
@@ -251,17 +148,9 @@ class theme_features{
 	 * @return string <script> tag string or js url only
 	 */
 	public static function get_theme_js($file_basename = null, $mtime = null){
-		/**
-		 * if dev mode is ON
-		 */
-		if(class_exists('theme_dev_mode') && theme_dev_mode::is_enabled()){
-			$basedir = self::$basedir_js_src;
-		}else{
-			$basedir = self::$basedir_js_min;
-		}
 		if(!$file_basename) 
-			return self::get_template_directory_uri() . $basedir;
-		return self::get_theme_file_url($basedir . $file_basename . '.js', $mtime);
+			return self::get_template_directory_uri() . self::$basedir_js;
+		return self::get_theme_file_url(self::$basedir_js . $file_basename . '.js', $mtime);
 	}
 	/**
 	 * theme_features::get_theme_css
@@ -272,17 +161,9 @@ class theme_features{
 	 * @return string Css url
 	 */
 	public static function get_theme_css($file_basename = null, $mtime = false){
-		/**
-		 * if dev mode is ON
-		 */
-		if(class_exists('theme_dev_mode') && theme_dev_mode::is_enabled()){
-			$basedir = self::$basedir_css_src;
-		}else{
-			$basedir = self::$basedir_css_min;
-		}
 		if(!$file_basename) 
-			return self::get_template_directory_uri() . $basedir;
-		return self::get_theme_file_url($basedir . $file_basename . '.css', $mtime);
+			return self::get_template_directory_uri() . self::$basedir_css;
+		return self::get_theme_file_url(self::$basedir_css . $file_basename . '.css', $mtime);
 	}
 	/**
 	 * get_theme_extension_url
@@ -299,11 +180,7 @@ class theme_features{
 	 * @version 3.0.0
 	 */
 	public static function get_theme_extension_url(array $args){
-		if(class_exists('theme_dev_mode') && theme_dev_mode::is_enabled()){
-			$self_basedir_extension = 'basedir_' . $args['ext'] . '_src';
-		}else{
-			$self_basedir_extension = 'basedir_' . $args['ext'] . '_min';
-		}
+		$self_basedir_extension = 'basedir_' . $args['ext'];
 		$self_basedir = 'basedir_' . $args['type'];
 		$file_url = self::get_theme_url() . self::$$self_basedir . basename($args['basedir']) . self::$$self_basedir_extension . $args['file_basename'] . '.' . $args['ext'];
 			
@@ -368,7 +245,7 @@ class theme_features{
 			
 		$args = [
 			'type' => 'addons',
-			'basedir' => basename($DIR) . self::$basedir_images_min,
+			'basedir' => basename($DIR) . self::$basedir_images,
 			'file_basename' => $filename,
 		];
 
@@ -387,7 +264,7 @@ class theme_features{
 	 * @version 2.0.0
 	 */
 	public static function get_theme_images_url($file_basename = null,$mtime = true){
-		return $file_basename ? self::get_theme_file_url(self::$basedir_images_min . $file_basename,$mtime) : self::get_template_directory_uri() . self::$basedir_images_min;
+		return $file_basename ? self::get_theme_file_url(self::$basedir_images . $file_basename,$mtime) : self::get_template_directory_uri() . self::$basedir_images;
 	}
 	/**
 	 * get the process file url of theme
@@ -1226,11 +1103,21 @@ class theme_features{
 		
 	}
 	/**
+	 * check_timestamp
+	 *
+	 * @version 1.0.0
+	 */
+	public static function check_timestamp(){
+		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
+			theme_file_timestamp::set_timestamp();
+		}
+	}
+	/**
 	 * Hook for after_setup_theme
 	 * 
 	 * 
 	 * @return n/a
-	 * @version 1.0.2
+	 * @version 1.0.3
 	 */
 	public static function after_setup_theme(){
 		/**
@@ -1252,9 +1139,9 @@ class theme_features{
 		 */
 		self::load_addons();
 		/** 
-		 * auto_minify
+		 * check_timestamp
 		 */
-		self::auto_minify();
+		self::check_timestamp();
 		/**
 		 * Othor
 		 */
@@ -1280,30 +1167,7 @@ class theme_features{
 
 		return $cache;
 	}
-	/**
-	 * auto_minify
-	 *
-	 * @return 
-	 * @version 2.0.0
-	 */
-	public static function auto_minify(){
-		/** 
-		 * js and css files version
-		 */
-		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
-			ini_set('max_input_nesting_level',10000);
-			ini_set('max_execution_time',0); 
-			
-			self::minify_force(self::get_stylesheet_directory() . self::$basedir_js_src);
-			
-			self::minify_force(self::get_stylesheet_directory() . self::$basedir_css_src);
-			
-			self::minify_force(self::get_stylesheet_directory() . self::$basedir_addons);
-			
-			theme_file_timestamp::set_timestamp();
-		}
-		
-	}
+
 	/**
 	 * Display category on select tag
 	 *

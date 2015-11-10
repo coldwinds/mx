@@ -2,10 +2,7 @@
 /**
  * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'custom_post_point::init';
-	return $fns;
-});
+
 class custom_post_point{
 	public static $post_meta_key = [
 		'users'				=> '_point_raters',
@@ -26,8 +23,7 @@ class custom_post_point{
 
 		add_action('before_delete_post', __CLASS__ . '::sync_delete_post');
 
-		add_filter('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
 
 		add_filter('custom_point_value_default', __CLASS__ . '::filter_custom_point_value_default');
 
@@ -840,27 +836,17 @@ class custom_post_point{
 
 		return true;
 	}
-	public static function frontend_seajs_alias(array $alias = []){
+	public static function frontend_js_config(array $config){
 		if(!theme_cache::is_singular('post'))
-			return $alias;
+			return $config;
 			
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
-		if(!theme_cache::is_singular('post'))
-			return;
-		?>
-		seajs.use(['<?= __CLASS__;?>'],function(m){
-			m.config.lang.M01 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.E01 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-			m.config.process_url = '<?= theme_features::get_process_url([
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url([
 				'action' => __CLASS__,
 				'type' => 'incr'
-			]);?>';
-			m.init();
-		});
-		<?php
+			]),
+		];
+		return $config;
 	}
 	public static function post_btn($post_id){
 			
@@ -902,3 +888,7 @@ class custom_post_point{
 		<?php
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'custom_post_point::init';
+	return $fns;
+});

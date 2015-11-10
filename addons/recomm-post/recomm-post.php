@@ -133,7 +133,7 @@ class theme_recommended_post{
 		$recomm_posts = self::get_ids();
 		?>
 		<fieldset>
-			<legend><?= ___('Recommended posts');?></legend>
+			<legend><i class="fa fa-fw fa-thumbs-o-up"></i> <?= ___('Recommended posts');?></legend>
 			<p><?= ___('Recommended posts will display on home page if enabled.');?></p>
 			<table class="form-table">
 				<tbody>

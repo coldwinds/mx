@@ -2,6 +2,9 @@
 	position: relative;
 	color: $excerpt-color;
 	margin-bottom: $grid-g-gutter;
+	@include view-phone{
+		margin-bottom: $grid-g-phone-gutter
+	}
 	.home{
 		.tx{
 			display: none;

@@ -1,23 +1,15 @@
 <?php
 /** 
- * @version 1.0.2
+ * @version 1.0.3
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_contribution::init';
-	return $fns;
-});
 class theme_custom_contribution{
 	public static $page_slug = 'account';
 	public static $file_exts = ['png','jpg','gif'];
 	public static $thumbnail_size = 'large';
-	public static $pages = [];
-	public static $post_meta_key = [
-		'bdyun' => '_theme_ctb_bdyun'
-	];
+
 	public static function init(){
-		add_filter('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
 	
-		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
 
 		add_filter('theme_options_save', __CLASS__ . '::options_save');
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
@@ -25,9 +17,6 @@ class theme_custom_contribution{
 		
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 
-		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
-
-		
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs', __CLASS__ . "::$nav_fn",$v['filter_priority']);
@@ -69,7 +58,7 @@ class theme_custom_contribution{
 		$opt = (array)self::get_options();
 		?>
 		<fieldset>
-			<legend><?= ___('Contribution settings');?></legend>
+			<legend><i class="fa fa-fw fa-paint-brush"></i> <?= ___('Contribution settings');?></legend>
 			<p class="description"><?= ___('About contribution setting.');?></p>
 			<table class="form-table">
 				<tr>
@@ -517,7 +506,12 @@ class theme_custom_contribution{
 		$order_cats = [];
 		
 		foreach(self::get_cats() as $cat)
-			$cats[$cat->term_id] = (array)$cat;
+			$cats[$cat->term_id] = [
+				'term_id' => $cat->term_id,
+				'parent' => $cat->parent,
+				'name' => $cat->name,
+				'description' => $cat->description,
+			];
 		
 		foreach($cats as $cat){
 			if (isset($cats[$cat['parent']])){
@@ -529,6 +523,14 @@ class theme_custom_contribution{
 		
 		return $order_cats;
 	}
+	private static function get_has_parent_cat_ids(){
+		$has_parent_cats = [];
+		foreach(self::get_cats() as $k => $cat){
+			if($cat->parent > 0 && !isset($has_parent_cats[$cat->parent]))
+				$has_parent_cats[$cat->parent] = $cat->parent;
+		}
+		return $has_parent_cats;
+	}
 	public static function get_cats($array = false){
 		static $cache = null;
 		if($cache === null)
@@ -539,7 +541,12 @@ class theme_custom_contribution{
 		if($array){
 			$cats = [];
 			foreach($cache as $cat)
-				$cats[$cat->term_id] = (array)$cat;
+				$cats[$cat->term_id] = [
+					'term_id' => $cat->term_id,
+					'parent' => $cat->parent,
+					'name' => $cat->name,
+					'description' => $cat->description,
+				];
 			return $cats;
 		}
 		return $cache;
@@ -550,11 +557,11 @@ class theme_custom_contribution{
 
 		self::output_cat(0);
 
-		foreach(self::get_cats() as $cat){
-			self::output_cat($cat->term_id);
+		foreach(self::get_has_parent_cat_ids() as $pid){
+			self::output_cat($pid);
 		}
 	}
-	public function output_cat($parent_cat_id){
+	private function output_cat($parent_cat_id){
 		$cats = [];
 		foreach(self::get_cats() as $cat){
 			if($cat->parent == $parent_cat_id){
@@ -649,87 +656,60 @@ class theme_custom_contribution{
 			'order' => 'ASC',
 		]);
 	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(self::is_page()){
-			$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		}
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(!self::is_page()) 
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
-			m.config.default_size = '<?= self::$thumbnail_size;?>';
-			m.config.cats = <?= json_encode(array_map(function($v){
-				return [
-					'id' => $v['term_id'],
-					'name' => $v['name'],
-					'des' => $v['description'],
-					'parent' => $v['parent'],
-				];
-			},self::get_cats(true)));?>;
-			m.config.lang = {
-				M01 : '<?= ___('Loading, please wait...');?>',
-				M02 : '<?= ___('Uploading {0}/{1}, please wait...');?>',
-				M03 : '<?= ___('Click to delete');?>',
-				M04 : '<?= ___('{0} files have been uploaded, please insert to post content on demand.');?>',
-				M05 : '<?= ___('Source');?>',
-				M06 : '<?= ___('Click to view source');?>',
-				M07 : '<?= ___('Set as cover.');?>',
-				M08 : '<?= ___('Optional: some description');?>',
-				M09 : '<?= ___('Insert to content');?>',
-				M10 : '<?= ___('Preview');?>',
-				M11 : '<?= ___('Large size');?>',
-				M12 : '<?= ___('Medium size');?>',
-				M13 : '<?= ___('Small size');?>',
-				E01 : '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>'
-			};
-			m.auto_save.config.lang = {
-				M01 : '<?= ___('You have a auto save version, do you want to restore? Auto save last time is {time}.');?>',
-				M02 : '<?= ___('Restore post data completed, please check it.');?>',
-				M03 : '<?= ___('The post data has saved your browser.');?>'
-			};
-			<?php
-			if(self::is_edit()){
-				$thumbnail_id = (int)get_post_thumbnail_id(self::is_edit());
-				$attachs = [];
-				
-				$attachs_data = self::get_post_attachs(self::is_edit());
-				foreach($attachs_data as $v){
-					$attachs[$v->ID] = self::get_thumbnail_data($v->ID);
-					$attachs[$v->ID]['attach-id'] = $v->ID;
-				}
+			return $config;
 
-				//if($thumbnail_id && !empty($attachs_data)){
-				//	$unshift_attach = $attachs[$thumbnail_id];
-				//	unset($attachs[$thumbnail_id]);
-				//	array_unshift($attachs,$unshift_attach);
-				//}
-				unset($attachs_data);
-				//asort($attachs);
-				?>
-				m.config.edit = 1;
-				m.config.thumbnail_id = <?= $thumbnail_id;?>;
-				m.config.attachs = <?= json_encode($attachs);?>;
-				<?php
-			}
-			?>
-			m.init();
-		});
-		<?php
-	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url(array('action' => __CLASS__)),
+			'default_size' => self::$thumbnail_size,
+			'lang' => [
+				'M01' => ___('Loading, please wait...'),
+				'M02' => ___('Uploading {0}/{1}, please wait...'),
+				'M03' => ___('Click to delete'),
+				'M04' => ___('{0} files have been uploaded, please insert to post content on demand.'),
+				'M05' => ___('Source'),
+				'M06' => ___('Click to view source'),
+				'M07' => ___('Set as cover.'),
+				'M08' => ___('Optional, some description'),
+				'M09' => ___('Insert to content'),
+				'M10' => ___('Preview'),
+				'M11' => ___('Large size'),
+				'M12' => ___('Medium size'),
+				'M13' => ___('Small size'),
+				'E01' => ___('Sorry, server is busy now, can not respond your request, please try again later.'),
+			],
+			'auto_save' => [
+				'lang' => [
+					'M01' => ___('You have a auto save version, do you want to restore? Auto save last time is {time}.'),
+					'M02' => ___('Restore post data completed, please check it.'),
+					'M03' => ___('The post data has saved your browser.'),
+				],
+			],
+		];
+		if(self::is_edit()){
+			$thumbnail_id = (int)get_post_thumbnail_id(self::is_edit());
+			$attachs = [];
 			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-	}
+			$attachs_data = self::get_post_attachs(self::is_edit());
+			foreach($attachs_data as $v){
+				$attachs[$v->ID] = self::get_thumbnail_data($v->ID);
+				$attachs[$v->ID]['attach-id'] = $v->ID;
+			}
 
+			unset($attachs_data);
+			$config[__CLASS__]['edit'] = 1;
+			$config[__CLASS__]['thumbnail_id'] = $thumbnail_id;
+			$config[__CLASS__]['attachs'] = $attachs;
+		}else{
+			$config[__CLASS__]['lang']['M04'] = ___('Please select a category');
+			//$config[__CLASS__]['cats'] = self::get_order_cats();
+			$config[__CLASS__]['cats'] = self::get_cats();
+		}
+		return $config;
+	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_contribution::init';
+	return $fns;
+});

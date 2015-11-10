@@ -1,33 +1,18 @@
 <?php
-/*
-Feature Name:	主题帮助与说明
-Feature URI:	http://www.inn-studio.com
-Version:		2.0.1
-Description:	主题必须组件，显示主题相关信息与说明
-Author:			INN STUDIO
-Author URI:		http://www.inn-studio.com
-*/
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_help::init';
-	return $fns;
-});
 class theme_help{
-	public static $iden = 'theme_help';
 	public static function init(){
-		add_action('help_settings',__CLASS__ . '::admin');
-		add_action('after_backend_tab_init',__CLASS__ . '::js'); 
+		add_action('help_settings', __CLASS__ . '::display_backend');
+		add_action('backend_js_config', __CLASS__ . '::backend_js_config'); 
 	}
 	
-	public static function admin(){
-		
-		$options = theme_options::get_options();
+	public static function display_backend(){
 		$theme_data = wp_get_theme();
 		$theme_meta_origin = theme_functions::theme_meta_translate();
 		$is_oem = isset($theme_meta_origin['oem']) ? true : false;
 		$theme_meta = isset($theme_meta_origin['oem']) ? $theme_meta_origin['oem'] : $theme_meta_origin;
 		?>
 <fieldset>
-	<legend><?= ___('Theme Information');?></legend>
+	<legend><i class="fa fa-fw fa-info-circle"></i> <?= ___('Theme Information');?></legend>
 	<table class="form-table">
 		<tbody>
 			<tr>
@@ -92,11 +77,17 @@ class theme_help{
 					<th scope="row"><?= ___('Donate');?></th>
 					<td>
 						<p>
+							<!-- paypal -->
 							<a id="paypal_donate" href="javascript:;" title="<?= ___('Donation by Paypal');?>">
-								<img src="http://ww2.sinaimg.cn/large/686ee05djw1ella1kv74cj202o011wea.jpg" alt="<?= ___('Donation by Paypal');?>" width="96" height="37"/>
+								<img src="//ww2.sinaimg.cn/large/686ee05djw1ella1kv74cj202o011wea.jpg" alt="<?= ___('Donation by Paypal');?>" width="96" height="37"/>
 							</a>
-							<a id="alipay_donate" target="_blank" href="http://ww3.sinaimg.cn/large/686ee05djw1eihtkzlg6mj216y16ydll.jpg" title="<?= ___('Donation by Alipay');?>">
-								<img width="96" height="37" src="http://ww1.sinaimg.cn/large/686ee05djw1ellabpq9euj202o011dfm.jpg" alt="<?= ___('Donation by Alipay');?>"/>
+							<!-- alipay -->
+							<a id="alipay_donate" target="_blank" href="http://ww3.sinaimg.cn/mw600/686ee05djw1eihtkzlg6mj216y16ydll.jpg" title="<?= ___('Donation by Alipay');?>">
+								<img width="96" height="37" src="//ww1.sinaimg.cn/large/686ee05djw1ellabpq9euj202o011dfm.jpg" alt="<?= ___('Donation by Alipay');?>"/>
+							</a>
+							<!-- wechat -->
+							<a id="wechat_donate" target="_blank" href="http://ww4.sinaimg.cn/mw600/686ee05djw1exukpkk4fwj20fr0f940r.jpg" title="<?= ___('Donation by Wechat');?>">
+								<img width="96" height="37" src="//ww3.sinaimg.cn/large/686ee05djw1exul2142tvj202o0113ya.jpg" alt="<?= ___('Donation by Wechat');?>"/>
 							</a>
 						</p>
 					</td>
@@ -114,21 +105,16 @@ class theme_help{
 </fieldset>
 	<?php
 	}
-	public static function js(){
-		
-		?>
-		seajs.use('<?= theme_features::get_theme_addons_js(__DIR__);?>',function(m){
-			/** alipay */
-			m.alipay.config.lang.M00001 = '<?= esc_js(sprintf(___('Donate to INN STUDIO (%s)'),theme_features::get_theme_info('name')));?>';
-			m.alipay.config.lang.M00002 = '<?= esc_js(___('Message for INN STUDIO:'));?>';
-			
-			/** paypal */
-			m.paypal.config.lang.M00001 = '<?= esc_js(sprintf(___('Donate to INN STUDIO (%s)'),theme_features::get_theme_info('name')));?>';
-			
-
-			m.init();
-		});
-		<?php
+	public static function backend_js_config(array $config){
+		$config[__CLASS__] = [
+			'lang' => [
+				'M01' => sprintf(___('Donate to INN STUDIO (%s)'),theme_features::get_theme_info('name')),
+			],
+		];
+		return $config;
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_help::init';
+	return $fns;
+});

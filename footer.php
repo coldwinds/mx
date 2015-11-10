@@ -60,5 +60,5 @@ if(class_exists('theme_adbox') && !empty(theme_adbox::display_frontend('above-fo
 	<?php } ?>
 	
 </footer>
-<a href="#" class="fa fa-arrow-up fa-2x back-to-top" title="<?= ___('Back to top');?>"></a>
+<a href="#" id="back-to-top" class="fa fa-arrow-up fa-2x" title="<?= ___('Back to top');?>"></a>
 <?php wp_footer();?></body></html>

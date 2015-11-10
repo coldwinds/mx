@@ -2,33 +2,22 @@
 /*
 Feature Name:	theme-custom-homebox
 Feature URI:	http://www.inn-studio.com
-Version:		1.1.3
+Version:		1.1.5
 Description:	
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_homebox::init';
-	return $fns;
-});
-class theme_custom_homebox{
-	public static $iden = 'theme_custom_homebox';
-	public static $cache_id_mtime = 'theme_custom_homebox-mtime';
 
+class theme_custom_homebox{
+	
 	public static function init(){
 		
 		add_filter('theme_options_save',__CLASS__ . '::options_save');
-		add_filter('after_backend_tab_init',__CLASS__ . '::after_backend_tab_init');
-		add_filter('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
-		add_action('backend_css',__CLASS__ . '::backend_css'); 
+		
+		add_filter('backend_js_config',__CLASS__ . '::backend_js_config');
+		
 		add_action('page_settings',__CLASS__ . '::display_backend');
 
-		if(!wp_is_mobile()){
-			//add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
-			add_action('frontend_seajs_alias',__CLASS__ . '::frontend_seajs_alias');
-			add_action('frontend_seajs_use',__CLASS__ . '::frontend_seajs_use');
-		}
-		
 		add_action('publish_post',__CLASS__ . '::action_public_post');
 	}
 	public static function action_public_post(){
@@ -89,7 +78,7 @@ class theme_custom_homebox{
 		$opt = array_filter((array)self::get_options());
 		?>
 		<fieldset>
-			<legend><?= ___('Theme home box settings');?></legend>
+			<legend><i class="fa fa-fw fa-home"></i> <?= ___('Theme home box settings');?></legend>
 			<div id="<?= __CLASS__;?>-container">
 				<?php
 				if(!$opt){
@@ -106,7 +95,7 @@ class theme_custom_homebox{
 					<tr>
 						<th scope="row"><?= ___('Home box control');?></th>
 						<td>
-							<a id="<?= __CLASS__;?>-add" href="javascript:;" class="button-primary"><i class="fa fa-plus"></i> <?= ___('Add a new home box');?></a>
+							<a id="<?= __CLASS__;?>-add" class="add button-primary" href="javascript:;"><i class="fa fa-plus"></i> <?= ___('Add a new home box');?></a>
 						</td>
 					</tr>
 				</tbody>
@@ -139,7 +128,7 @@ class theme_custom_homebox{
 		ob_start();
 		?>
 		<table 
-			class="form-table <?= __CLASS__;?>-item" 
+			class="form-table <?= __CLASS__;?>-item item" 
 			id="<?= __CLASS__;?>-item-<?= $placeholder;?>" 
 			data-placeholder="<?= $placeholder;?>" 
 		>
@@ -233,7 +222,7 @@ class theme_custom_homebox{
 			<th><label for="<?= __CLASS__;?>-<?= $placeholder;?>-ad"><?= ___('AD code');?></label></th>
 			<td>
 				<textarea name="<?= __CLASS__;?>[<?= $placeholder;?>][ad]" id="<?= __CLASS__;?>-<?= $placeholder;?>-ad" cols="30" rows="5" class="widefat" placeholder="<?= ___('HTML code will display below this box.');?>"><?= $ad;?></textarea>
-				<a href="javascript:;" class="<?= __CLASS__;?>-del delete" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-id="<?= $placeholder;?>" data-target="#<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= ___('Delete this item');?></a>
+				<a href="javascript:;" class="<?= __CLASS__;?>-del del" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-id="<?= $placeholder;?>" data-target="#<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= ___('Delete this item');?></a>
 			</td>
 		</tr>
 		</tbody>
@@ -271,47 +260,15 @@ class theme_custom_homebox{
 	public static function get_cache(){
 		return theme_cache::get('content',__CLASS__);
 	}
-	public static function backend_css(){
-		?>
-		<link href="<?= theme_features::get_theme_addons_css(__DIR__,'backend',true);?>" rel="stylesheet"  media="all"/>
-		<?php
-	}
-	public static function after_backend_tab_init(){
-		?>
-		seajs.use('<?= __CLASS__;?>',function(_m){
-			_m.config.tpl = <?= json_encode(html_minify(self::get_home_box_tpl('%placeholder%')));?>;
-			_m.init();
-		});
-		<?php
-	
-	}
-	public static function backend_seajs_alias(array $alias = []){
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__,'backend');
-		return $alias;
-	}
-	public static function frontend_css(){
-		if(!theme_cache::is_home())
-			return false;
-			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(theme_cache::is_home())
-			$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
-		if(!theme_cache::is_home())
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.init();
-		});
-		<?php
+
+	public static function backend_js_config(array $config){
+		$config[__CLASS__] = [
+			'tpl' => html_minify(self::get_home_box_tpl('%placeholder%')),
+		];
+		return $config;
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_homebox::init';
+	return $fns;
+});

@@ -2,10 +2,7 @@
 /**
  * @version 1.0.2
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_point::init';
-	return $fns;
-});
+
 class theme_custom_point{
 	public static $page_slug = 'account';
 	
@@ -22,31 +19,29 @@ class theme_custom_point{
 
 		add_action('comment_post',__CLASS__ . '::action_add_history_wp_new_comment_comment_publish',10,2);
 		
-		add_action('transition_comment_status',__CLASS__ . '::action_add_history_transition_comment_status_comment_publish',10,3);
+		add_action('transition_comment_status', __CLASS__ . '::action_add_history_transition_comment_status_comment_publish',10,3);
 
 		
-		add_action('transition_post_status',__CLASS__ . '::add_action_publish_post_history_post_publish',10,3);
+		add_action('transition_post_status', __CLASS__ . '::add_action_publish_post_history_post_publish',10,3);
 		
 		
-		add_action('user_register',__CLASS__ . '::action_add_history_signup');
+		add_action('user_register', __CLASS__ . '::action_add_history_signup');
 
 		/** post-delete */
-		add_action('before_delete_post',__CLASS__ . '::action_add_history_post_delete');
+		add_action('before_delete_post', __CLASS__ . '::action_add_history_post_delete');
 		
 		/** sign-in daily */
-		add_filter('cache_request',__CLASS__ . '::filter_cache_request');
+		add_filter('dynamic_request_process', __CLASS__ . '::filter_dynamic_request_process');
 		
-		add_filter('theme_options_default',__CLASS__ . '::options_default');
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
+		add_filter('theme_options_default', __CLASS__ . '::options_default');
+		add_filter('theme_options_save', __CLASS__ . '::options_save');
 
 		/** ajax */
-		add_action('wp_ajax_' . __CLASS__,__CLASS__ . '::process');
+		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 
+		add_filter('theme_api_theme_custom_sign_after_login_user_data', __CLASS__ . '::filter_theme_api_theme_custom_sign_after_login_user_data',10,2);
 
-		add_filter('theme_api_theme_custom_sign_after_login', __CLASS__ . '::filter_theme_api_theme_custom_sign_after_login',10,2);
-
-		add_action('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
-		add_action('after_backend_tab_init',__CLASS__ . '::backend_seajs_use');
+		add_action('backend_js_config', __CLASS__ . '::backend_js_config');
 
 		/**
 		 * list history hooks
@@ -67,7 +62,7 @@ class theme_custom_point{
 		$points = self::get_options('points');
 		?>
 		<fieldset>
-			<legend><?= ___('User point settings');?></legend>
+			<legend><i class="fa fa-fw fa-paw"></i> <?= ___('User point settings');?></legend>
 			<p class="description"><?= ___('About user point settings.');?></p>
 			<table class="form-table">
 				<tbody>
@@ -146,9 +141,6 @@ class theme_custom_point{
 								<i class="fa fa-pencil-square-o"></i> 
 								<?= ___('Add/Reduce');?>
 							</a>
-							
-							<span class="page-tip" id="<?= __CLASS__;?>-special-tip-set"></span>
-							
 						</td>
 					</tr>
 				</tbody>
@@ -216,7 +208,11 @@ class theme_custom_point{
 				}
 				$output['status'] = 'success';
 				$output['points'] = self::get_point($user->ID);
-				$output['msg'] = sprintf(___('The user has %d points now.'),self::get_point($user->ID));
+				$output['msg'] = sprintf(
+					___('The user %1$s has %2$d points now.'),
+					esc_html($user->display_name),
+					self::get_point($user->ID)
+				);
 				break;
 			/**
 			 * special
@@ -264,7 +260,7 @@ class theme_custom_point{
 				if(!$user){
 					$output['status'] = 'error';
 					$output['code'] = 'user_not_exist';
-					$output['msg'] = ___('Fuck you man, the user is not exist');
+					$output['msg'] = ___('The user is not exist');
 					die(theme_features::json_format($output));
 				}
 				/**
@@ -275,8 +271,8 @@ class theme_custom_point{
 				
 				$sign = $special['point'] > 0 ? '+' : null;
 				$output['msg'] = sprintf(
-					___('The user %s(%d) point has set to %s.'),
-					$user->display_name,
+					___('The user %1$s(%2$d) point has set to %3$d.'),
+					esc_html($user->display_name),
 					$user->ID,
 					self::get_point($user->ID) . $sign . $special['point'] . '=' . self::get_point($user->ID,true)
 				);
@@ -378,7 +374,7 @@ class theme_custom_point{
 		}
 		return $opts;
 	}
-	public static function filter_theme_api_theme_custom_sign_after_login(array $user = [],$user_id){
+	public static function filter_theme_api_theme_custom_sign_after_login_user_data(array $user = [],$user_id){
 		$user['points'] = self::get_point($user_id);
 		return $user;
 	}
@@ -661,7 +657,7 @@ class theme_custom_point{
 
 		return $content;
 	}
-	public static function filter_cache_request($output){
+	public static function filter_dynamic_request_process($output){
 		/**
 		 * signin daily
 		 */
@@ -1039,19 +1035,14 @@ class theme_custom_point{
 		$old_point = self::get_point($post->post_author);
 		update_user_meta($post->post_author,self::$user_meta_key['point'],$old_point + (int)theme_options::get_options(__CLASS__)['points']['post-publish']);
 	}
-
-	public static function backend_seajs_alias(array $alias = []){
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__,'backend');
-		return $alias;
-	}
-	public static function backend_seajs_use(){
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action'=>__CLASS__));?>';
-			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.E00001 = '<?= ___('Server error or network is disconnected.');?>';
-			m.init();
-		});
-		<?php
+	public static function backend_js_config(array $config){
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url(array('action'=>__CLASS__)),
+		];
+		return $config;
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_point::init';
+	return $fns;
+});

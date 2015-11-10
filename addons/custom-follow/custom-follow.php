@@ -18,7 +18,7 @@ class theme_custom_follow{
 		/** filter */
 		//add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
 		/** action */
-		//add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
+		//add_filter('frontend_js_config',	__CLASS__ . '::frontend_js_config');
 		//add_action('wp_ajax_nopriv_theme_quick_sign', 'theme_quick_sign::process');
 	}
 	public static function get_count($args){
@@ -132,7 +132,7 @@ class theme_custom_follow{
 		$alias[self::$iden] = theme_features::get_theme_addons_js(__DIR__);
 		return $alias;
 	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(){
 		if(theme_cache::is_user_logged_in() || !theme_cache::is_page(self::$page_slug)) return false;
 		?>
 		seajs.use('<?= self::$iden;?>',function(m){

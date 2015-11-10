@@ -7,26 +7,18 @@ Description:	theme_custom_slidebox
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_slidebox::init';
-	return $fns;
-});
 class theme_custom_slidebox{
-	public static $file_exts = ['png','jpg','gif'];
+	public static $file_exts = ['png','jpg','jpeg','gif'];
 	public static $image_size = [800,500,true];
 	public static function init(){
-		add_action('after_backend_tab_init', __CLASS__ . '::backend_seajs_use'); 
+		add_action('backend_js_config', __CLASS__ . '::backend_js_config'); 
 		add_action('page_settings', __CLASS__ . '::display_backend');
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		add_action('backend_css', __CLASS__ . '::backend_css'); 
-
 		/**
 		 * frontend
 		 */
-		add_action('frontend_seajs_alias',__CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use',__CLASS__ . '::frontend_seajs_use');
-		//add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
+		add_filter('frontend_js_config',__CLASS__ . '::frontend_js_config');
 	}
 	public static function options_save(array $opts = []){
 		if(isset($_POST[__CLASS__])){
@@ -57,7 +49,7 @@ class theme_custom_slidebox{
 					$selected_class = null;
 				}
 			?>
-			<label for="<?= $id;?>-<?= $cat->term_id;?>" class="item button <?= $selected_class;?>">
+			<label for="<?= $id;?>-<?= $cat->term_id;?>" class="button <?= $selected_class;?>">
 				<input 
 					type="checkbox" 
 					id="<?= $id;?>-<?= $cat->term_id;?>" 
@@ -144,7 +136,7 @@ class theme_custom_slidebox{
 		ob_start();
 		?>
 		<table 
-			class="form-table <?= __CLASS__;?>-item" 
+			class="form-table item" 
 			id="<?= __CLASS__;?>-item-<?= $placeholder;?>" 
 			data-placeholder="<?= $placeholder;?>" 
 		>
@@ -178,16 +170,15 @@ class theme_custom_slidebox{
 				<?php if($img_url){ ?>
 					<br>
 					<a href="<?= $img_url;?>" target="_blank">
-						<img src="<?= $img_url;?>" alt="preview" width="200" height="125">
+						<img src="<?= $img_url;?>" class="img-preview" alt="preview" width="200" height="125">
 					</a>
 				<?php } ?>
 			</th>
 			<td>
-				<div class="<?= __CLASS__;?>-upload-area">
-					<input type="url" id="<?= __CLASS__;?>-img-url-<?= $placeholder;?>" name="<?= __CLASS__;?>[boxes][<?= $placeholder;?>][img-url]" class="<?= __CLASS__;?>-img-url" placeholder="<?= ___('Image address');?>" value="<?= $img_url;?>"/>
-					<a href="javascript:;" class="button-primary <?= __CLASS__;?>-upload" id="<?= __CLASS__;?>-upload-<?= $placeholder;?>"><?= ___('Upload image');?><input type="file" id="<?= __CLASS__;?>-file-<?= $placeholder;?>" class="<?= __CLASS__;?>-file"/></a>
+				<div class="<?= __CLASS__;?>-upload-area upload-area">
+					<input type="url" id="<?= __CLASS__;?>-img-url-<?= $placeholder;?>" name="<?= __CLASS__;?>[boxes][<?= $placeholder;?>][img-url]" class="<?= __CLASS__;?>-img-url upload-img-url" placeholder="<?= ___('Image address');?>" value="<?= $img_url;?>"/>
+					<a href="javascript:;" class="button-primary <?= __CLASS__;?>-upload upload-btn" id="<?= __CLASS__;?>-upload-<?= $placeholder;?>"><i class="fa fa-image"></i> <?= ___('Upload image');?><input type="file" id="<?= __CLASS__;?>-file-<?= $placeholder;?>" class="<?= __CLASS__;?>-file"/></a>
 				</div>
-				<div class="<?= __CLASS__;?>-upload-tip hide"></div>
 			</td>
 		</tr>
 		<tr>
@@ -202,7 +193,7 @@ class theme_custom_slidebox{
 					<?= ___('Open in new window');?>
 				</label>
 
-				<a href="javascript:;" class="<?= __CLASS__;?>-del delete" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-id="<?= $placeholder;?>" data-target="#<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= ___('Delete this item');?></a>
+				<a href="javascript:;" class="del" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-id="<?= $placeholder;?>" data-target="#<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= ___('Delete this item');?></a>
 			</td>
 		</tr>
 		</tbody>
@@ -242,11 +233,11 @@ class theme_custom_slidebox{
 		$boxes = self::get_boxes();
 		?>
 		<fieldset>
-			<legend><?= ___('Slide-box settings');?></legend>
+			<legend><i class="fa fa-fw fa-tv"></i> <?= ___('Slide-box settings');?></legend>
 			<p class="description">
 				<?= sprintf(___('Slide-box will display on homepage. You can select style type and set images and links for slide-box. Image size is %s&times;%s px. Remember save your settings when all done.'),self::$image_size[0] === 999 ? ___('unlimited') : self::$image_size[0],self::$image_size[1] === 999 ? ___('unlimited') : self::$image_size[1]);?>
 			</p>
-			<table class="form-table" id="<?= __CLASS__;?>-control">
+			<table class="form-table">
 			<tbody>
 			<tr>
 				<th>
@@ -264,7 +255,7 @@ class theme_custom_slidebox{
 			</tr>
 			</tbody>
 			</table>
-			<div class="<?= __CLASS__;?>-container">
+			<div id="<?= __CLASS__;?>-container">
 				<?php
 				if(!empty($boxes)){
 					foreach($boxes as $k => $v){
@@ -281,7 +272,7 @@ class theme_custom_slidebox{
 			<tr>
 			<th><?= ___('Control');?></th>
 			<td>
-				<a id="<?= __CLASS__;?>-add" href="javascript:;" class="button-primary"><?= ___('Add a new item');?></a>
+				<a id="<?= __CLASS__;?>-add" href="javascript:;" class="add button-primary"><i class="fa fa-plus"></i> <?= ___('Add a new item');?></a>
 			</td>
 			</tr>
 			</tbody>
@@ -523,48 +514,25 @@ class theme_custom_slidebox{
 </div><!-- /.slidebox-container -->
 		<?php
 	}
-	public static function backend_css(){
-		?>
-		<link href="<?= theme_features::get_theme_addons_css(__DIR__,'backend',true);?>" rel="stylesheet"  media="all"/>
-		<?php
-	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(theme_cache::is_home())
-			$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(wp_is_mobile() || !theme_cache::is_home())
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.type = '<?= self::get_type();?>';
-			m.init();
-		});
-		<?php
+			return $config;
+		$config[__CLASS__] = [
+			'type' => self::get_type(),
+		];
+		return $config;
 	}
-	public static function frontend_css(){
-		if(!theme_cache::is_home())
-			return false;
-			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-	}
-	public static function backend_seajs_use(){
-		?>
-		seajs.use('<?= theme_features::get_theme_addons_js(__DIR__,'backend');?>',function(m){
-			m.config.tpl = <?= json_encode(html_minify(self::get_box_tpl('%placeholder%')));?>;
-			m.config.process_url = '<?= theme_features::get_process_url(array('action'=>__CLASS__));?>';
-			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.E00001 = '<?= ___('Server error or network is disconnected.');?>';
-			m.init();
-		});
-		<?php
+	public static function backend_js_config(array $config){
+		$config[__CLASS__] = [
+			'tpl' => html_minify(self::get_box_tpl('%placeholder%')),
+			'process_url' => theme_features::get_process_url([
+				'action' => __CLASS__,
+			]),
+		];
+		return $config;
 	}
 }
-
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_slidebox::init';
+	return $fns;
+});

@@ -1,11 +1,7 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_adbox::init';
-	return $fns;
-});
 class theme_adbox{
 
 	public static function init(){
@@ -87,7 +83,7 @@ class theme_adbox{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('ADs settings');?></legend>
+			<legend><i class="fa fa-fw fa-jpy"></i> <?= ___('ADs settings');?></legend>
 			<p class="description">
 				<?= ___('You can put some ADs into your site. Here are some AD areas for using.');?>
 			</p>
@@ -100,3 +96,7 @@ class theme_adbox{
 		<?php
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_adbox::init';
+	return $fns;
+});

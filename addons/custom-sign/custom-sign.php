@@ -16,13 +16,12 @@ class theme_custom_sign{
 		/** filter */
 		add_filter('login_headerurl',		__CLASS__ . '::filter_login_headerurl',1);
 		add_filter('query_vars',			__CLASS__ . '::filter_query_vars');
-		add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
+		add_filter('frontend_js_config',	__CLASS__ . '::frontend_js_config');
 		
 		/** action */
 		add_action('admin_init',			__CLASS__ . '::action_not_allow_login_backend',1);
 		add_action('init', 					__CLASS__ . '::page_create');
 		add_action('template_redirect',		__CLASS__ . '::template_redirect');
-		add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
 		
 		/** ajax */
 		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
@@ -32,9 +31,7 @@ class theme_custom_sign{
 		add_filter('register_url', 			__CLASS__ . '::filter_wp_registration_url');
 		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
 
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
-
-		add_filter('cache_request',			__CLASS__ . '::cache_request');
+		add_filter('dynamic_request_process',			__CLASS__ . '::dynamic_request_process');
 
 		/**
 		 * api
@@ -82,7 +79,7 @@ class theme_custom_sign{
 				$user = self::user_login(array(
 					'email' => $email,
 					'pwd' => $pwd,
-					'remember' => isset($user['remember']) ? true : false,
+					'remember' => true,
 				));
 				if($user['status'] === 'success'){
 					$output = [
@@ -94,7 +91,7 @@ class theme_custom_sign{
 						],
 					];
 					/** filter theme_api */
-					$output['user'] = apply_filter('theme_api_' . __CLASS__ . '_after_login_user_data',$output['user'],$user->ID);
+					$output['user'] = apply_filters('theme_api_' . __CLASS__ . '_after_login_user_data', $output['user'], $user['user-id']);
 					
 					die(theme_features::json_format($output));
 					
@@ -128,7 +125,7 @@ class theme_custom_sign{
 	public static function display_backend(){
 		?>
 		<fieldset id="<?= __CLASS__;?>">
-			<legend><?= ___('Custom sign settings');?></legend>
+			<legend><i class="fa fa-fw fa-user"></i> <?= ___('Custom sign settings');?></legend>
 			<p class="description"><?= ___('You can custom the sign page here.');?></p>
 			<table class="form-table">
 				<tbody>
@@ -653,7 +650,7 @@ class theme_custom_sign{
 		$token = authcode(base64_decode($token),'decode',AUTH_KEY);
 		return $token ? json_decode($token,true) : false;
 	}
-	public static function cache_request($datas){
+	public static function dynamic_request_process($datas){
 		if(theme_cache::is_user_logged_in()){
 			global $current_user;
 			get_currentuserinfo();
@@ -673,37 +670,14 @@ class theme_custom_sign{
 		
 		return $datas;
 	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(theme_cache::is_user_logged_in() || !self::is_page())
-			return $alias;
-
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(theme_cache::is_user_logged_in() || !self::is_page()) 
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url([
+			return $config;
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url([
 				'action' => __CLASS__
-			]);?>';
-			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.E00001 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-			
-			m.init();
-		});
-		<?php
-	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
-
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
+			]),
+		];
+		return $config;
 	}
 }

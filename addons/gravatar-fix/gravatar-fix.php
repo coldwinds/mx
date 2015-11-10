@@ -8,12 +8,7 @@ Author URI: http://inn-studio.com
 Version: 1.1.2
 */
 if(!class_exists('theme_gravatar_fix')){
-	add_filter('theme_addons',function($fns){
-		$fns[] = 'theme_gravatar_fix::init';
-		return $fns;
-	});
 	class theme_gravatar_fix{
-		public static $iden = 'theme_gravatar_fix';
 		public static function init(){
 			add_filter('get_avatar_url', __CLASS__ . '::get_avatar_url');			
 			add_filter('theme_options_save', __CLASS__ . '::options_save');
@@ -25,7 +20,7 @@ if(!class_exists('theme_gravatar_fix')){
 		public static function display_backend(){
 			?>
 			<fieldset>
-				<legend><?= ___('Gravatar fix');?></legend>
+				<legend><i class="fa fa-fw fa-github-alt"></i> <?= ___('Gravatar fix');?></legend>
 				<p class="description"><?= ___('This feature can fix the gravatar image to display in China. Just for Chinese users. If using "Custom default gravatar" please DO NOT enable this feature.');?></p>
 				<table class="form-table">
 					<tbody>
@@ -74,4 +69,8 @@ if(!class_exists('theme_gravatar_fix')){
 			return preg_replace('/[0-9a-z]+\.gravatar\.com\/avatar/i', 'cn.gravatar.com/avatar', $url);
 		}
 	}
+	add_filter('theme_addons',function($fns){
+		$fns[] = 'theme_gravatar_fix::init';
+		return $fns;
+	});
 }

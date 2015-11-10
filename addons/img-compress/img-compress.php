@@ -4,10 +4,7 @@
  *
  * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_img_compress::init';
-	return $fns;
-});
+
 class theme_img_compress{
 	public static function init(){
 		add_filter('wp_handle_upload_prefilter', __CLASS__ . '::compress_jpeg_quality', 1, 99 );
@@ -52,7 +49,7 @@ class theme_img_compress{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('Image settings');?></legend>
+			<legend><i class="fa fa-fw fa-file-zip-o"></i> <?= ___('Image compress settings');?></legend>
 			<p class="description"><?= ___('Global image settings.');?></p>
 			<table class="form-table">
 				<tr>
@@ -125,4 +122,7 @@ class theme_img_compress{
 	    return $file;
 	}
 }
-
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_img_compress::init';
+	return $fns;
+});

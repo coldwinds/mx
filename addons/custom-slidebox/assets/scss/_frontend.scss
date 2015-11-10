@@ -210,6 +210,11 @@
 }
 .theme_custom_slidebox-ad-below{
 	margin-bottom: $grid-g-gutter;
+	z-index: 1;
+	position: relative;
+	@include view-phone{
+		margin-bottom: $grid-g-phone-gutter;
+	}
 }
 
 @include view-not-phone{

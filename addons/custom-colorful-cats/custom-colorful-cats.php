@@ -7,10 +7,6 @@ Description:	theme_colorful_cats
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_colorful_cats::init';
-	return $fns;
-});
 class theme_colorful_cats{
 	public static $colors = array(
 		'61b4ca',	'1eb32a',	'ee916f',	'a89d84',
@@ -18,11 +14,8 @@ class theme_colorful_cats{
 		'ca8661',	'333333',	'84a89e',	'a584a8'
 	);
 	public static function init(){
-		add_action('after_backend_tab_init',__CLASS__ . '::backend_js'); 
-		add_action('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias'); 
-		add_action('backend_css',__CLASS__ . '::backend_css'); 
-		add_action('page_settings',__CLASS__ . '::display_backend');
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
+		add_action('page_settings', __CLASS__ . '::display_backend');
+		add_filter('theme_options_save', __CLASS__ . '::options_save');
 	}
 	public static function get_options($key = null){
 		static $caches = null;
@@ -84,7 +77,7 @@ class theme_colorful_cats{
 		));
 		?>
 		<fieldset>
-			<legend><?= ___('Colorful category');?></legend>
+			<legend><i class="fa fa-fw fa-adjust"></i> <?= ___('Colorful category');?></legend>
 			<p class="description">
 				<?= ___('You can select the category and set color for category. Preset is random color.');?>
 			</p>
@@ -147,22 +140,8 @@ class theme_colorful_cats{
 		}
 		return $rgb;
 	}
-	public static function backend_css(){
-		?>
-		<link href="<?= theme_features::get_theme_addons_css(__DIR__,'backend',true);?>" rel="stylesheet"  media="all"/>
-		<?php
-	}
-	public static function backend_seajs_alias(array $alias = []){
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__,'backend');
-		return $alias;
-	}
-	public static function backend_js(){
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.init();
-		});
-		<?php
-	}
 }
-
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_colorful_cats::init';
+	return $fns;
+});

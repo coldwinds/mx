@@ -44,7 +44,7 @@ class theme_open_sign{
 		$opt = self::get_options();
 		?>
 		<fieldset>
-			<legend><?= ___('Open sign settings');?></legend>
+			<legend><i class="fa fa-fw fa-qq"></i> <?= ___('Open sign settings');?></legend>
 			<p class="description"><?= sprintf(___('You can use the third-part sign feature for easy to register and login.'));?></p>
 			<table class="form-table">
 				<tbody>

@@ -14,10 +14,15 @@
 }
 .panel{
 	border-radius: $global-border-radius;
-	margin-bottom: 2rem;
-	
+	margin-bottom: $grid-g-gutter;
+	@include view-phone{
+		margin-bottom: $grid-g-phone-gutter;
+	}
 	.heading{
-		margin-bottom: 1rem;
+		margin-bottom: ($grid-g-gutter / 2);
+		@include view-phone{
+			margin-bottom: ($grid-g-phone-gutter / 4);
+		}
 		.title{
 			display: inline-block;
 			font-size: 1rem;

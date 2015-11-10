@@ -2,28 +2,18 @@
 /*
 Feature Name:	theme_comment_emotion
 Feature URI:	http://inn-studio.com
-Version:		2.0.0
+Version:		2.0.2
 Description:	
 Author:			INN STUDIO
 Author URI:		http://inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_comment_emotion::init';
-	return $fns;
-});
 class theme_comment_emotion{
 	public static function init(){
 		add_filter('theme_options_save',__CLASS__ . '::options_save');
 		add_filter('theme_options_default',__CLASS__ . '::options_default');
-		add_action('frontend_seajs_use',__CLASS__ . '::frontend_seajs_use');
-		add_action('frontend_seajs_alias',__CLASS__ . '::frontend_seajs_alias');
 		add_action('page_settings',__CLASS__ . '::display_backend');
 
-		//add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
-
 		add_filter('pre_comment_content', __CLASS__ . '::filter_pre_comment_content');
-
-		add_action('wp_footer', __CLASS__ . '::wp_footer');
 	}
 	public static function options_default(array $opts = []){
 		$opts[__CLASS__] = [
@@ -107,7 +97,7 @@ class theme_comment_emotion{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('Comment emoticon settings');?></legend>
+			<legend><i class="fa fa-fw fa-smile-o"></i> <?= ___('Comment emoticon settings');?></legend>
 			<p class="description"><?= ___('Comment can use Kaomoji or image emotions if enable.');?></p>
 			<table class="form-table">
 				<tbody>
@@ -156,7 +146,6 @@ class theme_comment_emotion{
 		return self::get_options($key)[$type];
 	}
 	public static function display_frontend($type){
-		//var_dump(self::get_options());
 		switch($type){
 			case 'pop-btn':
 				?>
@@ -213,41 +202,8 @@ class theme_comment_emotion{
 		}
 		return $cache;
 	}
-	public static function frontend_css(){
-		if(!self::can_show()) 
-			return false;
-			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(self::can_show()){
-			$alias[__CLASS__] =  theme_features::get_theme_addons_js(__DIR__);
-		}
-		return $alias;
-	}
-	public static function wp_footer(){
-		if(self::can_show()){
-			?>
-			<div id="layer-coment-emotion"></div>
-			<?php
-		}
-	}
-	public static function frontend_seajs_use(){
-		if(!self::can_show()) 
-			return false;
-			
-		global $post;
-		
-		?>
-		seajs.use(['<?= __CLASS__;?>'],function(m){
-			m.init();
-		});
-		<?php
-	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_comment_emotion::init';
+	return $fns;
+});

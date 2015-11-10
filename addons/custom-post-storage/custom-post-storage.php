@@ -44,7 +44,7 @@ class theme_custom_storage{
 	public static function display_backend(){
 		?>
 		<fieldset>
-			<legend><?= ___('Storage settings');?></legend>
+			<legend><i class="fa fa-fw fa-cloud-download"></i> <?= ___('Storage settings');?></legend>
 			<p class="description"><?= ___('You can edit storage types here. They will display in contribution page.');?></p>
 			<table class="form-table">
 				<tbody>

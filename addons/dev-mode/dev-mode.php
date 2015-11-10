@@ -2,17 +2,12 @@
 /*
 Feature Name:	Developer mode
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.0
+Version:		2.0.1
 Description:	启用开发者模式，助于维护人员进行调试，运营网站请禁用此模式
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_dev_mode::init';
-	return $fns;
-});
 class theme_dev_mode{
-	public static $iden = 'theme_dev_mode';
 	private static $data = [];
 	public static function init(){
 		
@@ -37,15 +32,13 @@ class theme_dev_mode{
 	}
 	public static function get_options($key = null){
 		static $caches = [];
-		if(!isset($caches[self::$iden]))
-			$caches[self::$iden] = (array)theme_options::get_options(self::$iden);
+		if(!isset($caches[__CLASS__]))
+			$caches[__CLASS__] = (array)theme_options::get_options(__CLASS__);
 			
-		
-		
 		if($key === null){
-			return $caches[self::$iden];
+			return $caches[__CLASS__];
 		}else{
-			return isset($caches[self::$iden][$key]) ? $caches[self::$iden][$key] : false;
+			return isset($caches[__CLASS__][$key]) ? $caches[__CLASS__][$key] : false;
 		}
 	}
 	public static function mark_start_data(){
@@ -65,28 +58,28 @@ class theme_dev_mode{
 		$checked_performance = isset($opt['performance']) && $opt['performance'] == 1 ? ' checked ' : null;
 		?>
 		<fieldset>
-			<legend><?= ___('Related Options');?></legend>
+			<legend><i class="fa fa-fw fa-terminal"></i> <?= ___('Related Options');?></legend>
 			<p class="description"><?= ___('For developers to debug the site and it will affect the user experience if enable, please note.');?></p>
 			<table class="form-table">
 				<tbody>
 					<tr>
 						<th scope="row">
-							<label for="<?= self::$iden;?>-enabled"><?= ___('Developer mode');?></label>
+							<label for="<?= __CLASS__;?>-enabled"><?= ___('Developer mode');?></label>
 						</th>
 						<td>
-							<label for="<?= self::$iden;?>-enabled"><input id="<?= self::$iden;?>-enabled" name="<?= self::$iden;?>[enabled]" type="checkbox" value="1" <?= $checked;?> /> <?= ___('Enabled');?></label>
+							<label for="<?= __CLASS__;?>-enabled"><input id="<?= __CLASS__;?>-enabled" name="<?= __CLASS__;?>[enabled]" type="checkbox" value="1" <?= $checked;?> /> <?= ___('Enabled');?></label>
 
 							<span class="description"><?= ___('If enable, your site will work within development mode, or works within high performance product mode.');?></span>
 
-							<input type="hidden" name="<?= self::$iden;?>[old-enabled]" value="<?= $checked ? 1 : -1 ;?>">
+							<input type="hidden" name="<?= __CLASS__;?>[old-enabled]" value="<?= $checked ? 1 : -1 ;?>">
 						</td>
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="<?= self::$iden;?>-performance"><?= ___('Display frontend performance');?></label>
+							<label for="<?= __CLASS__;?>-performance"><?= ___('Display frontend performance');?></label>
 						</th>
 						<td>
-							<label for="<?= self::$iden;?>-performance"><input id="<?= self::$iden;?>-performance" name="<?= self::$iden;?>[performance]" type="checkbox" value="1" <?= $checked_performance;?> /> <?= ___('Enabled');?></label>
+							<label for="<?= __CLASS__;?>-performance"><input id="<?= __CLASS__;?>-performance" name="<?= __CLASS__;?>[performance]" type="checkbox" value="1" <?= $checked_performance;?> /> <?= ___('Enabled');?></label>
 							<span class="description"><?= ___('Display theme performance information on frontend from F12 console.');?></span>
 
 						</td>
@@ -94,10 +87,10 @@ class theme_dev_mode{
 					
 					<tr>
 						<th scope="row">
-							<label for="<?= self::$iden;?>-queries"><?= ___('Display database queries detail');?></label>
+							<label for="<?= __CLASS__;?>-queries"><?= ___('Display database queries detail');?></label>
 						</th>
 						<td>
-							<label for="<?= self::$iden;?>-queries"><input id="<?= self::$iden;?>-queries" name="<?= self::$iden;?>[queries]" type="checkbox" value="1" <?= $checked_queries;?> /> <?= ___('Enabled');?></label>
+							<label for="<?= __CLASS__;?>-queries"><input id="<?= __CLASS__;?>-queries" name="<?= __CLASS__;?>[queries]" type="checkbox" value="1" <?= $checked_queries;?> /> <?= ___('Enabled');?></label>
 							<span class="description"><?= ___('Display database queries detail on frontend from F12 console.');?></span>
 
 						</td>
@@ -110,7 +103,7 @@ class theme_dev_mode{
 	public static function display_backend_options_list(){
 		?>
 		<fieldset>
-			<legend><?= ___('Theme options debug');?></legend>
+			<legend><i class="fa fa-fw fa-bug"></i> <?= ___('Theme options list');?></legend>
 			<textarea class="code widefat" cols="50" rows="50" readonly ><?php esc_textarea(print_r(theme_options::get_options()));?></textarea>
 		</fieldset>
 		<?php
@@ -125,30 +118,13 @@ class theme_dev_mode{
 	 * 
 	 */
 	public static function options_save(array $options = []){
-		if(isset($_POST[self::$iden])){
-			$options[self::$iden] = $_POST[self::$iden];
-			//var_dump($options);exit;
+		if(isset($_POST[__CLASS__])){
+			$options[__CLASS__] = $_POST[__CLASS__];
 			
-			$old_enable = isset($_POST[self::$iden]['old-enabled']) ? $_POST[self::$iden]['old-enabled'] : -1;
+			$old_enable = isset($_POST[__CLASS__]['old-enabled']) ? $_POST[__CLASS__]['old-enabled'] : -1;
 
-			if(isset($options[self::$iden]['old-enabled']))
-				unset($options[self::$iden]['old-enabled']);
-
-			/**
-			 * Dev mode ON => OFF, do minify
-			 */
-			if($old_enable == 1 && !isset($_POST[self::$iden]['enabled'])){
-				@ini_set('max_input_nesting_level','9999');
-				@ini_set('max_execution_time','300'); 
-				
-				remove_dir(theme_features::get_stylesheet_directory() . theme_features::$basedir_js_min);
-				theme_features::minify_force(theme_features::get_stylesheet_directory() . theme_features::$basedir_js_src);
-				
-				remove_dir(theme_features::get_stylesheet_directory() . theme_features::$basedir_css_min);
-				theme_features::minify_force(theme_features::get_stylesheet_directory() . theme_features::$basedir_css_src);
-				
-				theme_features::minify_force(theme_features::get_stylesheet_directory() . theme_features::$basedir_addons);
-			}
+			if(isset($options[__CLASS__]['old-enabled']))
+				unset($options[__CLASS__]['old-enabled']);
 		}
 
 		return $options;
@@ -220,4 +196,7 @@ class theme_dev_mode{
 		<?php
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_dev_mode::init';
+	return $fns;
+});

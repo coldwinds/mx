@@ -46,7 +46,7 @@ class maintenance_mode{
 		?>
 		<!-- maintenance_mode -->
 		<fieldset>
-			<legend><?= ___('Maintenance Mode');?></legend>
+			<legend><i class="fa fa-fw fa-wrench"></i> <?= ___('Maintenance Mode');?></legend>
 			<p class="description"><?= ___('If your site needs to test privately, maybe fill a URL in the redirect area that the the visitors will see the redirect page but yourself, otherwise left blank.');?></p>
 			<p class="description"><strong><?= ___('Attention: if theme has frontend log-in page, please DO NOT use maintenance mode, or you can not log-in to background.');?></strong></p>
 			<table class="form-table">

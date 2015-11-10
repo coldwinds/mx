@@ -2,41 +2,35 @@
 /*
 Feature Name:	Comment AJAX
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.9
+Version:		2.0.11
 Description:	Use AJAX when browse/add/reply comment. (Recommended enable)
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_comment_ajax::init';
-	return $fns;
-});
 class theme_comment_ajax{
-	public static $iden = 'theme_comment_ajax';
 	public static function init(){
 		
-		add_filter('theme_options_default',			__CLASS__ . '::options_default');
+		add_filter('theme_options_default', __CLASS__ . '::options_default');
 		
-		add_filter('theme_options_save',			__CLASS__ . '::options_save');
+		add_filter('theme_options_save', __CLASS__ . '::options_save');
 
-		add_action('page_settings',					__CLASS__ . '::display_backend');
+		add_action('page_settings', __CLASS__ . '::display_backend');
 		
-		add_action('wp_footer',						__CLASS__ . '::thread_comments_js');
+		add_action('wp_footer', __CLASS__ . '::thread_comments_js');
 		
 		if(!self::is_enabled()) 
 			return;
 
-		add_filter('js_cache_request',		__CLASS__ . '::js_cache_request');
-		add_filter('cache_request',			__CLASS__ . '::cache_request');
+		add_filter('dynamic_request', __CLASS__ . '::dynamic_request');
+		add_filter('dynamic_request_process', __CLASS__ . '::dynamic_request_process');
 		
-		add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
-		add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
+		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
 		
-		add_action('pre_comment_on_post',	__CLASS__ . '::block_frontend_comment',1);
-		add_action('pre_comment_on_post',	__CLASS__ . '::pre_comment_on_post');
+		add_action('pre_comment_on_post', __CLASS__ . '::block_frontend_comment',1);
+		add_action('pre_comment_on_post', __CLASS__ . '::pre_comment_on_post');
 		
-		add_action('wp_ajax_' . self::$iden,	__CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . self::$iden,	__CLASS__ . '::process');
+		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
 		
 		
 	}
@@ -56,47 +50,68 @@ class theme_comment_ajax{
 		return self::get_options('enabled') == 1 ? true : false;
 	}
 	public static function options_default(array $opts = []){
-		$opts[self::$iden]['enabled'] = 1;
+		$opts[__CLASS__] = [
+			'enabled' => 1,
+			'lang-loading' => ___('Your comment is sending, please wait...'),
+			'lang-comment-success' => ___('Commented successfully, thank you!'),
+			'lang-logged-comment-success' => ___('Commented successfully, thank you!'),
+		];
 		return $opts;
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[self::$iden])){
-			$opts[self::$iden] = $_POST[self::$iden];
-			/**
-			 * if disable
-			 */
-			if(!isset($_POST[self::$iden]['enabled'])){
-				$opts[self::$iden]['enabled'] = -1;
-			}
+		if(isset($_POST[__CLASS__])){
+			$opts[__CLASS__] = $_POST[__CLASS__];
+			
 			
 		}
 		return $opts;
 	}
 	public static function get_options($key = null){
-		static $cache = null;
-		if($cache === null)
-			$cache = theme_options::get_options(self::$iden);
-
+		static $caches = null;
+		if($caches === null)
+			$caches = (array)theme_options::get_options(__CLASS__);
 		if($key){
-			return isset($cache[$key]) ? $cache[$key] : false;
-		}else{
-			return $cache;
+			if(isset($caches[$key])){
+				return $caches[$key];
+			}else{
+				$caches[$key] = isset(self::options_default()[__CLASS__][$key]) ? self::options_default()[__CLASS__][$key] : false;
+				return $caches[$key];
+			}
 		}
+		return $caches;
 	}
 	public static function display_backend(){
-		$is_checked = self::is_enabled() ? ' checked="checked" ' : null;
 		?>
 		<fieldset>
-			<legend><?= ___('Comment AJAX settings');?></legend>
+			<legend><i class="fa fa-fw fa-comments"></i> <?= ___('Comment AJAX settings');?></legend>
 			<p class="description"><?= ___('Submitted comment without refreshing page. Recommended enable to improve the user experience.');?></p>
 			<table class="form-table">
 				<tbody>
 					<tr>
-						<th scope="row"><label for="<?= self::$iden;?>-enabled"><?= ___('Enable comment AJAX');?></label></th>
+						<th><label for="<?= __CLASS__;?>-enabled"><?= ___('Enable or not?');?></label></th>
 						<td>
-							<input id="<?= self::$iden;?>-enabled" name="<?= self::$iden;?>[enabled]" type="checkbox" value="1" <?= $is_checked;?>/>
-							<label for="<?= self::$iden;?>-enabled"><?= ___('Enable');?></label>
-							
+							<select name="<?= __CLASS__;?>[enabled]" id="<?= __CLASS__;?>-enabled" class="widefat">
+								<?php the_option_list(-1,___('Disable'),self::get_options('enabled'));?>
+								<?php the_option_list(1,___('Enable'),self::get_options('enabled'));?>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="<?= __CLASS__;?>-lang-loading"><?= ___('Submitting text');?></label></th>
+						<td>
+							<input type="text" class="widefat" name="<?= __CLASS__;?>[lang-loading]" id="<?= __CLASS__;?>-lang-loading" value="<?= self::get_options('lang-loading');?>">
+						</td>
+					</tr>
+					<tr>
+						<th><label for="<?= __CLASS__;?>-lang-comment-success"><?= ___('Submitted success for visitor');?></label></th>
+						<td>
+							<input type="text" class="widefat" name="<?= __CLASS__;?>[lang-comment-success]" id="<?= __CLASS__;?>-lang-comment-success" value="<?= self::get_options('lang-comment-success');?>">
+						</td>
+					</tr>
+					<tr>
+						<th><label for="<?= __CLASS__;?>-lang-logged-comment-success"><?= ___('Submitted success for logged user');?></label></th>
+						<td>
+							<input type="text" class="widefat" name="<?= __CLASS__;?>[lang-logged-comment-success]" id="<?= __CLASS__;?>lang-logged-comment-success" value="<?= self::get_options('lang-logged-comment-success');?>">
 						</td>
 					</tr>
 				</tbody>
@@ -269,7 +284,7 @@ class theme_comment_ajax{
 				}else{
 					$output['comment'] = $content;
 				}
-				$output['msg'] = ___('Commented successfully, thank you!');
+				$output['msg'] = theme_cache::is_user_logged_in() ? self::get_options('lang-logged-comment-success') : self::get_options('lang-comment-success');
 				$output['post_id'] = $comment_post_ID;
 				die(theme_features::json_format($output));
 			}
@@ -440,51 +455,42 @@ class theme_comment_ajax{
 			die(theme_features::json_format($output));
 		}
 	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(self::can_comment()){
-			$alias[self::$iden] = theme_features::get_theme_addons_js(__DIR__);
-		}
-		return $alias;
-	}
 	private static function can_comment(){
 		static $cache = null;
 		if($cache === null)
 			$cache = self::is_enabled() && theme_cache::is_singular() && !post_password_required() && comments_open();
 		return $cache;
 	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(!self::can_comment())
-			return false;
+			return $config;
 			
 		global $post;
-			?>
-		seajs.use('<?= self::$iden;?>',function(m){
-			m.config.pagi_process_url = '<?= theme_features::get_process_url([
-				'action' => self::$iden,
+		/** config */
+		$config[__CLASS__] = [
+			'pagi_process_url' => theme_features::get_process_url([
+				'action' => __CLASS__,
 				'type' => 'get-comments',
 				'post-id' => $post->ID,
 				'cpage' => 'n',
-			]);?>';
-			m.config.process_url = '<?= theme_features::get_process_url([
-				'action' => self::$iden,
-			]);?>';
-			m.config.post_id = <?= $post->ID;?>;
-			m.config.lang.M01 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.M02 = '<?= ___('Commented successfully, thank you!');?>';
-			
-			m.config.lang.M03 = '<i class="fa fa-arrow-left"></i>';
-			m.config.lang.M04 = '<i class="fa fa-arrow-right"></i>';
-			m.config.lang.M05 = '<?= ___('{n} page');?>';
-			
-			m.config.lang.E01 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-			m.init();
-		});
-		<?php
+			]),
+			'process_url' => theme_features::get_process_url([
+				'action' => __CLASS__,
+			]),
+			'post_id' => $post->ID,
+			'lang' => [
+				'M01' => self::get_options('lang-loading'),
+				'M02' => '<i class="fa fa-arrow-left"></i>',
+				'M03' => '<i class="fa fa-arrow-right"></i>',
+				'M04' => ___('{n} page'),
+			],
+		];
+		return $config;
 	}
-	public static function js_cache_request(array $output = []){
+	public static function dynamic_request(array $output){
 		if(self::can_comment()){
 			global $post;
-			$output[self::$iden] = [
+			$output[__CLASS__] = [
 				'type' => 'get-comments',
 				'post-id' => $post->ID,
 				'cpage' => get_query_var('cpage'),
@@ -493,10 +499,10 @@ class theme_comment_ajax{
 		return $output;
 	}
 
-	public static function cache_request(array $output = []){
+	public static function dynamic_request_process(array $output){
 
-		if(isset($_GET[self::$iden]) && is_array($_GET[self::$iden])){
-			$get = $_GET[self::$iden];
+		if(isset($_GET[__CLASS__]) && is_array($_GET[__CLASS__])){
+			$get = $_GET[__CLASS__];
 			
 			$post_id = isset($get['post-id']) && is_string($get['post-id']) ? (int)$get['post-id'] : null;
 			
@@ -534,7 +540,7 @@ class theme_comment_ajax{
 						$user_url = theme_cache::get_author_posts_url($current_user->ID);
 						$avatar_url =  theme_cache::get_avatar_url($current_user->ID);
 					}
-					$output[self::$iden] = [
+					$output[__CLASS__] = [
 						'comments' => self::get_comments_list($post_id,$cpage),
 						'count' => $post ? $post->comment_count : 0,
 						'pages' => $pages,
@@ -546,12 +552,14 @@ class theme_comment_ajax{
 						'avatar-url' => $avatar_url,
 					];
 					if(isset($user_email))
-						$output[self::$iden]['user-email'] = $user_email;
+						$output[__CLASS__]['user-email'] = $user_email;
 					break;
 			}
 		}
 		return $output;
 	}
 }
-
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_comment_ajax::init';
+	return $fns;
+});

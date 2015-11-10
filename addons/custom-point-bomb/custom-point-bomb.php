@@ -11,7 +11,6 @@ class theme_custom_point_bomb{
 	public static $page_slug = 'account';
 	
 	public static function init(){
-		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_css');
 		
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
@@ -24,8 +23,7 @@ class theme_custom_point_bomb{
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
 		
-		add_filter('frontend_seajs_alias', __CLASS__ . '::frontend_seajs_alias');
-		add_action('frontend_seajs_use', __CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
 
 		add_filter('custom_point_value_default', __CLASS__ . '::filter_custom_point_value_default');
 
@@ -747,28 +745,17 @@ class theme_custom_point_bomb{
 		}
 		return $alias;
 	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(!self::is_page()) 
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
-			m.config.lang.M01 = '<?= ___('Target locking...');?>';
-			m.config.lang.M02 = '<?= ___('Bombing, please wait...');?>';
-			m.config.lang.E01 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-			m.init();
-		});
-		<?php
-	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
+			return $config;
 			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url(array('action' => __CLASS__)),
+			'lang' => [
+				'M01' => ___('Target locking...'),
+				'M02' => ___('Bombing, please wait...'),
+			],
+		];
+		return $config;
 	}
 }

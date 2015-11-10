@@ -22,10 +22,7 @@ class theme_page_cats{
 		
 		add_filter('theme_options_save', 	__CLASS__ . '::options_save');
 
-		add_action('backend_seajs_alias',__CLASS__ . '::backend_seajs_alias');
-
-		add_action('after_backend_tab_init',__CLASS__ . '::backend_seajs_use'); 
-		
+		add_filter('backend_js_config',__CLASS__ . '::backend_js_config');
 	}
 	public static function get_options($key = null){
 		static $caches = null;
@@ -44,7 +41,7 @@ class theme_page_cats{
 		$opt = self::get_options();
 		?>
 		<fieldset>
-			<legend><?= ___('Categories index settings');?></legend>
+			<legend><i class="fa fa-fw fa-sitemap"></i> <?= ___('Categories index settings');?></legend>
 			<p class="description"><?= ___('Display posts number or alphabet slug index on categories index page.')?></p>
 			<table class="form-table">
 				<tbody>
@@ -192,17 +189,10 @@ class theme_page_cats{
 		echo $cache;
 		unset($cache,$slugs);
 	}
-	public static function backend_seajs_alias(array $alias = []){
-		$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__,'backend');
-		return $alias;
-	}
-	public static function backend_seajs_use(){
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action'=>__CLASS__));?>';
-			m.config.lang.M00001 = '<?= ___('Loading, please wait...');?>';
-			m.init();
-		});
-		<?php
+	public static function backend_js_config(array $config){
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url(array('action'=>__CLASS__)),
+		];
+		return $config;
 	}
 }

@@ -2,10 +2,7 @@
 /** 
  * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_collection::init';
-	return $fns;
-});
+
 class theme_custom_collection{
 	public static $page_slug = 'account';
 	public static $file_exts = array('png','jpg','gif','jpeg');
@@ -13,9 +10,7 @@ class theme_custom_collection{
 
 
 	public static function init(){
-		add_filter('frontend_seajs_alias',	__CLASS__ . '::frontend_seajs_alias');
-	
-		add_action('frontend_seajs_use',	__CLASS__ . '::frontend_seajs_use');
+		add_filter('frontend_js_config',	__CLASS__ . '::frontend_js_config');
 
 		add_filter('theme_options_save', 	__CLASS__ . '::options_save');
 		add_filter('theme_options_default', 	__CLASS__ . '::options_default');
@@ -30,8 +25,6 @@ class theme_custom_collection{
 		if(!self::is_enabled())
 			return;
 			
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
-
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
@@ -74,7 +67,7 @@ class theme_custom_collection{
 		$opt = (array)self::get_options();
 		?>
 		<fieldset>
-			<legend><?= ___('Collection settings');?></legend>
+			<legend><i class="fa fa-fw fa-leanpub"></i> <?= ___('Collection settings');?></legend>
 			<table class="form-table">
 				<tr>
 					<th><label for="<?= __CLASS__;?>-enabled"><?= ___('Enable or not?');?></label></th>
@@ -167,7 +160,6 @@ class theme_custom_collection{
 <div class="clt-list row" id="clt-list-<?= $placeholder; ?>" data-id="<?= $placeholder;?>">
 	<div class="g-tablet-1-3 g-desktop-1-6">
 		<div class="clt-list-thumbnail-container">
-			<img src="<?= theme_functions::$thumbnail_placeholder;?>" alt="Placeholder" class="media-object placeholder">
 			<div id="clt-list-thumbnail-preview-container-<?= $placeholder;?>" class="clt-list-thumbnail-preview-container">
 				<img id="clt-list-thumbnail-<?= $placeholder;?>" src="<?= theme_functions::$thumbnail_placeholder;?>" title="<?= ___('Post preview');?>" alt="" class="clt-list-thumbnail-preview">
 				<input type="hidden" id="clt-list-thumbnail-url-<?= $placeholder ;?>" name="clt[posts][<?= $placeholder;?>][thumbnail-url]" value="<?= theme_functions::$thumbnail_placeholder;?>">
@@ -571,45 +563,33 @@ class theme_custom_collection{
 
 		return '<div class="collection-list list-group">' . html_minify($tpl) . '</div>';
 	}
-	public static function frontend_seajs_alias(array $alias = []){
-		if(self::is_page()){
-			$alias[__CLASS__] = theme_features::get_theme_addons_js(__DIR__);
-		}
-		return $alias;
-	}
-	public static function frontend_seajs_use(){
+	public static function frontend_js_config(array $config){
 		if(!self::is_page()) 
-			return false;
-		?>
-		seajs.use('<?= __CLASS__;?>',function(m){
-			m.config.process_url = '<?= theme_features::get_process_url(array('action' => __CLASS__));?>';
-			m.config.min_posts = <?= self::get_posts_number('min');?>;
-			m.config.max_posts = <?= self::get_posts_number('max');?>;
-			m.config.tpl_input = <?= json_encode(self::get_input_tpl('%placeholder%'));?>;
-			m.config.tpl_preview = <?= json_encode(self::get_list_tpl([
-				'preview' => true,
-			]));?>;
-			m.config.lang.M01 = '<?= ___('Loading, please wait...');?>';
-			m.config.lang.M02 = '<?= ___('A item has been deleted.');?>';
-			m.config.lang.M03 = '<?= ___('Getting post data, please wait...');?>';
-			m.config.lang.M04 = '<?= ___('Previewing, please wait...');?>';
-			m.config.lang.E01 = '<?= ___('Sorry, server is busy now, can not respond your request, please try again later.');?>';
-			m.config.lang.E02 = '<?= sprintf(___('Sorry, the minimum number of posts is %d.'),self::get_posts_number('min'));?>';
-			m.config.lang.E03 = '<?= sprintf(___('Sorry, the maximum number of posts is %d.'),self::get_posts_number('max'));?>';
-			m.config.lang.E04 = '<?= ___('Sorry, the post id must be number, please correct it.');?>';
-			m.init();
-		});
-		<?php
-	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
+			return $config;
 			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__, 'post-new'),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
+		$config[__CLASS__] = [
+			'process_url' => theme_features::get_process_url(array('action' => __CLASS__)),
+			'min_posts' => self::get_posts_number('min'),
+			'max_posts' => self::get_posts_number('max'),
+			'tpl_input' => self::get_input_tpl('%placeholder%'),
+			'tpl_preview' => self::get_list_tpl([
+				'preview' => true,
+			]),
+			'lang' => [
+				'M01' => ___('Loading, please wait...'),
+				'M02' => ___('A item has been deleted.'),
+				'M03' => ___('Getting post data, please wait...'),
+				'M04' => ___('Previewing, please wait...'),
+				'E01' => ___('Sorry, server is busy now, can not respond your request, please try again later.'),
+				'E02' => sprintf(___('Sorry, the minimum number of posts is %d.'),self::get_posts_number('min')),
+				'E03' => sprintf(___('Sorry, the maximum number of posts is %d.'),self::get_posts_number('max')),
+				'E04' => ___('Sorry, the post id must be number, please correct it.')
+			],
+		];
+		return $config;
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_collection::init';
+	return $fns;
+});

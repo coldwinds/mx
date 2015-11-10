@@ -85,7 +85,7 @@ class theme_cache{
 	public static function display_backend(){
 		?>
 		<fieldset id="<?= __CLASS__;?>">
-			<legend><?= ___('Theme cache');?></legend>
+			<legend><i class="fa fa-fw fa-hourglass-end"></i> <?= ___('Theme cache');?></legend>
 			<p class="description"><?= ___('Maybe the theme used cache for improve performance, you can clean it when you modify some site contents if you want.');?></p>
 			<table class="form-table">
 				<tbody>
