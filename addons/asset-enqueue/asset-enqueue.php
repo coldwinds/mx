@@ -25,7 +25,8 @@ class theme_asset_enqueue{
 			],
 			'awesome' => [
 				'deps' => [],
-				'url' => theme_features::get_theme_css('modules/awesome/4.4.0/css/font-awesome'),
+				'url' => '//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css',
+				'version' => null,
 			],
 			
 		];
@@ -99,15 +100,15 @@ class theme_asset_enqueue{
 				'deps' => ['awesome'],
 				'url' =>  theme_features::get_theme_css($frontend_css),
 			],
-			//'awesome' => [
-			//	'deps' => [],
-			//	'url' => '//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css',
-			//	'version' => null,
-			//],
 			'awesome' => [
 				'deps' => [],
-				'url' => theme_features::get_theme_css('modules/awesome/4.4.0/css/font-awesome'),
+				'url' => '//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css',
+				'version' => null,
 			],
+			//'awesome' => [
+			//	'deps' => [],
+			//	'url' => theme_features::get_theme_css('modules/awesome/4.4.0/css/font-awesome'),
+			//],
 			
 		];
 

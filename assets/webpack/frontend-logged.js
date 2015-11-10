@@ -6,6 +6,7 @@ require('modules/menu-mobile')();
 require('modules/archive-pagination')();
 require('modules/search')();
 require('modules/toggle-on-js')();
+require('modules/lazyload')();
 
 /** addons common*/
 require('addons/comment-ajax/assets/js/frontend')();
