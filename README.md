@@ -1,4 +1,4 @@
-一款很棒（作者自评）且很豪华的 ACG 展示类主题，拥有高效的运作和丰富的功能。
+一款很棒且很豪华的资源展示类主题，拥有高效的运作和丰富的功能。
 
 - 详细介绍： [http://inn-studio.com/mx](http://inn-studio.com/mx)
 - 演示站点： [http://acg12.com](http://acg12.com)
@@ -9,7 +9,7 @@
 [![](http://ww2.sinaimg.cn/mw600/686ee05djw1ewtvqn87mzj211y0lctbe.jpg)](http://ww2.sinaimg.cn/large/686ee05djw1ewtkz4ifgmj211h429b29.jpg)
 
 ##  ▼ 首页
-[![](http://ww2.sinaimg.cn/thumb150/686ee05djw1ewtkz4ifgmj211h429b29.jpg)](http://ww2.sinaimg.cn/large/686ee05djw1ewtkz4ifgmj211h429b29.jpg)
+[![](http://ww3.sinaimg.cn/thumb150/686ee05djw1exvxc8up3ij20m81xwn4c.jpg)](http://ww3.sinaimg.cn/large/686ee05djw1exvxc8up3ij20m81xwn4c.jpg)
 
 ##  ▼ 手机版
 [![](http://ww4.sinaimg.cn/thumb150/686ee05djw1ewtvpzl50bj20go0rt0vr.jpg)](http://ww4.sinaimg.cn/large/686ee05djw1ewtvpzl50bj20go0rt0vr.jpg)
@@ -33,7 +33,7 @@
 [![](http://ww3.sinaimg.cn/thumb150/686ee05djw1ewtvqv5q44j20nd0aijve.jpg)](http://ww3.sinaimg.cn/large/686ee05djw1ewtvqv5q44j20nd0aijve.jpg)
 
 ##  ▼ 精美 + 强大的后台
-[![](http://ww3.sinaimg.cn/thumb150/686ee05djw1ewtvqrxl16j20ft0gxwhb.jpg)](http://ww3.sinaimg.cn/large/686ee05djw1ewtvqrxl16j20ft0gxwhb.jpg)
+[![](http://ww4.sinaimg.cn/thumb150/686ee05djw1exvxdb4h0bj20fn0ckgot.jpg)](http://ww4.sinaimg.cn/large/686ee05djw1exvxdb4h0bj20fn0ckgot.jpg)
 
 # 主题说明
 这是一款无插件收费主题，功能丰富，加载快速，百万流量无鸭梨。
@@ -42,3 +42,4 @@
 - 演示站点： [http://acg12.com](http://acg12.com)
 
 
+使用前请联系作者进行授权。
