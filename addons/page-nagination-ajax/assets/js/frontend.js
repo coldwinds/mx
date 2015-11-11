@@ -26,7 +26,6 @@ module.exports = function(){
 		};
 		
 	config = array_merge(config, window.THEME_CONFIG.theme_page_nagination_ajax);
-	
 
 	var page_nagi = {
 		init : function(){
@@ -123,7 +122,7 @@ module.exports = function(){
 			$parent.addEventListener(click_handle,event_img_click);
 		}
 	}
-	pagi_ajax = function(){
+	function pagi_ajax(){
 		if(!cache.$nagi)
 			return;
 			
