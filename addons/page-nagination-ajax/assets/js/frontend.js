@@ -1,5 +1,6 @@
 var ajax_loading_tip = require('modules/ajax-loading-tip');
 var array_merge = require('modules/array-merge');
+var scroll_to = require('modules/scroll-to');
 var window_scroll = require('modules/window-scroll');
 var ready = require('modules/ready');
 var click_handle = require('modules/click-handle');
@@ -219,7 +220,8 @@ function pagi_ajax(){
 	function hash(){
 		var url = config.url_tpl.replace(9999,config.page);
 		history.replaceState(null,null,url);
-		location.hash = cache.$post.id;
+		scroll_to(cache.post_top);
+		//location.hash = cache.$post.id;
 	}
 	function pagenumber(){
 		/** set page */
