@@ -1,7 +1,8 @@
 var ajax_loading_tip = require('modules/ajax-loading-tip');
 var array_merge = require('modules/array-merge');
 var scroll_to = require('modules/scroll-to');
-
+var ready = require('modules/ready');
+var click_handle = require('modules/click-handle');
 module.exports = function(){
 	'use strict';
 
@@ -26,7 +27,6 @@ module.exports = function(){
 		};
 		
 	config = array_merge(config, window.THEME_CONFIG.theme_page_nagination_ajax);
-	
 
 	var page_nagi = {
 		init : function(){
@@ -123,7 +123,7 @@ module.exports = function(){
 			$parent.addEventListener(click_handle,event_img_click);
 		}
 	}
-	pagi_ajax = function(){
+	function pagi_ajax(){
 		if(!cache.$nagi)
 			return;
 			
