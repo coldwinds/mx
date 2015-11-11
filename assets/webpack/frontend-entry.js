@@ -36,8 +36,9 @@ require('addons/custom-slidebox/assets/js/frontend')();
 require('addons/custom-homebox/assets/js/frontend')();
 require('addons/custom-attachment-page/assets/js/frontend')();
 require('addons/custom-post-point/assets/js/frontend')();
+var pna = require('addons/page-nagination-ajax/assets/js/frontend');
+	pna.init();
 require('addons/full-width-mode/assets/js/frontend')();
-require('addons/page-nagination-ajax/assets/js/frontend')();
 require('addons/post-share/assets/js/frontend')();
 require('addons/post-views/assets/js/frontend')();
 

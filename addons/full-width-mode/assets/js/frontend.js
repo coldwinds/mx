@@ -37,10 +37,10 @@ module.exports = function(){
 		if(window.jQuery){
 			jQuery(window).resize();
 		}
-		try{
-			var page_nagi = require('addons/page-nagination-ajax/assets/js/frontend');
-			page_nagi.reset_nagi_style();
-		}catch(e){}
+		//try{
+			var pna = require('addons/page-nagination-ajax/assets/js/frontend');
+				pna.page_nagi.reset_nagi_style();
+		//}catch(e){}
 	}
 	function expand(set){
 		cache.$btn.classList.remove('fa-angle-right');

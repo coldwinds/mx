@@ -82,7 +82,7 @@ class theme_page_nagination_ajax{
 			'post_id' => $post->ID,
 			'numpages' => $numpages,
 			'page' => $page,
-			'url_tpl' => json_encode(theme_features::get_link_page_url(9999)),
+			'url_tpl' => theme_features::get_link_page_url(9999),
 			'lang' => [
 				'M02' => ___('Content loaded.'),
 				'M03' => ___('Already first page.'),
