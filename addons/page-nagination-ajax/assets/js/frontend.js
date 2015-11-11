@@ -1,16 +1,10 @@
 var ajax_loading_tip = require('modules/ajax-loading-tip');
 var array_merge = require('modules/array-merge');
-var scroll_to = require('modules/scroll-to');
 var window_scroll = require('modules/window-scroll');
 var ready = require('modules/ready');
 var click_handle = require('modules/click-handle');
 var get_ele_top = require('modules/get-ele-top');
 var get_ele_left = require('modules/get-ele-left');
-'use strict';
-
-
-
-
 
 var cache = {},
 	config = {
