@@ -27,13 +27,7 @@ module.exports = function(){
 		
 	config = array_merge(config, window.THEME_CONFIG.theme_page_nagination_ajax);
 	
-	function init(){
-		ready(function(){
-			page_nagi.init();
-			pagi_ajax();
-			img_link();
-		});
-	}
+
 	var page_nagi = {
 		init : function(){
 			var that = this;
@@ -111,7 +105,7 @@ module.exports = function(){
 			return l;
 		}
 	};
-	img_link = function(){
+	function img_link(){
 		if(!cache.$nagi)
 			return;
 		var $imgs = cache.$post_content.querySelectorAll('a > img'),
@@ -264,6 +258,12 @@ module.exports = function(){
 			return cache.$current == cache.$next && config.page == config.numpages;
 		}
 	}
-
+	function init(){
+		ready(function(){
+			page_nagi.init();
+			pagi_ajax();
+			img_link();
+		});
+	}
 	init();
 }

@@ -1,5 +1,5 @@
 module.exports = function(){
-/*!
+/*
  * Lazy Load Images without jQuery
  * http://kaizau.github.com/Lazy-Load-Images-without-jQuery/
  *
