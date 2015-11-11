@@ -1105,11 +1105,15 @@ class theme_features{
 	/**
 	 * check_timestamp
 	 *
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	public static function check_timestamp(){
 		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
 			theme_file_timestamp::set_timestamp();
+			/** clear opcache */
+			if(function_exists('opcache_reset')){
+				opcache_reset();
+			}
 		}
 	}
 	/**
@@ -1123,7 +1127,7 @@ class theme_features{
 		/**
 		 * Load language_pack
 		 */
-		load_theme_textdomain(theme_functions::$iden,self::get_stylesheet_directory().'/languages' );
+		load_theme_textdomain(theme_functions::$iden, self::get_stylesheet_directory().'/languages' );
 		/**
 		 * Custom login logo url
 		 */
@@ -1147,8 +1151,8 @@ class theme_features{
 		 */
 		add_theme_support('automatic-feed-links');
 		remove_action('wp_head', 'wp_generator');
-		add_filter('body_class',__CLASS__ . '::theme_body_classes');
-		add_action('wp_before_admin_bar_render',__CLASS__ . '::remove_wp_support');
+		add_filter('body_class', __CLASS__ . '::theme_body_classes');
+		add_action('wp_before_admin_bar_render', __CLASS__ . '::remove_wp_support');
 	}
 	public static function remove_wp_support(){
 		global $wp_admin_bar;

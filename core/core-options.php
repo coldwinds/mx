@@ -85,10 +85,6 @@ class theme_options{
 		</script>
 		<?php
 	}
-	public static function backend_seajs_alias(array $alias = []){
-		$alias['backend'] = theme_features::get_theme_js('backend');
-		return $alias;
-	}
 	public static function display_backend(){
 		?>
 		<div class="wrap">

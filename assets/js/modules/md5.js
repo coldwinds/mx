@@ -1,4 +1,3 @@
-define(function(require, exports){
 module.exports = function(str) {
   //  discuss at: http://phpjs.org/functions/md5/
   // original by: Webtoolkit.info (http://www.webtoolkit.info/)
@@ -277,5 +276,4 @@ module.exports = function(str) {
   var temp = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
 
   return temp.toLowerCase();
-};
-});
+}
