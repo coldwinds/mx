@@ -1,6 +1,6 @@
 <?php
 /** 
- * @version 1.0.3
+ * @version 1.0.4
  */
 class theme_custom_contribution{
 	public static $page_slug = 'account';
@@ -13,7 +13,6 @@ class theme_custom_contribution{
 
 		add_filter('theme_options_save', __CLASS__ . '::options_save');
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
-		
 		
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 
@@ -496,6 +495,10 @@ class theme_custom_contribution{
 	private static function get_update_post_status($old_status){
 		if($old_status === 'pending')
 			return 'pending';
+		/** if is editor, return old status */
+		if(theme_cache::current_user_can('edit_pages'))
+			return 'publish';
+		/** if is lower than editor, check the pending after edited */
 		return theme_cache::current_user_can('publish_posts') && self::is_pending_after_edited() ? 'pending' : 'publish';
 	}
 	public static function get_order_cats(){

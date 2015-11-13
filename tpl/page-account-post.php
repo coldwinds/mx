@@ -106,7 +106,7 @@ function post_form($post_id = null){
 				<?= ___('Post excerpt');?>
 			</label>
 			<div class="g-tablet-5-6">
-				<textarea name="ctb[post-excerpt]" id="ctb-excerpt" rows="3" class="form-control" placeholder="<?= ___('Your can write the post excerpt here, it will show every page nagination header.');?>"><?= $post_excerpt;?></textarea>
+				<textarea name="ctb[post-excerpt]" id="ctb-excerpt" rows="3" class="form-control" placeholder="<?= ___('Your can write excerpt for describe the post, it will show every page nagination header.');?>"><?= $post_excerpt;?></textarea>
 			</div>
 		</div>
 		<!-- post content -->

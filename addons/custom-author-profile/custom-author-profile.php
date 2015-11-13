@@ -1,9 +1,9 @@
 <?php
 /**
- * @version 1.0.1
+ * @version 1.0.2
  */
 class theme_custom_author_profile{
-	public static $cache_expire = 3600*12;
+	public static $cache_expire = 43200;
 
 	public static $user_meta_key = array(
 		'followers_count' 	=> 'followers_count',
