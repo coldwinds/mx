@@ -86,6 +86,9 @@ class theme_custom_sign{
 						'status' => 'success',
 						'msg' => ___('Login successfully'),
 						'user' => [
+							'nicename' => theme_cache::get_the_author_meta('user_nicename',$user['user-id']),
+							'description' => theme_cache::get_the_author_meta('description',$user['user-id']),
+							'id' => $user['user-id'],
 							'avatar_url' => theme_cache::get_avatar_url($user['user-id']),
 							'display_name' => theme_cache::get_the_author_meta('display_name',$user['user-id']),
 						],
