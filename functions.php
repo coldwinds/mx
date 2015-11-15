@@ -31,8 +31,8 @@ class theme_functions{
 	/** 
 	 * theme_meta_translate(
 	 */
-	public static function theme_meta_translate(){
-		return [
+	public static function theme_meta_translate($key = null){
+		$data = [
 			'name' => ___('MX'),
 			'theme_url' => ___('http://inn-studio.com/mx'),
 			'author_url' => ___('http://inn-studio.com'),
@@ -49,6 +49,9 @@ class theme_functions{
 			'edition' => ___('Professional edition'),
 			'des' => ___('MX - Dream starts'),
 		];
+		if(!$key)
+			return $data;
+		return isset($data[$key]) ? $data[$key] : false;
 	}
 	/** 
 	 * init

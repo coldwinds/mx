@@ -8,10 +8,6 @@ Author:			INN STUDIO
 Author URI:		http://inn-studio.com
 */
 
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_cache::init';
-	return $fns;
-});
 class theme_cache{
 	public static $cache;
 	public static $cache_base_key;
@@ -688,4 +684,7 @@ class theme_cache{
 		return;
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_cache::init';
+	return $fns;
+});
