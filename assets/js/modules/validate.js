@@ -11,7 +11,6 @@ module.exports = function(){
 	this.loading_tx = false;
 	this.error_tx = 'Sorry, the server is busy, please try again later.';
 	this.$fm = false;
-
 	this.done_close = false;
 
 	this.done = function(){};
@@ -27,7 +26,6 @@ module.exports = function(){
 	
 	var ajax = {
 		init : function(){
-			that.before();/** callback before */
 			
 			if(!cache.$submit){
 				cache.$submit = that.$fm.querySelector('.submit');
@@ -39,9 +37,13 @@ module.exports = function(){
 			cache.$submit.setAttribute('disabled',true);
 			ajax_loading_tip('loading',cache.submit_loading_tx);
 
-			var xhr = new XMLHttpRequest(),
-				fd = new FormData(that.$fm);
-			fd.append('theme-nonce',window.DYNAMIC_REQUEST['theme-nonce']);
+			var xhr = new XMLHttpRequest();
+			fd = new FormData(that.$fm);
+			fd.append('theme-nonce', window.DYNAMIC_REQUEST['theme-nonce']);
+			
+			/** callback before */
+			that.before(fd);
+			
 			xhr.open('POST',that.process_url);
 			xhr.send(fd);
 			xhr.onload = function(){

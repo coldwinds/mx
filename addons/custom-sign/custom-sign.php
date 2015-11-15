@@ -109,18 +109,24 @@ class theme_custom_sign{
 	}
 	public static function options_default(array $opts = []){
 		$opts[__CLASS__] = [
-			'avatar-url' => 'http://ww3.sinaimg.cn/thumb150/686ee05djw1eriqgtewe7j202o02o3y9.jpg'
+			'avatar-url' => 'http://ww3.sinaimg.cn/thumb150/686ee05djw1eriqgtewe7j202o02o3y9.jpg',
+			'lang-login-success' => ___('Login successfully, page is refreshing, please wait...'),
 		];
 		return $opts;
 	}
 	public static function get_options($key = null){
 		static $caches = [];
-		if(!isset($caches[__CLASS__]))
-			$caches[__CLASS__] = theme_options::get_options(__CLASS__);
+		if(!isset($caches))
+			$caches = theme_options::get_options(__CLASS__);
 
-		if($key)
-			return isset($caches[__CLASS__][$key]) ? $caches[__CLASS__][$key] : null;
-		return $caches[__CLASS__];
+		if($key){
+			if(isset($caches[$key]) && !empty($caches[$key])){
+				return $caches[$key];
+			}else{
+				return self::options_default()[__CLASS__][$key];
+			}
+		}
+		return $caches;
 	}
 	public static function display_backend(){
 		?>
@@ -144,6 +150,12 @@ class theme_custom_sign{
 					<tr>
 						<th><?= ___('Terms of service page URL');?></th>
 						<td><input type="url" name="<?= __CLASS__;?>[tos-url]" id="<?= __CLASS__;?>-tos-url" class="widefat code" value="<?= self::get_tos_url();?>"></td>
+					</tr>
+					<tr>
+						<th><?= ___('After successful text tip');?></th>
+						<td>
+							<input type="text" class="widefat" name="<?= __CLASS__;?>[lang-login-success]" id="<?= __CLASS__;?>-lang-login-success" value="<?= self::get_options('lang-login-success');?>">
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -427,7 +439,7 @@ class theme_custom_sign{
 					'remember' => isset($user['remember']) ? true : false,
 				));
 				if($output['status'] === 'success'){
-					$output['msg'] = ___('Login successfully, page is refreshing, please wait...');
+					$output['msg'] = self::get_options('lang-login-success');
 				}else{
 					die(theme_features::json_format($output));
 				}

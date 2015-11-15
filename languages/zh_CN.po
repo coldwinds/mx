@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: MX\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-15 12:25+0800\n"
-"PO-Revision-Date: 2015-11-15 12:27+0800\n"
+"PO-Revision-Date: 2015-11-15 14:09+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -4923,11 +4923,11 @@ msgid "Post excerpt"
 msgstr "文章摘要"
 
 #: tpl/page-account-post.php:109
-#, fuzzy
 msgid ""
 "Your can write excerpt for describe the post, it will show every page "
 "nagination header."
-msgstr "您可以在这里填写文章摘要，如果是分页的话将会显示在每页的顶部。"
+msgstr ""
+"您可以在这里填写摘要向大家简单介绍一下，如果是分页的话将会显示在每页的顶部。"
 
 #: tpl/page-account-post.php:116
 msgid "Post content"

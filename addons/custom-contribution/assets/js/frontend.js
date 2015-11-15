@@ -40,6 +40,7 @@ module.exports = function(){
 				M11 : 'Large size',
 				M12 : 'Medium size',
 				M13 : 'Small size',
+				M14 : 'Please select a category',
 				E01 : 'Sorry, server is busy now, can not respond your request, please try again later.'
 			}
 		};
@@ -83,7 +84,7 @@ module.exports = function(){
 		
 		toggle_reprint_group();
 		
-		fm_validate(cache.$fm);	
+		fm_validate();	
 
 		save_split_number();
 		
@@ -477,11 +478,7 @@ module.exports = function(){
 	 * file_upload
 	 */
 	function file_upload(file){
-		var	reader = new FileReader();
-		reader.onload = function (e) {
-			file_submission(file);
-		};
-		reader.readAsDataURL(file);
+		file_submission(file);
 	}
 	/**
 	 * file_submission
@@ -759,18 +756,23 @@ module.exports = function(){
 		if(content)
 			send_to_editor(content.join(''));
 	}
-	function fm_validate($fm){
+	function fm_validate(){
 		var m = new validate();
 			m.process_url = config.process_url;
 			m.loading_tx = config.lang.M01;
 			m.error_tx = config.lang.E01;
-			m.$fm = $fm;
+			m.$fm = cache.$fm;
+			m.before = function(fd){
+				fd.append('ctb[post-content]',get_editor_content());
+			};
 			m.done = function(data){
 				if(config.edit){
-					$fm.querySelector('.submit').removeAttribute('disabled');
+					cache.$fm.querySelector('.submit').removeAttribute('disabled');
 				}
-				/** delete auto save */
-				auto_save.del();
+				if(data.status === 'success'){
+					/** delete auto save */
+					auto_save.del();
+				}
 			};
 			m.init();
 	}
@@ -786,7 +788,8 @@ module.exports = function(){
 		/** create no select option */
 		function create_null_opt($container){
 			var $null_opt = document.createElement('option');
-			$null_opt.innerHTML = config.lang.M04;
+			$null_opt.innerHTML = config.lang.M14;
+			$null_opt.value = '';
 			$container.appendChild($null_opt);
 		}
 		/** crreate parent select */

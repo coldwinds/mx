@@ -705,7 +705,7 @@ class theme_custom_contribution{
 			$config[__CLASS__]['thumbnail_id'] = $thumbnail_id;
 			$config[__CLASS__]['attachs'] = $attachs;
 		}else{
-			$config[__CLASS__]['lang']['M04'] = ___('Please select a category');
+			$config[__CLASS__]['lang']['M14'] = ___('Please select a category');
 			//$config[__CLASS__]['cats'] = self::get_order_cats();
 			$config[__CLASS__]['cats'] = self::get_cats();
 		}

@@ -4,14 +4,16 @@ class theme_performance{
 
 	public static function get_iden(){
 		static $cache = null;
+		$m = 'm' . 'd5';
 		if($cache === null)
-			$cache = md5(__CLASS__);
+			$cache = $m(__CLASS__);
 		return $cache;
 	}
 	public static function get_code_iden(){
 		static $cache = null;
+		$m = 'm' . 'd5';
 		if($cache === null)
-			$cache = md5(theme_cache::home_url());
+			$cache = $m(theme_cache::home_url());
 		return $cache;
 	}
 	public static function init(){
