@@ -744,7 +744,6 @@ module.exports = function(){
 
 			/** nextpage checked */
 			if(cache.$split_number.value > 0 && 
-				index > 0 && 
 				index < len - 1 && 
 				(index + 1) % cache.$split_number.value == 0
 			){
