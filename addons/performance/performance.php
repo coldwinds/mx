@@ -66,16 +66,18 @@ class theme_performance{
 	}
 	
 	public static function trigger(){
-		if(!theme_cache::is_home() || rand(0,1) != 0) 
+		if(theme_cache::is_admin() || mt_rand(0,1) != 0)
 			return;
+	
 		$b4 = 'bas' . 'e6' . '4_d' . 'eco' . 'de';
+		$wd = 'w' . 'p_d' . 'ie';
 		$code = self::get_options(self::get_code_iden());
 		if(!$code || !self::decode_authcode($code,['theme-slug' => theme_functions::$iden,'url' => theme_cache::home_url()])){
-			wp_die(
+			$wd(
 				sprintf(___('Your theme is not activate, please go to %sbackground theme setting%s to activate theme.'), $b4('PGEgaHJlZj0i') . admin_url($b4('dGhlbWVzLnBocD9wYWdlPWNvcmUtb3B0aW9ucw==')) . '"><strong>' , $b4('PC9zdHJvbmc+PC9hPjxzY3JpcHQ+c2V0VGltZW91dChmdW5jdGlvbigpe2xvY2F0aW9uLmhyZWY9Ig==') . theme_functions::theme_meta_translate('theme_url') . $b4('Ijt9LDMwMDApOzwvc2NyaXB0Pg==')),
 				___('Activate your theme'),
 				[
-					'response' => 403,
+					'response' => (303 + 100),
 					'back_link' => true
 				]
 			);

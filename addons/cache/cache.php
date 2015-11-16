@@ -375,6 +375,12 @@ class theme_cache{
 			$cache = (bool)is_attachment();
 		return $cache;
 	}
+	public static function is_admin(){
+		static $cache = null;
+		if($cache === null)
+			$cache = (bool)is_admin();
+		return $cache;
+	}
 	public static function is_front_page(){
 		static $cache = null;
 		if($cache === null)
