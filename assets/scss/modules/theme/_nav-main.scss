@@ -40,14 +40,11 @@
 	z-index: 10;
 	text-shadow: 0 1px 0 rgba(#fff,.5);
 	@extend %text-nowrap;
-	visibility: visible;
 	
 	@include transition-duration($nav-main-duration);
-	@include transform-origin(top);
-	@include scale3d(1,1,1);
+	@include translate3d(0,0,0);
 	&.fold{
-		visibility: hidden;
-		@include scale3d(1,0,0);
+		@include translate3d(0,-100%,0);
 	}
 	ul{
 		list-style-type: none;
@@ -83,7 +80,7 @@
 					&:after{
 						@extend %nav-main-arrow;
 						opacity: .5;
-						content:"\f0d7";
+						content:"\f107";
 					}
 				}
 			}
@@ -151,7 +148,7 @@
 		}
 		& > .menu-item-has-children > a:after{
 			@extend %nav-main-arrow;
-			content:"\f0da";
+			content:"\f105";
 		}
 	}
 	//logo
@@ -159,6 +156,7 @@
 		height: $nav-main-height;
 		padding: 0;
 		float: left;
+		margin-right: $grid-g-gutter;
 		img{
 			display: block;
 			margin-top: 5px;

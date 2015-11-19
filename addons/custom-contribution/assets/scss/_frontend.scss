@@ -1,10 +1,6 @@
 .screen-reader-text {
 	display: none;
 }
-#ctb-split-number {
-	display: inline-block;
-	width: auto;
-}
 #ctb-file-btn {
 	position: relative;
 	background: $card-bg-color-hover;
@@ -191,6 +187,25 @@
 label[for="ctb-content"] {
 	display: block;
 	margin: 0 0 -2rem;
+}
+
+//storage
+#theme_custom_storage-container{
+	margin-bottom: 1rem;
+	.theme_custom_storage-item{
+		position: relative;
+		.del{
+			position: absolute;
+			right: -10px;
+			top: 0;
+			color: $btn-danger-background;
+			opacity: .5;
+			&:hover,
+			&.hover{
+				opacity: 1;
+			}
+		}
+	}
 }
 @media(min-width: 768px) {
 	.wp-editor-wrap {

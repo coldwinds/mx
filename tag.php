@@ -11,7 +11,7 @@
 				foreach($wp_query->posts as $post){
 					setup_postdata($post);
 					theme_functions::archive_card_sm([
-						'classes' => 'g-desktop-1-4 g-tablet-1-3',
+						'classes' => 'g-desktop-1-4 g-tablet-1-2',
 						'lazyload' => $loop_i <= 8 ? false : true,
 					]);
 					++$loop_i;

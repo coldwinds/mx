@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MX\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-15 12:25+0800\n"
-"PO-Revision-Date: 2015-11-15 14:09+0800\n"
+"POT-Creation-Date: 2015-11-19 10:02+0800\n"
+"PO-Revision-Date: 2015-11-19 10:30+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -32,7 +32,8 @@ msgstr "如果您的服务器支持，当评论被回复时，它将会发送一
 #: addons/comment-ajax/comment-ajax.php:91
 #: addons/custom-collection/custom-collection.php:73
 #: addons/custom-post-source/custom-post-source.php:234
-#: addons/custom-post-storage/custom-post-storage.php:52
+#: addons/custom-post-storage/custom-post-storage.php:46
+#: addons/custom-text-mode/custom-text-mode.php:30
 #: addons/full-width-mode/full-width-mode.php:52
 #: addons/gravatar-fix/gravatar-fix.php:28
 #: addons/link-manager/link-manager.php:24 addons/mailer/mailer.php:92
@@ -49,7 +50,9 @@ msgstr "是否启用？"
 #: addons/custom-collection/custom-collection.php:77
 #: addons/custom-contribution/custom-contribution.php:80
 #: addons/custom-post-source/custom-post-source.php:238
-#: addons/custom-post-storage/custom-post-storage.php:56
+#: addons/custom-post-storage/custom-post-storage.php:50
+#: addons/custom-post-storage/custom-post-storage.php:59
+#: addons/custom-text-mode/custom-text-mode.php:34
 #: addons/full-width-mode/full-width-mode.php:55
 #: addons/gravatar-fix/gravatar-fix.php:32
 #: addons/img-compress/img-compress.php:60
@@ -314,7 +317,7 @@ msgstr "点击之前保存设置。"
 #: addons/custom-pm/custom-pm.php:153
 #: addons/custom-point-lottery/custom-point-lottery.php:224
 #: addons/custom-point/custom-point.php:138
-#: addons/custom-post-storage/custom-post-storage.php:68
+#: addons/custom-post-storage/custom-post-storage.php:64
 #: addons/custom-slidebox/custom-slidebox.php:273
 #: addons/file-timestamp/file-timestamp.php:52
 msgid "Control"
@@ -448,7 +451,9 @@ msgstr "提交评论无需刷新页面。推荐使以改善用户体验。"
 #: addons/custom-collection/custom-collection.php:76
 #: addons/custom-contribution/custom-contribution.php:79
 #: addons/custom-post-source/custom-post-source.php:237
-#: addons/custom-post-storage/custom-post-storage.php:55
+#: addons/custom-post-storage/custom-post-storage.php:49
+#: addons/custom-post-storage/custom-post-storage.php:58
+#: addons/custom-text-mode/custom-text-mode.php:33
 #: addons/gravatar-fix/gravatar-fix.php:31
 #: addons/img-compress/img-compress.php:59 addons/mailer/mailer.php:95
 #: addons/post-share/post-share.php:82 addons/post-views/post-views.php:60
@@ -503,8 +508,8 @@ msgid "Data sent."
 msgstr "数据传送完毕。"
 
 #: addons/comment-ajax/comment-ajax.php:412
-#: addons/custom-contribution/custom-contribution.php:257
-#: addons/custom-contribution/custom-contribution.php:278
+#: addons/custom-contribution/custom-contribution.php:258
+#: addons/custom-contribution/custom-contribution.php:279
 #: addons/page-nagination-ajax/page-nagination-ajax.php:38
 #: tpl/page-account-post.php:30
 msgid "Sorry, the post does not exist."
@@ -590,14 +595,14 @@ msgid "Already last page"
 msgstr "已是最后一页"
 
 #: addons/custom-attachment-page/custom-attachment-page.php:62
-#: functions.php:1052 functions.php:1053 functions.php:1060 functions.php:1061
-#: functions.php:1366
+#: functions.php:1134 functions.php:1135 functions.php:1142 functions.php:1143
+#: functions.php:1448
 msgid "Next page"
 msgstr "下一页"
 
 #: addons/custom-author-profile/custom-author-profile.php:67
 #: addons/custom-author-profile/custom-author-profile.php:71
-#: tpl/page-account-post.php:485 tpl/page-account-post.php:486
+#: tpl/page-account-post.php:400 tpl/page-account-post.php:401
 msgid "Author"
 msgstr "作者"
 
@@ -620,7 +625,7 @@ msgid "Works"
 msgstr "作品"
 
 #: addons/custom-author-profile/custom-author-profile.php:118 comments.php:12
-#: functions.php:368 functions.php:372 functions.php:512 functions.php:1531
+#: functions.php:450 functions.php:454 functions.php:594 functions.php:1613
 #: tpl/author-profile.php:75
 msgid "Comments"
 msgstr "评论"
@@ -669,6 +674,8 @@ msgstr "文章预览图"
 #: addons/custom-collection/custom-collection.php:168
 #: addons/custom-homebox/custom-homebox.php:225
 #: addons/custom-point-lottery/custom-point-lottery.php:160
+#: addons/custom-post-storage/custom-post-storage.php:161
+#: addons/custom-post-storage/custom-post-storage.php:401
 #: addons/custom-slidebox/custom-slidebox.php:196
 msgid "Delete this item"
 msgstr "删除此条目"
@@ -706,13 +713,13 @@ msgid "New collection"
 msgstr "新建专刊"
 
 #: addons/custom-collection/custom-collection.php:280
-#: addons/custom-contribution/custom-contribution.php:194
+#: addons/custom-contribution/custom-contribution.php:195
 #: addons/custom-slidebox/custom-slidebox.php:92
 msgid "Invaild file type."
 msgstr "无效的文件类型。"
 
 #: addons/custom-collection/custom-collection.php:307
-#: addons/custom-contribution/custom-contribution.php:217
+#: addons/custom-contribution/custom-contribution.php:218
 #: addons/custom-slidebox/custom-slidebox.php:122
 msgid "Upload success."
 msgstr "上传成功。"
@@ -726,12 +733,12 @@ msgid "Sorry, posts can not be empty."
 msgstr "抱歉，文章不能为空。"
 
 #: addons/custom-collection/custom-collection.php:339
-#: addons/custom-contribution/custom-contribution.php:289
+#: addons/custom-contribution/custom-contribution.php:290
 msgid "Please write the post title."
 msgstr "请填写文章标题。"
 
 #: addons/custom-collection/custom-collection.php:350
-#: addons/custom-contribution/custom-contribution.php:314
+#: addons/custom-contribution/custom-contribution.php:315
 msgid "Please set an image as post thumbnail"
 msgstr "请选择一张图片作为封面"
 
@@ -751,13 +758,13 @@ msgid "write a new collection"
 msgstr "再来一发"
 
 #: addons/custom-collection/custom-collection.php:416
-#: addons/custom-contribution/custom-contribution.php:439
+#: addons/custom-contribution/custom-contribution.php:440
 #, php-format
 msgid "Congratulation! Your post has been published. You can %s or %s."
 msgstr "恭喜！您的文章已发表成功。现在您可以 %s 或 %s。"
 
 #: addons/custom-collection/custom-collection.php:417
-#: addons/custom-contribution/custom-contribution.php:440
+#: addons/custom-contribution/custom-contribution.php:441
 msgid "View it now"
 msgstr "立即查看它"
 
@@ -766,7 +773,7 @@ msgid "countinue to write a new collection"
 msgstr "继续写一篇新专刊"
 
 #: addons/custom-collection/custom-collection.php:428
-#: addons/custom-contribution/custom-contribution.php:451
+#: addons/custom-contribution/custom-contribution.php:452
 msgid "Post published"
 msgstr "文章发表"
 
@@ -811,11 +818,11 @@ msgid "Sorry, the post do not exist, please try again."
 msgstr "抱歉，该文章不存在，请重试。"
 
 #: addons/custom-collection/custom-collection.php:579
-#: addons/custom-contribution/custom-contribution.php:670
+#: addons/custom-contribution/custom-contribution.php:671
 #: addons/custom-follow/custom-follow.php:140
 #: addons/custom-pm/custom-pm.php:826 comments.php:18 core/core-features.php:39
-#: core/core-options.php:77 functions.php:1780 tpl/page-account-bomb.php:14
-#: tpl/page-account-pm.php:3
+#: core/core-options.php:77 functions.php:1862 tpl/page-account-bomb.php:14
+#: tpl/page-account-pm.php:3 tpl/page-account-post.php:83
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
 
@@ -832,7 +839,7 @@ msgid "Previewing, please wait..."
 msgstr "正在预览，请稍候……"
 
 #: addons/custom-collection/custom-collection.php:583
-#: addons/custom-contribution/custom-contribution.php:683
+#: addons/custom-contribution/custom-contribution.php:684
 #: addons/custom-follow/custom-follow.php:141
 #: addons/custom-pm/custom-pm.php:833
 #: addons/page-nagination-ajax/page-nagination-ajax.php:90
@@ -875,7 +882,7 @@ msgid "Empty category."
 msgstr "空分类。"
 
 #: addons/custom-colorful-cats/custom-colorful-cats.php:96
-#: core/core-features.php:1207 tpl/page-account-post.php:316
+#: core/core-features.php:1207 tpl/page-account-post.php:231
 msgid "Select category"
 msgstr "选择目录"
 
@@ -968,112 +975,112 @@ msgstr "编辑文章"
 msgid "Post contribution"
 msgstr "文章投稿"
 
-#: addons/custom-contribution/custom-contribution.php:229
+#: addons/custom-contribution/custom-contribution.php:230
 msgid "Invaild contribution param."
 msgstr "无效的投稿参数。"
 
-#: addons/custom-contribution/custom-contribution.php:267
+#: addons/custom-contribution/custom-contribution.php:268
 #: tpl/page-account-post.php:55
 msgid "Sorry, you are not the post author, can not edit it."
 msgstr "抱歉，你不是该作品的作者，无法编辑。"
 
-#: addons/custom-contribution/custom-contribution.php:304
+#: addons/custom-contribution/custom-contribution.php:305
 msgid "Please write the post content."
 msgstr "文章内容必须填写哦"
 
-#: addons/custom-contribution/custom-contribution.php:326
-#: addons/custom-contribution/custom-contribution.php:338
+#: addons/custom-contribution/custom-contribution.php:327
+#: addons/custom-contribution/custom-contribution.php:339
 msgid "Please select a category."
 msgstr "请选择一个类别。"
 
-#: addons/custom-contribution/custom-contribution.php:434
+#: addons/custom-contribution/custom-contribution.php:435
 msgid ""
 "Your post submitted successful, it will be published after approve in a "
 "while."
 msgstr "你的文章提交成功，一会儿审核通过后将会发表，感谢您的参与！"
 
-#: addons/custom-contribution/custom-contribution.php:441
+#: addons/custom-contribution/custom-contribution.php:442
 msgid "countinue to write a new post"
 msgstr "继续写一篇"
 
-#: addons/custom-contribution/custom-contribution.php:458
-#: addons/custom-contribution/custom-contribution.php:460
+#: addons/custom-contribution/custom-contribution.php:459
+#: addons/custom-contribution/custom-contribution.php:461
 msgid "Your post has updated successful."
 msgstr "你的作品已成功更新。"
 
-#: addons/custom-contribution/custom-contribution.php:458
+#: addons/custom-contribution/custom-contribution.php:459
 msgid "Views it now"
 msgstr "立即查看它"
 
-#: addons/custom-contribution/custom-contribution.php:585
+#: addons/custom-contribution/custom-contribution.php:586
 msgid "Select a category"
 msgstr "选择一个分类"
 
-#: addons/custom-contribution/custom-contribution.php:671
+#: addons/custom-contribution/custom-contribution.php:672
 msgid "Uploading {0}/{1}, please wait..."
 msgstr "正在上传 {0}/{1}，请稍候…"
 
-#: addons/custom-contribution/custom-contribution.php:672
+#: addons/custom-contribution/custom-contribution.php:673
 msgid "Click to delete"
 msgstr "点击删除此张图片"
 
-#: addons/custom-contribution/custom-contribution.php:673
+#: addons/custom-contribution/custom-contribution.php:674
 msgid "{0} files have been uploaded, please insert to post content on demand."
 msgstr "{0} 个文件上传成功，请按需选择插入到文章内容。"
 
-#: addons/custom-contribution/custom-contribution.php:674
-#: tpl/page-account-post.php:431
+#: addons/custom-contribution/custom-contribution.php:675
+#: tpl/page-account-post.php:346
 msgid "Source"
 msgstr "来源"
 
-#: addons/custom-contribution/custom-contribution.php:675
+#: addons/custom-contribution/custom-contribution.php:676
 msgid "Click to view source"
 msgstr "点击查看原图"
 
-#: addons/custom-contribution/custom-contribution.php:676
+#: addons/custom-contribution/custom-contribution.php:677
 msgid "Set as cover."
 msgstr "设为封面"
 
-#: addons/custom-contribution/custom-contribution.php:677
+#: addons/custom-contribution/custom-contribution.php:678
 msgid "Optional, some description"
 msgstr "可选，写下一些描述吧"
 
-#: addons/custom-contribution/custom-contribution.php:678
+#: addons/custom-contribution/custom-contribution.php:679
 msgid "Insert to content"
 msgstr "插入到文章"
 
-#: addons/custom-contribution/custom-contribution.php:679
+#: addons/custom-contribution/custom-contribution.php:680
 msgid "Preview"
 msgstr "预览图"
 
-#: addons/custom-contribution/custom-contribution.php:680
+#: addons/custom-contribution/custom-contribution.php:681
 msgid "Large size"
 msgstr "大尺寸"
 
-#: addons/custom-contribution/custom-contribution.php:681
+#: addons/custom-contribution/custom-contribution.php:682
 msgid "Medium size"
 msgstr "中尺寸"
 
-#: addons/custom-contribution/custom-contribution.php:682
+#: addons/custom-contribution/custom-contribution.php:683
 msgid "Small size"
 msgstr "小尺寸"
 
-#: addons/custom-contribution/custom-contribution.php:687
+#: addons/custom-contribution/custom-contribution.php:688
 msgid ""
 "You have a auto save version, do you want to restore? Auto save last time is "
 "{time}."
 msgstr ""
 "你有自动保存版本，需要还原到该版本吗?最后一次自动保存的时间是  {time} 。"
 
-#: addons/custom-contribution/custom-contribution.php:688
+#: addons/custom-contribution/custom-contribution.php:689
 msgid "Restore post data completed, please check it."
 msgstr "恢复文章数据完毕，请检查。"
 
-#: addons/custom-contribution/custom-contribution.php:689
+#: addons/custom-contribution/custom-contribution.php:690
 msgid "The post data has saved your browser."
 msgstr "文章数据已成功保存到您的浏览器中。"
 
-#: addons/custom-contribution/custom-contribution.php:708
+#: addons/custom-contribution/custom-contribution.php:709
 msgid "Please select a category"
 msgstr "选择类别"
 
@@ -1088,7 +1095,7 @@ msgstr "我最近的积分动态"
 #: addons/custom-dashboard/dashboards.php:34
 #: addons/widget-author-posts/widget-author-posts.php:59
 #: addons/widget-rank/widget-rank.php:69 addons/widget-tags/widget-tags.php:85
-#: functions.php:1744 tpl/page-account-edit.php:82 tpl/page-rank-popular.php:22
+#: functions.php:1826 tpl/page-account-edit.php:82 tpl/page-rank-popular.php:22
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
@@ -1542,7 +1549,7 @@ msgid "Sorry, please %s."
 msgstr "抱歉，请先%s。"
 
 #: addons/custom-point-bomb/custom-point-bomb.php:226
-#: addons/custom-point-lottery/custom-point-lottery.php:360 functions.php:1787
+#: addons/custom-point-lottery/custom-point-lottery.php:360 functions.php:1869
 msgid "log-in"
 msgstr "登录"
 
@@ -2288,12 +2295,12 @@ msgid "Source: %1$s, author: %2$s"
 msgstr "来源: %1$s，作者: %2$s"
 
 #: addons/custom-post-source/custom-post-source.php:117
-#: tpl/page-account-post.php:444
+#: tpl/page-account-post.php:359
 msgid "Original"
 msgstr "原创"
 
 #: addons/custom-post-source/custom-post-source.php:120
-#: tpl/page-account-post.php:456
+#: tpl/page-account-post.php:371
 msgid "Reprint"
 msgstr "转载"
 
@@ -2366,105 +2373,99 @@ msgstr "HTML：如果是转载作品，无来源作者和 URL 地址"
 msgid "unknow"
 msgstr "不详"
 
-#: addons/custom-post-storage/custom-post-storage.php:39
+#: addons/custom-post-storage/custom-post-storage.php:33
 msgid "storage download"
 msgstr "网盘下载"
 
-#: addons/custom-post-storage/custom-post-storage.php:47
+#: addons/custom-post-storage/custom-post-storage.php:41
 msgid "Storage settings"
 msgstr "网盘设置"
 
-#: addons/custom-post-storage/custom-post-storage.php:48
+#: addons/custom-post-storage/custom-post-storage.php:42
 msgid ""
 "You can edit storage types here. They will display in contribution page."
 msgstr "您可以在这里编辑网盘类型，它们将会在投稿页面中显示。"
 
-#: addons/custom-post-storage/custom-post-storage.php:61
-msgid "Storage types"
-msgstr "网盘类型"
+#: addons/custom-post-storage/custom-post-storage.php:55
+msgid "Enable download item name?"
+msgstr "是否启用下载条目名称？"
 
-#: addons/custom-post-storage/custom-post-storage.php:63
-msgid "ID = Storage name, e.g. bdpan = Baidu storage"
-msgstr "ID = 网盘名称，例如：bdpan = 百度网盘"
-
-#: addons/custom-post-storage/custom-post-storage.php:64
-msgid "One item per line"
-msgstr "一行一个条目"
-
-#: addons/custom-post-storage/custom-post-storage.php:73
+#: addons/custom-post-storage/custom-post-storage.php:69
 msgid "Convert to new version data"
 msgstr "转换为新版本数据"
 
-#: addons/custom-post-storage/custom-post-storage.php:74
+#: addons/custom-post-storage/custom-post-storage.php:70
 msgid ""
 "This operation only needs to be performed once if you are upgrade from a old "
 "version."
 msgstr "如果你是从旧版本升级，此操作只需执行一次。"
 
-#: addons/custom-post-storage/custom-post-storage.php:86
-msgid "Baidu storage"
-msgstr "百度网盘"
-
-#: addons/custom-post-storage/custom-post-storage.php:87
-msgid "360 storage"
-msgstr "360网盘"
-
-#: addons/custom-post-storage/custom-post-storage.php:88
-msgid "Thunder storage"
-msgstr "迅雷快盘"
-
-#: addons/custom-post-storage/custom-post-storage.php:89
-msgid "Mega storage"
-msgstr "Mega网盘"
-
-#: addons/custom-post-storage/custom-post-storage.php:151
+#: addons/custom-post-storage/custom-post-storage.php:108
 msgid "Sorry, this URL is invaild."
 msgstr "对不起，此 URL 无效。"
 
-#: addons/custom-post-storage/custom-post-storage.php:152
+#: addons/custom-post-storage/custom-post-storage.php:109
 msgid "Error"
 msgstr "错误"
 
-#: addons/custom-post-storage/custom-post-storage.php:176
-msgid "File storage"
-msgstr "文件存储"
+#: addons/custom-post-storage/custom-post-storage.php:140
+msgid "Add new link"
+msgstr "添加新链接"
 
-#: addons/custom-post-storage/custom-post-storage.php:293
-#: addons/custom-post-storage/custom-post-storage.php:294
-#: tpl/page-account-post.php:218 tpl/page-account-post.php:219
+#: addons/custom-post-storage/custom-post-storage.php:174
+#: addons/custom-post-storage/custom-post-storage.php:175
+#: addons/custom-post-storage/custom-post-storage.php:369
+#: addons/custom-post-storage/custom-post-storage.php:370
+msgid "Name (optional)"
+msgstr "名称（可选）"
+
+#: addons/custom-post-storage/custom-post-storage.php:186
+#: addons/custom-post-storage/custom-post-storage.php:187
+#: addons/custom-post-storage/custom-post-storage.php:379
+#: addons/custom-post-storage/custom-post-storage.php:380
 msgid "Download page URL (include http://)"
 msgstr "下载页面的 URL (包括 http://)"
 
-#: addons/custom-post-storage/custom-post-storage.php:302
-#: addons/custom-post-storage/custom-post-storage.php:303
-#: tpl/page-account-post.php:231 tpl/page-account-post.php:232
+#: addons/custom-post-storage/custom-post-storage.php:199
+#: addons/custom-post-storage/custom-post-storage.php:200
+#: addons/custom-post-storage/custom-post-storage.php:388
+#: addons/custom-post-storage/custom-post-storage.php:389
 msgid "Download password (optional)"
 msgstr "提取码（可选）"
 
-#: addons/custom-post-storage/custom-post-storage.php:311
-#: addons/custom-post-storage/custom-post-storage.php:312
-#: tpl/page-account-post.php:245 tpl/page-account-post.php:246
+#: addons/custom-post-storage/custom-post-storage.php:213
+#: addons/custom-post-storage/custom-post-storage.php:214
+#: addons/custom-post-storage/custom-post-storage.php:397
+#: addons/custom-post-storage/custom-post-storage.php:398
 msgid "Extract password (optional)"
 msgstr "解压密码（可选）"
 
-#: addons/custom-post-storage/custom-post-storage.php:330
+#: addons/custom-post-storage/custom-post-storage.php:241
+msgid "File storage"
+msgstr "文件存储"
+
+#: addons/custom-post-storage/custom-post-storage.php:342
+msgid "Add new item"
+msgstr "添加新条目"
+
+#: addons/custom-post-storage/custom-post-storage.php:416
 msgid "Storage download"
 msgstr "网盘下载"
 
-#: addons/custom-post-storage/custom-post-storage.php:411
+#: addons/custom-post-storage/custom-post-storage.php:497
 msgid "Download password"
 msgstr "提取密码"
 
-#: addons/custom-post-storage/custom-post-storage.php:422
+#: addons/custom-post-storage/custom-post-storage.php:508
 msgid "Extract password"
 msgstr "解压密码"
 
-#: addons/custom-post-storage/custom-post-storage.php:438
+#: addons/custom-post-storage/custom-post-storage.php:524
 msgid "Download now"
 msgstr "立即下载"
 
-#: addons/custom-post-storage/custom-post-storage.php:454
-#: addons/custom-post-storage/custom-post-storage.php:463
+#: addons/custom-post-storage/custom-post-storage.php:540
+#: addons/custom-post-storage/custom-post-storage.php:549
 msgid "Download"
 msgstr "下载"
 
@@ -2484,113 +2485,117 @@ msgstr "抱歉，密码无效，请再试一次。"
 msgid "Login successfully"
 msgstr "登录成功"
 
-#: addons/custom-sign/custom-sign.php:128
-msgid "Custom sign settings"
-msgstr "自定义登录设置"
-
-#: addons/custom-sign/custom-sign.php:129
-msgid "You can custom the sign page here."
-msgstr "您可以在这里定制登录页面。"
-
-#: addons/custom-sign/custom-sign.php:134
-msgid "Sign-in avatar URL"
-msgstr "登录的头像图片 URL"
-
-#: addons/custom-sign/custom-sign.php:141
-msgid "Recommend 100x100 px image."
-msgstr "建议 100x100 象素的图片。"
-
-#: addons/custom-sign/custom-sign.php:145
-msgid "Terms of service page URL"
-msgstr "服务协议页面 URL"
-
-#: addons/custom-sign/custom-sign.php:222 page-sign.php:271
-msgid "Login"
-msgstr "登录"
-
-#: addons/custom-sign/custom-sign.php:229
-msgid "Register"
-msgstr "注册"
-
-#: addons/custom-sign/custom-sign.php:236 page-sign.php:153 page-sign.php:198
-msgid "Recover password"
-msgstr "找回密码"
-
-#: addons/custom-sign/custom-sign.php:243
-msgid "Reset password"
-msgstr "重设密码"
-
-#: addons/custom-sign/custom-sign.php:276
-msgid "Sign"
-msgstr "登录"
-
-#: addons/custom-sign/custom-sign.php:321
-#: addons/custom-sign/custom-sign.php:358
-msgid "Sorry, password is invalid, please try again."
-msgstr "抱歉，密码无效，请重试。"
-
-#: addons/custom-sign/custom-sign.php:325
-#: addons/custom-sign/custom-sign.php:362
-msgid "Sorry, email is invalid, please try again."
-msgstr "抱歉，邮箱无效，请重试。"
-
-#: addons/custom-sign/custom-sign.php:336
-msgid "Sorry, your email and password do not match, please try again."
-msgstr "抱歉，您的邮箱和密码不匹配，请重试。"
-
-#: addons/custom-sign/custom-sign.php:367
-msgid "Sorry, nickname is invalid, please try again."
-msgstr "抱歉，昵称无效，请输入另一个后重试。"
-
-#: addons/custom-sign/custom-sign.php:374
-msgid "Sorry, email already exists, please change another one and try again."
-msgstr "抱歉，邮箱已经存在，请输入另一个再尝试。"
-
-#: addons/custom-sign/custom-sign.php:430
+#: addons/custom-sign/custom-sign.php:116
 msgid "Login successfully, page is refreshing, please wait..."
 msgstr "登录成功，页面正在刷新，请稍候…"
 
-#: addons/custom-sign/custom-sign.php:446 page-sign.php:126
+#: addons/custom-sign/custom-sign.php:137
+msgid "Custom sign settings"
+msgstr "自定义登录设置"
+
+#: addons/custom-sign/custom-sign.php:138
+msgid "You can custom the sign page here."
+msgstr "您可以在这里定制登录页面。"
+
+#: addons/custom-sign/custom-sign.php:143
+msgid "Sign-in avatar URL"
+msgstr "登录的头像图片 URL"
+
+#: addons/custom-sign/custom-sign.php:150
+msgid "Recommend 100x100 px image."
+msgstr "建议 100x100 象素的图片。"
+
+#: addons/custom-sign/custom-sign.php:154
+msgid "Terms of service page URL"
+msgstr "服务协议页面 URL"
+
+#: addons/custom-sign/custom-sign.php:158
+msgid "After successful text tip"
+msgstr "成功登录的文本提示"
+
+#: addons/custom-sign/custom-sign.php:237 page-sign.php:271
+msgid "Login"
+msgstr "登录"
+
+#: addons/custom-sign/custom-sign.php:244
+msgid "Register"
+msgstr "注册"
+
+#: addons/custom-sign/custom-sign.php:251 page-sign.php:153 page-sign.php:198
+msgid "Recover password"
+msgstr "找回密码"
+
+#: addons/custom-sign/custom-sign.php:258
+msgid "Reset password"
+msgstr "重设密码"
+
+#: addons/custom-sign/custom-sign.php:291
+msgid "Sign"
+msgstr "登录"
+
+#: addons/custom-sign/custom-sign.php:336
+#: addons/custom-sign/custom-sign.php:373
+msgid "Sorry, password is invalid, please try again."
+msgstr "抱歉，密码无效，请重试。"
+
+#: addons/custom-sign/custom-sign.php:340
+#: addons/custom-sign/custom-sign.php:377
+msgid "Sorry, email is invalid, please try again."
+msgstr "抱歉，邮箱无效，请重试。"
+
+#: addons/custom-sign/custom-sign.php:351
+msgid "Sorry, your email and password do not match, please try again."
+msgstr "抱歉，您的邮箱和密码不匹配，请重试。"
+
+#: addons/custom-sign/custom-sign.php:382
+msgid "Sorry, nickname is invalid, please try again."
+msgstr "抱歉，昵称无效，请输入另一个后重试。"
+
+#: addons/custom-sign/custom-sign.php:389
+msgid "Sorry, email already exists, please change another one and try again."
+msgstr "抱歉，邮箱已经存在，请输入另一个再尝试。"
+
+#: addons/custom-sign/custom-sign.php:461 page-sign.php:126
 msgid "Sorry, it is not the time, the site is temporarily closed registration."
 msgstr "真抱歉，来的不是时候，目前网站暂时关闭了注册。"
 
-#: addons/custom-sign/custom-sign.php:457
+#: addons/custom-sign/custom-sign.php:472
 #, php-format
 msgid ""
 "Sorry, you nick name is invalid, at least %d characters in length, please "
 "try again."
 msgstr "抱歉，您的昵称长度太短，至少需要 %d 个字符，请重试。"
 
-#: addons/custom-sign/custom-sign.php:466
+#: addons/custom-sign/custom-sign.php:481
 #, php-format
 msgid ""
 "Sorry, you password is invalid, at least %d characters in length, please try "
 "again."
 msgstr "抱歉，您的密码无效，至少需要 %d 个字符，请重试。"
 
-#: addons/custom-sign/custom-sign.php:475
-#: addons/custom-sign/custom-sign.php:514
+#: addons/custom-sign/custom-sign.php:490
+#: addons/custom-sign/custom-sign.php:529
 msgid "Sorry, your email address is invalid, please check it and try again."
 msgstr "抱歉，您的邮箱地址不正确，请检查并再尝试。"
 
-#: addons/custom-sign/custom-sign.php:488
+#: addons/custom-sign/custom-sign.php:503
 msgid "Sorry, the nickname has been used, please change another one."
 msgstr "抱歉，该昵称已被使用，请更换另一个试试。"
 
-#: addons/custom-sign/custom-sign.php:503
+#: addons/custom-sign/custom-sign.php:518
 msgid "Register successfully, page is refreshing, please wait..."
 msgstr "注册成功，页面正在刷新，请稍候…"
 
-#: addons/custom-sign/custom-sign.php:524
+#: addons/custom-sign/custom-sign.php:539
 msgid "Sorry, the email does not exist."
 msgstr "抱歉，该邮箱不存在。"
 
-#: addons/custom-sign/custom-sign.php:542
+#: addons/custom-sign/custom-sign.php:557
 #, php-format
 msgid "Dear %s!"
 msgstr "亲爱的 %s！"
 
-#: addons/custom-sign/custom-sign.php:544
+#: addons/custom-sign/custom-sign.php:559
 #, php-format
 msgid ""
 "You are receiving this email because you forgot your password. We already "
@@ -2600,60 +2605,60 @@ msgstr ""
 "您接收到这封邮件是因为您忘记了密码。我们已为您创建了一个地址，您可以在 3 小时"
 "内，访问此链接地址（ %s ）登录并修改您的密码。"
 
-#: addons/custom-sign/custom-sign.php:546
+#: addons/custom-sign/custom-sign.php:561
 #, php-format
 msgid "-- From %s"
 msgstr "—— 来自 %s"
 
-#: addons/custom-sign/custom-sign.php:548
+#: addons/custom-sign/custom-sign.php:563
 msgid "You are applying to reset your password."
 msgstr "您正在申请重设密码。"
 
-#: addons/custom-sign/custom-sign.php:564
+#: addons/custom-sign/custom-sign.php:579
 msgid ""
 "Success, we sent an email that includes how to retrieve your password, "
 "please check it out in 3 hours."
 msgstr "成功，我们已发送了一封包括如何找回密码的邮件，请您在 3 小时内查收。"
 
-#: addons/custom-sign/custom-sign.php:569
+#: addons/custom-sign/custom-sign.php:584
 msgid "Error, server can not send email, please contact the administrator."
 msgstr "抱歉，服务器无法发送邮件，请联系管理员。"
 
-#: addons/custom-sign/custom-sign.php:579
+#: addons/custom-sign/custom-sign.php:594
 msgid "Sorry, the param is invalid."
 msgstr "对不起，参数无效。"
 
-#: addons/custom-sign/custom-sign.php:586
+#: addons/custom-sign/custom-sign.php:601
 msgid "Sorry, the token is invaild."
 msgstr "抱歉，令牌无效或已经过期。"
 
-#: addons/custom-sign/custom-sign.php:594
+#: addons/custom-sign/custom-sign.php:609
 msgid "Sorry, twice password is invaild, please try again."
 msgstr "抱歉，两次密码无效，请再试一次。"
 
-#: addons/custom-sign/custom-sign.php:603
+#: addons/custom-sign/custom-sign.php:618
 msgid "Sorry, the token is expired."
 msgstr "抱歉，令牌无效或已经过期"
 
-#: addons/custom-sign/custom-sign.php:613
+#: addons/custom-sign/custom-sign.php:628
 msgid "Sorry, the token email and you account email do not match."
 msgstr "抱歉，令牌的邮箱与帐号邮箱不匹配。"
 
-#: addons/custom-sign/custom-sign.php:622
+#: addons/custom-sign/custom-sign.php:637
 msgid "Sorry, your account email is not exist."
 msgstr "抱歉，您张帐号电子邮件不存在。"
 
-#: addons/custom-sign/custom-sign.php:629
+#: addons/custom-sign/custom-sign.php:644
 msgid "Sorry, the user do not apply recover yet."
 msgstr "抱歉，该用户未申请密码寻回。"
 
-#: addons/custom-sign/custom-sign.php:638
+#: addons/custom-sign/custom-sign.php:653
 msgid ""
 "Congratulation, your account has been recovered! Password has been updated. "
 "Redirecting home page, please wait..."
 msgstr "恭喜，您的帐号已成功寻回！密码已更新。正在跳转到首页，请稍候……"
 
-#: addons/custom-sign/custom-sign.php:644
+#: addons/custom-sign/custom-sign.php:659
 msgid "Invalid type."
 msgstr "抱歉，无效的类型。"
 
@@ -2757,6 +2762,20 @@ msgstr "广告 HTML 代码（幻灯片之下）"
 #: addons/custom-slidebox/custom-slidebox.php:485
 msgid "Detail &raquo;"
 msgstr "详细 &raquo;"
+
+#: addons/custom-text-mode/custom-text-mode.php:25
+msgid "Graphic text mode settings"
+msgstr "图文模式设置"
+
+#: addons/custom-text-mode/custom-text-mode.php:26
+msgid ""
+"Graphic text mode is a different with normal card list mode. It is mixed "
+"list with graphic and text."
+msgstr "图文模式与常规卡片列表模式不同，它是图片与文本的混合列表。"
+
+#: addons/custom-text-mode/custom-text-mode.php:39
+msgid "Which category using?"
+msgstr "选择哪个分类？"
 
 #: addons/custom-user-settings/custom-user-settings.php:68
 msgid "When user save settings"
@@ -3340,15 +3359,15 @@ msgstr "已是第一页了。"
 msgid "Already last page."
 msgstr "已是最后一页了。"
 
-#: addons/performance/performance.php:35
+#: addons/performance/performance.php:37
 msgid "Activate theme"
 msgstr "激活主题"
 
-#: addons/performance/performance.php:38
+#: addons/performance/performance.php:40
 msgid "Thank you for your support of genuine software."
 msgstr "感谢您支持正版软件！"
 
-#: addons/performance/performance.php:43
+#: addons/performance/performance.php:45
 #, php-format
 msgid ""
 "Please enter your authentication key to verify the following text box, and "
@@ -3357,18 +3376,18 @@ msgid ""
 msgstr ""
 "请在下面文本框中输入您的激活码并保存以激活 %s 主题。感谢您支持正版软件。"
 
-#: addons/performance/performance.php:49 addons/performance/performance.php:50
+#: addons/performance/performance.php:51 addons/performance/performance.php:52
 msgid "The activation code"
 msgstr "激活码"
 
-#: addons/performance/performance.php:73
+#: addons/performance/performance.php:77
 #, php-format
 msgid ""
 "Your theme is not activate, please go to %sbackground theme setting%s to "
 "activate theme."
 msgstr "您的主题暂未激活，请到 %s后台设置%s 中激活主题。"
 
-#: addons/performance/performance.php:74
+#: addons/performance/performance.php:78
 msgid "Activate your theme"
 msgstr "激活您的主题"
 
@@ -3446,7 +3465,7 @@ msgstr ""
 "使用缓存提高性能。当每篇文章查看数大于最大储存次数后，查看数会写入到数据库保"
 "存。"
 
-#: addons/post-views/post-views.php:183 functions.php:443 functions.php:1527
+#: addons/post-views/post-views.php:183 functions.php:525 functions.php:1609
 #: tpl/page-account-edit.php:19
 msgid "Views"
 msgstr "查看数"
@@ -3518,7 +3537,7 @@ msgstr "显示数量"
 msgid "For example: 10"
 msgstr "例如：10"
 
-#: addons/related-post/related-post.php:54 functions.php:1303
+#: addons/related-post/related-post.php:54 functions.php:1385
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
@@ -3877,7 +3896,7 @@ msgid "Display author posts on singular page."
 msgstr "在单页面中显示作者文章"
 
 #: addons/widget-author-posts/widget-author-posts.php:20
-#: addons/widget-author-posts/widget-author-posts.php:74 functions.php:662
+#: addons/widget-author-posts/widget-author-posts.php:74 functions.php:744
 msgid "Author posts"
 msgstr "作者文章"
 
@@ -4028,7 +4047,7 @@ msgstr "固定标签（可选，一行一个）"
 msgid "The attachment of %s"
 msgstr "《%s》的附件"
 
-#: category.php:22 search.php:25 tag.php:22
+#: category.php:22 search.php:25 tag.php:22 tpl/category-text.php:18
 msgid "No content yet."
 msgstr "暂无资料"
 
@@ -4088,7 +4107,8 @@ msgstr "%d天前"
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:674 functions.php:431 functions.php:1619
+#: core/core-functions.php:674 functions.php:291 functions.php:513
+#: functions.php:1701
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
@@ -4213,14 +4233,6 @@ msgstr "手机菜单"
 msgid "Login mobile menu"
 msgstr "手机菜单（已登录状态）"
 
-#: functions.php:68
-msgid "Top bar menu"
-msgstr "顶栏菜单"
-
-#: functions.php:69
-msgid "Login top bar menu"
-msgstr "顶栏菜单（已登录状态）"
-
 #: functions.php:70
 msgid "Footer links"
 msgstr "底部友情链接"
@@ -4273,189 +4285,189 @@ msgstr "404 页面小工具区域"
 msgid "Appears on 404 no found page in the sidebar."
 msgstr "显示在 404 页面的边栏中。"
 
-#: functions.php:424 tpl/page-account-post.php:296
+#: functions.php:506 tpl/page-account-post.php:211
 msgid "Category"
 msgstr "分类"
 
-#: functions.php:436
+#: functions.php:518
 #, php-format
 msgid "Views all post by %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:465 tpl/page-account-edit.php:38
+#: functions.php:547 tpl/page-account-edit.php:38
 msgid "Edit"
 msgstr "编辑"
 
-#: functions.php:516
+#: functions.php:598
 msgctxt "Tucao"
 msgid "Comments"
 msgstr "吐槽"
 
-#: functions.php:612 functions.php:614
+#: functions.php:694 functions.php:696
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:627
+#: functions.php:709
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:634
+#: functions.php:716
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:652
+#: functions.php:734
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:656
+#: functions.php:738
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:666
+#: functions.php:748
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:685
+#: functions.php:767
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:692
+#: functions.php:774
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:720
+#: functions.php:802
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:721
+#: functions.php:803
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:736
+#: functions.php:818
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:766 functions.php:1033 functions.php:1035 functions.php:1042
-#: functions.php:1044 functions.php:1369
+#: functions.php:848 functions.php:1115 functions.php:1117 functions.php:1124
+#: functions.php:1126 functions.php:1451
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:784 functions.php:790 functions.php:798
+#: functions.php:866 functions.php:872 functions.php:880
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:912
+#: functions.php:994
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1109 functions.php:1127
+#: functions.php:1191 functions.php:1209
 #, php-format
 msgid "Random: %s"
 msgstr "随机：%s"
 
-#: functions.php:1109
+#: functions.php:1191
 #, php-format
 msgid "Previous post: %s"
 msgstr "上一篇：%s"
 
-#: functions.php:1127
+#: functions.php:1209
 #, php-format
 msgid "Next post: %s"
 msgstr "下一篇：%s"
 
-#: functions.php:1211
+#: functions.php:1293
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1235
+#: functions.php:1317
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1336
+#: functions.php:1418
 msgid "No data."
 msgstr "暂无资料"
 
-#: functions.php:1397
+#: functions.php:1479
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1429
+#: functions.php:1511
 msgid "more &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1652
+#: functions.php:1734
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1687 functions.php:1749
+#: functions.php:1769 functions.php:1831
 #, php-format
 msgid "More about %s"
 msgstr "更多%s"
 
-#: functions.php:1777
+#: functions.php:1859
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1786
+#: functions.php:1868
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1820 tpl/author-profile.php:21
+#: functions.php:1902 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:85
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1822
+#: functions.php:1904
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1833
+#: functions.php:1915
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1835
+#: functions.php:1917
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1846
+#: functions.php:1928
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1847
+#: functions.php:1929
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1868 functions.php:1870
+#: functions.php:1950 functions.php:1952
 msgid "Post comment"
 msgstr "发表评论"
 
-#: header.php:64 header.php:159
+#: header.php:73 header.php:168
 msgid "Log-out"
 msgstr "登出"
 
-#: header.php:173
+#: header.php:182
 msgid "Your have new notification"
 msgstr "您有新的提醒"
 
-#: header.php:183
+#: header.php:192
 msgid "You have new P.M."
 msgstr "您有新的私信"
 
-#: header.php:190
+#: header.php:199
 msgid "Log-in"
 msgstr "登录"
 
-#: header.php:202
+#: header.php:211
 msgid "Search"
 msgstr "搜索"
 
-#: header.php:209
+#: header.php:218
 msgid "Please input search keyword"
 msgstr "请输入搜索关键词"
 
@@ -4586,11 +4598,11 @@ msgstr "下次自动登录"
 msgid "Logging in, please wait..."
 msgstr "登录中，请稍候……"
 
-#: page-stroage-download.php:6
+#: page-storage-download.php:6
 msgid "Lacking the class theme_custom_storage"
 msgstr "缺少类 theme_custom_storage"
 
-#: page-stroage-download.php:14
+#: page-storage-download.php:14
 #, php-format
 msgid "You are ready to download \"%s\""
 msgstr "你正准备下载 《%s》"
@@ -4778,11 +4790,11 @@ msgstr "预览专刊"
 msgid "Add new post"
 msgstr "添加新文章"
 
-#: tpl/page-account-collection.php:131 tpl/page-account-post.php:335
+#: tpl/page-account-collection.php:131 tpl/page-account-post.php:250
 msgid "Pop. tags"
 msgstr "热门标签"
 
-#: tpl/page-account-collection.php:160 tpl/page-account-post.php:404
+#: tpl/page-account-collection.php:160 tpl/page-account-post.php:319
 msgid "Custom tags"
 msgstr "自定义标签"
 
@@ -4791,11 +4803,11 @@ msgstr "自定义标签"
 msgid "tag %d"
 msgstr "标签 %d"
 
-#: tpl/page-account-collection.php:187 tpl/page-account-post.php:506
+#: tpl/page-account-collection.php:187 tpl/page-account-post.php:421
 msgid "Sending, please wait..."
 msgstr "数据发送中，请稍候…"
 
-#: tpl/page-account-collection.php:189 tpl/page-account-post.php:508
+#: tpl/page-account-collection.php:189 tpl/page-account-post.php:423
 msgid "Submit"
 msgstr "提交"
 
@@ -4941,44 +4953,44 @@ msgstr "上传预览图"
 msgid "Batch insert images to content"
 msgstr "批量将图片插入到文章内容"
 
-#: tpl/page-account-post.php:162
+#: tpl/page-account-post.php:163
 msgid "How many images to split with next-page tag?"
 msgstr "每页显示多少张图片？"
 
-#: tpl/page-account-post.php:163
+#: tpl/page-account-post.php:164
 msgid "Do not use next-page tag"
 msgstr "不使用图片分页符"
 
-#: tpl/page-account-post.php:165
+#: tpl/page-account-post.php:166
 #, php-format
 msgid "%d image(s) / page"
 msgstr "%d 张图片 / 每页"
 
-#: tpl/page-account-post.php:266
+#: tpl/page-account-post.php:191
 msgid "Storage link"
 msgstr "网盘链接"
 
-#: tpl/page-account-post.php:410
+#: tpl/page-account-post.php:325
 #, php-format
 msgid "Custom tag %d"
 msgstr "自定义标签 %d"
 
-#: tpl/page-account-post.php:469 tpl/page-account-post.php:470
+#: tpl/page-account-post.php:384 tpl/page-account-post.php:385
 msgid "The source of work URL, includes http://"
 msgstr "作品的来源地址，包括 http://"
 
-#: tpl/page-account-post.php:500
+#: tpl/page-account-post.php:415
 msgid ""
 "The post data will be saved automatically per minute in your current "
 "borwser, you can also save it now manually."
 msgstr ""
 "该文章数据会在您当前的浏览器中，每分钟自动保存一次，您也可以手动进行保存。"
 
-#: tpl/page-account-post.php:501
+#: tpl/page-account-post.php:416
 msgid "Quick save"
 msgstr "快速保存"
 
-#: tpl/page-account-post.php:508
+#: tpl/page-account-post.php:423
 msgid "Update"
 msgstr "更新"
 
@@ -5028,6 +5040,37 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:119
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#, fuzzy
+#~ msgid "Add new"
+#~ msgstr "添加新文章"
+
+#~ msgid "Storage types"
+#~ msgstr "网盘类型"
+
+#~ msgid "ID = Storage name, e.g. bdpan = Baidu storage"
+#~ msgstr "ID = 网盘名称，例如：bdpan = 百度网盘"
+
+#~ msgid "One item per line"
+#~ msgstr "一行一个条目"
+
+#~ msgid "Baidu storage"
+#~ msgstr "百度网盘"
+
+#~ msgid "360 storage"
+#~ msgstr "360网盘"
+
+#~ msgid "Thunder storage"
+#~ msgstr "迅雷快盘"
+
+#~ msgid "Mega storage"
+#~ msgstr "Mega网盘"
+
+#~ msgid "Top bar menu"
+#~ msgstr "顶栏菜单"
+
+#~ msgid "Login top bar menu"
+#~ msgstr "顶栏菜单（已登录状态）"
 
 #~ msgid "Server error or network is disconnected."
 #~ msgstr "服务器错误或网络未连接。"

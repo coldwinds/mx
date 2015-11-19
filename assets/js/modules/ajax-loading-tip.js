@@ -11,7 +11,7 @@ var click_handle = require('modules/click-handle');
 var cache = {};
 var doc = document;
 module.exports = function(t,s,timeout){
-		
+	
 	if(!cache)
 		cache = {};
 
@@ -71,4 +71,4 @@ module.exports = function(t,s,timeout){
 	function action_close(){
 		cache.$t_container.classList.remove('show');
 	}
-};
+}

@@ -60,34 +60,36 @@ class theme_custom_contribution{
 			<legend><i class="fa fa-fw fa-paint-brush"></i> <?= ___('Contribution settings');?></legend>
 			<p class="description"><?= ___('About contribution setting.');?></p>
 			<table class="form-table">
-				<tr>
-					<th><?= ___('Shows categories');?></th>
-					<td>
-						<?php theme_features::cat_checkbox_list(__CLASS__,'cats');?>
-					</td>
-				</tr>
-				<tr>
-					<th><label for="<?= __CLASS__;?>-tags-number"><?= ___('Shows tags number');?></label></th>
-					<td>
-						<input class="short-text" type="number" name="<?= __CLASS__;?>[tags-number]" id="<?= __CLASS__;?>-tags-number" value="<?= isset($opt['tags-number']) ?  $opt['tags-number'] : 6;?>">
-					</td>
-				</tr>
-				<tr>
-					<th><label for="<?= __CLASS__;?>-pending-after-edited"><?= ___('Pending after edited');?></label></th>
-					<td>
-						<select name="<?= __CLASS__;?>[pending-after-edited]" id="<?= __CLASS__;?>-pending-after-edited" class="widefat">
-							<?php the_option_list(-1,___('Disable'),self::get_options('pending-after-edited'));?>
-							<?php the_option_list(1,___('Enable'),self::get_options('pending-after-edited'));?>
-						</select>
-						<p class="description"><?= ___('After the post of contributor published, if contributor edit the post which post status will become to pending if enable.');?></p>
-					</td>
-				</tr>
-				<tr>
-					<th><label for="<?= __CLASS__;?>-description"><?= htmlentities(___('You can write some description for contribution page header. Please use tag <p> to wrap your HTML codes.'));?></label></th>
-					<td>
-						<textarea name="<?= __CLASS__;?>[description]" id="<?= __CLASS__;?>-description" class="widefat" rows="5"><?= self::get_des();?></textarea>
-					</td>
-				</tr>
+				<tbody>
+					<tr>
+						<th><?= ___('Shows categories');?></th>
+						<td>
+							<?php theme_features::cat_checkbox_list(__CLASS__,'cats');?>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="<?= __CLASS__;?>-tags-number"><?= ___('Shows tags number');?></label></th>
+						<td>
+							<input class="short-text" type="number" name="<?= __CLASS__;?>[tags-number]" id="<?= __CLASS__;?>-tags-number" value="<?= isset($opt['tags-number']) ?  $opt['tags-number'] : 6;?>">
+						</td>
+					</tr>
+					<tr>
+						<th><label for="<?= __CLASS__;?>-pending-after-edited"><?= ___('Pending after edited');?></label></th>
+						<td>
+							<select name="<?= __CLASS__;?>[pending-after-edited]" id="<?= __CLASS__;?>-pending-after-edited" class="widefat">
+								<?php the_option_list(-1,___('Disable'),self::get_options('pending-after-edited'));?>
+								<?php the_option_list(1,___('Enable'),self::get_options('pending-after-edited'));?>
+							</select>
+							<p class="description"><?= ___('After the post of contributor published, if contributor edit the post which post status will become to pending if enable.');?></p>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="<?= __CLASS__;?>-description"><?= htmlentities(___('You can write some description for contribution page header. Please use tag <p> to wrap your HTML codes.'));?></label></th>
+						<td>
+							<textarea name="<?= __CLASS__;?>[description]" id="<?= __CLASS__;?>-description" class="widefat" rows="5"><?= self::get_des();?></textarea>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 		</fieldset>
 		<?php
@@ -144,6 +146,7 @@ class theme_custom_contribution{
 			
 		return $cache;
 	}
+
 	private static function wp_get_attachment_image_src($attachment_id, $size = 'thumbnail'){
 		static $caches = [];
 		$cache_id = $attachment_id . $size;
@@ -241,7 +244,7 @@ class theme_custom_contribution{
 			/** set edit again */
 			$edit_again = true;
 			
-			self::set_once_published($edit_post_id);
+			//self::set_once_published($edit_post_id);
 			
 			/**
 			 * check post exists
@@ -495,11 +498,16 @@ class theme_custom_contribution{
 	private static function get_update_post_status($old_status){
 		if($old_status === 'pending')
 			return 'pending';
-		/** if is editor, return old status */
+		/** if is editor, return publish status */
 		if(theme_cache::current_user_can('edit_pages'))
 			return 'publish';
-		/** if is lower than editor, check the pending after edited */
-		return theme_cache::current_user_can('publish_posts') && self::is_pending_after_edited() ? 'pending' : 'publish';
+
+		/** if is author, check the pending after edit status */
+		if(theme_cache::current_user_can('publish_posts'))
+			return self::is_pending_after_edited() ? 'pending' : 'publish';
+		
+		/** if is lower than author, return pending */
+		return 'pending';
 	}
 	public static function get_order_cats(){
 		if(!self::get_cats())

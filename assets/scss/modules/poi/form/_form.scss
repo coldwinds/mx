@@ -23,6 +23,7 @@ select{
 	display: block;
 	width: 100%;
 	padding: ($btn-gutter / 2) $btn-gutter;
+	@extend %transition-duration-fast;
 	border: {
 		width: 0 0 2px 0;
 		color: $form-control-border-color;

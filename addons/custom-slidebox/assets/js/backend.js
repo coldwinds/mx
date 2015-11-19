@@ -79,7 +79,7 @@ module.exports = function(){
 	
 	function bind_add(){
 		cache.$add.addEventListener('click',function(){
-			var tpl = config.tpl.replace(config.placeholder_pattern,+new Date()),
+			var tpl = config.tpl.replace(config.placeholder_pattern, +new Date()),
 				$new_item = paseHTML(tpl);
 			/** append */
 			cache.$container.appendChild($new_item);
@@ -97,11 +97,12 @@ module.exports = function(){
 	}
 	function bind_del($del){
 		$del.addEventListener('click', function () {
-			var target_id = this.getAttribution('data-target'),
+			var target_id = this.getAttribute('data-target'),
 			$target = document.getElementById(target_id);
 			if(window.jQuery){
-				jQuery($target).fadeOut(1,function(){
-					jQuery(this).remove();
+				var $t = jQuery($target);
+				$t.fadeOut(1,function(){
+					$t.remove();
 				}).css({
 					'background-color':'#d54e21'
 				});

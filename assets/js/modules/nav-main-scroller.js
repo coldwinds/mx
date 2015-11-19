@@ -5,9 +5,7 @@ module.exports = function(){
 	'use strict';
 	var cache = {};
 	
-	function init(){
-		ready(bind)
-	}
+	ready(bind)
 
 	function bind(){
 		cache.$menu = document.querySelector('.nav-main');
@@ -52,6 +50,4 @@ module.exports = function(){
 		}
 		cache.y = scroll_y;
 	}
-
-	init();
 }

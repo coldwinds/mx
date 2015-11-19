@@ -14,27 +14,36 @@
  * menu menu-mobile
  */
 if(wp_is_mobile()){
-	if(theme_cache::is_user_logged_in()){
-		theme_cache::wp_nav_menu([
-			'theme_location'    => 'menu-mobile-login',
-			'container'         => 'nav',
-			'container_class'   => 'nav-slide menu-mobile',
-			'menu_class'        => 'menu',
-			'menu_id' 			=> 'menu-mobile',
-			'fallback_cb'       => 'custom_navwalker::fallback',
-			'walker'            => new custom_navwalker
-		]);
-	}else{
-		theme_cache::wp_nav_menu([
-			'theme_location'    => 'menu-mobile',
-			'container'         => 'nav',
-			'container_class'   => 'nav-slide menu-mobile',
-			'menu_class'        => 'menu',
-			'menu_id' 			=> 'menu-mobile',
-			'fallback_cb'       => 'custom_navwalker::fallback',
-			'walker'            => new custom_navwalker
-		]);
-	}
+	?>
+	<div class="nav-slide menu-mobile header-nav-slide">
+		<a href="<?= theme_cache::home_url();?>" class="nav-slide-header">
+			<?= theme_cache::get_bloginfo('name');?>
+		</a>
+		<?php
+		if(theme_cache::is_user_logged_in()){
+			theme_cache::wp_nav_menu([
+				'theme_location'    => 'menu-mobile-login',
+				'container'         => 'nav',
+				'container_class'   => '',
+				'menu_class'        => 'menu',
+				'menu_id' 			=> 'menu-mobile',
+				'fallback_cb'       => 'custom_navwalker::fallback',
+				'walker'            => new custom_navwalker
+			]);
+		}else{
+			theme_cache::wp_nav_menu([
+				'theme_location'    => 'menu-mobile',
+				'container'         => 'nav',
+				'container_class'   => '',
+				'menu_class'        => 'menu',
+				'menu_id' 			=> 'menu-mobile',
+				'fallback_cb'       => 'custom_navwalker::fallback',
+				'walker'            => new custom_navwalker
+			]);
+		}	
+		?>
+	</div>
+	<?php
 }
 /**
  * account menu
@@ -46,7 +55,7 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 	?>
 	<div class="nav-slide header-nav-account-menu">
 		<a href="<?= theme_cache::get_author_posts_url(theme_cache::get_current_user_id());?>" class="nav-slide-header">
-			<img src="<?= theme_cache::get_avatar_url(theme_cache::get_current_user_id());?>" width="32" height="32" alt="avatar" class="avatar">
+			<img src="<?= theme_cache::get_avatar_url(theme_cache::get_current_user_id());?>" width="48" height="48" alt="avatar" class="avatar">
 			<span class="author-name"><?= theme_cache::get_the_author_meta('display_name',theme_cache::get_current_user_id());?></span>
 		</a>
 		<ul class="menu">

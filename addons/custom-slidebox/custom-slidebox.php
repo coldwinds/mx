@@ -169,7 +169,7 @@ class theme_custom_slidebox{
 				<label for="<?= __CLASS__;?>-img-url-<?= $placeholder;?>"><?= ___('Image url');?></label>
 				<?php if($img_url){ ?>
 					<br>
-					<a href="<?= $img_url;?>" target="_blank">
+					<a href="<?= $img_url;?>" target="<?= theme_functions::$link_target;?>">
 						<img src="<?= $img_url;?>" class="img-preview" alt="preview" width="200" height="125">
 					</a>
 				<?php } ?>

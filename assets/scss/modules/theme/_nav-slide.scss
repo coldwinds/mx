@@ -10,15 +10,18 @@
 	width: 60%;
 	height: 100%;
 	overflow-y: scroll;
-	visibility: collapse;
+	//visibility: collapse;
 	-webkit-overflow-scrolling: touch;
 	@include transition-duration($global-transition-duration);
-	@include transform-origin(left);
-	@include scale3d(0,1,1);
+	//@include transform-origin(left);
+	@include translate3d(-100%,0,0);
 	z-index: 100;
 	&.on{
-		visibility: visible;
-		@include scale3d(1,1,1);
+		//visibility: visible;
+		@include translate3d(0,0,0);
+		&:after{
+			content: ' ';
+		}
 	}
 	.nav-slide-header{
 		padding: 2rem 1rem;
@@ -69,9 +72,13 @@
 	}
 }
 .nav-slide-header{
-	background: #f8f8f8;
-	font-size: 20px;
-	text-indent: 10px;
+	background: $accent-color;
+	color: #fff !important;
+	font-size: 1.5rem;
+	text-indent: 1rem;
+	.avatar{
+		border: 2px solid #fff;
+	}
 }
 .admin-bar .nav-slide{
 	padding-top: 46px;

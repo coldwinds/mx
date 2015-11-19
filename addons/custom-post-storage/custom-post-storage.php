@@ -1,32 +1,26 @@
 <?php
 /**
- * @version 1.1.0
+ * @version 2.0.0
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_storage::init';
-	return $fns;
-});
 class theme_custom_storage{
 	public static $page_slug = 'storage-download';
 	public static $post_meta_key = array(
 		'key' => '_theme_custom_storage'
 	);
 	public static function init(){
-		add_action('init',					__CLASS__ . '::page_create');
-		add_action('add_meta_boxes', 		__CLASS__ . '::meta_box_add');
-		add_action('save_post_post', 		__CLASS__ . '::meta_box_save');
+		add_action('init', __CLASS__ . '::page_create');
+		add_action('add_meta_boxes', __CLASS__ . '::meta_box_add');
+		add_action('save_post_post', __CLASS__ . '::meta_box_save');
 
-		add_action('template_redirect',		__CLASS__ . '::template_redirect');
+		add_action('template_redirect', __CLASS__ . '::template_redirect');
 		
-		//add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
+		//add_shortcode('post-stroage-download', __CLASS__ . '::add_shortcode');
 		
-		//add_shortcode('post-stroage-download',__CLASS__ . '::add_shortcode');
-		
-		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);	
+		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);	
 
 		add_action('page_settings',__CLASS__ . '::display_backend');
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
-		add_filter('theme_options_default',__CLASS__ . '::options_default');
+		add_filter('theme_options_save', __CLASS__ . '::options_save');
+		add_filter('theme_options_default', __CLASS__ . '::options_default');
 
 		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 	}
@@ -58,10 +52,12 @@ class theme_custom_storage{
 					</td>
 				</tr>
 				<tr>
-					<th><label for="<?= __CLASS__;?>-types"><?= ___('Storage types');?></label></th>
+					<th><label for="<?= __CLASS__;?>-enabled-display-name"><?= ___('Enable download item name?');?></label></th>
 					<td>
-						<textarea name="<?= __CLASS__;?>[types]" id="<?= __CLASS__;?>-types" cols="50" rows="5" class="widefat" placeholder="<?= ___('ID = Storage name, e.g. bdpan = Baidu storage');?>"><?= self::get_types_text();?></textarea>
-						<p class="description"><?= ___('One item per line');?></p>
+						<select name="<?= __CLASS__;?>[enabled-display-name]" id="<?= __CLASS__;?>-enabled-display-name" class="widefat">
+							<?php the_option_list(-1,___('Disable'),self::get_options('enabled-display-name'));?>
+							<?php the_option_list(1,___('Enable'),self::get_options('enabled-display-name'));?>
+						</select>
 					</td>
 				</tr>
 				<tr>
@@ -82,12 +78,7 @@ class theme_custom_storage{
 	public static function options_default(array $opts = []){
 		$opts[__CLASS__] = [
 			'enabled' => 1,
-			'types' => [
-				'bdyun' => ___('Baidu storage'),
-				'360pan' => ___('360 storage'),
-				'kuaipan' => ___('Thunder storage'),
-				'mega' => ___('Mega storage'),
-			],
+			'enabled-display-name' => -1,
 		];
 		return $opts;
 	}
@@ -107,43 +98,9 @@ class theme_custom_storage{
 	}
 	public static function options_save(array $opts = []){
 		if(isset($_POST[__CLASS__])){
-			if(empty(trim($_POST[__CLASS__]['types']))){
-				$opts[__CLASS__]['types'] = self::options_default()[__CLASS__]['types'];
-			}else{
-				$opts[__CLASS__] = $_POST[__CLASS__];
-				$lines = explode("\n",$_POST[__CLASS__]['types']);
-
-				$opts[__CLASS__]['types'] = [];
-				foreach($lines as $v){
-					$items = explode('=',$v);
-					if(isset($items[0],$items[1])){
-						$opts[__CLASS__]['types'][trim($items[0])] = trim($items[1]);
-					}
-				}
-			}
+			$opts[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $opts;
-	}
-	public static function get_types($key = null){
-		$types = array_filter((array)self::get_options('types'));
-		if($key)
-			return isset($types[$key]) ? $types[$key] : false;
-		return $types;
-	}
-	public static function get_types_text(){
-		$lines = [];
-		$types = self::get_types();
-		$keys = array_keys($types);
-		if(is_numeric($keys[0])){
-			foreach($types as $k => $v){
-				$lines[] = array_keys($v)[0] . ' = ' . array_values($v)[0];
-			}
-		}else{
-			foreach($types as $k => $v){
-				$lines[] = $k . ' = ' . $v;
-			}
-		}
-		return stripslashes(implode("\n",$lines));
 	}
 	public static function template_redirect(){
 		if(self::is_page() && !self::get_decode_post()){
@@ -157,6 +114,113 @@ class theme_custom_storage{
 			);
 		}
 		return;
+	}
+	public static function display_frontend_contribution($post_id){
+		if(!self::is_enabled())
+			return false;
+
+		?>
+		<div id="<?= __CLASS__;?>-container" data-tpl="<?= esc_attr(self::get_tpl_frontend_contribution());?>">
+			<?php
+			if(!$post_id){
+				echo self::get_tpl_frontend_contribution(0);
+			}else{
+				$meta = array_filter((array)self::get_post_meta($post_id));
+				if(!$meta){
+					echo self::get_tpl_frontend_contribution(0,$meta);
+				}else{
+					foreach($meta as $k => $v){
+						echo self::get_tpl_frontend_contribution($k,$meta);
+					}
+				}
+			}
+			?>
+		</div>
+		<div id="<?= __CLASS__;?>-control">
+			<a href="javascript:;" id="<?= __CLASS__;?>-add" class="add btn btn-block btn-primary"><i class="fa fa-plus"></i> <?= ___('Add new link');?></a>
+		</div>
+		<?php
+	}
+	public static function get_tpl_frontend_contribution($placeholder = '%placeholder%', array $meta = []){
+		
+		$name = isset($meta[$placeholder]['name']) ? esc_attr($meta[$placeholder]['name']) : null;
+		
+		$url = isset($meta[$placeholder]['url']) ? esc_attr($meta[$placeholder]['url']) : null;
+		
+		$download_pwd = isset($meta[$placeholder]['download-pwd']) ? esc_attr($meta[$placeholder]['download-pwd']) : null;
+		
+		$extract_pwd = isset($meta[$placeholder]['extract-pwd']) ? esc_attr($meta[$placeholder]['extract-pwd']) : null;
+
+		$class_lg = 'g-tablet-2-4';
+		$class_sm = 'g-tablet-1-4';
+		ob_start();
+		
+		?>
+		<div class="<?= __CLASS__;?>-item item" id="<?= __CLASS__;?>-item-<?= $placeholder;?>" data-placeholder="<?= $placeholder;?>">
+			<a href="javascript:;" class="del" title="<?= ___('Delete this item');?>" data-target="<?= __CLASS__;?>-item-<?= $placeholder;?>"><i class="fa fa-times"></i></a>
+			<div class="row">
+				<?php 
+				
+				if(self::is_enabled_display_name()){ 
+					$class = 'g-tablet-1-4'
+					?>
+					<div class="g-tablet-1-5">
+						<input 
+							type="text" 
+							name="<?= __CLASS__;?>[<?= $placeholder;?>][name]" 
+							id="<?= __CLASS__;?>-<?= $placeholder;?>-name" 
+							class="form-control" 
+							placeholder="<?= ___('Name (optional)');?>" 
+							title="<?= ___('Name (optional)');?>" 
+							value="<?= $name;?>" 
+						>
+					</div>
+				<?php } ?>
+				<div class="<?= self::is_enabled_display_name() ? 'g-tablet-2-5' : 'g-tablet-3-5';?>">
+					<input 
+						type="text" 
+						class="form-control" 
+						name="<?= __CLASS__;?>[<?= $placeholder;?>][url]" 
+						id="<?= __CLASS__;?>-<?= $placeholder;?>-url" 
+						title="<?= ___('Download page URL (include http://)');?>" 
+						placeholder="<?= ___('Download page URL (include http://)');?>" 
+						value="<?= $storage_url;?>" 
+					>
+				</div>
+				<div class="g-tablet-1-5">
+					<!-- <div class="input-group"> -->
+						<!-- <label class="addon" for="<?= __CLASS__;?>-download-pwd"><i class="fa fa-key fa-fw"></i></label> -->
+						<input 
+							type="text" 
+							class="form-control" 
+							name="<?= __CLASS__;?>[<?= $placeholder;?>][download-pwd]" 
+							id="<?= __CLASS__;?>-<?= $placeholder;?>-download-pwd" 
+							title="<?= ___('Download password (optional)');?>" 
+							placeholder="<?= ___('Download password (optional)');?>" 
+							value="<?= $storage_download_pwd;?>" 
+						>
+					<!-- </div> -->
+				</div>
+				<div class="g-tablet-1-5">
+					<!-- <div class="input-group"> -->
+						<!-- <label class="addon" for="<?= __CLASS__;?>-url"><i class="fa fa-unlock fa-fw"></i></label> -->
+						<input 
+							type="text" 
+							class="form-control" 
+							name="<?= __CLASS__;?>[<?= $placeholder;?>][extract-pwd]" 
+							id="<?= __CLASS__;?>-<?= $placeholder;?>-extract-pwd" 
+							title="<?= ___('Extract password (optional)');?>" 
+							placeholder="<?= ___('Extract password (optional)');?>" 
+							value="<?= $storage_extract_pwd;?>" 
+						>
+					<!-- </div> -->
+				</div>
+			</div><!-- /.row -->
+		</div><!-- /.item -->
+		<?php
+		$html = html_minify(ob_get_contents());
+		ob_end_clean();
+		return $html;
 	}
 	public static function get_post_meta($post_id){
 		static $caches = [];
@@ -184,48 +248,38 @@ class theme_custom_storage{
 		if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) 
 			return;
 			
-		if(!isset($_POST[__CLASS__]))
+		if(!isset($_POST[__CLASS__])){
+			delete_post_meta($post_id,self::$post_meta_key['key']);
 			return;
+		}
 			
 		$new_meta = array_filter((array)$_POST[__CLASS__]);
-		if($new_meta)
-			$new_meta = array_values($new_meta);
 			
-		$old_meta = self::get_post_meta($post_id);
+		$old_meta = array_filter((array)self::get_post_meta($post_id));
 		
 		self::post_save($post_id, $old_meta, $new_meta);
 		
 	}
 	public static function post_save($post_id, $old_meta = [], $new_meta = []){
-		/** nothing to do */
+		/** nothing to modify */
 		if($old_meta == $new_meta)
 			return;
-		if(!$old_meta && empty($new_meta[0]['url']))
+			
+		/** if empty, delete */
+		if(!$new_meta){
+			delete_post_meta($post_id,self::$post_meta_key['key']);
 			return;
+		}
+		$delete = false;
 
 		/** check */
-		foreach($new_meta as $k => $v){
-			if(!self::get_types($v['type']))
-				$new_meta[$k]['type'] = 'bdyun';
-				
-			if($new_meta[$key]['url'])
-				$new_meta[$key]['url'] = esc_url($new_meta[$key]['url']);
-		}
-		
-		/** add */
-		if(!$old_meta){
-			add_post_meta($post_id,self::$post_meta_key['key'],$new_meta);
-			return;
-		}
-		
-		/** delete */
-		if(isset($new_meta[0]['url']) && $new_meta[0]['url'] == ''){
+		if(is_null_array($new_meta)){
 			delete_post_meta($post_id,self::$post_meta_key['key']);
 			return;
 		}
 		
 		/** update */
-		update_post_meta($post_id,self::$post_meta_key['key'],$new_meta);
+		update_post_meta($post_id, self::$post_meta_key['key'],$new_meta);
 	}
 	public static function process(){
 		theme_features::check_referer();
@@ -251,7 +305,6 @@ class theme_custom_storage{
 						if(isset($v['download-pwd']))
 							break 1;
 						$new_meta[] = [
-							'type' => $k,
 							'url' => $v['url'],
 							'download-pwd' => $v['pwd'],
 							'extract-pwd' => self::get_options('default-extract-pwd'),
@@ -272,53 +325,83 @@ class theme_custom_storage{
 	}
 	public static function meta_box_display($post){
 		$meta = array_filter((array)self::get_post_meta($post->ID));
-		if(!$meta)
-			$meta[] = [];
-			
-		foreach($meta as $k => $v){
-			?>
-			<div class="<?= __CLASS__;?>">
-				<select class="widefat" name="<?= __CLASS__;?>[<?= $k;?>][type]" id="<?= __CLASS__;?>-<?= $k;?>-type">
-					<?php
-					foreach(self::get_types() as $item_key => $item_name){
-						the_option_list($item_key,$item_name,$v['type']);
-					}
-					?>
-				</select>
-				<input 
-					type="url" 
-					name="<?= __CLASS__;?>[<?= $k;?>][url]" 
-					id="<?= __CLASS__;?>-<?= $k;?>-url" 
-					class="widefat" 
-					placeholder="<?= ___('Download page URL (include http://)');?>" 
-					title="<?= ___('Download page URL (include http://)');?>" 
-					value="<?= isset($v['url']) && !empty($v['url']) ? esc_url($v['url']) : null;?>" 
-				>
-				<input 
-					type="text" 
-					name="<?= __CLASS__;?>[<?= $k;?>][download-pwd]" 
-					id="<?= __CLASS__;?>-<?= $k;?>-download-pwd" 
-					class="widefat" 
-					placeholder="<?= ___('Download password (optional)');?>" 
-					title="<?= ___('Download password (optional)');?>" 
-					value="<?= isset($v['download-pwd']) ? $v['download-pwd'] : null;?>" 
-				>
-				<input 
-					type="text" 
-					name="<?= __CLASS__;?>[<?= $k;?>][extract-pwd]" 
-					id="<?= __CLASS__;?>-<?= $k;?>-extract-pwd" 
-					class="widefat" 
-					placeholder="<?= ___('Extract password (optional)');?>" 
-					title="<?= ___('Extract password (optional)');?>" 
-					value="<?= isset($v['extract-pwd']) ? $v['extract-pwd'] : null;?>" 
-				>
-			</div>			
+		?>
+		<div id="<?= __CLASS__;?>-container" data-tpl="<?= esc_attr(self::get_tpl_meta_box());?>">
 			<?php
-		}
-		//var_dump($meta);die;
-		//wp_nonce_field(__CLASS__,__CLASS__ . '-nonce');
+			if(!$meta){
+				echo self::get_tpl_meta_box(0);
+			}else{
+				foreach($meta as $k => $v){
+					echo self::get_tpl_meta_box($k,$meta);
+				}
+			}
+			?>
+		</div>
+		<div id="<?= __CLASS__;?>-control">
+			<a href="javascript:;" id="<?= __CLASS__;?>-add" class="add button button-primary"><?= ___('Add new item');?></a>
+		</div>
+		<?php
 	}
+	public static function is_enabled_display_name(){
+		return self::get_options('enabled-display-name') == 1;
+	}
+	public static function get_tpl_meta_box($placeholder = '%placeholder%',array $meta = []){
+		$name = isset($meta[$placeholder]['name']) ? esc_attr($meta[$placeholder]['name']) : null;
+		
+		$url = isset($meta[$placeholder]['url']) ? esc_attr($meta[$placeholder]['url']) : null;
+		
+		$download_pwd = isset($meta[$placeholder]['download-pwd']) ? esc_attr($meta[$placeholder]['download-pwd']) : null;
+		
+		$extract_pwd = isset($meta[$placeholder]['extract-pwd']) ? esc_attr($meta[$placeholder]['extract-pwd']) : null;
 
+		ob_start();
+		?>
+		<p class="<?= __CLASS__;?>-item item" id="<?= __CLASS__;?>-item-<?= $placeholder;?>">
+			<?php if(self::is_enabled_display_name()){ ?>
+				<input 
+					type="text" 
+					name="<?= __CLASS__;?>[<?= $placeholder;?>][name]" 
+					id="<?= __CLASS__;?>-<?= $placeholder;?>-name" 
+					class="widefat" 
+					placeholder="<?= ___('Name (optional)');?>" 
+					title="<?= ___('Name (optional)');?>" 
+					value="<?= $name;?>" 
+				>
+			<?php } ?>
+			<input 
+				type="text" 
+				name="<?= __CLASS__;?>[<?= $placeholder;?>][url]" 
+				id="<?= __CLASS__;?>-<?= $placeholder;?>-url" 
+				class="widefat" 
+				placeholder="<?= ___('Download page URL (include http://)');?>" 
+				title="<?= ___('Download page URL (include http://)');?>" 
+				value="<?= $url;?>" 
+			>
+			<input 
+				type="text" 
+				name="<?= __CLASS__;?>[<?= $placeholder;?>][download-pwd]" 
+				id="<?= __CLASS__;?>-<?= $placeholder;?>-download-pwd" 
+				class="widefat" 
+				placeholder="<?= ___('Download password (optional)');?>" 
+				title="<?= ___('Download password (optional)');?>" 
+				value="<?= $download_pwd;?>" 
+			>
+			<input 
+				type="text" 
+				name="<?= __CLASS__;?>[<?= $placeholder;?>][extract-pwd]" 
+				id="<?= __CLASS__;?>-<?= $placeholder;?>-extract-pwd" 
+				class="widefat" 
+				placeholder="<?= ___('Extract password (optional)');?>" 
+				title="<?= ___('Extract password (optional)');?>" 
+				value="<?= $extract_pwd;?>" 
+			>
+			<a href="javascript:;" class="del" data-target="<?= __CLASS__;?>-item-<?= $placeholder;?>">&uarr; <?= ___('Delete this item');?></a>
+		</p>			
+		<?php
+		$html = html_minify(ob_get_contents());
+		ob_end_clean();
+		return $html;
+	}
 	public static function page_create(){
 		if(!theme_cache::current_user_can('manage_options')) 
 			return false;
@@ -365,7 +448,7 @@ class theme_custom_storage{
 			'post-id' => (int)$post_id
 		);
 		$caches[$post_id] = esc_url(add_query_arg(array(
-			'code' => base64_encode(authcode(serialize($code_obj),'encode'))
+			'code' => base64_encode(authcode(json_encode($code_obj),'encode'))
 			),self::get_url()));
 		return $caches[$post_id];
 	}
@@ -386,7 +469,7 @@ class theme_custom_storage{
 			return $cache;
 		}
 			
-		$decode = unserialize($decode);
+		$decode = json_decode($decode);
 		
 		if(!isset($decode['post-id'])){
 			$cache = false;
@@ -468,4 +551,7 @@ class theme_custom_storage{
 		return theme_cache::is_page(self::$page_slug);
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_storage::init';
+	return $fns;
+});

@@ -9,7 +9,9 @@ class theme_asset_enqueue{
 		add_action('wp_enqueue_scripts', __CLASS__ . '::frontend_enqueue_css');
 		
 		/** admin */
+		//add_action('')
 		add_action('admin_enqueue_scripts', __CLASS__ . '::backend_enqueue_scripts', 999);
+		add_action('admin_enqueue_scripts', __CLASS__ . '::backend_post_new_enqueue_scripts', 999);
 		add_action('admin_enqueue_scripts', __CLASS__ . '::backend_enqueue_css');
 	}
 	/**
@@ -49,7 +51,6 @@ class theme_asset_enqueue{
 			
 		$js = [
 			'frontend' => [
-				'deps' => [],
 				'url' => theme_features::get_theme_js('backend-entry'),
 			],
 			
@@ -64,6 +65,31 @@ class theme_asset_enqueue{
 			);
 		}
 		
+	}
+	public static function backend_post_new_enqueue_scripts($hook){
+		$pages = [
+			'post-new.php',
+			'post.php'
+		];
+		if(!in_array($hook,$pages))
+			return;
+			
+		$js = [
+			'frontend' => [
+				'deps' => [],
+				'url' => theme_features::get_theme_js('backend-post-new-entry'),
+			],
+			
+		];
+		foreach($js as $k => $v){
+			wp_enqueue_script(
+				$k,
+				$v['url'],
+				isset($v['deps']) ? $v['deps'] : [],
+				self::get_version($v),
+				true
+			);
+		}
 	}
 	/** frontend js */
 	public static function frontend_enqueue_scripts(){

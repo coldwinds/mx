@@ -3,6 +3,8 @@ var array_merge = require('modules/array-merge');
 var ajax_loading_tip = require('modules/ajax-loading-tip');
 var validate = require('modules/validate');
 var placeholder = require('modules/placeholder');
+var paseHTML = require('modules/parse-html');
+
 module.exports = function(){
 	'use strict';
 
@@ -75,7 +77,12 @@ module.exports = function(){
 
 		if(!cache.$fm) 
 			return false;
-			
+		I('fm-ctb-loading').style.display = 'none';
+		cache.$fm.style.display = 'block';
+		
+		cache.$post_title.focus();
+
+		
 		load_thumbnails();
 		
 		upload();
@@ -227,15 +234,20 @@ module.exports = function(){
 			if(document.querySelector('.theme_custom_storage-group')){
 				data.storage = {};
 				cache.$storage_items = document.querySelectorAll('.theme_custom_storage-item');
-				for(var i=0, len=cache.$storage_items.length; i<len; i++){
-					if(!data.storage[i])
-						data.storage[i] = {};
-					data.storage[i] = {
-						type : I('theme_custom_storage-' + i + '-type').value,
-						url : I('theme_custom_storage-' + i + '-url').value,
-						download_pwd : I('theme_custom_storage-' + i + '-download-pwd').value,
-						extract_pwd : I('theme_custom_storage-' + i + '-extract-pwd').value
-					};
+				if(cache.$storage_items[0]){
+					for(var i=0, len=cache.$storage_items.length; i<len; i++){
+						if(!data.storage[i])
+							data.storage[i] = {};
+						var ph = cache.$storage_items[i].getAttribute('data-placeholder');
+						data.storage[i] = {
+							url : I('theme_custom_storage-' + ph + '-url').value,
+							download_pwd : I('theme_custom_storage-' + ph + '-download-pwd').value,
+							extract_pwd : I('theme_custom_storage-' + ph + '-extract-pwd').value
+						};
+						var $name = I('theme_custom_storage-' + ph + '-name');
+						if($name)
+							data.storage[i].name = $name.value;
+					}
 				}
 				//data.can_restore = true;
 			}
@@ -311,31 +323,28 @@ module.exports = function(){
 				set_editor_content(data.content);
 				
 			/** storage */
-			if(data.storage){
+			if(data.storage && document.querySelector('.theme_custom_storage-group')){
+				var $storage_container = I('theme_custom_storage-container');
+				var tpl = $storage_container.getAttribute('data-tpl');
+				$storage_container.innerHTML = '';
 				for(var i in data.storage){
-					var $item = I('theme_custom_storage-' + i + '-type');
-					if($item){
-						item_option_select : {
-							for(var j=0,len=$item.options;j<len;j++){
-								if($item.options[j].value === data.storage[i].type){
-									$item.options[j].selected = true;
-									break item_option_select;
-								}
-							}
-						}
+					var $tpl = paseHTML(tpl.replace(/\%placeholder\%/g,i));
+					/** name */
+					var $name = $tpl.querySelector('#theme_custom_storage-' + i + '-name');
+					if($name){
+						$name.value = data.storage[i].name;
 					}
-						
-					$item =	I('theme_custom_storage-' + i + '-url');
-					if($item)
-						$item.value = data.storage[i].url;
-						
-					$item =	I('theme_custom_storage-' + i + '-download-pwd');
-					if($item)
-						$item.value = data.storage[i].download_pwd;
-						
-					$item = I('theme_custom_storage-' + i + '-extract-pwd');
-					if($item)
-						$item.value = data.storage[i].extract_pwd;
+					/** url */
+					var $url = $tpl.querySelector('#theme_custom_storage-' + i + '-url');
+					$url.value = data.storage[i].url;
+					/** url */
+					var $download_pwd = $tpl.querySelector('#theme_custom_storage-' + i + '-download-pwd');
+					$download_pwd.value = data.storage[i].download_pwd;
+					/** url */
+					var $extract_pwd = $tpl.querySelector('#theme_custom_storage-' + i + '-extract-pwd');
+					$extract_pwd.value = data.storage[i].extract_pwd;
+
+					$storage_container.appendChild($tpl);			
 				}
 			}
 			

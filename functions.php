@@ -23,6 +23,7 @@ class theme_functions{
 	public static $thumbnail_placeholder = 'http://ww4.sinaimg.cn/large/686ee05djw1ew56itdn2nj208w05k0sp.jpg';
 	public static $avatar_placeholder = 'http://ww2.sinaimg.cn/large/686ee05djw1ew5767l9voj2074074dfn.jpg';
 	public static $cache_expire = 3600;
+	public static $link_target = '_blank';
 	public static $colors = [
 		'61b4ca',	'e1b32a',	'ee916f',	'a89d84',
 		'86b767',	'6170ca',	'c461ca',	'ca6161',
@@ -65,14 +66,14 @@ class theme_functions{
 			'menu-header-login' 	=> ___('Login header menu'),
 			'menu-mobile' 			=> ___('Mobile menu'),
 			'menu-mobile-login' 	=> ___('Login mobile menu'),
-			'menu-top-bar' 			=> ___('Top bar menu'),
-			'menu-top-bar-login'	=> ___('Login top bar menu'),
+			//'menu-top-bar' 			=> ___('Top bar menu'),
+			//'menu-top-bar-login'	=> ___('Login top bar menu'),
 			'links-footer'			=> ___('Footer links'),
 		]);
 		/** 
 		 * other
 		 */
-		add_action('widgets_init',__CLASS__ . '::widget_init');
+		add_action('widgets_init', __CLASS__ . '::widget_init');
 		add_filter('use_default_gallery_style','__return_false');
 		add_theme_support('html5',['comment-list','comment-form','search-form']);
 
@@ -217,6 +218,96 @@ class theme_functions{
 		}
 		return new WP_Query($query_args);
 	}
+	public static function archive_card_text(array $args = []){
+		global $post;
+		$args = array_merge([
+			'classes' => '',
+			'lazyload' => true,
+			'target' => theme_functions::$link_target,
+			'children' => 3,
+		]);
+		$args['classes'] .= ' card text ';
+		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
+		$post_title = theme_cache::get_the_title($post->ID);
+		?>
+		<article class="<?= $args['classes'];?>">
+			<div class="card-bg">
+				<div class="media">
+					<a 
+						class="media-left" 
+						href="<?= theme_cache::get_author_posts_url($post->post_author);?>" 
+						class="meta author" 
+						title="<?= $author_display_name;?>" 
+						target="<?= $args['target'];?>" 
+					>
+						<img src="<?= theme_functions::$avatar_placeholder;?>" data-src="<?= theme_cache::get_avatar_url($post->post_author);?>" alt="avatar" width="48" height="48" class="avatar"> 
+					</a>
+					<div class="media-body">
+						<a title="<?= $post_title;?>" class="media-heading" href="<?= theme_cache::get_permalink($post->ID);?>" target="<?= $args['target'];?>" >
+							<h3 class="title"><?= $post_title;?></h3>
+						</a>
+						<div class="media-excerpt">
+							<time class="time meta" datetime="<?= get_the_time('Y-m-d H:i:s',$post->ID);?>" title="<?= get_the_time(___('M j, Y'),$post->ID);?>">
+								<i class="fa fa-clock-o"></i> <?= friendly_date(get_the_time('U',$post->ID));?>
+							</time>
+
+							<!-- author -->
+							<a 
+								href="<?= theme_cache::get_author_posts_url($post->post_author);?>" 
+								class="meta author" 
+								title="<?= $author_display_name;?>" 
+								target="<?= $args['target'];?>" 
+							><i class="fa fa-user"></i> <?= theme_cache::get_the_author_meta('display_name',$post->post_author);?></a>
+
+							<!-- views -->
+							<?php if(class_exists('theme_post_views') && theme_post_views::is_enabled()){ ?>
+								<span class="view meta">
+									<i class="fa fa-play-circle"></i> 
+									<?= theme_post_views::get_views();?>
+								</span>
+							<?php } ?>
+						</div>
+					</div>
+				</div><!-- .media -->
+				<a href="<?= theme_cache::get_permalink($post->ID);?>" class="thumbnails" target="<?= $args['target'];?>">
+					
+					<?php
+					/** get first thumbanil */
+					$first_thumbnail_id = get_post_thumbnail_id($post->ID);
+					/** get children */
+					$children = get_children([
+						'numberposts' => $args['children'],
+						'inlcude' => [$first_thumbnail_id],
+						'post_parent' => $post->ID,
+						'post_status' => 'inherit',
+						'post_type' => 'attachment',
+						'order' => 'ASC',
+					]);
+					$children = array_values($children);
+					if($children){
+						?>
+						<div class="row">
+						<?php
+						foreach($children as $child){
+							$child_img = wp_get_attachment_image_src($child->ID, 'thumbnail');
+							?>
+							<div class="g-phone-1-<?= $args['children'];?>">
+								<?php if($args['lazyload']){ ?>
+									<img class="thumbnail" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $child_img[0];?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>" >
+								<?php }else{ ?>
+									<img class="thumbnail" src="<?= $child_img[0];?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>" >
+								<?php } ?>
+							</div>
+							<?php
+						}/** end loop */
+						?>
+						</div>
+					<?php } ?>
+				</a>
+			</div>
+		</article>
+		<?php
+	}
 	/**
 	 * archive_card_xs
 	 *
@@ -228,7 +319,7 @@ class theme_functions{
 		$args = array_merge([
 			'classes' => 'g-desktop-1-2',
 			'lazyload' => true,
-			'target' => '_blank',
+			'target' => theme_functions::$link_target,
 		],$args);
 
 		$args['classes'] .= ' card xs ';
@@ -287,7 +378,7 @@ class theme_functions{
 			'classes' => '',
 			'lazyload' => true,
 			'excerpt' => false,
-			'target' => '_blank',
+			'target' => theme_functions::$link_target,
 		],$args);
 
 		$thumbnail_real_src = theme_functions::get_thumbnail_src($post->ID);
@@ -1457,7 +1548,7 @@ class theme_functions{
 		$args = array_merge([
 			'classes' => 'g-tablet-1-4',
 			'lazyload' => true,
-			'target' => '_blank',
+			'target' => theme_functions::$link_target,
 		],$args);
 
 		$args['classes'] .= ' card lg ';
@@ -1542,7 +1633,7 @@ class theme_functions{
 			'classes' => 'g-tablet-1-4',
 			'lazyload' => true,
 			'category' => true,
-			'target' => '_blank',
+			'target' => theme_functions::$link_target,
 		],$args);
 		
 		$args['classes'] .= ' card sm ';
@@ -1746,7 +1837,7 @@ class theme_functions{
 		unset($query);
 		?>
 	</div>
-	<a href="<?= $link;?>" class="below-more btn btn-block btn-default" target="_blank"><?= sprintf(___('More about %s'),$title);?> <i class="fa fa-caret-right"></i></a>
+	<a href="<?= $link;?>" class="below-more btn btn-block btn-default" target="<?= theme_functions::$link_target;?>"><?= sprintf(___('More about %s'),$title);?> <i class="fa fa-caret-right"></i></a>
 	<?php
 	/**
 	 * ad
@@ -1890,7 +1981,7 @@ class theme_functions{
 			'user_id' => null,
 			'extra_title' => '', /** e.g. You have % points */
 			'extra' => 'point',
-			'target' => '_blank',
+			'target' => theme_functions::$link_target,
 		],$args);
 		
 		/**

@@ -31,3 +31,4 @@ require('addons/custom-point-lottery/assets/js/frontend')();
 require('addons/custom-contribution/assets/js/frontend')();
 require('addons/custom-user-settings/assets/js/settings')();
 require('addons/custom-user-settings/assets/js/avatar')();
+require('addons/custom-post-storage/assets/js/post-new')();

@@ -15,6 +15,7 @@ module.exports = function(){
 				M01 : 'Full width mode'
 			}
 		};
+		
 	config = array_merge(config, window.THEME_CONFIG.theme_full_width_mode);
 
 	init();
@@ -22,11 +23,15 @@ module.exports = function(){
 		ready(bind);
 	}
 	function bind(){
-		if(!create_btn())
-			return false;
-
 		cache.$main = I('main');
 		cache.$side = I('sidebar-container');
+		
+		if(!cache.$main || !cache.$side)
+			return;
+			
+		if(!create_btn())
+			return;
+			
 		cache.$btn.addEventListener(click_handle, event_click);
 
 		if(localStorage.getItem(config.key) == 1){
@@ -38,8 +43,7 @@ module.exports = function(){
 			jQuery(window).resize();
 		}
 		try{
-			var pna = require('addons/page-nagination-ajax/assets/js/frontend');
-				pna.page_nagi.reset_nagi_style();
+			require('addons/page-nagination-ajax/assets/js/frontend').page_nagi.reset_nagi_style();
 		}catch(e){}
 	}
 	function expand(set){

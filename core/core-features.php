@@ -630,8 +630,8 @@ class theme_features{
 	 * 
 	 */
 	public static function get_cat_root_id($current_cat_id = null){
-		/* 如果无参数，进行备选方案 */
-		$current_cat_id = $current_cat_id ? $current_cat_id : self::get_current_cat_id();
+		if(!$current_cat_id)
+			$current_cat_id = self::get_current_cat_id();
 		/* 获取目录对象 */
 		$current_cat_parent_obj = theme_cache::get_category($current_cat_id);
 		/* 获取父目录ID */

@@ -356,6 +356,12 @@ class theme_cache{
 			return $caches[$path];
 		}
 	}
+	public static function get_current_screen(){
+		static $cache = null;
+		if($cache === null)
+			$cache = get_current_screen();
+		return $caceh;
+	}
 	public static function is_archive(){
 		static $cache = null;
 		if($cache === null)

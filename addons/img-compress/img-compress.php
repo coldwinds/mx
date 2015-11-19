@@ -2,9 +2,8 @@
 /**
  * img compress
  *
- * @version 1.0.1
+ * @version 1.0.2
  */
-
 class theme_img_compress{
 	public static function init(){
 		add_filter('wp_handle_upload_prefilter', __CLASS__ . '::compress_jpeg_quality', 1, 99 );
@@ -63,9 +62,9 @@ class theme_img_compress{
 					</td>
 				</tr>
 				<tr>
-					<th><label for="<?= __CLASS__;?>-jpeg-quality"><?= ___('JPG image compress quality');?></label></th>
+					<th><label for="<?= __CLASS__;?>-jpg-quality"><?= ___('JPG image compress quality');?></label></th>
 					<td>
-						<select name="<?= __CLASS__;?>[jpeg-quality]" id="<?= __CLASS__;?>-jpeg-quality" class="widefat">
+						<select name="<?= __CLASS__;?>[jpg-quality]" id="<?= __CLASS__;?>-jpg-quality" class="widefat">
 							<?php 
 							for($i=100;$i>=50;$i-=5){
 								the_option_list($i,sprintf(___('Level %d'),$i),self::get_jpg_quality());

@@ -68,7 +68,7 @@ class theme_custom_homebox{
 					value="<?= $cat->term_id;?>"
 					<?= $checked;?>
 				/>
-				<?= esc_html($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="_blank"><?= urldecode($cat->slug);?></a>
+				<?= esc_html($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="<?= theme_functions::$link_target;?>"><?= urldecode($cat->slug);?></a>
 			</label>
 			<?php
 		}

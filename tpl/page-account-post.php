@@ -80,8 +80,8 @@ function post_form($post_id = null){
 	?>
 	
 	<?= theme_custom_contribution::get_des();?>
-	
-	<form action="javascript:;" id="fm-ctb" class="form-horizontal">
+	<div id="fm-ctb-loading" class="page-tip"><?= status_tip('loading',___('Loading, please wait...'));?></div>
+	<form action="javascript:;" id="fm-ctb" class="form-horizontal" hidden>
 		<div class="form-group">
 			<label for="ctb-title" class="g-tablet-1-6 control-label">
 				<?= ___('Post title');?>
@@ -152,22 +152,21 @@ function post_form($post_id = null){
 				</div>
 				
 				<!-- file tool -->
-				<div id="ctb-file-tool">
-
+				<div id="ctb-file-tool" class="row">
+					<div class="g-tablet-1-2">
 					<!-- batch insert -->
-					<a href="javascript:;" id="ctb-batch-insert-btn" class="btn btn-primary">
-						<i class="fa fa-plug"></i> <?= ___('Batch insert images to content');?>
-					</a>
-						
-					<select id="ctb-split-number" class="form-control" title="<?= ___('How many images to split with next-page tag?');?>">
-						<option value="0"><?= ___('Do not use next-page tag');?></option>
-						<?php for($i=1;$i<=10;++$i){ ?>
-							<option value="<?= $i;?>"><?= sprintf(___('%d image(s) / page'),$i);?></option>
-						<?php } ?>
-					</select>
-
-					
-					
+						<a href="javascript:;" id="ctb-batch-insert-btn" class="btn btn-primary btn-block">
+							<i class="fa fa-plug"></i> <?= ___('Batch insert images to content');?>
+						</a>
+					</div>
+					<div class="g-tablet-1-2">
+						<select id="ctb-split-number" class="form-control" title="<?= ___('How many images to split with next-page tag?');?>">
+							<option value="0"><?= ___('Do not use next-page tag');?></option>
+							<?php for($i=1;$i<=10;++$i){ ?>
+								<option value="<?= $i;?>"><?= sprintf(___('%d image(s) / page'),$i);?></option>
+							<?php } ?>
+						</select>
+					</div>
 				</div>
 
 				
@@ -185,105 +184,21 @@ function post_form($post_id = null){
 <!-- storage -->
 <?php
 if(class_exists('theme_custom_storage') && theme_custom_storage::is_enabled()){
-	$storage_meta = $post_id ? theme_custom_storage::get_post_meta($post_id) : null;
-
-	/**
-	 * tpl
-	 */
-	$storage_tpl = function($placeholder) use ($storage_meta){
-		
-		$storage_type = isset($storage_meta[$placeholder]['type']) ? $storage_meta[$placeholder]['type'] : null;
-		
-		$storage_url = isset($storage_meta[$placeholder]['url']) ? $storage_meta[$placeholder]['url'] : null;
-		
-		$storage_download_pwd = isset($storage_meta[$placeholder]['download-pwd']) ? $storage_meta[$placeholder]['download-pwd'] : null;
-		
-		$storage_extract_pwd = isset($storage_meta[$placeholder]['extract-pwd']) ? $storage_meta[$placeholder]['extract-pwd'] : null;
-
-		ob_start();
-		?>
-		<div class="theme_custom_storage-item">
-			<select name="theme_custom_storage[<?= $placeholder;?>][type]" id="theme_custom_storage-<?= $placeholder;?>-type" class="form-control theme_custom_storage-control">
-				<?php foreach(theme_custom_storage::get_types() as $item_key => $item_name){
-					the_option_list($item_key,$item_name,$storage_type);
-				} ?>
-			</select>
-			<div class="row">
-				<div class="g-tablet-2-4">
-					<input 
-						type="url" 
-						class="form-control" 
-						name="theme_custom_storage[<?= $placeholder;?>][url]" 
-						id="theme_custom_storage-<?= $placeholder;?>-url" 
-						title="<?= ___('Download page URL (include http://)');?>" 
-						placeholder="<?= ___('Download page URL (include http://)');?>" 
-						value="<?= $storage_url;?>" 
-					>
-				</div>
-				<div class="g-tablet-1-4">
-					<div class="input-group">
-						<label class="addon" for="theme_custom_storage-download-pwd"><i class="fa fa-key fa-fw"></i></label>
-						<input 
-							type="text" 
-							class="form-control" 
-							name="theme_custom_storage[<?= $placeholder;?>][download-pwd]" 
-							id="theme_custom_storage-<?= $placeholder;?>-download-pwd" 
-							title="<?= ___('Download password (optional)');?>" 
-							placeholder="<?= ___('Download password (optional)');?>" 
-							value="<?= $storage_download_pwd;?>" 
-						>
-					</div>
-				</div>
-				<div class="g-tablet-1-4">
-					<div class="input-group">
-						<label class="addon" for="theme_custom_storage-url"><i class="fa fa-unlock fa-fw"></i></label>
-						<input 
-							type="text" 
-							class="form-control" 
-							name="theme_custom_storage[<?= $placeholder;?>][extract-pwd]" 
-							id="theme_custom_storage-<?= $placeholder;?>-extract-pwd" 
-							title="<?= ___('Extract password (optional)');?>" 
-							placeholder="<?= ___('Extract password (optional)');?>" 
-							value="<?= $storage_extract_pwd;?>" 
-						>
-					</div>
-				</div>
-			</div><!-- /.row -->
-		</div><!-- /.item -->
-		<?php
-		$html = html_minify(ob_get_contents());
-		ob_end_clean();
-		return $html;
-	};
-	/**
-	 * end $storage_tpl()
-	 */
-	
 	?>
-	<div class="form-group theme_custom_storage-group" data-tpl="<?= esc_attr($storage_tpl(0));?>">
+	<div class="form-group theme_custom_storage-group">
 		<div class="g-tablet-1-6 control-label">
 			<i class="fa fa-cloud-download"></i>
 			<?= ___('Storage link');?>
 		</div>
 		<div class="g-tablet-5-6">
-			<?php
-			/** is edit */
-			if($post_id && $storage_meta){
-				foreach($storage_meta as $k => $v){
-					echo $storage_tpl($k);
-				}
-			/** new post */
-			}else{
-				echo $storage_tpl(0);
-			}
-			?>
+			<?= theme_custom_storage::display_frontend_contribution($post_id);?>
 		</div>
 	</div>
 <?php 
 /**
  * end theme_custom_storage
  */
-} 
+}
 ?>
 		
 

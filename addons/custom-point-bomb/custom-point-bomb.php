@@ -610,7 +610,7 @@ class theme_custom_point_bomb{
 
 		$attacker_name = theme_cache::get_the_author_meta('display_name',$history['attacker-id']);
 		
-		$attacker_name = '<a href="' . theme_cache::get_author_posts_url($history['attacker-id']) . '" attacker="_blank"><img src="' . theme_cache::get_avatar_url($history['attacker-id']) . '" alt="' . $attacker_name . '" width="16" height="16" class="avatar"> ' . $attacker_name  . '</a>';
+		$attacker_name = '<a href="' . theme_cache::get_author_posts_url($history['attacker-id']) . '" target="_blank"><img src="' . theme_cache::get_avatar_url($history['attacker-id']) . '" alt="' . $attacker_name . '" width="16" height="16" class="avatar"> ' . $attacker_name  . '</a>';
 
 		if(class_exists('number_user_nicename')){
 			$fight_back_url = self::get_tabs('bomb',$history['attacker-id'] + number_user_nicename::$prefix_number)['url'];

@@ -73,7 +73,7 @@ $status-tip-gutter: 1rem !default;
 
 //card
 $card-shadow-hover: 0 3px 5px 0 rgba(0,0,0,.25) !default;
-$card-bg-color-hover: #F8F8F8 !default;
+$card-bg-color-hover: #F9F9F9 !default;
 $card-bg-color-active: #eee !default;
 $card-sm-shadow-hover: 0 3px 5px 0 $link-color-hover !default;
 	//card xs
@@ -156,7 +156,7 @@ $mod-phone-title-font-size: 1rem !default;
 	$entry-excerpt-bg-color: $card-bg-color-hover !default;
 
 	$entry-meta-circle-size-phone: 5rem !default;
-	$entry-meta-circle-size-not-phone: 10rem !default;
+	$entry-meta-circle-size-desktop: 10rem !default;
 	$entry-meta-circle-font-size: 2rem !default;
 
 	//comment

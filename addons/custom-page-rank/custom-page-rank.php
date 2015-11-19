@@ -310,7 +310,7 @@ class theme_page_rank{
 			'lazyload' => true,
 			'excerpt' => true,
 			'index' => false,
-			'target' => '_blank',
+			'target' => theme_functions::$link_target,
 		],$args);
 
 		$post_title = theme_cache::get_the_title($post->ID);
