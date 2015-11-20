@@ -70,7 +70,7 @@ class widget_comments extends WP_Widget{
 					$comment_text = str_sub(strip_tags(preg_replace('/<img[^>]+>/i','[' . ___('Image') . ']',get_comment_text($comment->comment_ID))),35);
 					?>
 <li class="list-group-item">
-	<a class="media" href="<?= theme_cache::get_permalink($comment->comment_post_ID);?>#comment-<?= $comment->comment_ID;?>" title="<?= theme_cache::get_the_title($comment->comment_post_ID);?>">
+	<a class="media tooltip top" href="<?= theme_cache::get_permalink($comment->comment_post_ID);?>#comment-<?= $comment->comment_ID;?>" title="<?= theme_cache::get_the_title($comment->comment_post_ID);?>">
 		<div class="media-left">
 			<img class="avatar media-object" data-src="<?= esc_url(theme_cache::get_avatar_url($comment));?>" src="<?= $caches['avatar_placeholder'];?>" alt="<?= $caches['author_name'][$comment->comment_author];?>" width="<?= self::$avatar_size;?>" height="<?= self::$avatar_size;?>"/>
 		</div>

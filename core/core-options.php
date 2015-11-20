@@ -58,8 +58,6 @@ class theme_options{
 		return $cache;
 	}
 	public static function backend_js(){
-		if(!theme_cache::current_user_can('manage_options'))
-			return;
 
 		if(!self::is_options_page())
 			return;
@@ -198,7 +196,7 @@ class theme_options{
 	public static function is_options_page(){
 		if(!theme_cache::current_user_can('manage_options'))
 			return false;
-		return is_admin() && isset($_GET['page']) && $_GET['page'] === 'core-options';
+		return theme_cache::is_admin() && isset($_GET['page']) && $_GET['page'] === 'core-options';
 	}
 	public static function add_page(){
 		if(!theme_cache::current_user_can('manage_options'))

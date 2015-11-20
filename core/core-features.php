@@ -1114,11 +1114,12 @@ class theme_features{
 	 */
 	public static function check_timestamp(){
 		if(theme_cache::current_user_can('manage_options') && theme_file_timestamp::get_timestamp() < self::get_theme_mtime()){
-			theme_file_timestamp::set_timestamp();
 			/** clear opcache */
 			if(function_exists('opcache_reset')){
 				opcache_reset();
 			}
+			/** update timestamp */
+			theme_file_timestamp::set_timestamp();
 		}
 	}
 	/**
@@ -1173,7 +1174,6 @@ class theme_features{
 		static $cache = null;
 		if($cache === null)
 			$cache = filemtime(self::get_stylesheet_directory() . '/style.css');
-
 		return $cache;
 	}
 
@@ -1184,17 +1184,9 @@ class theme_features{
 	 * @param string $cat_id
 	 * @param bool $child
 	 * @return string
-	 * @version 1.1.1
+	 * @version 1.2.0
 	 */
 	public static function cat_option_list($group_id,$cat_id,$child = false){
-		static $caches = [];
-		$cache_id = md5(json_encode(func_get_args()));
-
-		if(isset($caches[$cache_id])){
-			echo $caches[$cache_id];
-			return;
-		}
-			
 		$opt = (array)theme_options::get_options($group_id);
 		if($child !== false){
 			$cat_current_id = isset($opt[$cat_id][$child]) && $opt[$cat_id][$child] != 0 ? $opt[$cat_id][$child] : null;
@@ -1208,10 +1200,9 @@ class theme_features{
 			'hierarchical' => 1,
 			'hide_empty' => false,
 			'selected' => $cat_current_id,
-			'echo' => 0,
+			'echo' => 1,
 		);		
-		$caches[$cache_id] = wp_dropdown_categories($cat_args);
-		echo $caches[$cache_id];
+		wp_dropdown_categories($cat_args);
 	}
 	/**
 	 * Display category on checkbox tag
@@ -1220,21 +1211,18 @@ class theme_features{
 	 * @param string $group_id
 	 * @param string $ids_name
 	 * @return string
-	 * @version 1.1.3
+	 * @version 1.2.0
 	 */
 	public static function cat_checkbox_list($group_id,$ids_name){
-		static $caches = [];
-		$cache_id = md5(json_encode(func_get_args()));
-
-		if(isset($caches[$cache_id])){
-			echo $caches[$cache_id];
-			return;
+		static $cats = null;
+		if($cats === null){
+			$cats = get_categories(array(
+				'hide_empty' => false,
+			));
 		}
 			
 		$opt = (array)theme_options::get_options($group_id);
-		$cats = get_categories(array(
-			'hide_empty' => false,
-		));
+	
 		$cat_ids = isset($opt[$ids_name]) ? (array)$opt[$ids_name] : [];
 
 		ob_start();
@@ -1264,9 +1252,6 @@ class theme_features{
 		}else{ ?>
 			<p><?= ___('No category, pleass go to add some categories.');?></p>
 		<?php }
-		$caches[$cache_id] = ob_get_contents();
-		ob_end_clean();
-		echo $caches[$cache_id];
 	}
 	/**
 	 * Display page list on select tag
@@ -1274,42 +1259,34 @@ class theme_features{
 	 * @param string $group_id
 	 * @param string $page_slug
 	 * @return
-	 * @version 1.1.1
+	 * @version 1.2.0
 	 */
-	public static function page_option_list($group_id,$page_slug){
-		static $caches = [];
-		$cache_id = md5(json_encode(func_get_args()));
-
-		if(isset($caches[$cache_id])){
-			echo $caches[$cache_id];
-			return;
-		}
+	public static function page_option_list($group_id, $iden){
+		static $pages = null;
+		if($pages === null)
+			$pages = get_pages();
 			
 		$opt = theme_options::get_options($group_id);
-		$page_id = isset($opt[$page_slug]) ? (int)$opt[$page_slug] : null;
+		$page_id = isset($opt[$iden]) ? (int)$opt[$iden] : null;
 
 		ob_start();
 		?>
-		<select name="<?= $group_id,'[',$page_slug,']';?>" id="<?= $group_id,'-',$page_slug;?>">
-			<option value="0"><?= esc_attr(___('Select page'));?></option>
+		<select name="<?= $group_id;?>[<?= $iden;?>]" id="<?= $group_id;?>-<?= $iden;?>">
+			<option value="-1"><?= ___('Select page');?></option>
 			<?php
-			foreach(get_pages() as $page){
+			foreach($pages as $page){
 				if($page_id == $page->ID){
 					$selected = ' selected ';
 				}else{
 					$selected = null;
 				}
 				?>
-				<option value="<?= esc_attr($page->ID);?>" <?= $selected;?>><?= esc_attr($page->post_title);?></option>
+				<option value="<?= $page->ID;?>" <?= $selected;?>><?= theme_cache::get_the_title($page->ID);?></option>
 				<?php
 			}
 			?>
 		</select>
 		<?php
-		$caches[$cache_id] = ob_get_contents();
-		ob_end_clean();
-		echo $caches[$cache_id];
-		
 	}
 	/**
 	 * Get post format icons

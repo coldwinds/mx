@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MX\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-19 10:02+0800\n"
-"PO-Revision-Date: 2015-11-19 10:30+0800\n"
+"POT-Creation-Date: 2015-11-20 21:49+0800\n"
+"PO-Revision-Date: 2015-11-20 21:50+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -33,7 +33,8 @@ msgstr "如果您的服务器支持，当评论被回复时，它将会发送一
 #: addons/custom-collection/custom-collection.php:73
 #: addons/custom-post-source/custom-post-source.php:234
 #: addons/custom-post-storage/custom-post-storage.php:46
-#: addons/custom-text-mode/custom-text-mode.php:30
+#: addons/custom-report/custom-report.php:41
+#: addons/custom-text-mode/custom-text-mode.php:32
 #: addons/full-width-mode/full-width-mode.php:52
 #: addons/gravatar-fix/gravatar-fix.php:28
 #: addons/link-manager/link-manager.php:24 addons/mailer/mailer.php:92
@@ -48,14 +49,15 @@ msgstr "是否启用？"
 #: addons/comment-emotion/comment-emotion.php:110
 #: addons/comment-emotion/comment-emotion.php:125
 #: addons/custom-collection/custom-collection.php:77
-#: addons/custom-contribution/custom-contribution.php:80
+#: addons/custom-contribution/custom-contribution.php:81
 #: addons/custom-post-source/custom-post-source.php:238
 #: addons/custom-post-storage/custom-post-storage.php:50
 #: addons/custom-post-storage/custom-post-storage.php:59
-#: addons/custom-text-mode/custom-text-mode.php:34
+#: addons/custom-report/custom-report.php:45
+#: addons/custom-text-mode/custom-text-mode.php:36
 #: addons/full-width-mode/full-width-mode.php:55
 #: addons/gravatar-fix/gravatar-fix.php:32
-#: addons/img-compress/img-compress.php:60
+#: addons/img-compress/img-compress.php:59
 #: addons/link-manager/link-manager.php:28 addons/mailer/mailer.php:96
 #: addons/post-share/post-share.php:83 addons/post-views/post-views.php:61
 #: addons/recomm-post/recomm-post.php:145
@@ -252,6 +254,7 @@ msgstr "广告"
 
 #: addons/adbox/widget.php:40
 #: addons/custom-point-lottery/custom-point-lottery.php:127
+#: addons/custom-report/custom-report.php:113
 msgid "Type"
 msgstr "类型"
 
@@ -318,6 +321,8 @@ msgstr "点击之前保存设置。"
 #: addons/custom-point-lottery/custom-point-lottery.php:224
 #: addons/custom-point/custom-point.php:138
 #: addons/custom-post-storage/custom-post-storage.php:64
+#: addons/custom-report/custom-report.php:78
+#: addons/custom-report/custom-report.php:146
 #: addons/custom-slidebox/custom-slidebox.php:273
 #: addons/file-timestamp/file-timestamp.php:52
 msgid "Control"
@@ -449,13 +454,14 @@ msgstr "提交评论无需刷新页面。推荐使以改善用户体验。"
 
 #: addons/comment-ajax/comment-ajax.php:94
 #: addons/custom-collection/custom-collection.php:76
-#: addons/custom-contribution/custom-contribution.php:79
+#: addons/custom-contribution/custom-contribution.php:80
 #: addons/custom-post-source/custom-post-source.php:237
 #: addons/custom-post-storage/custom-post-storage.php:49
 #: addons/custom-post-storage/custom-post-storage.php:58
-#: addons/custom-text-mode/custom-text-mode.php:33
+#: addons/custom-report/custom-report.php:44
+#: addons/custom-text-mode/custom-text-mode.php:35
 #: addons/gravatar-fix/gravatar-fix.php:31
-#: addons/img-compress/img-compress.php:59 addons/mailer/mailer.php:95
+#: addons/img-compress/img-compress.php:58 addons/mailer/mailer.php:95
 #: addons/post-share/post-share.php:82 addons/post-views/post-views.php:60
 #: addons/recomm-post/recomm-post.php:144
 msgid "Disable"
@@ -508,8 +514,8 @@ msgid "Data sent."
 msgstr "数据传送完毕。"
 
 #: addons/comment-ajax/comment-ajax.php:412
-#: addons/custom-contribution/custom-contribution.php:258
-#: addons/custom-contribution/custom-contribution.php:279
+#: addons/custom-contribution/custom-contribution.php:260
+#: addons/custom-contribution/custom-contribution.php:281
 #: addons/page-nagination-ajax/page-nagination-ajax.php:38
 #: tpl/page-account-post.php:30
 msgid "Sorry, the post does not exist."
@@ -595,8 +601,8 @@ msgid "Already last page"
 msgstr "已是最后一页"
 
 #: addons/custom-attachment-page/custom-attachment-page.php:62
-#: functions.php:1134 functions.php:1135 functions.php:1142 functions.php:1143
-#: functions.php:1448
+#: functions.php:1155 functions.php:1156 functions.php:1163 functions.php:1164
+#: functions.php:1469
 msgid "Next page"
 msgstr "下一页"
 
@@ -625,7 +631,7 @@ msgid "Works"
 msgstr "作品"
 
 #: addons/custom-author-profile/custom-author-profile.php:118 comments.php:12
-#: functions.php:450 functions.php:454 functions.php:594 functions.php:1613
+#: functions.php:459 functions.php:463 functions.php:603 functions.php:1634
 #: tpl/author-profile.php:75
 msgid "Comments"
 msgstr "评论"
@@ -643,7 +649,7 @@ msgid "Which categories will be added after submit?"
 msgstr "在提交后哪些分类目录将会自动添加？"
 
 #: addons/custom-collection/custom-collection.php:88
-#: addons/custom-contribution/custom-contribution.php:70
+#: addons/custom-contribution/custom-contribution.php:71
 msgid "Shows tags number"
 msgstr "显示的标签数量"
 
@@ -674,13 +680,15 @@ msgstr "文章预览图"
 #: addons/custom-collection/custom-collection.php:168
 #: addons/custom-homebox/custom-homebox.php:225
 #: addons/custom-point-lottery/custom-point-lottery.php:160
-#: addons/custom-post-storage/custom-post-storage.php:161
-#: addons/custom-post-storage/custom-post-storage.php:401
+#: addons/custom-post-storage/custom-post-storage.php:160
+#: addons/custom-post-storage/custom-post-storage.php:398
+#: addons/custom-report/custom-report.php:148
 #: addons/custom-slidebox/custom-slidebox.php:196
 msgid "Delete this item"
 msgstr "删除此条目"
 
 #: addons/custom-collection/custom-collection.php:173
+#: addons/custom-report/custom-report.php:33
 msgid "Post ID"
 msgstr "文章 ID"
 
@@ -713,13 +721,13 @@ msgid "New collection"
 msgstr "新建专刊"
 
 #: addons/custom-collection/custom-collection.php:280
-#: addons/custom-contribution/custom-contribution.php:195
+#: addons/custom-contribution/custom-contribution.php:197
 #: addons/custom-slidebox/custom-slidebox.php:92
 msgid "Invaild file type."
 msgstr "无效的文件类型。"
 
 #: addons/custom-collection/custom-collection.php:307
-#: addons/custom-contribution/custom-contribution.php:218
+#: addons/custom-contribution/custom-contribution.php:220
 #: addons/custom-slidebox/custom-slidebox.php:122
 msgid "Upload success."
 msgstr "上传成功。"
@@ -733,12 +741,12 @@ msgid "Sorry, posts can not be empty."
 msgstr "抱歉，文章不能为空。"
 
 #: addons/custom-collection/custom-collection.php:339
-#: addons/custom-contribution/custom-contribution.php:290
+#: addons/custom-contribution/custom-contribution.php:292
 msgid "Please write the post title."
 msgstr "请填写文章标题。"
 
 #: addons/custom-collection/custom-collection.php:350
-#: addons/custom-contribution/custom-contribution.php:315
+#: addons/custom-contribution/custom-contribution.php:317
 msgid "Please set an image as post thumbnail"
 msgstr "请选择一张图片作为封面"
 
@@ -758,13 +766,13 @@ msgid "write a new collection"
 msgstr "再来一发"
 
 #: addons/custom-collection/custom-collection.php:416
-#: addons/custom-contribution/custom-contribution.php:440
+#: addons/custom-contribution/custom-contribution.php:442
 #, php-format
 msgid "Congratulation! Your post has been published. You can %s or %s."
 msgstr "恭喜！您的文章已发表成功。现在您可以 %s 或 %s。"
 
 #: addons/custom-collection/custom-collection.php:417
-#: addons/custom-contribution/custom-contribution.php:441
+#: addons/custom-contribution/custom-contribution.php:443
 msgid "View it now"
 msgstr "立即查看它"
 
@@ -773,7 +781,7 @@ msgid "countinue to write a new collection"
 msgstr "继续写一篇新专刊"
 
 #: addons/custom-collection/custom-collection.php:428
-#: addons/custom-contribution/custom-contribution.php:452
+#: addons/custom-contribution/custom-contribution.php:454
 msgid "Post published"
 msgstr "文章发表"
 
@@ -818,10 +826,10 @@ msgid "Sorry, the post do not exist, please try again."
 msgstr "抱歉，该文章不存在，请重试。"
 
 #: addons/custom-collection/custom-collection.php:579
-#: addons/custom-contribution/custom-contribution.php:671
+#: addons/custom-contribution/custom-contribution.php:678
 #: addons/custom-follow/custom-follow.php:140
 #: addons/custom-pm/custom-pm.php:826 comments.php:18 core/core-features.php:39
-#: core/core-options.php:77 functions.php:1862 tpl/page-account-bomb.php:14
+#: core/core-options.php:75 functions.php:1883 tpl/page-account-bomb.php:14
 #: tpl/page-account-pm.php:3 tpl/page-account-post.php:83
 msgid "Loading, please wait..."
 msgstr "加载中，请稍候…"
@@ -839,11 +847,11 @@ msgid "Previewing, please wait..."
 msgstr "正在预览，请稍候……"
 
 #: addons/custom-collection/custom-collection.php:583
-#: addons/custom-contribution/custom-contribution.php:684
+#: addons/custom-contribution/custom-contribution.php:691
 #: addons/custom-follow/custom-follow.php:141
 #: addons/custom-pm/custom-pm.php:833
 #: addons/page-nagination-ajax/page-nagination-ajax.php:90
-#: core/core-features.php:40 core/core-options.php:78
+#: core/core-features.php:40 core/core-options.php:76
 msgid ""
 "Sorry, server is busy now, can not respond your request, please try again "
 "later."
@@ -882,7 +890,7 @@ msgid "Empty category."
 msgstr "空分类。"
 
 #: addons/custom-colorful-cats/custom-colorful-cats.php:96
-#: core/core-features.php:1207 tpl/page-account-post.php:231
+#: core/core-features.php:1199 tpl/page-account-post.php:231
 msgid "Select category"
 msgstr "选择目录"
 
@@ -945,21 +953,21 @@ msgstr "投稿设置"
 msgid "About contribution setting."
 msgstr "有关投稿的设置。"
 
-#: addons/custom-contribution/custom-contribution.php:64
+#: addons/custom-contribution/custom-contribution.php:65
 msgid "Shows categories"
 msgstr "显示的分类目录"
 
-#: addons/custom-contribution/custom-contribution.php:76
+#: addons/custom-contribution/custom-contribution.php:77
 msgid "Pending after edited"
 msgstr "再次编辑后待审"
 
-#: addons/custom-contribution/custom-contribution.php:82
+#: addons/custom-contribution/custom-contribution.php:83
 msgid ""
 "After the post of contributor published, if contributor edit the post which "
 "post status will become to pending if enable."
 msgstr "在投稿者成功发表文章后，如果投稿者再次编辑此文章，文章状态变为待审。"
 
-#: addons/custom-contribution/custom-contribution.php:86
+#: addons/custom-contribution/custom-contribution.php:87
 msgid ""
 "You can write some description for contribution page header. Please use tag "
 "<p> to wrap your HTML codes."
@@ -967,120 +975,120 @@ msgstr ""
 "你可以给投稿页面写一些说明，将会在页面头部显示。请使用标签 <p> 包裹你的 HTML "
 "代码。"
 
-#: addons/custom-contribution/custom-contribution.php:129
+#: addons/custom-contribution/custom-contribution.php:131
 msgid "Edit post"
 msgstr "编辑文章"
 
-#: addons/custom-contribution/custom-contribution.php:129
+#: addons/custom-contribution/custom-contribution.php:131
 msgid "Post contribution"
 msgstr "文章投稿"
 
-#: addons/custom-contribution/custom-contribution.php:230
+#: addons/custom-contribution/custom-contribution.php:232
 msgid "Invaild contribution param."
 msgstr "无效的投稿参数。"
 
-#: addons/custom-contribution/custom-contribution.php:268
+#: addons/custom-contribution/custom-contribution.php:270
 #: tpl/page-account-post.php:55
 msgid "Sorry, you are not the post author, can not edit it."
 msgstr "抱歉，你不是该作品的作者，无法编辑。"
 
-#: addons/custom-contribution/custom-contribution.php:305
+#: addons/custom-contribution/custom-contribution.php:307
 msgid "Please write the post content."
 msgstr "文章内容必须填写哦"
 
-#: addons/custom-contribution/custom-contribution.php:327
-#: addons/custom-contribution/custom-contribution.php:339
+#: addons/custom-contribution/custom-contribution.php:329
+#: addons/custom-contribution/custom-contribution.php:341
 msgid "Please select a category."
 msgstr "请选择一个类别。"
 
-#: addons/custom-contribution/custom-contribution.php:435
+#: addons/custom-contribution/custom-contribution.php:437
 msgid ""
 "Your post submitted successful, it will be published after approve in a "
 "while."
 msgstr "你的文章提交成功，一会儿审核通过后将会发表，感谢您的参与！"
 
-#: addons/custom-contribution/custom-contribution.php:442
+#: addons/custom-contribution/custom-contribution.php:444
 msgid "countinue to write a new post"
 msgstr "继续写一篇"
 
-#: addons/custom-contribution/custom-contribution.php:459
 #: addons/custom-contribution/custom-contribution.php:461
+#: addons/custom-contribution/custom-contribution.php:463
 msgid "Your post has updated successful."
 msgstr "你的作品已成功更新。"
 
-#: addons/custom-contribution/custom-contribution.php:459
+#: addons/custom-contribution/custom-contribution.php:461
 msgid "Views it now"
 msgstr "立即查看它"
 
-#: addons/custom-contribution/custom-contribution.php:586
+#: addons/custom-contribution/custom-contribution.php:593
 msgid "Select a category"
 msgstr "选择一个分类"
 
-#: addons/custom-contribution/custom-contribution.php:672
+#: addons/custom-contribution/custom-contribution.php:679
 msgid "Uploading {0}/{1}, please wait..."
 msgstr "正在上传 {0}/{1}，请稍候…"
 
-#: addons/custom-contribution/custom-contribution.php:673
+#: addons/custom-contribution/custom-contribution.php:680
 msgid "Click to delete"
 msgstr "点击删除此张图片"
 
-#: addons/custom-contribution/custom-contribution.php:674
+#: addons/custom-contribution/custom-contribution.php:681
 msgid "{0} files have been uploaded, please insert to post content on demand."
 msgstr "{0} 个文件上传成功，请按需选择插入到文章内容。"
 
-#: addons/custom-contribution/custom-contribution.php:675
+#: addons/custom-contribution/custom-contribution.php:682
 #: tpl/page-account-post.php:346
 msgid "Source"
 msgstr "来源"
 
-#: addons/custom-contribution/custom-contribution.php:676
+#: addons/custom-contribution/custom-contribution.php:683
 msgid "Click to view source"
 msgstr "点击查看原图"
 
-#: addons/custom-contribution/custom-contribution.php:677
+#: addons/custom-contribution/custom-contribution.php:684
 msgid "Set as cover."
 msgstr "设为封面"
 
-#: addons/custom-contribution/custom-contribution.php:678
+#: addons/custom-contribution/custom-contribution.php:685
 msgid "Optional, some description"
 msgstr "可选，写下一些描述吧"
 
-#: addons/custom-contribution/custom-contribution.php:679
+#: addons/custom-contribution/custom-contribution.php:686
 msgid "Insert to content"
 msgstr "插入到文章"
 
-#: addons/custom-contribution/custom-contribution.php:680
+#: addons/custom-contribution/custom-contribution.php:687
 msgid "Preview"
 msgstr "预览图"
 
-#: addons/custom-contribution/custom-contribution.php:681
+#: addons/custom-contribution/custom-contribution.php:688
 msgid "Large size"
 msgstr "大尺寸"
 
-#: addons/custom-contribution/custom-contribution.php:682
+#: addons/custom-contribution/custom-contribution.php:689
 msgid "Medium size"
 msgstr "中尺寸"
 
-#: addons/custom-contribution/custom-contribution.php:683
+#: addons/custom-contribution/custom-contribution.php:690
 msgid "Small size"
 msgstr "小尺寸"
 
-#: addons/custom-contribution/custom-contribution.php:688
+#: addons/custom-contribution/custom-contribution.php:695
 msgid ""
 "You have a auto save version, do you want to restore? Auto save last time is "
 "{time}."
 msgstr ""
 "你有自动保存版本，需要还原到该版本吗?最后一次自动保存的时间是  {time} 。"
 
-#: addons/custom-contribution/custom-contribution.php:689
+#: addons/custom-contribution/custom-contribution.php:696
 msgid "Restore post data completed, please check it."
 msgstr "恢复文章数据完毕，请检查。"
 
-#: addons/custom-contribution/custom-contribution.php:690
+#: addons/custom-contribution/custom-contribution.php:697
 msgid "The post data has saved your browser."
 msgstr "文章数据已成功保存到您的浏览器中。"
 
-#: addons/custom-contribution/custom-contribution.php:709
+#: addons/custom-contribution/custom-contribution.php:716
 msgid "Please select a category"
 msgstr "选择类别"
 
@@ -1095,7 +1103,7 @@ msgstr "我最近的积分动态"
 #: addons/custom-dashboard/dashboards.php:34
 #: addons/widget-author-posts/widget-author-posts.php:59
 #: addons/widget-rank/widget-rank.php:69 addons/widget-tags/widget-tags.php:85
-#: functions.php:1826 tpl/page-account-edit.php:82 tpl/page-rank-popular.php:22
+#: functions.php:1847 tpl/page-account-edit.php:82 tpl/page-rank-popular.php:22
 msgid "No data yet."
 msgstr "此类别暂无资料"
 
@@ -1507,8 +1515,8 @@ msgstr "用户轰炸积分描述"
 #: addons/custom-point-bomb/custom-point-bomb.php:182
 #: addons/custom-point-lottery/custom-point-lottery.php:135
 #: addons/custom-point-lottery/custom-point-lottery.php:197
-#: addons/dev-mode/dev-mode.php:149 tpl/author-profile.php:52
-#: tpl/page-account-settings.php:105
+#: addons/custom-report/custom-report.php:128 addons/dev-mode/dev-mode.php:149
+#: tpl/author-profile.php:52 tpl/page-account-settings.php:105
 msgid "Description"
 msgstr "描述"
 
@@ -1549,7 +1557,7 @@ msgid "Sorry, please %s."
 msgstr "抱歉，请先%s。"
 
 #: addons/custom-point-bomb/custom-point-bomb.php:226
-#: addons/custom-point-lottery/custom-point-lottery.php:360 functions.php:1869
+#: addons/custom-point-lottery/custom-point-lottery.php:360 functions.php:1890
 msgid "log-in"
 msgstr "登录"
 
@@ -2412,62 +2420,194 @@ msgstr "错误"
 msgid "Add new link"
 msgstr "添加新链接"
 
+#: addons/custom-post-storage/custom-post-storage.php:173
 #: addons/custom-post-storage/custom-post-storage.php:174
-#: addons/custom-post-storage/custom-post-storage.php:175
-#: addons/custom-post-storage/custom-post-storage.php:369
-#: addons/custom-post-storage/custom-post-storage.php:370
+#: addons/custom-post-storage/custom-post-storage.php:366
+#: addons/custom-post-storage/custom-post-storage.php:367
 msgid "Name (optional)"
 msgstr "名称（可选）"
 
+#: addons/custom-post-storage/custom-post-storage.php:185
 #: addons/custom-post-storage/custom-post-storage.php:186
-#: addons/custom-post-storage/custom-post-storage.php:187
-#: addons/custom-post-storage/custom-post-storage.php:379
-#: addons/custom-post-storage/custom-post-storage.php:380
+#: addons/custom-post-storage/custom-post-storage.php:376
+#: addons/custom-post-storage/custom-post-storage.php:377
 msgid "Download page URL (include http://)"
 msgstr "下载页面的 URL (包括 http://)"
 
+#: addons/custom-post-storage/custom-post-storage.php:198
 #: addons/custom-post-storage/custom-post-storage.php:199
-#: addons/custom-post-storage/custom-post-storage.php:200
-#: addons/custom-post-storage/custom-post-storage.php:388
-#: addons/custom-post-storage/custom-post-storage.php:389
+#: addons/custom-post-storage/custom-post-storage.php:385
+#: addons/custom-post-storage/custom-post-storage.php:386
 msgid "Download password (optional)"
 msgstr "提取码（可选）"
 
+#: addons/custom-post-storage/custom-post-storage.php:212
 #: addons/custom-post-storage/custom-post-storage.php:213
-#: addons/custom-post-storage/custom-post-storage.php:214
-#: addons/custom-post-storage/custom-post-storage.php:397
-#: addons/custom-post-storage/custom-post-storage.php:398
+#: addons/custom-post-storage/custom-post-storage.php:394
+#: addons/custom-post-storage/custom-post-storage.php:395
 msgid "Extract password (optional)"
 msgstr "解压密码（可选）"
 
-#: addons/custom-post-storage/custom-post-storage.php:241
+#: addons/custom-post-storage/custom-post-storage.php:240
 msgid "File storage"
 msgstr "文件存储"
 
-#: addons/custom-post-storage/custom-post-storage.php:342
+#: addons/custom-post-storage/custom-post-storage.php:341
+#: addons/custom-report/custom-report.php:80
 msgid "Add new item"
 msgstr "添加新条目"
 
-#: addons/custom-post-storage/custom-post-storage.php:416
+#: addons/custom-post-storage/custom-post-storage.php:413
 msgid "Storage download"
 msgstr "网盘下载"
 
-#: addons/custom-post-storage/custom-post-storage.php:497
+#: addons/custom-post-storage/custom-post-storage.php:494
 msgid "Download password"
 msgstr "提取密码"
 
-#: addons/custom-post-storage/custom-post-storage.php:508
+#: addons/custom-post-storage/custom-post-storage.php:505
 msgid "Extract password"
 msgstr "解压密码"
 
-#: addons/custom-post-storage/custom-post-storage.php:524
+#: addons/custom-post-storage/custom-post-storage.php:521
 msgid "Download now"
 msgstr "立即下载"
 
-#: addons/custom-post-storage/custom-post-storage.php:540
-#: addons/custom-post-storage/custom-post-storage.php:549
+#: addons/custom-post-storage/custom-post-storage.php:537
+#: addons/custom-post-storage/custom-post-storage.php:546
 msgid "Download"
 msgstr "下载"
+
+#: addons/custom-report/custom-report.php:28
+msgid "Report settings"
+msgstr "报告设置"
+
+#: addons/custom-report/custom-report.php:29
+msgid ""
+"Vistors can report to you as comment if some problems with post. Here are "
+"some keywords to use (only available in comment)."
+msgstr "如果某篇文章出问题，访客可以作为评论给你报告。这里有一些关键词供使用。"
+
+#: addons/custom-report/custom-report.php:31
+msgid "Post link"
+msgstr "作品链接"
+
+#: addons/custom-report/custom-report.php:35
+msgid "Report name"
+msgstr "报告名称"
+
+#: addons/custom-report/custom-report.php:50
+msgid "The page of report collection"
+msgstr "报告收集的页面"
+
+#: addons/custom-report/custom-report.php:56
+msgid "Export text"
+msgstr "入口文本"
+
+#: addons/custom-report/custom-report.php:58
+msgid "The link export text"
+msgstr "链接入口文本"
+
+#: addons/custom-report/custom-report.php:107
+msgid "Name"
+msgstr "名称"
+
+#: addons/custom-report/custom-report.php:109
+msgid "The item name, short is better"
+msgstr "条目名称，越短越好。"
+
+#: addons/custom-report/custom-report.php:116
+msgid "Standard"
+msgstr "标准"
+
+#: addons/custom-report/custom-report.php:117
+msgid "Custom"
+msgstr "自定义"
+
+#: addons/custom-report/custom-report.php:122
+msgid "Question"
+msgstr "问题"
+
+#: addons/custom-report/custom-report.php:124
+msgid "The item question, only shows in custom type"
+msgstr "条目的问题，仅在自定义类型才显示"
+
+#: addons/custom-report/custom-report.php:130
+msgid "The item description"
+msgstr "条目描述"
+
+#: addons/custom-report/custom-report.php:134
+msgid "After successful reported"
+msgstr "条目报告成功后的提示"
+
+#: addons/custom-report/custom-report.php:136
+msgid "The item after successful reported tip"
+msgstr "条目报告成功后的提示"
+
+#: addons/custom-report/custom-report.php:140
+msgid "Comment content"
+msgstr "评论内容"
+
+#: addons/custom-report/custom-report.php:142
+msgid "The item comment content"
+msgstr "条目评论内容"
+
+#: addons/custom-report/custom-report.php:161
+msgid "Is this problem post?"
+msgstr "有问题？"
+
+#: addons/custom-report/custom-report.php:164
+msgid "Download failure"
+msgstr "下载失败"
+
+#: addons/custom-report/custom-report.php:167
+msgid "I can not download."
+msgstr "我无法下载资源。"
+
+#: addons/custom-report/custom-report.php:168
+#: addons/custom-report/custom-report.php:175
+#: addons/custom-report/custom-report.php:182
+msgid "Report successful, we will fix it soon, thank you."
+msgstr "报告成功，我们会很快修复，感谢参与。"
+
+#: addons/custom-report/custom-report.php:169
+msgid "%report_name%: %post_id% - %post_link%."
+msgstr "%report_name%：: %post_id% - %post_link%。"
+
+#: addons/custom-report/custom-report.php:171
+msgid "Duplicate post"
+msgstr "重复的作品"
+
+#: addons/custom-report/custom-report.php:173
+msgid "Whats duplicate with post ID?"
+msgstr "与那篇作品 ID 重复？"
+
+#: addons/custom-report/custom-report.php:174
+msgid "It is duplicate post."
+msgstr "这是重复的作品"
+
+#: addons/custom-report/custom-report.php:176
+msgid ""
+"%report_name%: %post_id% - %post_link%. Duplicate post %duplicate_link%."
+msgstr ""
+"%report_name%：%post_id% - %post_link%。. 与这篇作品《%duplicate_link%》重"
+"复。"
+
+#: addons/custom-report/custom-report.php:178
+msgid "Other"
+msgstr "其他"
+
+#: addons/custom-report/custom-report.php:180
+msgid "Whats the reason?"
+msgstr "报告的原因是什么？"
+
+#: addons/custom-report/custom-report.php:181
+msgid "Other reason."
+msgstr "其他原因"
+
+#: addons/custom-report/custom-report.php:183
+msgid "%report_name%: %post_id% - %post_link%. %detail%"
+msgstr "%report_name%： %post_id% - %post_link%。 %detail%"
 
 #: addons/custom-sign/custom-sign.php:57
 msgid "Sorry, you logged."
@@ -2664,7 +2804,7 @@ msgstr "抱歉，无效的类型。"
 
 #: addons/custom-slidebox/custom-slidebox.php:66
 #: addons/widget-author-posts/widget-author-posts.php:206
-#: addons/widget-rank/widget-rank.php:250 core/core-features.php:1265
+#: addons/widget-rank/widget-rank.php:250 core/core-features.php:1253
 msgid "No category, pleass go to add some categories."
 msgstr "暂无分类目录，请去添加一些分类。"
 
@@ -2722,6 +2862,7 @@ msgid "Nofollow link"
 msgstr "Nofollow 链接"
 
 #: addons/custom-slidebox/custom-slidebox.php:193
+#: addons/link-target/link-target.php:47
 msgid "Open in new window"
 msgstr "在新窗口中打开"
 
@@ -2763,17 +2904,17 @@ msgstr "广告 HTML 代码（幻灯片之下）"
 msgid "Detail &raquo;"
 msgstr "详细 &raquo;"
 
-#: addons/custom-text-mode/custom-text-mode.php:25
+#: addons/custom-text-mode/custom-text-mode.php:27
 msgid "Graphic text mode settings"
 msgstr "图文模式设置"
 
-#: addons/custom-text-mode/custom-text-mode.php:26
+#: addons/custom-text-mode/custom-text-mode.php:28
 msgid ""
 "Graphic text mode is a different with normal card list mode. It is mixed "
 "list with graphic and text."
 msgstr "图文模式与常规卡片列表模式不同，它是图片与文本的混合列表。"
 
-#: addons/custom-text-mode/custom-text-mode.php:39
+#: addons/custom-text-mode/custom-text-mode.php:41
 msgid "Which category using?"
 msgstr "选择哪个分类？"
 
@@ -3057,19 +3198,19 @@ msgstr "内核程序"
 msgid "Donate to INN STUDIO (%s)"
 msgstr "捐赠给 INN 工作室（%s）"
 
-#: addons/img-compress/img-compress.php:52
+#: addons/img-compress/img-compress.php:51
 msgid "Image compress settings"
 msgstr "图片压缩设置"
 
-#: addons/img-compress/img-compress.php:53
+#: addons/img-compress/img-compress.php:52
 msgid "Global image settings."
 msgstr "全局图片设置"
 
-#: addons/img-compress/img-compress.php:56
+#: addons/img-compress/img-compress.php:55
 msgid "PNG to JPG format"
 msgstr "PNG 转换为 JPG 格式"
 
-#: addons/img-compress/img-compress.php:62
+#: addons/img-compress/img-compress.php:61
 msgid ""
 "It will convent png to jpg image format When user upload image file. This "
 "feature always disable if is administrator."
@@ -3077,16 +3218,16 @@ msgstr ""
 "此功能会在用户上传图片时候，将会使 PNG 图片转换为 JPG 图片。如果是管理员此功"
 "能无效。"
 
-#: addons/img-compress/img-compress.php:66
+#: addons/img-compress/img-compress.php:65
 msgid "JPG image compress quality"
 msgstr "JPG 图片压缩等级"
 
-#: addons/img-compress/img-compress.php:71
+#: addons/img-compress/img-compress.php:70
 #, php-format
 msgid "Level %d"
 msgstr "等级 %d"
 
-#: addons/img-compress/img-compress.php:75
+#: addons/img-compress/img-compress.php:74
 msgid "It will compress image When user upload image file."
 msgstr "此功能将会在用户上传图片时候自动压缩图片质量。"
 
@@ -3126,6 +3267,22 @@ msgid ""
 msgstr ""
 "使存在于 WordPress 3.5 版本前的链接管理器。但实际上并不建议使用它，因为你可以"
 "用“菜单”来代替“链路管理器”。"
+
+#: addons/link-target/link-target.php:39
+msgid "Global link target settings"
+msgstr "链接目标设置"
+
+#: addons/link-target/link-target.php:40
+msgid "You can settings global link target here."
+msgstr "您可以再这里设置全局链接打开方式"
+
+#: addons/link-target/link-target.php:44
+msgid "Global target"
+msgstr "全局打开方式"
+
+#: addons/link-target/link-target.php:48
+msgid "Open in current window"
+msgstr "在新窗口中打开"
 
 #: addons/mailer/mailer.php:41
 msgid "Form mail"
@@ -3465,7 +3622,7 @@ msgstr ""
 "使用缓存提高性能。当每篇文章查看数大于最大储存次数后，查看数会写入到数据库保"
 "存。"
 
-#: addons/post-views/post-views.php:183 functions.php:525 functions.php:1609
+#: addons/post-views/post-views.php:183 functions.php:534 functions.php:1630
 #: tpl/page-account-edit.php:19
 msgid "Views"
 msgstr "查看数"
@@ -3537,7 +3694,7 @@ msgstr "显示数量"
 msgid "For example: 10"
 msgstr "例如：10"
 
-#: addons/related-post/related-post.php:54 functions.php:1385
+#: addons/related-post/related-post.php:54 functions.php:1406
 msgid "Maybe you will like them"
 msgstr "或许您会喜欢"
 
@@ -3896,7 +4053,7 @@ msgid "Display author posts on singular page."
 msgstr "在单页面中显示作者文章"
 
 #: addons/widget-author-posts/widget-author-posts.php:20
-#: addons/widget-author-posts/widget-author-posts.php:74 functions.php:744
+#: addons/widget-author-posts/widget-author-posts.php:74 functions.php:765
 msgid "Author posts"
 msgstr "作者文章"
 
@@ -4047,7 +4204,7 @@ msgstr "固定标签（可选，一行一个）"
 msgid "The attachment of %s"
 msgstr "《%s》的附件"
 
-#: category.php:22 search.php:25 tag.php:22 tpl/category-text.php:18
+#: category.php:22 search.php:25 tag.php:22 tpl/category-text.php:17
 msgid "No content yet."
 msgstr "暂无资料"
 
@@ -4079,7 +4236,7 @@ msgstr "&laquo; 首页"
 msgid "Last &raquo;"
 msgstr "尾页 &raquo;"
 
-#: core/core-features.php:1294
+#: core/core-features.php:1275
 msgid "Select page"
 msgstr "选择页面"
 
@@ -4107,77 +4264,77 @@ msgstr "%d天前"
 msgid "%dm ago"
 msgstr "%d个月前"
 
-#: core/core-functions.php:674 functions.php:291 functions.php:513
-#: functions.php:1701
+#: core/core-functions.php:674 functions.php:250 functions.php:522
+#: functions.php:1722
 msgid "M j, Y"
 msgstr "Y年m月d日"
 
-#: core/core-options.php:95
+#: core/core-options.php:93
 msgid "Loading your settings, please wait..."
 msgstr "正在加载您的设置，请稍后……"
 
-#: core/core-options.php:100
+#: core/core-options.php:98
 msgid "Visit the official of theme"
 msgstr "访问主题官网"
 
-#: core/core-options.php:104
+#: core/core-options.php:102
 msgid "The theme common basic settings."
 msgstr "主题通用的基本设置。"
 
-#: core/core-options.php:106
+#: core/core-options.php:104
 msgid "Basic settings"
 msgstr "基本设置"
 
-#: core/core-options.php:109
+#: core/core-options.php:107
 msgid "You can customize the theme in this label."
 msgstr "您可以在这个标签中自定义主题。"
 
-#: core/core-options.php:111
+#: core/core-options.php:109
 msgid "Page settings"
 msgstr "页面设置"
 
-#: core/core-options.php:114
+#: core/core-options.php:112
 msgid ""
 "If the theme there are some problems, you can try to use these settings."
 msgstr "如果主题有一些问题，你可以尝试使用这些设置。"
 
-#: core/core-options.php:116
+#: core/core-options.php:114
 msgid "Advanced settings"
 msgstr "高级设置"
 
-#: core/core-options.php:119
+#: core/core-options.php:117
 msgid ""
 "This settings is for developer, if you want to debug code, you can try this."
 msgstr "此设置专为开发者，如果你想调试代码，你可以试试这个。"
 
-#: core/core-options.php:121
+#: core/core-options.php:119
 msgid "Developer settings"
 msgstr "开发者设置"
 
-#: core/core-options.php:124
+#: core/core-options.php:122
 msgid "If you in trouble, maybe this label can help you."
 msgstr "如果你陷入困境，也许这个标签可以帮助你。"
 
-#: core/core-options.php:126
+#: core/core-options.php:124
 msgid "About &amp; help"
 msgstr "关于 &amp; 帮助"
 
-#: core/core-options.php:158
+#: core/core-options.php:156
 msgid "Save all settings"
 msgstr "保存所有设置"
 
-#: core/core-options.php:160
+#: core/core-options.php:158
 msgid ""
 "Something error with theme? Try to restore. Be careful, theme options will "
 "be cleared up!"
 msgstr "主题发生了错误？试试还原数据。注意，主题选项将会被清空！"
 
-#: core/core-options.php:162
+#: core/core-options.php:160
 msgid "Restore to theme default options"
 msgstr "还原主题选项"
 
-#: core/core-options.php:208 core/core-options.php:209
-#: core/core-options.php:223
+#: core/core-options.php:206 core/core-options.php:207
+#: core/core-options.php:221
 msgid "Theme settings"
 msgstr "主题设置"
 
@@ -4193,257 +4350,257 @@ msgstr "友情链接"
 msgid "Back to top"
 msgstr "返回顶部"
 
-#: functions.php:36
+#: functions.php:37
 msgid "MX"
 msgstr "MX"
 
-#: functions.php:37
+#: functions.php:38
 msgid "http://inn-studio.com/mx"
 msgstr "http://inn-studio.com/mx"
 
-#: functions.php:38
+#: functions.php:39
 msgid "http://inn-studio.com"
 msgstr "http://inn-studio.com/"
 
-#: functions.php:39
+#: functions.php:40
 msgid "INN STUDIO"
 msgstr "INN STUDIO"
 
-#: functions.php:49
+#: functions.php:50
 msgid "Professional edition"
 msgstr "专业版"
 
-#: functions.php:50
+#: functions.php:51
 msgid "MX - Dream starts"
 msgstr "MX - 梦想起航"
 
-#: functions.php:64
+#: functions.php:65
 msgid "Header menu"
 msgstr "头部菜单"
 
-#: functions.php:65
+#: functions.php:66
 msgid "Login header menu"
 msgstr "头部菜单（已登录状态）"
 
-#: functions.php:66
+#: functions.php:67
 msgid "Mobile menu"
 msgstr "手机菜单"
 
-#: functions.php:67
+#: functions.php:68
 msgid "Login mobile menu"
 msgstr "手机菜单（已登录状态）"
 
-#: functions.php:70
+#: functions.php:71
 msgid "Footer links"
 msgstr "底部友情链接"
 
-#: functions.php:103
+#: functions.php:104
 msgid "Home widget area"
 msgstr "首页小工具区域"
 
-#: functions.php:104
+#: functions.php:105
 msgid "Appears on home in the sidebar."
 msgstr "显示在首页的边栏中。"
 
-#: functions.php:107
+#: functions.php:108
 msgid "Archive page widget area"
 msgstr "归档页面小工具区域"
 
-#: functions.php:108
+#: functions.php:109
 msgid "Appears on archive page in the sidebar."
 msgstr "显示在归档页面的边栏中。"
 
-#: functions.php:111
+#: functions.php:112
 msgid "Footer widget area"
 msgstr "底部 小工具区域"
 
-#: functions.php:112
+#: functions.php:113
 msgid "Appears on all page in the footer."
 msgstr "显示在每个页面的底部。"
 
-#: functions.php:117
+#: functions.php:118
 msgid "Singular post widget area"
 msgstr "单文章小工具区域"
 
-#: functions.php:118
+#: functions.php:119
 msgid "Appears on post in the sidebar."
 msgstr "显示在文章页面的边栏中。"
 
-#: functions.php:121
+#: functions.php:122
 msgid "Singular page widget area"
 msgstr "单页 小工具区域"
 
-#: functions.php:122
+#: functions.php:123
 msgid "Appears on page in the sidebar."
 msgstr "显示在单页的边栏中。"
 
-#: functions.php:125
+#: functions.php:126
 msgid "404 page widget area"
 msgstr "404 页面小工具区域"
 
-#: functions.php:126
+#: functions.php:127
 msgid "Appears on 404 no found page in the sidebar."
 msgstr "显示在 404 页面的边栏中。"
 
-#: functions.php:506 tpl/page-account-post.php:211
+#: functions.php:515 tpl/page-account-post.php:211
 msgid "Category"
 msgstr "分类"
 
-#: functions.php:518
+#: functions.php:527
 #, php-format
 msgid "Views all post by %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:547 tpl/page-account-edit.php:38
+#: functions.php:556 tpl/page-account-edit.php:38
 msgid "Edit"
 msgstr "编辑"
 
-#: functions.php:598
+#: functions.php:607
 msgctxt "Tucao"
 msgid "Comments"
 msgstr "吐槽"
 
-#: functions.php:694 functions.php:696
+#: functions.php:715 functions.php:717
 msgid "Back to Homepage"
 msgstr "返回到首页"
 
-#: functions.php:709
+#: functions.php:730
 msgid "Category Browser"
 msgstr "目录浏览"
 
-#: functions.php:716
+#: functions.php:737
 msgid "Tags Browser"
 msgstr "标签归档浏览"
 
-#: functions.php:734
+#: functions.php:755
 msgid "Date Browser"
 msgstr "日期归档浏览"
 
-#: functions.php:738
+#: functions.php:759
 #, php-format
 msgid "Search Result: %s"
 msgstr "搜索结果：%s"
 
-#: functions.php:748
+#: functions.php:769
 msgid "Archive Browser"
 msgstr "归档浏览"
 
-#: functions.php:767
+#: functions.php:788
 #, php-format
 msgid "View all posts in %s"
 msgstr "查看 %s 目录下的所有文章"
 
-#: functions.php:774
+#: functions.php:795
 msgid "Not found"
 msgstr "暂无资料"
 
-#: functions.php:802
+#: functions.php:823
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: functions.php:803
+#: functions.php:824
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: functions.php:818
+#: functions.php:839
 msgid "Posts pagination navigation"
 msgstr "文章分页导航"
 
-#: functions.php:848 functions.php:1115 functions.php:1117 functions.php:1124
-#: functions.php:1126 functions.php:1451
+#: functions.php:869 functions.php:1136 functions.php:1138 functions.php:1145
+#: functions.php:1147 functions.php:1472
 msgid "Previous page"
 msgstr "上一页"
 
-#: functions.php:866 functions.php:872 functions.php:880
+#: functions.php:887 functions.php:893 functions.php:901
 #, php-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: functions.php:994
+#: functions.php:1015
 msgid ""
 "Sorry, I was not able to find what you need, what about look at other "
 "content :)"
 msgstr "抱歉，我没能找到您需要的内容，不放看看其他东西 ：）"
 
-#: functions.php:1191 functions.php:1209
+#: functions.php:1212 functions.php:1230
 #, php-format
 msgid "Random: %s"
 msgstr "随机：%s"
 
-#: functions.php:1191
+#: functions.php:1212
 #, php-format
 msgid "Previous post: %s"
 msgstr "上一篇：%s"
 
-#: functions.php:1209
+#: functions.php:1230
 #, php-format
 msgid "Next post: %s"
 msgstr "下一篇：%s"
 
-#: functions.php:1293
+#: functions.php:1314
 msgid "Your comment is awaiting moderation."
 msgstr "您的评论正在审核中。"
 
-#: functions.php:1317
+#: functions.php:1338
 msgid "Reply"
 msgstr "回复"
 
-#: functions.php:1418
+#: functions.php:1439
 msgid "No data."
 msgstr "暂无资料"
 
-#: functions.php:1479
+#: functions.php:1500
 msgid "Please set some recommended posts to display."
 msgstr "请设置一些推荐文章以显示。"
 
-#: functions.php:1511
+#: functions.php:1532
 msgid "more &raquo;"
 msgstr "更多 &raquo;"
 
-#: functions.php:1734
+#: functions.php:1755
 msgid "Please add some homebox."
 msgstr "请添加一些首页盒子。"
 
-#: functions.php:1769 functions.php:1831
+#: functions.php:1790 functions.php:1852
 #, php-format
 msgid "More about %s"
 msgstr "更多%s"
 
-#: functions.php:1859
+#: functions.php:1880
 msgid "Cancel reply"
 msgstr "取消回复"
 
-#: functions.php:1868
+#: functions.php:1889
 #, php-format
 msgid "You must be %s to post a comment."
 msgstr "您需要 %s 后才能发表评论。"
 
-#: functions.php:1902 tpl/author-profile.php:21
+#: functions.php:1923 tpl/author-profile.php:21
 #: tpl/page-account-settings.php:85
 msgid "Nickname"
 msgstr "昵称"
 
-#: functions.php:1904
+#: functions.php:1925
 msgid "Whats your nickname?"
 msgstr "您的昵称"
 
-#: functions.php:1915
+#: functions.php:1936
 msgid "Email"
 msgstr "邮箱"
 
-#: functions.php:1917
+#: functions.php:1938
 msgid "Whats your Email?"
 msgstr "您的邮箱"
 
-#: functions.php:1928
+#: functions.php:1949
 msgid "Hi, have something to say?"
 msgstr "Hi, 有什么要说的吗？"
 
-#: functions.php:1929
+#: functions.php:1950
 msgid "Nothing to say?"
 msgstr "没什么好说的吗？"
 
-#: functions.php:1950 functions.php:1952
+#: functions.php:1971 functions.php:1973
 msgid "Post comment"
 msgstr "发表评论"
 

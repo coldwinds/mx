@@ -44,8 +44,14 @@
 	-webkit-transform: translateX($args);
 	transform: translateX($args);
 }
+%translateX--50{
+	@include translateX(-50%);
+}
 @mixin translateY($args...){
 	-ms-transform: translateY($args);
 	-webkit-transform: translateY($args);
 	transform: translateY($args);
+}
+%translateY--50{
+	@include translateY(-50%);
 }

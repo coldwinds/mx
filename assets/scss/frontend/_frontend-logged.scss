@@ -20,6 +20,7 @@
 @import "../modules/poi/well/well";
 @import "../modules/poi/table/table";
 @import "../modules/poi/fieldset/fieldset";
+@import "../modules/poi/tooltip/tooltip";
 
 //common
 @import "../modules/status-tip/status-tip";
@@ -78,7 +79,8 @@
 	@import "../../../addons/custom-page-tags/assets/scss/frontend";
 	@import "../../../addons/custom-post-storage/assets/scss/frontend";
 	@import "../../../addons/custom-text-mode/assets/scss/frontend";
-	
+	@import "../../../addons/custom-report/assets/scss/frontend";
+
 
 	//logged
 	@import "../../../addons/custom-contribution/assets/scss/frontend";

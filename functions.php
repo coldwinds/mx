@@ -642,7 +642,19 @@ class theme_functions{
 						<?php
 					} /** end post-share */
 					?>
-					
+
+					<?php
+					/**
+					 * report
+					 */
+					if(class_exists('theme_custom_report') && theme_custom_report::is_enabled()){
+						?>
+						<div class="entry-report">
+							<?= theme_custom_report::display_frontend();?>
+						</div>
+						<?php
+					}
+					?>
 				</footer>
 			</div><!-- /.entry-body -->
 			

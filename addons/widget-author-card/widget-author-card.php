@@ -60,12 +60,12 @@ class theme_widget_author extends WP_Widget{
 			<?php if(class_exists('theme_custom_author_profile')){ ?>
 				<div class="author-card-meta-links">
 					<!-- works count -->
-					<a href="<?= theme_custom_author_profile::get_tabs('works',$author_id)['url'];?>" title="<?= ___('Views author posts');?>">
+					<a class="tooltip" href="<?= theme_custom_author_profile::get_tabs('works',$author_id)['url'];?>" title="<?= ___('Views author posts');?>" target="_blank">
 						<span class="tx"><i class="fa fa-fw fa-<?= theme_custom_author_profile::get_tabs('works',$author_id)['icon'];?>"></i></span>
 						<span class="count"><?= (int)theme_custom_author_profile::get_tabs('works',$author_id)['count'];?></span>
 					</a>
 					<!-- comments count -->
-					<a href="<?= theme_custom_author_profile::get_tabs('comments',$author_id)['url'];?>" title="<?= ___('Views author comments');?>">
+					<a class="tooltip" href="<?= theme_custom_author_profile::get_tabs('comments',$author_id)['url'];?>" title="<?= ___('Views author comments');?>" target="_blank">
 						<span class="tx"><i class="fa fa-fw fa-<?= theme_custom_author_profile::get_tabs('comments',$author_id)['icon'];?>"></i></span>
 						<span class="count"><?= (int)theme_custom_author_profile::get_tabs('comments',$author_id)['count'];?></span>
 					</a>
@@ -79,7 +79,7 @@ class theme_widget_author extends WP_Widget{
 						}
 						?>
 						<!-- followers count -->
-						<a href="<?= theme_custom_point_bomb::get_tabs('bomb',$target_id)['url'];?>" rel="nofollow" title="<?= ___('Bomb!');?>">
+						<a class="tooltip" href="<?= theme_custom_point_bomb::get_tabs('bomb',$target_id)['url'];?>" rel="nofollow" title="<?= ___('Bomb!');?>" target="_blank">
 							<span class="tx"><i class="fa fa-fw fa-bomb"></i></span>
 							<span class="count"><?= theme_custom_point::get_point($author_id);?></span>
 						</a>
@@ -87,7 +87,7 @@ class theme_widget_author extends WP_Widget{
 					
 					<!-- pm -->
 					<?php if(class_exists('theme_custom_pm')){ ?>
-						<a target="_blank" href="<?= theme_custom_pm::get_user_pm_url($author_id);?>" title="<?= ___('Send a private message.');?>">
+						<a target="_blank" class="tooltip" href="<?= theme_custom_pm::get_user_pm_url($author_id);?>" title="<?= ___('Send a private message.');?>">
 							<span class="tx"><i class="fa fa-<?= theme_custom_pm::get_tabs('pm')['icon'];?>"></i></span><span class="count"><?= __x('P.M.','Widget author card PM.');?></span>
 						</a>
 					<?php } ?>

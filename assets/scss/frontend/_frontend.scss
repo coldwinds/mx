@@ -20,6 +20,7 @@
 @import "../modules/poi/well/well";
 @import "../modules/poi/table/table";
 @import "../modules/poi/fieldset/fieldset";
+@import "../modules/poi/tooltip/tooltip";
 
 //common
 @import "../modules/status-tip/status-tip";
@@ -80,3 +81,5 @@
 	@import "../../../addons/custom-post-storage/assets/scss/frontend";
 	@import "../../../addons/custom-sign/assets/scss/frontend";
 	@import "../../../addons/custom-text-mode/assets/scss/frontend";
+	@import "../../../addons/custom-report/assets/scss/frontend";
+	
