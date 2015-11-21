@@ -469,7 +469,7 @@ class theme_custom_storage{
 			return $cache;
 		}
 			
-		$decode = json_decode($decode);
+		$decode = json_decode($decode,true);
 		
 		if(!isset($decode['post-id'])){
 			$cache = false;
@@ -485,7 +485,9 @@ class theme_custom_storage{
 <div class="post-download">
 	<?php foreach($meta as $k => $v){ ?>
 		<fieldset class="post-download-module">
-			<legend><span class="label label-success"><?= self::get_types($v['type']);?></span></legend>
+			<?php if(isset($v['name']) && !empty($v['name'])){ ?>
+				<legend><span class="label label-success"><?= esc_html($v['name']);?></span></legend>
+			<?php } ?>
 			<div class="fieldset-content">
 				<?php if(isset($v['download-pwd']) && !empty($v['download-pwd'])){ ?>
 					<div class="form-group">
