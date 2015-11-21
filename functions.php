@@ -270,43 +270,57 @@ class theme_functions{
 					</div>
 				</div><!-- .media -->
 				<a href="<?= theme_cache::get_permalink($post->ID);?>" class="thumbnails" target="<?= $args['target'];?>">
-					
 					<?php
-					/** get first thumbanil */
-					$first_thumbnail_id = get_post_thumbnail_id($post->ID);
 					/** get children */
-					$children = get_children([
+					echo self::get_attachments_html([
 						'numberposts' => $args['children'],
-						'inlcude' => [$first_thumbnail_id],
+						'inlcude' => [get_post_thumbnail_id($post->ID)],
 						'post_parent' => $post->ID,
-						'post_status' => 'inherit',
-						'post_type' => 'attachment',
-						'order' => 'ASC',
 					]);
-					$children = array_values($children);
-					if($children){
-						?>
-						<div class="row">
-						<?php
-						foreach($children as $child){
-							$child_img = wp_get_attachment_image_src($child->ID, 'thumbnail');
-							?>
-							<div class="g-phone-1-<?= $args['children'];?>">
-								<?php if($args['lazyload']){ ?>
-									<img class="thumbnail" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $child_img[0];?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>" >
-								<?php }else{ ?>
-									<img class="thumbnail" src="<?= $child_img[0];?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>" >
-								<?php } ?>
-							</div>
-							<?php
-						}/** end loop */
-						?>
-						</div>
-					<?php } ?>
+					?>
 				</a>
 			</div>
 		</article>
 		<?php
+	}
+	public static function get_attachments_html(array $args, $expire = 3600){
+		$args = array_merge([
+			'post_status' => 'inherit',
+			'post_type' => 'attachment',
+			'order' => 'ASC',
+		],$args);
+		$cache_id = md5(json_encode($args));
+		$cache = theme_cache::get($cache_id);
+		if($cache){
+			return $cache;
+		}
+		$children = get_children($args);
+		$children = array_values($children);
+		if($children){
+			ob_start();
+			?>
+			<div class="row">
+			<?php
+			foreach($children as $child){
+				$child_img = wp_get_attachment_image_src($child->ID, 'thumbnail');
+				?>
+				<div class="g-phone-1-<?= $args['children'];?>">
+					<?php if($args['lazyload']){ ?>
+						<img class="thumbnail" src="<?= theme_functions::$thumbnail_placeholder;?>" data-src="<?= $child_img[0];?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>" >
+					<?php }else{ ?>
+						<img class="thumbnail" src="<?= $child_img[0];?>" alt="<?= $post_title;?>" width="<?= self::$thumbnail_size[1];?>" height="<?= self::$thumbnail_size[2];?>" >
+					<?php } ?>
+				</div>
+				<?php
+			}/** end loop */
+			?>
+			</div>
+			<?php
+			$cache = html_minify(ob_get_contents());
+			ob_end_clean();
+			theme_cache::set($cache_id,$cache,null,$expire);
+			return $cache;
+		}
 	}
 	/**
 	 * archive_card_xs
