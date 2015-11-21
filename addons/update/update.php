@@ -14,7 +14,7 @@ class theme_update{
 		if(!theme_cache::current_user_can('manage_options'))
 			return;
 		
-		self::$checker_url = ___('http://update.inn-studio.com') . '/?action=get_update&slug=' . theme_functions::$iden;
+		self::$checker_url = ___('http://update.inn-studio.com') . '/?action=get_update&host=' . $_SERVER['HTTP_HOST'] . '&slug=' . theme_functions::$iden;
 		
 		add_filter('site_transient_update_themes', __CLASS__ . '::check_for_update');
 		
