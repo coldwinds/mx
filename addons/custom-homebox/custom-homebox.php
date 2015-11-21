@@ -14,8 +14,6 @@ class theme_custom_homebox{
 		
 		add_filter('theme_options_save',__CLASS__ . '::options_save');
 		
-		add_filter('backend_js_config',__CLASS__ . '::backend_js_config');
-		
 		add_action('page_settings',__CLASS__ . '::display_backend');
 
 		add_action('publish_post',__CLASS__ . '::action_public_post');
@@ -79,13 +77,13 @@ class theme_custom_homebox{
 		?>
 		<fieldset>
 			<legend><i class="fa fa-fw fa-home"></i> <?= ___('Theme home box settings');?></legend>
-			<div id="<?= __CLASS__;?>-container">
+			<div id="<?= __CLASS__;?>-container" data-tpl="<?= esc_attr(self::get_home_box_tpl());?>">
 				<?php
 				if(!$opt){
-					echo self::get_home_box_tpl('1');
+					echo self::get_home_box_tpl(0);
 				}else{
 					foreach($opt as $k => $v){
-						echo self::get_home_box_tpl($k);
+						echo self::get_home_box_tpl($k,$opt);
 					}
 				}
 				?>
@@ -93,9 +91,9 @@ class theme_custom_homebox{
 			<table class="form-table" id="<?= __CLASS__;?>-control">
 				<tbody>
 					<tr>
-						<th scope="row"><?= ___('Home box control');?></th>
+						<th scope="row"><?= ___('Control');?></th>
 						<td>
-							<a id="<?= __CLASS__;?>-add" class="add button-primary" href="javascript:;"><i class="fa fa-plus"></i> <?= ___('Add a new home box');?></a>
+							<a id="<?= __CLASS__;?>-add" class="add button-primary" href="javascript:;"><i class="fa fa-plus"></i> <?= ___('Add new item');?></a>
 						</td>
 					</tr>
 				</tbody>
@@ -105,9 +103,7 @@ class theme_custom_homebox{
 	<?php
 	
 	}
-	private static function get_home_box_tpl($placeholder){
-		$boxes = self::get_options();
-		
+	private static function get_home_box_tpl($placeholder = '%placeholder%', array $boxes = []){
 		$title = isset($boxes[$placeholder]['title']) ? stripcslashes($boxes[$placeholder]['title']) : null;
 		
 		if($placeholder !== '%placeholder%' && !$title)
@@ -128,13 +124,13 @@ class theme_custom_homebox{
 		ob_start();
 		?>
 		<table 
-			class="form-table <?= __CLASS__;?>-item item" 
+			class="form-table <?= __CLASS__;?>-item item tpl-item" 
 			id="<?= __CLASS__;?>-item-<?= $placeholder;?>" 
 			data-placeholder="<?= $placeholder;?>" 
 		>
 		<tbody>
 		<tr>
-			<th><label for="<?= __CLASS__;?>-title-<?= $placeholder;?>"><?= ___('Box title');?></label></th>
+			<th><label for="<?= __CLASS__;?>-title-<?= $placeholder;?>"><?= ___('Title');?> - <?= $placeholder;?></label></th>
 			<td>
 				<input 
 					type="text" 
@@ -148,7 +144,7 @@ class theme_custom_homebox{
 		</tr>
 		<tr>
 			<th>
-				<label for="<?= __CLASS__;?>-icon-<?= $placeholder;?>"><?= ___('Box icon');?></label>
+				<label for="<?= __CLASS__;?>-icon-<?= $placeholder;?>"><?= ___('Icon');?></label>
 				<a href="//fortawesome.github.io/Font-Awesome/icons" target="_blank" title="<?= ___('Views all icons');?>">#<?= ___('ALL');?></a>
 			</th>
 			<td>
@@ -163,7 +159,7 @@ class theme_custom_homebox{
 			</td>
 		</tr>
 		<tr>
-			<th><label for="<?= __CLASS__;?>-link-<?= $placeholder;?>"><?= ___('Box link');?></label></th>
+			<th><label for="<?= __CLASS__;?>-link-<?= $placeholder;?>"><?= ___('Link');?></label></th>
 			<td>
 				<input 
 					type="url" 
@@ -222,7 +218,12 @@ class theme_custom_homebox{
 			<th><label for="<?= __CLASS__;?>-<?= $placeholder;?>-ad"><?= ___('AD code');?></label></th>
 			<td>
 				<textarea name="<?= __CLASS__;?>[<?= $placeholder;?>][ad]" id="<?= __CLASS__;?>-<?= $placeholder;?>-ad" cols="30" rows="5" class="widefat" placeholder="<?= ___('HTML code will display below this box.');?>"><?= $ad;?></textarea>
-				<a href="javascript:;" class="<?= __CLASS__;?>-del del" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-id="<?= $placeholder;?>" data-target="#<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= ___('Delete this item');?></a>
+			</td>
+		</tr>
+		<tr>
+			<th><?= ___('Control');?></th>
+			<td>
+				<a href="javascript:;" class="del" data-target="<?= __CLASS__;?>-item-<?= $placeholder;?>"><i class="fa fa-exclamation-circle"></i> <?= ___('Delete this item');?></a>
 			</td>
 		</tr>
 		</tbody>
@@ -259,13 +260,6 @@ class theme_custom_homebox{
 	}
 	public static function get_cache(){
 		return theme_cache::get('content',__CLASS__);
-	}
-
-	public static function backend_js_config(array $config){
-		$config[__CLASS__] = [
-			'tpl' => html_minify(self::get_home_box_tpl('%placeholder%')),
-		];
-		return $config;
 	}
 }
 add_filter('theme_addons',function($fns){

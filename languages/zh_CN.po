@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MX\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-20 21:49+0800\n"
-"PO-Revision-Date: 2015-11-20 21:50+0800\n"
+"POT-Creation-Date: 2015-11-21 09:11+0800\n"
+"PO-Revision-Date: 2015-11-21 09:11+0800\n"
 "Last-Translator: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language-Team: INN STUDIO <kmvan.com@gmail.com>\n"
 "Language: zh_CN\n"
@@ -220,15 +220,15 @@ msgstr "文章标题之下（文章页面）"
 msgid "Below the adjacent post (singular post page)"
 msgstr "相邻文章之下（文章页面）"
 
-#: addons/adbox/adbox.php:66 addons/custom-slidebox/custom-slidebox.php:288
+#: addons/adbox/adbox.php:66 addons/custom-slidebox/custom-slidebox.php:287
 msgid "Desktop codes"
 msgstr "桌面版代码"
 
-#: addons/adbox/adbox.php:67 addons/custom-slidebox/custom-slidebox.php:289
+#: addons/adbox/adbox.php:67 addons/custom-slidebox/custom-slidebox.php:288
 msgid "Mobile codes"
 msgstr "手机版代码"
 
-#: addons/adbox/adbox.php:75 addons/custom-slidebox/custom-slidebox.php:297
+#: addons/adbox/adbox.php:75 addons/custom-slidebox/custom-slidebox.php:296
 msgid "You can write AD HTML codes here."
 msgstr "您可以在此处填写广告 HTML 代码"
 
@@ -258,7 +258,7 @@ msgstr "广告"
 msgid "Type"
 msgstr "类型"
 
-#: addons/adbox/widget.php:46 addons/custom-homebox/custom-homebox.php:201
+#: addons/adbox/widget.php:46 addons/custom-homebox/custom-homebox.php:197
 #: addons/widget-rank/widget-rank.php:205
 msgid "All"
 msgstr "全部"
@@ -315,7 +315,9 @@ msgstr "启用主题对象缓存"
 msgid "Save your settings before click."
 msgstr "点击之前保存设置。"
 
-#: addons/cache/cache.php:113 addons/custom-page-cats/custom-page-cats.php:55
+#: addons/cache/cache.php:113 addons/custom-homebox/custom-homebox.php:94
+#: addons/custom-homebox/custom-homebox.php:224
+#: addons/custom-page-cats/custom-page-cats.php:55
 #: addons/custom-page-tags/custom-page-tags.php:68
 #: addons/custom-pm/custom-pm.php:153
 #: addons/custom-point-lottery/custom-point-lottery.php:224
@@ -323,7 +325,7 @@ msgstr "点击之前保存设置。"
 #: addons/custom-post-storage/custom-post-storage.php:64
 #: addons/custom-report/custom-report.php:78
 #: addons/custom-report/custom-report.php:146
-#: addons/custom-slidebox/custom-slidebox.php:273
+#: addons/custom-slidebox/custom-slidebox.php:272
 #: addons/file-timestamp/file-timestamp.php:52
 msgid "Control"
 msgstr "操作"
@@ -678,12 +680,12 @@ msgid "Post preview"
 msgstr "文章预览图"
 
 #: addons/custom-collection/custom-collection.php:168
-#: addons/custom-homebox/custom-homebox.php:225
+#: addons/custom-homebox/custom-homebox.php:226
 #: addons/custom-point-lottery/custom-point-lottery.php:160
 #: addons/custom-post-storage/custom-post-storage.php:160
 #: addons/custom-post-storage/custom-post-storage.php:398
 #: addons/custom-report/custom-report.php:148
-#: addons/custom-slidebox/custom-slidebox.php:196
+#: addons/custom-slidebox/custom-slidebox.php:195
 msgid "Delete this item"
 msgstr "删除此条目"
 
@@ -1172,90 +1174,91 @@ msgstr "取消关注成功。"
 msgid "Unkown param."
 msgstr "位置参数。"
 
-#: addons/custom-homebox/custom-homebox.php:81
+#: addons/custom-homebox/custom-homebox.php:79
 msgid "Theme home box settings"
 msgstr "首页盒子设置"
 
 #: addons/custom-homebox/custom-homebox.php:96
-msgid "Home box control"
-msgstr "盒子操作"
+#: addons/custom-post-storage/custom-post-storage.php:341
+#: addons/custom-report/custom-report.php:80
+#: addons/custom-slidebox/custom-slidebox.php:274
+msgid "Add new item"
+msgstr "添加新条目"
 
-#: addons/custom-homebox/custom-homebox.php:98
-msgid "Add a new home box"
-msgstr "添加一个新的盒子"
+#: addons/custom-homebox/custom-homebox.php:133 tpl/page-account-edit.php:13
+msgid "Title"
+msgstr "标题"
 
-#: addons/custom-homebox/custom-homebox.php:137
-#: addons/custom-homebox/custom-homebox.php:145
+#: addons/custom-homebox/custom-homebox.php:141
 #: addons/recomm-post/recomm-post.php:150
 msgid "Box title"
 msgstr "盒子标题"
 
-#: addons/custom-homebox/custom-homebox.php:151
-#: addons/recomm-post/recomm-post.php:157
-msgid "Box icon"
-msgstr "盒子图标"
+#: addons/custom-homebox/custom-homebox.php:147
+msgid "Icon"
+msgstr "图标"
 
-#: addons/custom-homebox/custom-homebox.php:152
+#: addons/custom-homebox/custom-homebox.php:148
 #: addons/custom-navwalker/custom-navwalker.php:378
 #: addons/recomm-post/recomm-post.php:158
 msgid "Views all icons"
 msgstr "查看所有图标"
 
-#: addons/custom-homebox/custom-homebox.php:152
+#: addons/custom-homebox/custom-homebox.php:148
 #: addons/custom-navwalker/custom-navwalker.php:378
 #: addons/recomm-post/recomm-post.php:158
 msgid "ALL"
 msgstr "全部"
 
-#: addons/custom-homebox/custom-homebox.php:166
-msgid "Box link"
-msgstr "盒子链接"
+#: addons/custom-homebox/custom-homebox.php:162
+msgid "Link"
+msgstr "链接"
 
-#: addons/custom-homebox/custom-homebox.php:174
+#: addons/custom-homebox/custom-homebox.php:170
 msgid "Box link (include http://)"
 msgstr "盒子地址（包括 http://）"
 
-#: addons/custom-homebox/custom-homebox.php:179
+#: addons/custom-homebox/custom-homebox.php:175
 msgid "Show posts"
 msgstr "显示文章数量"
 
-#: addons/custom-homebox/custom-homebox.php:187
+#: addons/custom-homebox/custom-homebox.php:183
 msgid "Posts number."
 msgstr "文章数量"
 
-#: addons/custom-homebox/custom-homebox.php:194
+#: addons/custom-homebox/custom-homebox.php:190
 msgid "Display type"
 msgstr "显示类型"
 
-#: addons/custom-homebox/custom-homebox.php:202
+#: addons/custom-homebox/custom-homebox.php:198
 msgid "Only login"
 msgstr "仅登录后显示"
 
-#: addons/custom-homebox/custom-homebox.php:203
+#: addons/custom-homebox/custom-homebox.php:199
 msgid "Only logout"
 msgstr "仅登录前显示"
 
-#: addons/custom-homebox/custom-homebox.php:209 tpl/page-account-edit.php:14
+#: addons/custom-homebox/custom-homebox.php:205 tpl/page-account-edit.php:14
 msgid "Categories"
 msgstr "分类"
 
-#: addons/custom-homebox/custom-homebox.php:215
+#: addons/custom-homebox/custom-homebox.php:211
 msgid "Keywords and links"
 msgstr "关键词与链接"
 
-#: addons/custom-homebox/custom-homebox.php:217
+#: addons/custom-homebox/custom-homebox.php:213
 msgid "Eg. Tag1 = http://inn-studio.com"
 msgstr "例如 标签1 = http://inn-studio.com"
 
-#: addons/custom-homebox/custom-homebox.php:218
+#: addons/custom-homebox/custom-homebox.php:214
 msgid "Per keyword/line"
 msgstr "一行一个关键词"
 
-#: addons/custom-homebox/custom-homebox.php:222
+#: addons/custom-homebox/custom-homebox.php:218
 msgid "AD code"
 msgstr "广告代码"
 
-#: addons/custom-homebox/custom-homebox.php:224
+#: addons/custom-homebox/custom-homebox.php:220
 msgid "HTML code will display below this box."
 msgstr "HTML 代码将显示此盒子下面。"
 
@@ -1759,7 +1762,6 @@ msgid "Max times daily"
 msgstr "每日最大抽奖次数"
 
 #: addons/custom-point-lottery/custom-point-lottery.php:226
-#: addons/custom-slidebox/custom-slidebox.php:275
 msgid "Add a new item"
 msgstr "添加新条目"
 
@@ -2452,11 +2454,6 @@ msgstr "解压密码（可选）"
 msgid "File storage"
 msgstr "文件存储"
 
-#: addons/custom-post-storage/custom-post-storage.php:341
-#: addons/custom-report/custom-report.php:80
-msgid "Add new item"
-msgstr "添加新条目"
-
 #: addons/custom-post-storage/custom-post-storage.php:413
 msgid "Storage download"
 msgstr "网盘下载"
@@ -2812,73 +2809,73 @@ msgstr "暂无分类目录，请去添加一些分类。"
 msgid "You have not permission to upload."
 msgstr "您没有上传的权限。"
 
-#: addons/custom-slidebox/custom-slidebox.php:145
+#: addons/custom-slidebox/custom-slidebox.php:144
 #, php-format
 msgid "Slide-box title - %s"
 msgstr "幻灯片标题 - %s"
 
-#: addons/custom-slidebox/custom-slidebox.php:146
+#: addons/custom-slidebox/custom-slidebox.php:145
 msgid "Title will be display as attribute-alt"
 msgstr "将会被作用于 alt 属性"
 
-#: addons/custom-slidebox/custom-slidebox.php:149
+#: addons/custom-slidebox/custom-slidebox.php:148
 msgid "Subtitles (optional)"
 msgstr "子标题（可选）"
 
-#: addons/custom-slidebox/custom-slidebox.php:151
+#: addons/custom-slidebox/custom-slidebox.php:150
 msgid "Subtitle can be date or any text"
 msgstr "子标题可以是日期或任何纯文本"
 
-#: addons/custom-slidebox/custom-slidebox.php:155
+#: addons/custom-slidebox/custom-slidebox.php:154
 msgid "Categories (optional)"
 msgstr "分类目录（可选）"
 
-#: addons/custom-slidebox/custom-slidebox.php:164
+#: addons/custom-slidebox/custom-slidebox.php:163
 msgid "Link url"
 msgstr "链接 url"
 
-#: addons/custom-slidebox/custom-slidebox.php:165
+#: addons/custom-slidebox/custom-slidebox.php:164
 msgid "Url address"
 msgstr "Url 地址"
 
-#: addons/custom-slidebox/custom-slidebox.php:169
+#: addons/custom-slidebox/custom-slidebox.php:168
 msgid "Image url"
 msgstr "图片 url"
 
-#: addons/custom-slidebox/custom-slidebox.php:179
+#: addons/custom-slidebox/custom-slidebox.php:178
 msgid "Image address"
 msgstr "图片地址"
 
-#: addons/custom-slidebox/custom-slidebox.php:180
+#: addons/custom-slidebox/custom-slidebox.php:179
 msgid "Upload image"
 msgstr "上传图片"
 
-#: addons/custom-slidebox/custom-slidebox.php:185
+#: addons/custom-slidebox/custom-slidebox.php:184
 msgid "Addon options"
 msgstr "附加选项"
 
-#: addons/custom-slidebox/custom-slidebox.php:189
+#: addons/custom-slidebox/custom-slidebox.php:188
 msgid "Nofollow link"
 msgstr "Nofollow 链接"
 
-#: addons/custom-slidebox/custom-slidebox.php:193
+#: addons/custom-slidebox/custom-slidebox.php:192
 #: addons/link-target/link-target.php:47
 msgid "Open in new window"
 msgstr "在新窗口中打开"
 
-#: addons/custom-slidebox/custom-slidebox.php:208
+#: addons/custom-slidebox/custom-slidebox.php:207
 msgid "Candy"
 msgstr "糖果"
 
-#: addons/custom-slidebox/custom-slidebox.php:209
+#: addons/custom-slidebox/custom-slidebox.php:208
 msgid "Scroller"
 msgstr "滑轮"
 
-#: addons/custom-slidebox/custom-slidebox.php:236
+#: addons/custom-slidebox/custom-slidebox.php:235
 msgid "Slide-box settings"
 msgstr "幻灯片设置"
 
-#: addons/custom-slidebox/custom-slidebox.php:238
+#: addons/custom-slidebox/custom-slidebox.php:237
 #, php-format
 msgid ""
 "Slide-box will display on homepage. You can select style type and set images "
@@ -2888,19 +2885,19 @@ msgstr ""
 "您可以设置图片和链接在首页的幻灯片中。图像尺寸为 %s&times;%s px。记得完成设置"
 "后保存哦。"
 
-#: addons/custom-slidebox/custom-slidebox.php:238
+#: addons/custom-slidebox/custom-slidebox.php:237
 msgid "unlimited"
 msgstr "不限制"
 
-#: addons/custom-slidebox/custom-slidebox.php:244
+#: addons/custom-slidebox/custom-slidebox.php:243
 msgid "Style type"
 msgstr "风格类型"
 
-#: addons/custom-slidebox/custom-slidebox.php:285
+#: addons/custom-slidebox/custom-slidebox.php:284
 msgid "AD HTML codes (below the slide-box)"
 msgstr "广告 HTML 代码（幻灯片之下）"
 
-#: addons/custom-slidebox/custom-slidebox.php:485
+#: addons/custom-slidebox/custom-slidebox.php:484
 msgid "Detail &raquo;"
 msgstr "详细 &raquo;"
 
@@ -3642,6 +3639,10 @@ msgstr "推荐文章"
 #: addons/recomm-post/recomm-post.php:137
 msgid "Recommended posts will display on home page if enabled."
 msgstr "如果启用，将会在首页显示推荐文章。"
+
+#: addons/recomm-post/recomm-post.php:157
+msgid "Box icon"
+msgstr "盒子图标"
 
 #: addons/recomm-post/recomm-post.php:172
 msgid "Show posts number"
@@ -4972,10 +4973,6 @@ msgstr "提交"
 msgid "Thumbnail"
 msgstr "封面图"
 
-#: tpl/page-account-edit.php:13
-msgid "Title"
-msgstr "标题"
-
 #: tpl/page-account-edit.php:15
 msgid "Tags"
 msgstr "Tag 标签"
@@ -5197,6 +5194,15 @@ msgstr "向每个人介绍自己"
 #: tpl/page-account-settings.php:119
 msgid "Save my settings"
 msgstr "保存我的设置"
+
+#~ msgid "Home box control"
+#~ msgstr "盒子操作"
+
+#~ msgid "Add a new home box"
+#~ msgstr "添加一个新的盒子"
+
+#~ msgid "Box link"
+#~ msgstr "盒子链接"
 
 #, fuzzy
 #~ msgid "Add new"

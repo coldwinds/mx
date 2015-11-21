@@ -42,13 +42,17 @@ module.exports = function(){
 			$target = document.getElementById(target_id);
 		if(window.jQuery){
 			var $t = jQuery($target);
-			$t.fadeOut(1,function(){
+			$t.fadeOut('slow',function(){
 				$t.remove();
 			}).css({
-				'background-color':'#d54e21'
+				'border':'2px solid #d54e21'
 			});
 		}else{
-			$target.parentNode.removeChild($target);
+			$target.style.borderWidth = '2px';
+			$target.style.borderColor = '#d54e2';
+			setTimeout(function(){
+				$target.parentNode.removeChild($target);
+			}, 1000);
 		}
 	}
 	function bind_click_add(){
@@ -57,8 +61,7 @@ module.exports = function(){
 	function event_click_add(e){
 		e.preventDefault();
 		var tpl = that.$container.getAttribute('data-tpl').replace(/\%placeholder\%/ig, +new Date()),
-			$new_item = paseHTML(tpl);
-
+			$new_item = paseHTML(tpl.trim());
 		/** bind del */
 		bind_click_del($new_item.querySelector('.del'));
 		

@@ -124,8 +124,7 @@ class theme_custom_slidebox{
 		}
 		die(theme_features::json_format($output));
 	}
-	private static function get_box_tpl($placeholder){
-		$boxes = (array)self::get_options('boxes');
+	private static function get_box_tpl($placeholder = '%placeholder%', array $boxes = []){
 		$title = isset($boxes[$placeholder]['title']) ? $boxes[$placeholder]['title'] : null;
 		$subtitle = isset($boxes[$placeholder]['subtitle']) ? $boxes[$placeholder]['subtitle'] : null;
 		$link_url = isset($boxes[$placeholder]['link-url']) ? $boxes[$placeholder]['link-url'] : null;
@@ -136,7 +135,7 @@ class theme_custom_slidebox{
 		ob_start();
 		?>
 		<table 
-			class="form-table item" 
+			class="form-table item tpl-item" 
 			id="<?= __CLASS__;?>-item-<?= $placeholder;?>" 
 			data-placeholder="<?= $placeholder;?>" 
 		>
@@ -177,7 +176,7 @@ class theme_custom_slidebox{
 			<td>
 				<div class="<?= __CLASS__;?>-upload-area upload-area">
 					<input type="url" id="<?= __CLASS__;?>-img-url-<?= $placeholder;?>" name="<?= __CLASS__;?>[boxes][<?= $placeholder;?>][img-url]" class="<?= __CLASS__;?>-img-url upload-img-url" placeholder="<?= ___('Image address');?>" value="<?= $img_url;?>"/>
-					<a href="javascript:;" class="button-primary <?= __CLASS__;?>-upload upload-btn" id="<?= __CLASS__;?>-upload-<?= $placeholder;?>"><i class="fa fa-image"></i> <?= ___('Upload image');?><input type="file" id="<?= __CLASS__;?>-file-<?= $placeholder;?>" class="<?= __CLASS__;?>-file"/></a>
+					<span class="button-primary <?= __CLASS__;?>-upload upload-btn" id="<?= __CLASS__;?>-upload-<?= $placeholder;?>"><i class="fa fa-image"></i> <?= ___('Upload image');?><input type="file" id="<?= __CLASS__;?>-file-<?= $placeholder;?>" class="<?= __CLASS__;?>-file"/></span>
 				</div>
 			</td>
 		</tr>
@@ -193,13 +192,13 @@ class theme_custom_slidebox{
 					<?= ___('Open in new window');?>
 				</label>
 
-				<a href="javascript:;" class="del" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-id="<?= $placeholder;?>" data-target="#<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= ___('Delete this item');?></a>
+				<a href="javascript:;" class="del" id="<?= __CLASS__;?>-del-<?= $placeholder;?>" data-target="<?= __CLASS__;?>-item-<?= $placeholder;?>"><?= ___('Delete this item');?></a>
 			</td>
 		</tr>
 		</tbody>
 		</table>
 		<?php
-		$content = ob_get_contents();
+		$content = html_minify(ob_get_contents());
 		ob_end_clean();
 		return $content;
 	}
@@ -255,14 +254,14 @@ class theme_custom_slidebox{
 			</tr>
 			</tbody>
 			</table>
-			<div id="<?= __CLASS__;?>-container">
+			<div id="<?= __CLASS__;?>-container" data-tpl="<?= esc_attr(self::get_box_tpl());?>">
 				<?php
 				if(!empty($boxes)){
 					foreach($boxes as $k => $v){
-						echo self::get_box_tpl($k);
+						echo self::get_box_tpl($k, $boxes);
 					}
 				}else{
-					echo self::get_box_tpl(1);
+					echo self::get_box_tpl(0);
 				}
 				?>
 			</div>
@@ -272,7 +271,7 @@ class theme_custom_slidebox{
 			<tr>
 			<th><?= ___('Control');?></th>
 			<td>
-				<a id="<?= __CLASS__;?>-add" href="javascript:;" class="add button-primary"><i class="fa fa-plus"></i> <?= ___('Add a new item');?></a>
+				<a id="<?= __CLASS__;?>-add" href="javascript:;" class="add button-primary"><i class="fa fa-plus"></i> <?= ___('Add new item');?></a>
 			</td>
 			</tr>
 			</tbody>
@@ -524,7 +523,6 @@ class theme_custom_slidebox{
 	}
 	public static function backend_js_config(array $config){
 		$config[__CLASS__] = [
-			'tpl' => html_minify(self::get_box_tpl('%placeholder%')),
 			'process_url' => theme_features::get_process_url([
 				'action' => __CLASS__,
 			]),

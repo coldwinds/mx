@@ -3,6 +3,7 @@ var ajax_loading_tip = require('modules/ajax-loading-tip');
 var array_merge = require('modules/array-merge');
 var uploader = require('modules/uploader');
 var paseHTML = require('modules/parse-html');
+var tpl_control = require('modules/tpl-control');
 
 module.exports = function(){
 	'use strict';
@@ -12,8 +13,6 @@ module.exports = function(){
 	
 	var cache = {},
 		config = {
-			placeholder_pattern : /\%placeholder\%/ig,
-			tpl : '',
 			process_url : ''
 		};
 	config = array_merge(config, window.THEME_CONFIG.theme_custom_slidebox);
@@ -22,35 +21,22 @@ module.exports = function(){
 	function bind(){
 		
 		cache.$container = document.getElementById('theme_custom_slidebox-container');
-		if(!cache.$container)
+		cache.$add = document.getElementById('theme_custom_slidebox-add');
+		if(!cache.$container || !cache.$add)
 			return;
-			
-		cache.$control_container = document.getElementById('theme_custom_slidebox-control');
 
-		cache.$items = cache.$container.querySelectorAll('.item');
-		cache.$add = cache.$control_container.querySelector('.add');
-		cache.$dels = cache.$container.querySelectorAll('.del');
-
-		cache.len = cache.$items.length;
-		/** 
-		 * bind event for first init
-		 */
-		if(cache.len > 0){
-			for(var i = 0; i < cache.len; i++){
-				/** del */
-				bind_del(cache.$dels[i]);
-				/** upload */
-				bind_upload({
-					$item : cache.$items[i],
-					$url : cache.$items[i].querySelector('.upload-img-url'),
-					$file : cache.$items[i].querySelector('input[type="file"]')
-				});
-			}
-		}
-		/** 
-		 * bind add event
-		 */
-		bind_add();
+		var controler = new tpl_control();
+		controler.$add = cache.$add;
+		controler.$container = cache.$container;
+		controler.new_tpl_callback = function($item){
+			bind_upload({
+				$item : $item,
+				$url : $item.querySelector('.upload-img-url'),
+				$file : $item.querySelector('input[type="file"]')
+			});
+		};
+		controler.init();
+		
 	}
 	function bind_upload(args){
 		new uploader({
@@ -73,41 +59,6 @@ module.exports = function(){
 				}else{
 					ajax_loading_tip('error',data);
 				}
-			}
-		});
-	}
-	
-	function bind_add(){
-		cache.$add.addEventListener('click',function(){
-			var tpl = config.tpl.replace(config.placeholder_pattern, +new Date()),
-				$new_item = paseHTML(tpl);
-			/** append */
-			cache.$container.appendChild($new_item);
-			/** bind del */
-			bind_del($new_item.querySelector('.del'));
-			/** bind upload */
-			bind_upload({
-				$item : $new_item,
-				$file : $new_item.querySelector('input[type="file"]'),
-				$url : $new_item.querySelector('.upload-img-url')
-			});
-			/** focus */
-			$new_item.querySelector('input').focus();
-		});
-	}
-	function bind_del($del){
-		$del.addEventListener('click', function () {
-			var target_id = this.getAttribute('data-target'),
-			$target = document.getElementById(target_id);
-			if(window.jQuery){
-				var $t = jQuery($target);
-				$t.fadeOut(1,function(){
-					$t.remove();
-				}).css({
-					'background-color':'#d54e21'
-				});
-			}else{
-				$target.parentNode.removeChild($target);
 			}
 		});
 	}
