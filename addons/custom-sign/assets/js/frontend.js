@@ -74,7 +74,6 @@ module.exports = function(){
 					m.process_url = config.process_url;
 					m.done = function(data){
 						if(data && data.status === 'success'){
-							location.hash = '';
 							location.reload();
 						}
 					};
@@ -87,7 +86,6 @@ module.exports = function(){
 					m.process_url = config.process_url;
 					m.done = function(data){
 						if(data && data.status === 'success'){
-							location.hash = '';
 							location.reload();
 						}
 					};

