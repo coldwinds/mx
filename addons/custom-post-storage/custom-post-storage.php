@@ -8,21 +8,25 @@ class theme_custom_storage{
 		'key' => '_theme_custom_storage'
 	);
 	public static function init(){
-		add_action('init', __CLASS__ . '::page_create');
-		add_action('add_meta_boxes', __CLASS__ . '::meta_box_add');
-		add_action('save_post_post', __CLASS__ . '::meta_box_save');
-
-		add_action('template_redirect', __CLASS__ . '::template_redirect');
-		
-		//add_shortcode('post-stroage-download', __CLASS__ . '::add_shortcode');
-		
-		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);	
-
-		add_action('page_settings',__CLASS__ . '::display_backend');
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
-
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings',__CLASS__ . '::display_backend');
+				add_action('init', __CLASS__ . '::page_create');
+				
+			}else{
+				add_filter('wp_title', __CLASS__ . '::wp_title',10,2);	
+				add_action('template_redirect', __CLASS__ . '::template_redirect');
+			}
+		}
+		if(theme_cache::is_admin()){
+			add_action('add_meta_boxes', __CLASS__ . '::meta_box_add');
+		}
+		add_action('save_post_post', __CLASS__ . '::meta_box_save');
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 

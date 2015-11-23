@@ -4,21 +4,15 @@
  *
  * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_page_rank::init';
-	return $fns;
-});
 class theme_page_rank{
 	
 	public static $page_slug = 'rank';
 	
 	public static function init(){
-		add_action('init', __CLASS__ . '::page_create');
-
-		//add_action('wp_enqueue_scripts', __CLASS__  . '::frontend_enqueue_css');
-
+		if(!theme_cache::is_ajax()){
+			add_action('init', __CLASS__ . '::page_create');
+		}
 		add_filter('query_vars', __CLASS__ . '::filter_query_vars');
-		
 	}
 
 	public static function page_create(){
@@ -268,7 +262,7 @@ class theme_page_rank{
 			'posts_per_page ' => 100,
 			'paged' => 1,
 			'orderby' => 'rand',
-			'post__in' => theme_recommended_post::get_ids(),
+			'post__in' => theme_recomm_post::get_ids(),
 			'ignore_sticky_posts' => false,
 		],$args);
 
@@ -404,15 +398,8 @@ class theme_page_rank{
 		</div>
 		<?php
 	}
-	public static function frontend_enqueue_css(){
-		if(!self::is_page())
-			return false;
-			
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_page_rank::init';
+	return $fns;
+});

@@ -1,12 +1,17 @@
 <?php
 /**
- * @version 1.0.1
+ * @version 1.0.2
  */
 class theme_adbox{
 
 	public static function init(){
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		add_action('page_settings', __CLASS__ . '::display_backend');
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}
+		
+		if(theme_options::is_options_page()){
+			add_action('page_settings', __CLASS__ . '::display_backend');
+		}
 		include __DIR__ . '/widget.php';
 	}
 

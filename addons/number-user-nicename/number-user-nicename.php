@@ -8,8 +8,10 @@ class number_user_nicename{
 	public static function init(){
 		add_action('profile_update',__CLASS__ . '::profile_update',20,2);
 		add_action('user_register',__CLASS__ . '::user_register');
-		/** theme api */
-		add_filter('theme_api_theme_custom_sign_after_login', __CLASS__ . '::filter_theme_api_theme_custom_sign_after_login',10,2);
+		if(theme_cache::is_ajax()){
+			/** theme api */
+			add_filter('theme_api_theme_custom_sign_after_login', __CLASS__ . '::filter_theme_api_theme_custom_sign_after_login',10,2);
+		}
 	}
 	public static function profile_update($user_id,$old_user_data){
 		$std_nicename = $user_id + self::$prefix_number;

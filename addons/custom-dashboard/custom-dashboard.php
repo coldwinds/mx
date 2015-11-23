@@ -1,27 +1,21 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_dashboard::init';
-	return $fns;
-});
 class theme_custom_dashboard{
-	
 	public static $page_slug = 'account';
 
 	public static function init(){	
+		if(!theme_cache::is_ajax()){
+			add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
+			include __DIR__ . '/dashboards.php';
+		}
 		
-		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
-		
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
-
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
 		}
 
-		include __DIR__ . '/dashboards.php';
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 
@@ -73,15 +67,8 @@ class theme_custom_dashboard{
 		}
 		return $tabs;
 	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
-
-		wp_enqueue_style(
-			__CLASS__,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_dashboard::init';
+	return $fns;
+});

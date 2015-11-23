@@ -14,48 +14,48 @@ class theme_custom_point{
 	public static function init(){
 
 		include __DIR__ . '/widget.php';
+		add_filter('theme_options_default', __CLASS__ . '::options_default');
 		
-		add_action('page_settings',__CLASS__ . '::display_backend');
+		if(theme_cache::is_ajax()){
+			add_filter('dynamic_request_process', __CLASS__ . '::filter_dynamic_request_process');
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_filter('theme_api_theme_custom_sign_after_login_user_data', __CLASS__ . '::filter_theme_api_theme_custom_sign_after_login_user_data',10,2);
+			
+
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings', __CLASS__ . '::display_backend');
+				add_action('backend_js_config', __CLASS__ . '::backend_js_config');
+				
+			}else{
+				/**
+				 * list history hooks
+				 */
+				foreach([
+					'list_history_sepcial_event',
+					'list_history_comment_publish',
+					'list_history_post_delete',
+					'list_history_post_publish',
+					'list_history_post_reply',
+					'list_history_signup',
+					'list_history_signin_daily'
+				] as $v)
+					add_action('list_point_histroy',__CLASS__ . '::' . $v);
+			}
+			
+		}
 
 		add_action('comment_post',__CLASS__ . '::action_add_history_wp_new_comment_comment_publish',10,2);
 		
 		add_action('transition_comment_status', __CLASS__ . '::action_add_history_transition_comment_status_comment_publish',10,3);
-
 		
 		add_action('transition_post_status', __CLASS__ . '::add_action_publish_post_history_post_publish',10,3);
-		
 		
 		add_action('user_register', __CLASS__ . '::action_add_history_signup');
 
 		/** post-delete */
 		add_action('before_delete_post', __CLASS__ . '::action_add_history_post_delete');
-		
-		/** sign-in daily */
-		add_filter('dynamic_request_process', __CLASS__ . '::filter_dynamic_request_process');
-		
-		add_filter('theme_options_default', __CLASS__ . '::options_default');
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-
-		/** ajax */
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-
-		add_filter('theme_api_theme_custom_sign_after_login_user_data', __CLASS__ . '::filter_theme_api_theme_custom_sign_after_login_user_data',10,2);
-
-		add_action('backend_js_config', __CLASS__ . '::backend_js_config');
-
-		/**
-		 * list history hooks
-		 */
-		foreach([
-			'list_history_sepcial_event',
-			'list_history_comment_publish',
-			'list_history_post_delete',
-			'list_history_post_publish',
-			'list_history_post_reply',
-			'list_history_signup',
-			'list_history_signin_daily'
-		] as $v)
-			add_action('list_point_histroy',__CLASS__ . '::' . $v);
 	}
 
 	public static function display_backend(){

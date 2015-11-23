@@ -1,12 +1,10 @@
 <?php
 /**
- * @version 1.0.1
+ * @version 1.0.2
  */
-theme_dashboards::init();
 class theme_dashboards{
-
 	public static function init(){
-		
+
 		add_action('account_dashboard_left',__CLASS__ . '::my_statistics');
 		add_action('account_dashboard_left',__CLASS__ . '::my_point');
 		
@@ -224,3 +222,4 @@ class theme_dashboards{
 		<?php
 	}
 }
+theme_dashboards::init();

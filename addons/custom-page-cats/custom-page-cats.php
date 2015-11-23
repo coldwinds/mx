@@ -9,20 +9,19 @@ add_filter('theme_addons',function($fns){
 	return $fns;
 });
 class theme_page_cats{
-	
 	public static $page_slug = 'cats-index';
 	
 	public static function init(){
-		
-		add_action('init',__CLASS__ . '::page_create');
-
-		add_action('page_settings', 		__CLASS__ . '::display_backend');
-
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		
-		add_filter('theme_options_save', 	__CLASS__ . '::options_save');
-
-		add_filter('backend_js_config',__CLASS__ . '::backend_js_config');
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_filter('theme_options_save', 	__CLASS__ . '::options_save');
+		}else{
+			add_action('init',__CLASS__ . '::page_create');
+			if(theme_options::is_options_page()){
+				add_filter('backend_js_config',__CLASS__ . '::backend_js_config');
+				add_action('page_settings', __CLASS__ . '::display_backend');
+			}
+		}
 	}
 	public static function get_options($key = null){
 		static $caches = null;

@@ -4,10 +4,15 @@
  */
 class theme_file_timestamp{
 	private static $timestamp;
-	public static function init(){		
-		add_action('advanced_settings' , __CLASS__ . '::display_backend');
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_filter('theme_options_save' , __CLASS__ . '::options_save');
+	public static function init(){
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_filter('theme_options_save' , __CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('advanced_settings' , __CLASS__ . '::display_backend');
+			}
+		}
 	}
 	public static function process(){
 		if(!theme_cache::current_user_can('manage_options'))

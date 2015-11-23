@@ -9,10 +9,17 @@ Description:	Improve the seo friendly
 class theme_seo_plus{
 	private static $keywords_split = ',';
 	public static function init(){
-		add_action('base_settings', __CLASS__ . '::display_backend',5);
-		add_action('wp_head', __CLASS__ . '::wp_head',1);
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		add_filter('wp_title', __CLASS__ . '::wp_title',999,2);
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			
+		}
+		if(theme_options::is_options_page()){
+			add_action('base_settings', __CLASS__ . '::display_backend',5);
+		}
+		if(!theme_cache::is_admin()){
+			add_action('wp_head', __CLASS__ . '::wp_head',1);
+			add_filter('wp_title', __CLASS__ . '::wp_title',999,2);
+		}
 	}
 	public static function wp_title($title, $sep){
 		$sep = ' - ';

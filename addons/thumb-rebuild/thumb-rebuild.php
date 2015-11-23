@@ -403,4 +403,3 @@ function RegenerateThumbnails() {
 }
 
 }/** end class_exists */
-?>

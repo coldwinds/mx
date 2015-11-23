@@ -1,12 +1,5 @@
 <?php
-
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_login_with_email::init';
-	return $fns;
-});
 class theme_login_with_email {
-	private static $iden = 'theme-login-with-email';
-
 	public static function init(){
 		add_filter('authenticate',__CLASS__ . '::authenticate', 20, 3);
 	}
@@ -18,3 +11,7 @@ class theme_login_with_email {
 		return wp_authenticate_username_password(null,$username,$password);
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_login_with_email::init';
+	return $fns;
+});

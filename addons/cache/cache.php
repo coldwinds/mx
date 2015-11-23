@@ -341,7 +341,12 @@ class theme_cache{
 			$caches[$cache_id] = get_option($cache_id);
 		return $caches[$cache_id];
 	}
-
+	public static function is_ajax(){
+		static $cache = null;
+		if($cache === null)
+			$cache = defined('DOING_AJAX') && DOING_AJAX;
+		return $cache;
+	}
 	public static function home_url($path = null){
 		static $caches = [],$cache = null;
 		if($path === null){

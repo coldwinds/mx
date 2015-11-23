@@ -1,11 +1,7 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_comment_at_people::init';
-	return $fns;
-});
 class theme_comment_at_people{
 	public static function init(){
 		add_filter('get_comment_text' , __CLASS__ . '::get_comment_text', 10, 2);
@@ -24,3 +20,7 @@ class theme_comment_at_people{
 		return $comment_content;
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_comment_at_people::init';
+	return $fns;
+});

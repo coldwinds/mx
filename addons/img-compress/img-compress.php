@@ -6,12 +6,18 @@
  */
 class theme_img_compress{
 	public static function init(){
+		add_filter('theme_options_default', __CLASS__ . '::options_default');
 		add_filter('wp_handle_upload_prefilter', __CLASS__ . '::compress_jpeg_quality', 1, 99 );
 
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		add_filter('theme_options_default', __CLASS__ . '::options_default');
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('base_settings', __CLASS__ . '::display_backend');
+			}
+		}
 
-		add_action('base_settings', __CLASS__ . '::display_backend');
 		
 		if(theme_cache::current_user_can('manage_options'))
 			return;

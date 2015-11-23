@@ -183,8 +183,8 @@ class theme_functions{
 				break;
 			case 'recomm':
 			case 'recommended':
-				if(class_exists('theme_recommended_post')){
-					$query_args['post__in'] = (array)theme_recommended_post::get_ids();
+				if(class_exists('theme_recomm_post')){
+					$query_args['post__in'] = (array)theme_recomm_post::get_ids();
 				}else{
 					$query_args['post__in'] = (array)theme_cache::get_option( 'sticky_posts' );
 					unset($query_args['ignore_sticky_posts']);
@@ -1494,32 +1494,27 @@ class theme_functions{
 		return $output;
 	}
 	/**
-	 * the_recommended
+	 * frontend_recomm_posts
 	 */
-	public static function the_recommended(){
-		if(!class_exists('theme_recommended_post') || !theme_recommended_post::is_enabled())
+	public static function frontend_recomm_posts(){
+		if(!class_exists('theme_recomm_post') || !theme_recomm_post::is_enabled())
 			return false;
 			
-		$cache = theme_recommended_post::get_cache();
+		$cache = theme_recomm_post::get_cache();
 		
 		if(!empty($cache)){
-			echo $cache;
-			unset($cache);
-			return;
+			return $cache;
 		}
 		
-		$recomms = theme_recommended_post::get_ids();
+		$recomms = theme_recomm_post::get_ids();
 		
 		if(empty($recomms)){
-			?>
-			<div class="page-tip"><?= status_tip('info',___('Please set some recommended posts to display.'));?></div>
-			<?php
 			return false;
 		}
 		
 		global $post;
 		$query = new WP_Query([
-			'posts_per_page' => theme_recommended_post::get_item('number'),
+			'posts_per_page' => theme_recomm_post::get_item('number'),
 			'post__in' => $recomms,
 			'orderby' => 'ID',
 			'ignore_sticky_posts' => true,
@@ -1534,10 +1529,10 @@ class theme_functions{
 						<?php if(class_exists('theme_page_rank')){ ?>
 							<a href="<?= theme_page_rank::get_tabs('recommend')['url'];?>">
 						<?php } ?>
-						<?php if(theme_recommended_post::get_item('icon')){ ?>
-							<i class="fa fa-<?= theme_recommended_post::get_item('icon');?>"></i> 
+						<?php if(theme_recomm_post::get_item('icon')){ ?>
+							<i class="fa fa-<?= theme_recomm_post::get_item('icon');?>"></i> 
 						<?php } ?>
-						<?= theme_recommended_post::get_item('title');?>
+						<?= theme_recomm_post::get_item('title');?>
 						<?php if(class_exists('theme_page_rank')){ ?>
 							</a>
 						<?php } ?>
@@ -1565,10 +1560,9 @@ class theme_functions{
 		unset($query,$recomms);
 		$cache = ob_get_contents();
 		ob_end_clean();
-		theme_recommended_post::set_cache($cache);
+		theme_recomm_post::set_cache($cache);
 
-		echo $cache;
-		unset($cache);
+		return $cache;
 	}
 	public static function archive_card_lg(array $args = []){
 		global $post;
@@ -1894,7 +1888,7 @@ class theme_functions{
 <div id="respond" class="panel">
 	<a href="javascript:;" id="cancel-comment-reply-link" class="none" title="<?= ___('Cancel reply');?>">&times;</a>
 	<div class="content">
-		<div class="page-tip" id="respond-loading-ready">
+		<div id="respond-loading-ready">
 			<?= status_tip('loading',___('Loading, please wait...'));?>
 		</div>
 		

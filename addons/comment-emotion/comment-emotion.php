@@ -1,18 +1,16 @@
 <?php
 /*
-Feature Name:	theme_comment_emotion
-Feature URI:	http://inn-studio.com
-Version:		2.0.2
-Description:	
-Author:			INN STUDIO
-Author URI:		http://inn-studio.com
-*/
+ * @version 2.3.0
+ */
 class theme_comment_emotion{
 	public static function init(){
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
 		add_filter('theme_options_default',__CLASS__ . '::options_default');
-		add_action('page_settings',__CLASS__ . '::display_backend');
-
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save',__CLASS__ . '::options_save');
+		}
+		if(theme_options::is_options_page()){
+			add_action('page_settings',__CLASS__ . '::display_backend');
+		}
 		add_filter('pre_comment_content', __CLASS__ . '::filter_pre_comment_content');
 	}
 	public static function options_default(array $opts = []){
@@ -190,7 +188,7 @@ class theme_comment_emotion{
 		$item_value = [];
 		foreach(self::get_ems('img','items') as $k => $v){
 			$item_keys[] = '[' . $k . ']';
-			$item_value[] = '<img src="' . esc_url($v) . '" alt="' . ___('Emotion') . '" class="emotion">';
+			$item_value[] = '<img src="' . $v . '" alt="' . ___('Emotion') . '" class="emotion">';
 		}
 		return str_replace( $item_keys, $item_value, $content );
 	}

@@ -2,19 +2,22 @@
 /*
 Feature Name:	theme_clean_up
 Feature URI:	http://www.inn-studio.com/theme_clean_up
-Version:		3.0.0
+Version:		3.0.1
 Description:	optimizate your database
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
 class theme_clean_up{
 	public static function init(){
-		add_action('advanced_settings', __CLASS__ . '::display_backend',20);
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_action('backend_js_config', __CLASS__ . '::backend_js_config');
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		}
+		if(theme_options::is_options_page()){
+			add_action('backend_js_config', __CLASS__ . '::backend_js_config');
+			add_action('advanced_settings', __CLASS__ . '::display_backend',20);
+		}
 	}
 	public static function display_backend(){
-				
 		?>
 		<fieldset>
 			<legend><i class="fa fa-fw fa-database"></i> <?= ___('Database Optimization');?></legend>

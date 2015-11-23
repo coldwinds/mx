@@ -1,11 +1,7 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_point_views_per_hundred::init';
-	return $fns;
-});
 class theme_custom_point_views_per_hundred{
 
 	public static $iden = 'theme_custom_point_views_per_hundred';
@@ -14,29 +10,30 @@ class theme_custom_point_views_per_hundred{
 	
 	public static function init(){
 		if(!self::is_enabled())
-			return false;
+			return;
 
+		if(!theme_cache::is_ajax()){
+			
+			/**
+			 * list history
+			 */
+			foreach([
+				'list_history'
+			] as $v)
+				add_action('list_point_histroy',__CLASS__ . '::' . $v);
+				
+			foreach([
+				'list_noti'
+			] as $v)
+				add_action('list_noti',__CLASS__ . '::' . $v);
+		}
 		self::$post_meta_key = theme_post_views::$post_meta_key;
 		
-		add_filter('custom_point_value_default',__CLASS__ . '::filter_custom_point_value_default');
+		add_filter('custom_point_value_default', __CLASS__ . '::filter_custom_point_value_default');
 		
-		add_filter('custom_point_types',__CLASS__ . '::filter_custom_point_types');
+		add_filter('custom_point_types', __CLASS__ . '::filter_custom_point_types');
 
 		add_action('update_postmeta' , __CLASS__ . '::action_update_postmeta', 10, 4);
-
-		/**
-		 * list history
-		 */
-		foreach([
-			'list_history'
-		] as $v)
-			add_action('list_point_histroy',__CLASS__ . '::' . $v);
-			
-		foreach([
-			'list_noti'
-		] as $v)
-			add_action('list_noti',__CLASS__ . '::' . $v);
-
 	}
 	
 	public static function is_enabled(){
@@ -229,5 +226,8 @@ class theme_custom_point_views_per_hundred{
 		<?php
 		wp_reset_postdata();
 	}
-	
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_point_views_per_hundred::init';
+	return $fns;
+});

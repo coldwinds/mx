@@ -1,8 +1,10 @@
 <?php
 class theme_help{
 	public static function init(){
-		add_action('help_settings', __CLASS__ . '::display_backend');
-		add_action('backend_js_config', __CLASS__ . '::backend_js_config'); 
+		if(theme_options::is_options_page()){
+			add_action('help_settings', __CLASS__ . '::display_backend');
+			add_action('backend_js_config', __CLASS__ . '::backend_js_config'); 
+		}
 	}
 	
 	public static function display_backend(){

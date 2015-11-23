@@ -2,10 +2,7 @@
 /**
  * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'custom_navwalker::custom_nav_menu_hook';
-	return $fns;
-});
+
 class custom_navwalker extends Walker_Nav_Menu{
 	/**
 	 * Starts the list before the elements are added.
@@ -457,3 +454,7 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu {
 	}
 
 } // Walker_Nav_Menu_Edit
+add_filter('theme_addons',function($fns){
+	$fns[] = 'custom_navwalker::custom_nav_menu_hook';
+	return $fns;
+});

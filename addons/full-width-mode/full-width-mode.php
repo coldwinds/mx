@@ -2,17 +2,23 @@
 /**
  * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_full_width_mode::init';
-	return $fns;
-});
+
 class theme_full_width_mode{
 
 	public static function init(){
-		add_filter('frontend_js_config' , __CLASS__ . '::frontend_js_config');
-		add_action('page_settings', __CLASS__ . '::display_backend');
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings', __CLASS__ . '::display_backend');
+			}else{
+				
+			}
+		}
+		if(!theme_cache::is_admin()){
+			add_filter('frontend_js_config' , __CLASS__ . '::frontend_js_config');
+		}
 	}
 	public static function options_default(array $opts = []){
 		$opts[__CLASS__] = [
@@ -83,3 +89,7 @@ class theme_full_width_mode{
 		);
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_full_width_mode::init';
+	return $fns;
+});

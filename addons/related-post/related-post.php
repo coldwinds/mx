@@ -7,20 +7,16 @@ Description:	Display the related post below your article.<br/>在您的日志下
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-//add_filter('theme_addons',function($fns){
-//	$fns[] = 'theme_related_post::init';
-//	return $fns;
-//});
-class theme_related_post{
-	public static $iden = 'theme_related_post';
 
+class theme_related_post{
 	public static function init(){
-		// add_action('save_post',__CLASS__ . '::flush_cache');
-		// add_action('deleted_post',__CLASS__ . '::flush_cache');
-		// add_action('switch_theme',__CLASS__ . '::flush_cache');
-		add_action('page_settings',__CLASS__ . '::admin');
 		add_filter('theme_options_default',__CLASS__ . '::options_default');
-		add_filter('theme_options_save',__CLASS__ . '::save');
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save',__CLASS__ . '::save');
+		}
+		if(theme_options::is_options_page()){
+			add_action('page_settings',__CLASS__ . '::admin');
+		}
 
 	}
 	public static function admin(){
@@ -128,4 +124,7 @@ class theme_related_post{
 		return $posts;
 	}
 }
-?>
+//add_filter('theme_addons',function($fns){
+//	$fns[] = 'theme_related_post::init';
+//	return $fns;
+//});

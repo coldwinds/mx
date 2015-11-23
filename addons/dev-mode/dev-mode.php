@@ -10,36 +10,36 @@ Author URI:		http://www.inn-studio.com
 class theme_dev_mode{
 	private static $data = [];
 	public static function init(){
-		
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
-
-		add_action('dev_settings',__CLASS__ . '::display_backend');
-		
-		add_action('dev_settings',__CLASS__ . '::display_backend_options_list',90);
-		
-		if(self::get_options('performance')){
-			add_action('after_setup_theme',__CLASS__ . '::mark_start_data',1);
-			add_action('wp_footer',__CLASS__ . '::hook_footer_performance',90);
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save',__CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('dev_settings',__CLASS__ . '::display_backend');
+				add_action('dev_settings',__CLASS__ . '::display_backend_options_list',90);
+			}
 		}
-		
-		if(self::get_options('queries')){
-			add_action('wp_footer',__CLASS__ . '::hook_footer_queries',99);
+		if(!theme_cache::is_admin()){
+			if(self::get_options('performance')){
+				add_action('after_setup_theme',__CLASS__ . '::mark_start_data',1);
+				add_action('wp_footer',__CLASS__ . '::hook_footer_performance',90);
+			}
+			if(self::get_options('queries')){
+				add_action('wp_footer',__CLASS__ . '::hook_footer_queries',99);
+			}
 		}
-		
 	}
 	public static function is_enabled(){
 		return self::get_options('enabled');
 	}
 	public static function get_options($key = null){
-		static $caches = [];
-		if(!isset($caches[__CLASS__]))
-			$caches[__CLASS__] = (array)theme_options::get_options(__CLASS__);
+		static $cache = null;
+		if($cache === null)
+			$cache = (array)theme_options::get_options(__CLASS__);
 			
-		if($key === null){
-			return $caches[__CLASS__];
-		}else{
-			return isset($caches[__CLASS__][$key]) ? $caches[__CLASS__][$key] : false;
-		}
+		if($key)
+			return isset($cache[$key]) ? $cache[$key] : false;
+		return $cache;
+		
 	}
 	public static function mark_start_data(){
 		self::$data = array(

@@ -1,21 +1,23 @@
 <?php
 /** 
- * @version 1.0.0
+ * @version 1.0.1
  */
 class theme_mailer{
 	private static $debug = false;
 	public static function init(){
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 
-		/** ajax */
-		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-
-		add_filter('theme_options_save' , __CLASS__ . '::options_save');
-		
-		add_action('base_settings' , __CLASS__ . '::display_backend',90);
-
-		add_action('backend_js_config',__CLASS__ . '::backend_js_config');
-		
+			add_filter('theme_options_save' , __CLASS__ . '::options_save');
+			
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('base_settings' , __CLASS__ . '::display_backend',90);
+				add_action('backend_js_config',__CLASS__ . '::backend_js_config');
+				
+			}
+		}
 		if(!self::is_enabled())
 			return false;
 

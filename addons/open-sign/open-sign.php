@@ -1,11 +1,7 @@
 <?php
 /**
- * @version 2.0.1
+ * @version 2.0.2
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_open_sign::init';
-	return $fns;
-});
 class theme_open_sign{
 	public static $open_types = array('sina','qq');
 
@@ -22,17 +18,15 @@ class theme_open_sign{
 	private static $open_url = 'http://opensign.inn-studio.com/api/';
 	
 	public static function init(){
-	
-		add_action('wp_ajax_nopriv_isos_cb', __CLASS__ . '::process_cb');
-		
-		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
-
-		add_action('page_settings', __CLASS__ . '::display_backend');
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-	}
-	public static function options_default(array $opts = []){
-		
-		return $opts;
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_nopriv_isos_cb', __CLASS__ . '::process_cb');
+			add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings', __CLASS__ . '::display_backend');
+			}
+		}
 	}
 	public static function options_save($opts){
 		if(isset($_POST[__CLASS__])){
@@ -347,3 +341,7 @@ class theme_open_sign{
 		die(theme_features::json_format($output));
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_open_sign::init';
+	return $fns;
+});

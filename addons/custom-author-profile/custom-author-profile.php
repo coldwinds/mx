@@ -12,10 +12,10 @@ class theme_custom_author_profile{
 		'following' 		=> 'following',
 	);
 	public static function init(){
-		add_filter('query_vars',			__CLASS__ . '::filter_query_vars');
-		
-		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
-		
+		if(!theme_cache::is_ajax()){
+			add_filter('query_vars',			__CLASS__ . '::filter_query_vars');
+			add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
+		}
 	}
 	public static function wp_title($title, $sep){
 		if(!is_author())

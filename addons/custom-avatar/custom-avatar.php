@@ -2,12 +2,8 @@
 /**
  * theme-custom-avatar
  *
- * @version 1.0.1
+ * @version 1.0.2
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_avatar::init';
-	return $fns;
-});
 class theme_custom_avatar{
 	public static $user_meta_key = array(
 		'avatar' => 'avatar',
@@ -69,4 +65,7 @@ class theme_custom_avatar{
 		return $caches[$user_id];
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_avatar::init';
+	return $fns;
+});

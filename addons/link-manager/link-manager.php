@@ -4,9 +4,13 @@
  */
 class theme_link_manager{
 	public static function init(){
-		add_action('base_settings',__CLASS__ . '::backend_display');
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
-		
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save',__CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('base_settings',__CLASS__ . '::backend_display');
+			}
+		}
 		if(self::is_enabled()){
 			add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 		}
@@ -41,7 +45,6 @@ class theme_link_manager{
 
 		if($key)
 			return isset($caches[$key]) ? $caches[$key] : false;
-
 		return $caches;
 	}
 	public static function is_enabled(){

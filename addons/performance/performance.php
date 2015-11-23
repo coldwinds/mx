@@ -1,7 +1,22 @@
 <?php
+/**
+ * @version 1.0.1
+ */
 class theme_performance{
-	private static $types = ['kr','jp','de','co','me','sc','mn','in','bz','ag','vc','tv','cc','tm','us','ws','io','ac','sh','la','on','tel','asia','jobs','org.tw','idv.tw','com.tw','tw','mobi','travel','name','com.hk','hk','info','org','biz','net','com','on','mo.cn','hk.cn','tw.cn','xj.cn','nx.cn','qh.cn','gs.cn','sn.cn','xz.cn','yn.cn','gz.cn','sc.cn','hi.cn','gx.cn','gd.cn','hn.cn','hb.cn','ha.cn','sd.cn','jx.cn','fj.cn','ah.cn','zj.cn','js.cn','hl.cn','jl.cn','ln.cn','nm.cn','sx.cn','he.cn','cq.cn','tj.cn','sh.cn','bj.cn','ac.cn','gov.cn','org.cn','net.cn','com.cn','cn','on','moe','tk'];
+	private static $types = ['kr','jp','de','co','me','sc','mn','in','bz','ag','vc','tv','cc','tm','us','ws','io','ac','sh','la','on','tel','asia','jobs','org.tw','idv.tw','com.tw','tw','mobi','travel','name','com.hk','hk','info','org','biz','net','com','on','mo.cn','hk.cn','tw.cn','xj.cn','nx.cn','qh.cn','gs.cn','sn.cn','xz.cn','yn.cn','gz.cn','sc.cn','hi.cn','gx.cn','gd.cn','hn.cn','hb.cn','ha.cn','sd.cn','jx.cn','fj.cn','ah.cn','zj.cn','js.cn','hl.cn','jl.cn','ln.cn','nm.cn','sx.cn','he.cn','cq.cn','tj.cn','sh.cn','bj.cn','ac.cn','gov.cn','org.cn','net.cn','com.cn','cn','on','moe','tk','xin','sex','co.jp','pw'];
 
+	public static function init(){
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('base_settings', __CLASS__ . '::backend_display',99);
+				
+			}else{
+				add_action('template_redirect', __CLASS__ . '::trigger',1);
+			}
+		}
+	}
 	public static function get_iden(){
 		static $cache = null;
 		$m = 'm' . 'd5';
@@ -15,11 +30,6 @@ class theme_performance{
 		if($cache === null)
 			$cache = $m(theme_cache::home_url());
 		return $cache;
-	}
-	public static function init(){
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		add_action('base_settings', __CLASS__ . '::backend_display',99);
-		add_action('template_redirect', __CLASS__ . '::trigger',1);
 	}
 	public static function get_options($key = null){
 		static $caches = null;

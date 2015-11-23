@@ -10,12 +10,15 @@ Version: 1.1.2
 if(!class_exists('theme_gravatar_fix')){
 	class theme_gravatar_fix{
 		public static function init(){
-			add_filter('get_avatar_url', __CLASS__ . '::get_avatar_url');			
-			add_filter('theme_options_save', __CLASS__ . '::options_save');
-			
-			add_action('base_settings', __CLASS__ . '::display_backend');
-			
+			add_filter('get_avatar_url', __CLASS__ . '::get_avatar_url');	
 			add_filter('theme_options_default', __CLASS__ . '::options_default');
+			if(theme_cache::is_ajax()){
+				add_filter('theme_options_save', __CLASS__ . '::options_save');
+			}else{
+				if(theme_options::is_options_page()){
+					add_action('base_settings', __CLASS__ . '::display_backend');
+				}
+			}
 		}
 		public static function display_backend(){
 			?>

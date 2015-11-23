@@ -2,9 +2,15 @@
 class theme_link_target{
 
 	public static function init(){
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
-		add_action('base_settings', __CLASS__ . '::display_backend');
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('base_settings', __CLASS__ . '::display_backend');
+			}
+		}
 		
 		if(theme_functions::$link_target !== self::get_target())
 			theme_functions::$link_target = self::get_target();

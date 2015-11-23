@@ -4,10 +4,7 @@
  *
  * @version 1.1.0
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_page_tags::init';
-	return $fns;
-});
+
 class theme_page_tags{
 	
 	public static $page_slug = 'tags-index';
@@ -16,16 +13,16 @@ class theme_page_tags{
 	private static $tags = [];
 	
 	public static function init(){
-		add_action('init',					__CLASS__ . '::page_create');
-
-		add_action('page_settings', 		__CLASS__ . '::display_backend');
-		
-		add_filter('theme_options_save', 	__CLASS__ . '::options_save');
-
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
-
-		add_filter('backend_js_config', __CLASS__ . '::backend_js_config'); 
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings', __CLASS__ . '::display_backend');
+			}
+			add_action('init', __CLASS__ . '::page_create');
+		}
 	}
 	public static function get_options($key = null){
 		static $caches = null;
@@ -311,3 +308,7 @@ class theme_page_tags{
 	}
 	
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_page_tags::init';
+	return $fns;
+});

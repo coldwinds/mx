@@ -13,36 +13,27 @@ class theme_custom_sign{
 	public static $min_display_name_length = 2;
 	public static $min_pwd_length = 5;
 	public static function init(){
-		/** filter */
-		add_filter('login_headerurl',		__CLASS__ . '::filter_login_headerurl',1);
-		add_filter('query_vars',			__CLASS__ . '::filter_query_vars');
-		add_filter('frontend_js_config',	__CLASS__ . '::frontend_js_config');
-		
-		/** action */
-		add_action('admin_init',			__CLASS__ . '::action_not_allow_login_backend',1);
-		add_action('init', 					__CLASS__ . '::page_create');
-		add_action('template_redirect',		__CLASS__ . '::template_redirect');
-		
-		/** ajax */
-		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
-		
-		add_filter('show_admin_bar', 		__CLASS__ . '::filter_show_admin_bar');
-		add_filter('login_url', 			__CLASS__ . '::filter_wp_login_url',10,2);
-		add_filter('register_url', 			__CLASS__ . '::filter_wp_registration_url');
-		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
-
-		add_filter('dynamic_request_process',			__CLASS__ . '::dynamic_request_process');
-
-		/**
-		 * api
-		 */
-		add_action('theme_api',	__CLASS__ . '::process_theme_api');
-		
-		/**
-		 * backend
-		 */
-		add_action('page_settings' , __CLASS__ . '::display_backend');
-		add_filter('theme_options_save' , __CLASS__ . '::options_save');
+		if(theme_cache::is_ajax()){
+			add_filter('dynamic_request_process', __CLASS__ . '::dynamic_request_process');
+			add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
+			add_action('theme_api',	__CLASS__ . '::process_theme_api');
+			add_filter('theme_options_save' , __CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings' , __CLASS__ . '::display_backend');
+			}else{
+				add_filter('query_vars', __CLASS__ . '::filter_query_vars');
+				add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+				add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
+				add_action('admin_init', __CLASS__ . '::action_not_allow_login_backend',1);
+				add_action('template_redirect', __CLASS__ . '::template_redirect');
+				add_action('init', __CLASS__ . '::page_create');
+			}
+			add_filter('login_headerurl', __CLASS__ . '::filter_login_headerurl',1);
+			add_filter('show_admin_bar', 		__CLASS__ . '::filter_show_admin_bar');
+			add_filter('login_url', __CLASS__ . '::filter_wp_login_url',10,2);
+		}
+		add_filter('register_url', __CLASS__ . '::filter_wp_registration_url');
 	}
 	public static function process_theme_api($type){
 		

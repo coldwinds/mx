@@ -2,49 +2,47 @@
 /**
  * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_point_bomb::init';
-	return $fns;
-});
+
 class theme_custom_point_bomb{
 
 	public static $page_slug = 'account';
 	
 	public static function init(){
-		
-		foreach(self::get_tabs() as $k => $v){
-			$nav_fn = 'filter_nav_' . $k; 
-			add_filter('account_navs', __CLASS__ . "::$nav_fn",$v['filter_priority']);
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
+		}else{
+			if(theme_options::is_options_page()){
+				
+			}else{
+				foreach(self::get_tabs() as $k => $v){
+					$nav_fn = 'filter_nav_' . $k; 
+					add_filter('account_navs', __CLASS__ . "::$nav_fn",$v['filter_priority']);
+				}
+				add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
+				add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+				/**
+				 * list history
+				 */
+				foreach([
+					'list_history_for_attacker',
+					'list_history_for_target'
+				] as $v)
+					add_action('list_point_histroy',__CLASS__ . '::' . $v);
+
+				/**
+				 * noti event
+				 */
+				foreach([
+					'list_noti_be_bomb'
+				] as $v)
+					add_action('list_noti',__CLASS__ . '::' . $v);
+			}
 		}
-
-		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
-
-		
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
-		
-		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
 
 		add_filter('custom_point_value_default', __CLASS__ . '::filter_custom_point_value_default');
 
 		add_filter('custom_point_types',__CLASS__ . '::filter_custom_point_types');
-
-		/**
-		 * list history
-		 */
-		foreach([
-			'list_history_for_attacker',
-			'list_history_for_target'
-		] as $v)
-			add_action('list_point_histroy',__CLASS__ . '::' . $v);
-
-		/**
-		 * noti event
-		 */
-		foreach([
-			'list_noti_be_bomb'
-		] as $v)
-			add_action('list_noti',__CLASS__ . '::' . $v);
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 
@@ -759,3 +757,7 @@ class theme_custom_point_bomb{
 		return $config;
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_point_bomb::init';
+	return $fns;
+});

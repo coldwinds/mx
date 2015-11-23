@@ -2,10 +2,10 @@
 /** 
  * @version 1.0.0
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_follow::init';
-	return $fns;
-});
+//add_filter('theme_addons',function($fns){
+//	$fns[] = 'theme_custom_follow::init';
+//	return $fns;
+//});
 class theme_custom_follow{
 	public static $iden = 'theme_custom_follow';
 	public static $user_meta_key = array(

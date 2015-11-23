@@ -2,12 +2,7 @@
 /** 
  * @version 1.0.0
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_notification::init';
-	return $fns;
-});
 class theme_notification{
-	public static $iden = 'theme_notification';
 	public static $page_slug = 'account';
 	public static $user_meta_key = array(
 		'key' => 'theme_noti',
@@ -16,33 +11,26 @@ class theme_notification{
 	);
 	
 	public static function init(){
-		/** filter */
+		add_filter('query_vars', __CLASS__ . '::filter_query_vars');
 		
-		add_filter('query_vars',			__CLASS__ . '::filter_query_vars');
-		
-		add_action('wp_enqueue_scripts', 	__CLASS__ . '::frontend_css');
-
-		
-		/** action */
-		
-		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
+		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
 		
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
-			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
+			add_filter('account_navs', __CLASS__ . "::$nav_fn",$v['filter_priority']);
 		}
 
 		/**
 		 * add hook to comment publish and reply
 		 */
-		add_action('comment_post',__CLASS__ . '::action_add_noti_wp_new_comment_comment_publish',10,2);
+		add_action('comment_post', __CLASS__ . '::action_add_noti_wp_new_comment_comment_publish',10,2);
 		
-		add_action('transition_comment_status',__CLASS__ . '::action_add_noti_transition_comment_status_comment_publish',10,3);
+		add_action('transition_comment_status', __CLASS__ . '::action_add_noti_transition_comment_status_comment_publish',10,3);
 
 		/**
 		 * add noti for special event
 		 */
-		add_action('added_user_meta',	__CLASS__ . '::action_add_noti_special_event',10,4);
+		add_action('added_user_meta', __CLASS__ . '::action_add_noti_special_event',10,4);
 
 		/**
 		 * list notis
@@ -59,7 +47,8 @@ class theme_notification{
 		/**
 		 * clean unread notis
 		 */
-		add_action('wp_footer'		,__CLASS__ . '::clean_unread_notis');
+		add_action('wp_footer' , __CLASS__ . '::clean_unread_notis');
+		
 	}
 	public static function wp_title($title, $sep){
 		/**
@@ -153,18 +142,17 @@ class theme_notification{
 	}
 
 	public static function get_count(array $args = []){
-		$defaults = array(
+		$args = array_merge(array(
 			'user_id' => theme_cache::get_current_user_id(),
 			'type' => 'all',
-		);
-		$args = array_merge($defaults,$args);
+		),$args);
 		if(empty($args['user_id'])) return false;
 		
 		/**
 		 * cache
 		 */
 		static $caches = [];
-		$cache_id = md5(serialize($args));
+		$cache_id = md5(json_encode($args));
 		if(isset($caches[$cache_id]))
 			return $caches[$cache_id];
 			
@@ -179,21 +167,20 @@ class theme_notification{
 		return $caches[$cache_id];
 	}
 	public static function get_notifications(array $args = []){
-		$defaults = array(
+		$args = array_merge(array(
 			'user_id' => theme_cache::get_current_user_id(),
 			'type' => 'all',/** all / unread / read */
 			'posts_per_page' => 20,
 			'paged' => 1,
 			'orderby' => 'desc',
-		);
-		$args = array_merge($defaults,$args);
+		),$args);
 		if(empty($args['user_id'])) return false;
 		
 		/**
 		 * cache
 		 */
 		static $caches = [];
-		$cache_id = md5(serialize($args));
+		$cache_id = md5(json_encode($args));
 		if(isset($caches[$cache_id]))
 			return $caches[$cache_id];
 
@@ -606,15 +593,8 @@ class theme_notification{
 		</span>
 		<?php
 	}
-	public static function frontend_css(){
-		if(!self::is_page()) 
-			return false;
-			
-		wp_enqueue_style(
-			self::$iden,
-			theme_features::get_theme_addons_css(__DIR__),
-			'frontend',
-			theme_file_timestamp::get_timestamp()
-		);
-	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_notification::init';
+	return $fns;
+});

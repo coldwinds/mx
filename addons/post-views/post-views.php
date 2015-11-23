@@ -18,27 +18,30 @@ class theme_post_views{
 	public static $cookie = null;
 
 	public static function init(){
-
-		add_action('base_settings', __CLASS__ . '::display_backend');
-
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
-
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}
+		if(theme_options::is_options_page()){
+			add_action('base_settings', __CLASS__ . '::display_backend');
+		}
 
 		if(!self::is_enabled())
 			return;
 
-		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+		if(theme_cache::is_admin()){
+			/** admin post/page css */
+			add_action('admin_head', __CLASS__ . '::admin_css');
+			add_action('manage_posts_custom_column', __CLASS__ . '::admin_show',10,2);
+			add_filter('manage_posts_columns', __CLASS__ . '::admin_add_column');
+		}else{
+			add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+			add_filter('dynamic_request', __CLASS__ . '::dynamic_request');
+		}
 
-		
-		add_filter('dynamic_request_process', __CLASS__ . '::process_dynamic_request_process');
-		add_filter('dynamic_request', __CLASS__ . '::dynamic_request');
-
-
-		/** admin post/page css */
-		add_action('admin_head', __CLASS__ . '::admin_css');
-		add_action('manage_posts_custom_column', __CLASS__ . '::admin_show',10,2);
-		add_filter('manage_posts_columns', __CLASS__ . '::admin_add_column');
+		if(theme_cache::is_ajax()){
+			add_filter('dynamic_request_process', __CLASS__ . '::process_dynamic_request_process');
+		}
 	}
 	public static function options_default(array $opts = []){
 		$opts[__CLASS__] = array(

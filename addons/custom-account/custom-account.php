@@ -1,22 +1,16 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_account::init';
-	return $fns;
-});
 class theme_custom_account{
-	
-	public static $iden = 'theme_custom_account';
 	public static $page_slug = 'account';
 
 	public static function init(){
-		add_action('init', 					__CLASS__ . '::page_create');
-		
-		add_filter('query_vars',			__CLASS__ . '::filter_query_vars');
-		
-		add_action('template_redirect',		__CLASS__ . '::template_redirect');
+		if(!theme_cache::is_ajax()){
+			add_action('init', __CLASS__ . '::page_create');
+			add_filter('query_vars', __CLASS__ . '::filter_query_vars');
+			add_action('template_redirect', __CLASS__ . '::template_redirect');
+		}
 
 	}
 	public static function filter_query_vars($vars){
@@ -26,7 +20,6 @@ class theme_custom_account{
 		return $vars;
 	}
 	public static function template_redirect(){
-
 		if(!self::is_page())
 			return false;
 
@@ -82,3 +75,7 @@ class theme_custom_account{
 		}
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_account::init';
+	return $fns;
+});

@@ -1,8 +1,13 @@
 <?php
 class theme_custom_report{
 	public static function init(){
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		add_action('page_settings', __CLASS__ . '::display_backend');
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings', __CLASS__ . '::display_backend');
+			}
+		}
 	}
 	public static function options_save(array $opts = []){
 		if(isset($_POST[__CLASS__])){

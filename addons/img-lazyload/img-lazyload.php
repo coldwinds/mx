@@ -2,12 +2,8 @@
 /**
  * @version 1.0.0
  */
-//add_filter('theme_addons',function($fns){
-//	$fns[] = 'theme_img_lazyload::init';
-//	return $fns;
-//});
+
 class theme_img_lazyload{
-	public static $iden = 'theme_img_lazyload';
 	public static function init(){
 		add_filter('the_content', __CLASS__ . '::the_content');
 	}
@@ -27,3 +23,7 @@ class theme_img_lazyload{
 		);
 	}
 }
+//add_filter('theme_addons',function($fns){
+//	$fns[] = 'theme_img_lazyload::init';
+//	return $fns;
+//});

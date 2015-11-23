@@ -1,13 +1,8 @@
 <?php
 /** 
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_edit::init';
-	return $fns;
-});
 class theme_custom_edit{
-	public static $iden = 'theme_custom_edit';
 	public static $page_slug = 'account';
 	public static $pages = [];
 
@@ -17,8 +12,9 @@ class theme_custom_edit{
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
 		}
-		
-		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
+		if(!theme_cache::is_ajax()){
+			add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
+		}
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 
@@ -86,3 +82,7 @@ class theme_custom_edit{
 		return $cache;
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_edit::init';
+	return $fns;
+});

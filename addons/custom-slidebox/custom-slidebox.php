@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme_custom_slidebox
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.1
+Version:		2.0.2
 Description:	theme_custom_slidebox
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -11,14 +11,17 @@ class theme_custom_slidebox{
 	public static $file_exts = ['png','jpg','jpeg','gif'];
 	public static $image_size = [800,500,true];
 	public static function init(){
-		add_action('backend_js_config', __CLASS__ . '::backend_js_config'); 
-		add_action('page_settings', __CLASS__ . '::display_backend');
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		/**
-		 * frontend
-		 */
-		add_filter('frontend_js_config',__CLASS__ . '::frontend_js_config');
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			if(theme_options::is_options_page()){
+				add_action('backend_js_config', __CLASS__ . '::backend_js_config');
+				add_action('page_settings', __CLASS__ . '::display_backend');
+				
+			}else{
+				add_filter('frontend_js_config',__CLASS__ . '::frontend_js_config');
+			}
+		}
 	}
 	public static function options_save(array $opts = []){
 		if(isset($_POST[__CLASS__])){

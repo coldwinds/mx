@@ -13,35 +13,35 @@ class theme_custom_pm{
 	public static $table;
 	public static $db_version = '1.0.0';
 	public static function init(){
-		global $wpdb;
+		if(theme_cache::is_ajax()){
+			add_filter('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_filter('dynamic_request_process', __CLASS__ . '::dynamic_request_process');
+			add_action('theme_options_save', __CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				global $wpdb;
 
-		self::$table = $wpdb->prefix . 'pm';
-		
-		if(!self::get_db_version()){
-			self::create_db_table();
-			theme_options::set_options(__CLASS__,[
-				'db-version' => self::$db_version,
-			]);
+				self::$table = $wpdb->prefix . 'pm';
+				
+				if(!self::get_db_version()){
+					self::create_db_table();
+					theme_options::set_options(__CLASS__,[
+						'db-version' => self::$db_version,
+					]);
+				}
+				add_action('base_settings', __CLASS__ . '::display_backend');
+				
+			}else{
+				add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
+				add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+				add_filter('dynamic_request', __CLASS__ . '::dynamic_request');
+				foreach(self::get_tabs() as $k => $v){
+					$nav_fn = 'filter_nav_' . $k; 
+					add_filter('account_navs', __CLASS__ . "::$nav_fn",$v['filter_priority']);
+				}
+				add_action('wp_footer' ,__CLASS__ . '::wp_footer');
+			}
 		}
-		
-		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
-		
-		add_filter('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		
-		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
-
-		add_filter('dynamic_request', __CLASS__ . '::dynamic_request');
-		add_filter('dynamic_request_process', __CLASS__ . '::dynamic_request_process');
-		
-		foreach(self::get_tabs() as $k => $v){
-			$nav_fn = 'filter_nav_' . $k; 
-			add_filter('account_navs', __CLASS__ . "::$nav_fn",$v['filter_priority']);
-		}
-
-		add_action('base_settings', __CLASS__ . '::display_backend');
-		add_action('theme_options_save', __CLASS__ . '::options_save');
-		
-		add_action('wp_footer' ,__CLASS__ . '::wp_footer');
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 

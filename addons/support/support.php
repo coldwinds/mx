@@ -1,8 +1,10 @@
 <?php
 class theme_support{
 	public static function init(){
-		add_action('wp_ajax_nopirv_' . __CLASS__, __CLASS__ . '::process');
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_nopirv_' . __CLASS__, __CLASS__ . '::process');
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		}
 	}
 	public static function process(){
 		error_reporting(0);
@@ -13,4 +15,7 @@ class theme_support{
 		die;
 	}
 }
-theme_support::init();
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_support::init';
+	return $fns;
+});

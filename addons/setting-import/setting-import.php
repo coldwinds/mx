@@ -10,9 +10,12 @@ Author URI:		http://www.inn-studio.com
 
 class theme_import_settings{
 	public static function init(){
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_action('backend_js_config', __CLASS__ . '::backend_js_config'); 
-		add_action('advanced_settings', __CLASS__ . '::display_backend',99);		
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		}
+		if(theme_options::is_options_page()){
+			add_action('backend_js_config', __CLASS__ . '::backend_js_config'); 
+		}
 	}
 	public static function display_backend(){
 		

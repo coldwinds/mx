@@ -1,23 +1,23 @@
 <?php
 /**
- * theme recommended post
- *
- * @version 2.1.0
+ * @version 2.2.0
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_recommended_post::init';
-	return $fns;
-});
-class theme_recommended_post{
+class theme_recomm_post{
 	
 	public static function init(){
-		add_action('add_meta_boxes',__CLASS__ . '::add_meta_boxes');
-		add_action('page_settings',__CLASS__ . '::display_backend');
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
-		add_filter('theme_options_default',__CLASS__ . '::options_default');
-		
 		add_action('save_post',__CLASS__ . '::save_post');
 		add_action('delete_post',__CLASS__ . '::delete_post');
+		add_filter('theme_options_default',__CLASS__ . '::options_default');
+		
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save',__CLASS__ . '::options_save');
+		}
+		if(theme_cache::is_admin()){
+			add_action('add_meta_boxes',__CLASS__ . '::add_meta_boxes');
+		}
+		if(theme_options::is_options_page()){
+			add_action('page_settings',__CLASS__ . '::display_backend');
+		}
 	}
 	public static function add_meta_boxes(){
 		$screens = ['post','page'];
@@ -204,6 +204,7 @@ class theme_recommended_post{
 								echo status_tip('info',___('No any post yet'));
 							}
 							?>
+							<input type="hidden" name="<?= __CLASS__;?>[hash]" value="<?= md5(json_encode(self::get_options()));?>">
 						</td>
 					</tr>
 				</tbody>
@@ -212,10 +213,20 @@ class theme_recommended_post{
 		<?php
 	}
 	public static function options_save(array $opts = []){
-		if(isset($_POST[__CLASS__])){
-			$opts[__CLASS__] = $_POST[__CLASS__];
+		if(!isset($_POST[__CLASS__]))
+			return $opts;
+		
+		$old_hash = $_POST[__CLASS__]['hash'];
+		unset($_POST[__CLASS__]['hash']);
+		if($old_hash != md5(json_encode($_POST[__CLASS__]))){
 			self::clear_cache();
 		}
+		
+		$opts[__CLASS__] = $_POST[__CLASS__];
 		return $opts;
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_recomm_post::init';
+	return $fns;
+});

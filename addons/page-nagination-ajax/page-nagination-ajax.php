@@ -4,10 +4,13 @@
  */
 class theme_page_nagination_ajax{
 	public static function init(){
-		add_filter('frontend_js_config',	__CLASS__ . '::frontend_js_config');
-		
-		add_action('wp_ajax_' . __CLASS__,	__CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . __CLASS__,	__CLASS__ . '::process');
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__,	__CLASS__ . '::process');
+			add_action('wp_ajax_nopriv_' . __CLASS__,	__CLASS__ . '::process');
+		}
+		if(!theme_cache::is_admin()){
+			add_filter('frontend_js_config',	__CLASS__ . '::frontend_js_config');
+		}
 		
 	}
 	private static function is_enabled(){

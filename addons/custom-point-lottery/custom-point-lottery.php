@@ -9,30 +9,28 @@ class theme_point_lottery{
 	];
 	
 	public static function init(){
-		foreach(self::get_tabs() as $k => $v){
-			$nav_fn = 'filter_nav_' . $k; 
-			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
-		}
-
-		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
-
-		
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
-		
-		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
-		add_filter('backend_js_config', __CLASS__ . '::backend_js_config');
-
-		add_action('page_settings' , __CLASS__ . '::display_backend');
-		
-		/**
-		 * list history
-		 */
-
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
 		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		add_action('list_point_histroy', __CLASS__ . '::list_history');
-
+		}else{
+			if(theme_options::is_options_page()){
+				add_filter('backend_js_config', __CLASS__ . '::backend_js_config');
+				add_action('page_settings' , __CLASS__ . '::display_backend');
+			}else{
+				add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
+				foreach(self::get_tabs() as $k => $v){
+					$nav_fn = 'filter_nav_' . $k; 
+					add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
+				}
+				add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+				/**
+				 * list history
+				 */
+				add_action('list_point_histroy', __CLASS__ . '::list_history');
+			}
+		}
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 

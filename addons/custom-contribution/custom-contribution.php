@@ -1,6 +1,6 @@
 <?php
 /** 
- * @version 1.0.4
+ * @version 1.0.5
  */
 class theme_custom_contribution{
 	public static $page_slug = 'account';
@@ -8,24 +8,23 @@ class theme_custom_contribution{
 	public static $thumbnail_size = 'large';
 
 	public static function init(){
-	
-		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
-
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
 		
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		}else{
+			add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+			add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
+			if(theme_options::is_options_page()){
+				add_action('page_settings', __CLASS__ . '::display_backend');
+			}
+		}
+		
 		foreach(self::get_tabs() as $k => $v){
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs', __CLASS__ . "::$nav_fn",$v['filter_priority']);
 		}
-
-		add_filter('wp_title', __CLASS__ . '::wp_title',10,2);
-
-		add_action('page_settings', __CLASS__ . '::display_backend');
-
-
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 

@@ -4,7 +4,6 @@
  * 
  * @version 1.0.1
  */
-add_action('widgets_init','widget_point_rank::register_widget');
 class widget_point_rank extends WP_Widget{
 	function __construct(){
 		$this->alt_option_name = __CLASS__;
@@ -139,3 +138,4 @@ class widget_point_rank extends WP_Widget{
 		register_widget(__CLASS__);
 	}
 }
+add_action('widgets_init', 'widget_point_rank::register_widget');

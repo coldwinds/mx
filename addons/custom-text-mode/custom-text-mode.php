@@ -1,16 +1,18 @@
 <?php
 class theme_custom_text_mode{
 	public static function init(){
-		add_filter('template_include', __CLASS__ . '::template_include', 99);
 		
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-
-		add_action('page_settings', __CLASS__ . '::display_backend');
-
-		add_filter('body_class', __CLASS__ . '::body_classes');
-	}
-	public static function in_cat(){
-		
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings', __CLASS__ . '::display_backend');
+				
+			}
+			add_filter('template_include', __CLASS__ . '::template_include', 99);
+			add_filter('body_class', __CLASS__ . '::body_classes');
+		}
 	}
 	public static function options_save(array $opts = []){
 		if(isset($_POST[__CLASS__])){

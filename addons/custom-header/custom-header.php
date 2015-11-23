@@ -2,12 +2,8 @@
 /**
  * theme custom header
  *
- * @version 1.0.1
+ * @version 1.0.2
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_custom_header::init';
-	return $fns;
-});
 class theme_custom_header{
 	public static function init() {
 		$default_headers = [];
@@ -71,3 +67,7 @@ class theme_custom_header{
 
 	<?php }
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_custom_header::init';
+	return $fns;
+});

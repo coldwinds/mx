@@ -1,26 +1,26 @@
 <?php
 /** 
- * @version 1.0.1
+ * @version 1.0.2
  */
-
 class theme_custom_collection{
 	public static $page_slug = 'account';
 	public static $file_exts = array('png','jpg','gif','jpeg');
 	public static $thumbnail_size = 'large';
 
-
 	public static function init(){
-		add_filter('frontend_js_config',	__CLASS__ . '::frontend_js_config');
-
-		add_filter('theme_options_save', 	__CLASS__ . '::options_save');
-		add_filter('theme_options_default', 	__CLASS__ . '::options_default');
+		add_filter('theme_options_default', __CLASS__ . '::options_default');
 		
-		
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-
-		add_action('page_settings',			__CLASS__ . '::display_backend');
-
-		self::add_editor_style();
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings', __CLASS__ . '::display_backend');
+			}else{
+				add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+				self::add_editor_style();
+			}
+		}
 		
 		if(!self::is_enabled())
 			return;
@@ -29,9 +29,9 @@ class theme_custom_collection{
 			$nav_fn = 'filter_nav_' . $k; 
 			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
 		}
-
-		add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
-
+		if(!theme_cache::is_ajax()){
+			add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
+		}
 	}
 
 	public static function add_editor_style(){
@@ -251,7 +251,7 @@ class theme_custom_collection{
 	}
 	private static function wp_get_attachment_image_src(){
 		static $caches = [];
-		$cache_id = md5(serialize(func_get_args()));
+		$cache_id = md5(json_encode(func_get_args()));
 		if(!isset($caches[$cache_id]))
 			$caches[$cache_id] = call_user_func_array('wp_get_attachment_image_src',func_get_args());
 		return $caches[$cache_id];

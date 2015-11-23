@@ -2,16 +2,20 @@
 /*
 Feature Name:	Post Share
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.3
+Version:		2.0.4
 Description:	
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
 class theme_post_share{
 	public static function init(){
-		add_filter('theme_options_default', __CLASS__ . '::options_default');
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		add_action('page_settings', __CLASS__ . '::backend_display');
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_default', __CLASS__ . '::options_default');
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}
+		if(theme_options::is_options_page()){
+			add_action('page_settings', __CLASS__ . '::backend_display');
+		}
 	}
 	public static function get_options($key = null){
 		static $caches = [];

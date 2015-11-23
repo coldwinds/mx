@@ -15,34 +15,31 @@ class custom_post_point{
 	public static $error = [];
 	
 	public static function init(){
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
-		
-		add_action('wp_ajax_backend_' . __CLASS__, __CLASS__ . '::process_backend');
-
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
+			add_action('wp_ajax_backend_' . __CLASS__, __CLASS__ . '::process_backend');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('theme_custom_point_backend' , __CLASS__ . '::theme_custom_point_backend');
+			}else{
+				add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+				/**
+				 * list history hooks
+				 */
+				foreach([
+					'list_history_post_rate',
+					'list_history_post_be_rate'
+				] as $v)
+					add_action('list_point_histroy', __CLASS__ . '::' . $v);
+			}
+		}
 
 		add_action('before_delete_post', __CLASS__ . '::sync_delete_post');
-
-		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
 
 		add_filter('custom_point_value_default', __CLASS__ . '::filter_custom_point_value_default');
 
 		add_filter('custom_point_types', __CLASS__ . '::filter_custom_point_types');
-
-		/**
-		 * backend options
-		 */
-		add_action('theme_custom_point_backend' , __CLASS__ . '::theme_custom_point_backend');
-		/**
-		 * list history hooks
-		 */
-		foreach([
-			'list_history_post_rate',
-			'list_history_post_be_rate'
-		] as $v)
-			add_action('list_point_histroy', __CLASS__ . '::' . $v);
-
-		//add_action('pre_get_posts' , __CLASS__ . '::pre_get_posts_in_rates');
 	}
 	public static function sync_delete_post($post_id){
 		$post = theme_cache::get_post($post_id);
@@ -157,7 +154,7 @@ class custom_post_point{
 			'expire' => 3600*24,
 		];
 		$args = array_merge($defaults,$args);
-		$cache_id = md5(serialize(func_get_args()));
+		$cache_id = md5(json_encode(func_get_args()));
 		$caches = wp_cache_get('most_point_posts',__CLASS__);
 		if(isset($caches[$cache_id]))
 			return $caches[$cache_id];

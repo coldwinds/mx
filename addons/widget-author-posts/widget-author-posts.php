@@ -148,7 +148,7 @@ class widget_author_posts extends WP_Widget{
 				/** 
 				 * orderby recommended
 				 */
-				if(class_exists('theme_recommended_post')){
+				if(class_exists('theme_recomm_post')){
 					the_option_list('recommended',___('Recommended'),$instance['orderby']);
 				}
 				/** 

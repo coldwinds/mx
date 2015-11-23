@@ -3,24 +3,22 @@
 /**
  * slidebox
  */
-//if(!wp_is_mobile() && class_exists('theme_custom_slidebox')){
-	theme_custom_slidebox::display_frontend();
-//} 
+theme_custom_slidebox::display_frontend();
 ?>
 <div class="g">
 
-	<?php if(!wp_is_mobile()){ ?>
+	<?php 
+	/**
+	 * recommended box
+	 */
+	if(!wp_is_mobile() && $recomm = theme_functions::frontend_recomm_posts()){ ?>
 		<div class="recomm-container hidden-sm">
-			<?php
-			/**
-			 * recommended box
-			 */
-			if(method_exists('theme_functions','the_recommended')){
-				theme_functions::the_recommended();
-			}
-			?>
+			<?= $recomm;?>
 		</div>
-	<?php } ?>
+		<?php 
+		unset($recomm);
+	} 
+	?>
 
 	<div class="row">
 		<div id="main" class="g-desktop-3-4">

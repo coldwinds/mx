@@ -2,42 +2,42 @@
 /*
 Feature Name:	Maintenance Mode
 Feature URI:	http://www.inn-studio.com
-Version:		1.1.5
+Version:		1.1.6
 Description:	Site in the background to maintain or measured using the change function, visitors will jump to a specified page, the administrator will not.
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'maintenance_mode::init';
-	return $fns;
-});
 class maintenance_mode{
-	public static $iden = 'maintenance_mode';
-	
 	public static function init(){
-		add_action('dev_settings', __CLASS__ . '::display_backend',90);
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+			add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
+			
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('dev_settings', __CLASS__ . '::display_backend',90);
+			}
+		}
 		add_action('after_setup_theme', __CLASS__ . '::redirect');
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-		add_action('wp_ajax_nopriv_' . self::$iden, __CLASS__ . '::process');
 	
 	}
 	public static function get_options($key = null){
 		static $caches = [];
-		if(!isset($caches[self::$iden]))
-			$caches[self::$iden] = theme_options::get_options(self::$iden);
+		if(!isset($caches[__CLASS__]))
+			$caches[__CLASS__] = theme_options::get_options(__CLASS__);
 
 		if($key){
-			return isset($caches[self::$iden][$key]) ? $caches[self::$iden][$key] : null;
+			return isset($caches[__CLASS__][$key]) ? $caches[__CLASS__][$key] : null;
 		}else{
-			return $caches[self::$iden];
+			return $caches[__CLASS__];
 		}
 	}
 	public static function has_url(){
 		static $caches = [];
-		if(!isset($caches[self::$iden]))
-			$caches[self::$iden] = trim(esc_url(self::get_options('url')));
+		if(!isset($caches[__CLASS__]))
+			$caches[__CLASS__] = trim(esc_url(self::get_options('url')));
 
-		return empty($caches[self::$iden]) ? null : $caches[self::$iden];
+		return empty($caches[__CLASS__]) ? null : $caches[__CLASS__];
 	}
 	public static function display_backend(){
 		
@@ -52,14 +52,14 @@ class maintenance_mode{
 			<table class="form-table">
 				<tbody>
 					<tr>
-						<th scope="row"><label for="<?= self::$iden;?>-url"><?= ___('Redirect URL (include http://):');?></label></th>
+						<th scope="row"><label for="<?= __CLASS__;?>-url"><?= ___('Redirect URL (include http://):');?></label></th>
 						<td>
-							<input type="url" id="<?= self::$iden;?>-url" name="<?= self::$iden;?>[url]" class="widefat" value="<?= $url;?>"/>
+							<input type="url" id="<?= __CLASS__;?>-url" name="<?= __CLASS__;?>[url]" class="widefat" value="<?= $url;?>"/>
 							
 							<p class="description">
 								<?= ___('Optional template URL: ');?>
 							
-								<input type="url" class="widfat text-select" value="<?= theme_features::get_process_url(array('action'=>self::$iden));?>" readonly />
+								<input type="url" class="widfat text-select" value="<?= theme_features::get_process_url(array('action'=>__CLASS__));?>" readonly />
 							</p>
 						</td>
 					</tr>
@@ -101,8 +101,8 @@ class maintenance_mode{
 	 * Save options
 	 */
 	public static function options_save($options){
-		if(isset($_POST[self::$iden])){
-			$options[self::$iden] = $_POST[self::$iden];
+		if(isset($_POST[__CLASS__])){
+			$options[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $options;
 	}
@@ -117,4 +117,7 @@ class maintenance_mode{
 		}
 	}
 }
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'maintenance_mode::init';
+	return $fns;
+});

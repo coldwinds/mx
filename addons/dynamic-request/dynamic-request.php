@@ -1,16 +1,21 @@
 <?php
 /** 
- * @version 2.0.0
+ * @version 2.0.1
  */
 class dynamic_request{
 	public static function init(){
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
-		add_action('wp_enqueue_scripts', __CLASS__  . '::frontend_enqueue_scripts' ,1);
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
+			
+		}else{
+			if(!theme_cache::is_admin()){
+				add_action('wp_enqueue_scripts', __CLASS__  . '::frontend_enqueue_scripts' ,1);
+			}
+		}
 	}
 	public static function process(){
 		theme_features::check_referer();
-		
 		$output = apply_filters('dynamic_request_process',[]);
 		$output['theme-nonce'] = wp_create_nonce('theme-nonce');
 		/**

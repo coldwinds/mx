@@ -2,20 +2,21 @@
 /*
 Feature Name:	theme-custom-homebox
 Feature URI:	http://www.inn-studio.com
-Version:		1.1.5
+Version:		1.1.6
 Description:	
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
 */
-
 class theme_custom_homebox{
 	
 	public static function init(){
-		
-		add_filter('theme_options_save',__CLASS__ . '::options_save');
-		
-		add_action('page_settings',__CLASS__ . '::display_backend');
-
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save',__CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings',__CLASS__ . '::display_backend');
+			}
+		}
 		add_action('publish_post',__CLASS__ . '::action_public_post');
 	}
 	public static function action_public_post(){

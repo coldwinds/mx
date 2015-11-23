@@ -13,8 +13,10 @@ Author URI:		http://www.inn-studio.com
 
 class theme_tinymce_plus{
 	public static function init(){
-		add_filter('mce_buttons', __CLASS__ . '::tmce');
-		add_action('after_wp_tiny_mce', __CLASS__ . '::html');
+		if(!theme_cache::is_ajax()){
+			add_filter('mce_buttons', __CLASS__ . '::tmce');
+			add_action('after_wp_tiny_mce', __CLASS__ . '::html');
+		}
 	}
 	public static function tmce($buttons){
 		array_unshift($buttons, 'fontsizeselect');

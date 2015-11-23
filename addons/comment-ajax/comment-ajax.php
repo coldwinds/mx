@@ -11,26 +11,32 @@ class theme_comment_ajax{
 	public static function init(){
 		
 		add_filter('theme_options_default', __CLASS__ . '::options_default');
+		/** ajax */
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}
 		
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
-
-		add_action('page_settings', __CLASS__ . '::display_backend');
-		
+		/** options */
+		if(theme_options::is_options_page()){
+			add_action('page_settings', __CLASS__ . '::display_backend');
+		}
 		add_action('wp_footer', __CLASS__ . '::thread_comments_js');
 		
 		if(!self::is_enabled()) 
 			return;
 
-		add_filter('dynamic_request', __CLASS__ . '::dynamic_request');
-		add_filter('dynamic_request_process', __CLASS__ . '::dynamic_request_process');
-		
-		add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
-		
 		add_action('pre_comment_on_post', __CLASS__ . '::block_frontend_comment',1);
 		add_action('pre_comment_on_post', __CLASS__ . '::pre_comment_on_post');
 		
-		add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
-		add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
+		/** ajax */
+		if(theme_cache::is_ajax()){
+			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
+			add_action('wp_ajax_nopriv_' . __CLASS__, __CLASS__ . '::process');
+			add_filter('dynamic_request_process', __CLASS__ . '::dynamic_request_process');
+		}else{
+			add_filter('dynamic_request', __CLASS__ . '::dynamic_request');
+			add_filter('frontend_js_config', __CLASS__ . '::frontend_js_config');
+		}
 		
 		
 	}

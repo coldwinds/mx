@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme_colorful_cats
 Feature URI:	http://www.inn-studio.com
-Version:		2.0.1
+Version:		2.0.2
 Description:	theme_colorful_cats
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -14,8 +14,11 @@ class theme_colorful_cats{
 		'ca8661',	'333333',	'84a89e',	'a584a8'
 	);
 	public static function init(){
-		add_action('page_settings', __CLASS__ . '::display_backend');
-		add_filter('theme_options_save', __CLASS__ . '::options_save');
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}else if(theme_options::is_options_page()){
+			add_action('page_settings', __CLASS__ . '::display_backend');
+		}
 	}
 	public static function get_options($key = null){
 		static $caches = null;

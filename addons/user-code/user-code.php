@@ -1,21 +1,21 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
-add_filter('theme_addons',function($fns){
-	$fns[] = 'theme_user_code::init';
-	return $fns;
-});
 class theme_user_code{
 	public static $iden = 'theme_user_code';
 	public static function init(){
-		add_action('wp_head',__CLASS__ . '::the_frontend_header',99);
-		add_filter('theme_options_save', 	__CLASS__ . '::options_save');
 		add_filter('theme_options_default', 	__CLASS__ . '::options_default');
-		add_action('base_settings', 		__CLASS__ . '::display_backend');
-
+		if(theme_cache::is_ajax()){
+			add_filter('theme_options_save', 	__CLASS__ . '::options_save');
+		}
+		if(!theme_cache::is_admin()){
+			add_action('wp_head',__CLASS__ . '::the_frontend_header',99);
+		}
+		if(theme_options::is_options_page()){
+			add_action('base_settings', 		__CLASS__ . '::display_backend');
+		}
 		//add_action('customize_register', __CLASS__ . '::customize');
-		
 	}
 	public static function get_frontend_header_code(){
 		return stripslashes(self::get_options('header'));
@@ -110,3 +110,7 @@ class theme_user_code{
 		]);
 	}
 }
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_user_code::init';
+	return $fns;
+});
