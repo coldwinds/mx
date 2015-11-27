@@ -37,7 +37,7 @@
 	line-height: $nav-main-height;
 	color: $excerpt-color;
 	box-shadow: $nav-main-shadow;
-	z-index: 100;
+	z-index: 10;
 	text-shadow: 0 1px 0 rgba(#fff,.5);
 	@extend %text-nowrap;
 	
