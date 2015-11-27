@@ -186,7 +186,7 @@ class theme_custom_homebox{
 					$selected_cat_ids = isset(self::get_options($placeholder)['cats']) ? (array)self::get_options($placeholder)['cats'] : [];
 					theme_features::cat_checkbox_list(
 						__CLASS__ . '-cats-' . $placeholder, 
-						__CLASS__ . '[boxes][' . $placeholder . '][cats][]',
+						__CLASS__ . '[' . $placeholder . '][cats][]',
 						$selected_cat_ids
 					);?>
 				</ul></div></div>

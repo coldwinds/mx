@@ -103,11 +103,11 @@ class theme_super_search{
 	public static function get_tags(){
 		$cache = array_filter((array)wp_cache_get('tags',__CLASS__));
 		
-		if($cache)
+		if(!is_null_array($cache))
 			return $cache;
+			
 		$tags = array_filter((array)self::get_options('tags'));
-		
-		if(!$tags)
+		if(is_null_array($tags))
 			return false;
 			
 		foreach($tags as $k => $tag){
