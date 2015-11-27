@@ -75,6 +75,35 @@ class theme_cache{
 		),theme_features::get_process_url()));
 
 	}
+	public static function get_search_link( $query = '' ) {
+		global $wp_rewrite;
+
+		if ( empty($query) )
+			$search = get_search_query( false );
+		else
+			$search = stripslashes($query);
+
+		$permastruct = $wp_rewrite->get_search_permastruct();
+
+		if ( empty( $permastruct ) ) {
+			$link = self::home_url('?s=' . urlencode($search) );
+		} else {
+			$search = urlencode($search);
+			$search = str_replace('%2F', '/', $search); // %2F(/) is not valid within a URL, send it un-encoded.
+			$link = str_replace( '%search%', $search, $permastruct );
+			$link = self::home_url( user_trailingslashit( $link, 'search' ) );
+		}
+
+		/**
+		 * Filter the search permalink.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param string $link   Search permalink.
+		 * @param string $search The URL-encoded search term.
+		 */
+		return apply_filters( 'search_link', $link, $search );
+	}
 	/**
 	 * Admin Display
 	 */

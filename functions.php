@@ -1388,15 +1388,13 @@ class theme_functions{
 		}
 	}
 
-	public static function the_related_posts(array $args = []){
+	public static function get_related_posts(array $args = []){
 		global $post;
 
 		$cache_group_id = 'related_posts';
 		$cache = theme_cache::get($post->ID,$cache_group_id);
 		if($cache){
-			echo $cache;
-			unset($cache);
-			return;
+			return $cache;
 		}
 		
 		$defaults = [
@@ -1450,21 +1448,18 @@ class theme_functions{
 						wp_reset_postdata();
 					?>
 					</div>
-				<?php }else{ ?>
-					<div class="page-tip"><?= status_tip('info',___('No data.'));?></div>
-				<?php
+				<?php 
+				}else{ 
+					$no_content = true;
 				}
-				//wp_reset_query();
 				?>
 			</div>
-
 		</div>
 		<?php
-		$cache = ob_get_contents();
+		$cache = $no_content ? null : ob_get_contents();
 		ob_end_clean();
 		theme_cache::set($post->ID,$cache,$cache_group_id,3600);
-		echo $cache;
-		unset($cache);
+		return $cache;
 	}
 	/**
 	 * get_page_pagenavi
@@ -2054,7 +2049,7 @@ class theme_functions{
 				target="<?= $args['target'];?>" 
 			>
 				<div class="avatar-container">
-					<img src="<?= theme_functions::$avatar_placeholder;?>" data-src="<?= $avatar_url;?>" alt="<?= $display_name;?>" class="avatar">
+					<img src="<?= theme_functions::$avatar_placeholder;?>" data-src="<?= $avatar_url;?>" alt="<?= $display_name;?>" class="avatar" width="100" height="100">
 				</div>
 				<h3 class="author"><?= $display_name;?></h3>
 				<?php if($args['extra']){ ?>

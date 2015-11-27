@@ -1,0 +1,32 @@
+%fade-in{
+	@extend %transition-duration-fast;
+	opacity: 1;
+	visibility: visible;
+}
+%fade-out{
+	@extend %transition-duration-default;
+	opacity: 0;
+	visibility: hidden;
+}
+%slide-up{
+	@extend %transition-duration-default;
+	visibility: hidden;
+	@include translate3d(0,-100%,0);
+}
+%slide-down{
+	@extend %transition-duration-fast;
+	visibility: visible;
+	@include translate3d(0,0,0);
+}
+%slide-fade-in{
+	@extend %transition-duration-fast;
+	opacity: 1;
+	visibility: visible;
+	@include translate3d(0,0,0);
+}
+%slide-fade-out{
+	@extend %transition-duration-default;
+	opacity: 0;
+	visibility: hidden;
+	@include translate3d(0,-100%,0);
+}

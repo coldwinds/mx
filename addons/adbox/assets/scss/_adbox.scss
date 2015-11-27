@@ -1,5 +1,5 @@
 .ad-container{
-	margin-bottom: $grid-g-phone-gutter;
+	margin-bottom: $grid-g-gutter;
 	@include view-phone{
 		margin-bottom: $grid-g-phone-gutter;
 	}
@@ -8,6 +8,7 @@
 	img{
 		display: block;
 		width: 100%;
+		max-width: 100%;
 		height: auto;
 	}
 }

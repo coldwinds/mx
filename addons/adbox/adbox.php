@@ -7,12 +7,14 @@ class theme_adbox{
 	public static function init(){
 		if(theme_cache::is_ajax()){
 			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}else{
+			if(theme_options::is_options_page()){
+				add_action('page_settings', __CLASS__ . '::display_backend');
+			}else{
+				include __DIR__ . '/widget.php';
+			}
 		}
 		
-		if(theme_options::is_options_page()){
-			add_action('page_settings', __CLASS__ . '::display_backend');
-		}
-		include __DIR__ . '/widget.php';
 	}
 
 	public static function options_save(array $opts = []){

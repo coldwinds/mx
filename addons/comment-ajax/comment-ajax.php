@@ -19,12 +19,13 @@ class theme_comment_ajax{
 		/** options */
 		if(theme_options::is_options_page()){
 			add_action('page_settings', __CLASS__ . '::display_backend');
+		}else{
+			add_action('wp_footer', __CLASS__ . '::thread_comments_js');
 		}
-		add_action('wp_footer', __CLASS__ . '::thread_comments_js');
 		
 		if(!self::is_enabled()) 
 			return;
-
+		
 		add_action('pre_comment_on_post', __CLASS__ . '::block_frontend_comment',1);
 		add_action('pre_comment_on_post', __CLASS__ . '::pre_comment_on_post');
 		

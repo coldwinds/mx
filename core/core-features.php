@@ -1213,7 +1213,7 @@ class theme_features{
 	 * @return string
 	 * @version 1.2.0
 	 */
-	public static function cat_checkbox_list($group_id,$ids_name){
+	public static function cat_checkbox_item($group_id,$ids_name){
 		static $cats = null;
 		if($cats === null){
 			$cats = get_categories(array(
@@ -1253,14 +1253,26 @@ class theme_features{
 			<p><?= ___('No category, pleass go to add some categories.');?></p>
 		<?php }
 	}
-	/**
-	 * Display page list on select tag
-	 *
-	 * @param string $group_id
-	 * @param string $page_slug
-	 * @return
-	 * @version 1.2.0
-	 */
+	public static function cat_checkbox_list($id, $name, array $selected = []){
+		$li_id = "$id-category-";
+		$input_id = "$id-in-";
+		
+		ob_start();
+		wp_category_checklist( 0, 0, $selected, false, null, false );
+		$content = ob_get_contents();
+		ob_end_clean();
+		
+		/** replace <li> id */
+		$content = str_replace("li id='category-", "li id='" . $li_id, $content);
+		
+		/** replace input id */
+		$content = str_replace('id="in-', 'id="' . $input_id, $content);
+
+		/** repalce input name */
+		$content = str_replace('name="post_category[]', 'name="' . $name . '"', $content);
+		
+		echo $content;
+	}
 	public static function page_option_list($group_id, $iden){
 		static $pages = null;
 		if($pages === null)

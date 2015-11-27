@@ -63,7 +63,15 @@ class theme_custom_contribution{
 					<tr>
 						<th><?= ___('Shows categories');?></th>
 						<td>
-							<?php theme_features::cat_checkbox_list(__CLASS__,'cats');?>
+							<div class="categorydiv"><div class="tabs-panel"><ul class="categorychecklist form-no-clear">
+								<?php 
+								$selected_cat_ids = isset($boxes[$placeholder]['catids']) ? (array)$boxes[$placeholder]['catids'] : [];
+								theme_features::cat_checkbox_list(
+									__CLASS__ . '-cats', 
+									__CLASS__ . '[cats][]',
+									self::get_cat_ids()
+								);?>
+							</ul></div></div>
 						</td>
 					</tr>
 					<tr>
@@ -114,7 +122,7 @@ class theme_custom_contribution{
 		return $caches;
 	}
 	public static function get_cat_ids(){
-		return self::get_options('cats');
+		return array_filter((array)self::get_options('cats'));
 	}
 	public static function get_url(){
 		static $cache = null;
@@ -541,23 +549,25 @@ class theme_custom_contribution{
 		}
 		return $has_parent_cats;
 	}
-	public static function get_cats($array = false){
+	public static function get_cats(){
 		static $cache = null;
-		if($cache === null)
-			$cache = theme_cache::get_categories([
+		if($cache === null){
+			$cats = theme_cache::get_categories([
 				'include' => self::get_cat_ids(),
 				'hide_empty' => false,
 			]);
-		if($array){
-			$cats = [];
-			foreach($cache as $cat)
-				$cats[$cat->term_id] = [
-					'term_id' => $cat->term_id,
-					'parent' => $cat->parent,
-					'name' => $cat->name,
-					'description' => $cat->description,
-				];
-			return $cats;
+			if($cats){
+				foreach($cats as $cat){
+					$cache[$cat->term_id] = [
+						'term_id' => $cat->term_id,
+						'parent' => $cat->parent,
+						'name' => $cat->name,
+						'description' => $cat->description,
+					];
+				}
+			}else{
+				$cache = false;
+			}
 		}
 		return $cache;
 	}

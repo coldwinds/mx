@@ -25,8 +25,8 @@ module.exports = function(){
 	};
 	
 	var ajax = {
-		init : function(){
-			
+		init : function(e){
+			e.preventDefault();
 			if(!cache.$submit){
 				cache.$submit = that.$fm.querySelector('.submit');
 				cache.submit_ori_tx = cache.$submit.innerHTML;

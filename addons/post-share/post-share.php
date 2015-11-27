@@ -64,7 +64,7 @@ class theme_post_share{
 		
 		?>
 		<fieldset>
-			<legend><i class="fa fa-fa fa-share-alt"></i> <?= ___('Posts share settings');?></legend>
+			<legend><i class="fa fa-fa fa-share-alt fa-fw"></i> <?= ___('Posts share settings');?></legend>
 			<p class="description">
 				<?= ___('Share your post to everywhere. Here are some keywords that can be used:');?>
 			</p>
@@ -123,7 +123,7 @@ class theme_post_share{
 	<a class="bds_tieba" data-cmd="tieba" title="<?= sprintf(___('Share to %s'),___('Tieba'));?>" href="javascript:;"></a>
 	<a class="bds_weixin" data-cmd="weixin" title="<?= sprintf(___('Share to %s'),___('Wechat'));?>" href="javascript:;"></a>
 	<a class="bds_more" data-cmd="more" href="javascript:;"></a>
-</div>				
+</div>
 <?php
 		$content = ob_get_contents();
 		ob_end_clean();

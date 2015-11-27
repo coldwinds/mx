@@ -212,11 +212,15 @@ if(wp_is_mobile() && theme_cache::is_user_logged_in()){
 			></a>
 
 		</div><!-- /.tools -->
-	 
-		<!-- search form -->
-		<form id="fm-search" action="<?= theme_cache::home_url();?>/" data-focus-target="#fm-search-s">
+
+	 	<form 
+	 		id="fm-search" 
+	 		action="<?= theme_cache::home_url();?>" 
+	 		data-focus-target="#fm-search-s" 
+	 	>
 			<input id="fm-search-s" name="s" class="form-control" placeholder="<?= ___('Please input search keyword');?>" value="<?= esc_attr(get_search_query())?>" type="search" required>
 	    </form>
+	    
 	</div><!--  /.g -->
 </div><!-- /.nav-main -->
 <div class="nav-main-placeholder"></div>

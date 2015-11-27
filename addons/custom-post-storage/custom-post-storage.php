@@ -122,7 +122,6 @@ class theme_custom_storage{
 	public static function display_frontend_contribution($post_id){
 		if(!self::is_enabled())
 			return false;
-
 		?>
 		<div id="<?= __CLASS__;?>-container" data-tpl="<?= esc_attr(self::get_tpl_frontend_contribution());?>">
 			<?php
@@ -188,36 +187,30 @@ class theme_custom_storage{
 						id="<?= __CLASS__;?>-<?= $placeholder;?>-url" 
 						title="<?= ___('Download page URL (include http://)');?>" 
 						placeholder="<?= ___('Download page URL (include http://)');?>" 
-						value="<?= $storage_url;?>" 
+						value="<?= $url;?>" 
 					>
 				</div>
 				<div class="g-tablet-1-5">
-					<!-- <div class="input-group"> -->
-						<!-- <label class="addon" for="<?= __CLASS__;?>-download-pwd"><i class="fa fa-key fa-fw"></i></label> -->
-						<input 
-							type="text" 
-							class="form-control" 
-							name="<?= __CLASS__;?>[<?= $placeholder;?>][download-pwd]" 
-							id="<?= __CLASS__;?>-<?= $placeholder;?>-download-pwd" 
-							title="<?= ___('Download password (optional)');?>" 
-							placeholder="<?= ___('Download password (optional)');?>" 
-							value="<?= $storage_download_pwd;?>" 
-						>
-					<!-- </div> -->
+					<input 
+						type="text" 
+						class="form-control" 
+						name="<?= __CLASS__;?>[<?= $placeholder;?>][download-pwd]" 
+						id="<?= __CLASS__;?>-<?= $placeholder;?>-download-pwd" 
+						title="<?= ___('Download password (optional)');?>" 
+						placeholder="<?= ___('Download password (optional)');?>" 
+						value="<?= $download_pwd;?>" 
+					>
 				</div>
 				<div class="g-tablet-1-5">
-					<!-- <div class="input-group"> -->
-						<!-- <label class="addon" for="<?= __CLASS__;?>-url"><i class="fa fa-unlock fa-fw"></i></label> -->
-						<input 
-							type="text" 
-							class="form-control" 
-							name="<?= __CLASS__;?>[<?= $placeholder;?>][extract-pwd]" 
-							id="<?= __CLASS__;?>-<?= $placeholder;?>-extract-pwd" 
-							title="<?= ___('Extract password (optional)');?>" 
-							placeholder="<?= ___('Extract password (optional)');?>" 
-							value="<?= $storage_extract_pwd;?>" 
-						>
-					<!-- </div> -->
+					<input 
+						type="text" 
+						class="form-control" 
+						name="<?= __CLASS__;?>[<?= $placeholder;?>][extract-pwd]" 
+						id="<?= __CLASS__;?>-<?= $placeholder;?>-extract-pwd" 
+						title="<?= ___('Extract password (optional)');?>" 
+						placeholder="<?= ___('Extract password (optional)');?>" 
+						value="<?= $extract_pwd;?>" 
+					>
 				</div>
 			</div><!-- /.row -->
 		</div><!-- /.item -->

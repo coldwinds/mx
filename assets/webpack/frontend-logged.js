@@ -22,6 +22,7 @@ require('addons/page-nagination-ajax/assets/js/frontend').init();
 require('addons/full-width-mode/assets/js/frontend')();
 require('addons/post-share/assets/js/frontend')();
 require('addons/post-views/assets/js/frontend')();
+require('addons/super-search/assets/js/frontend')();
 
 
 /** logged */

@@ -49,35 +49,11 @@ class theme_custom_homebox{
 			return isset($caches[$key]) ? $caches[$key] : null;
 		return $caches;
 	}
-
-	private static function cat_checkbox_tpl($placeholder){
-		$opt = self::get_options();
-		$exists_cats = isset($opt[$placeholder]['cats']) ? (array)$opt[$placeholder]['cats'] : [];
-		$cats = theme_cache::get_categories(array(
-			'hide_empty' => false,
-		));
-		foreach($cats as $cat){
-			$checked = !empty($exists_cats) && in_array($cat->term_id,$exists_cats) ? ' checked ' : null;
-			?>
-			<label for="<?= __CLASS__;?>-cats-<?= $placeholder;?>-<?= $cat->term_id;?>" class="button <?= empty($checked) ? null : 'button-primary';?>">
-				<input 
-					type="checkbox" 
-					name="<?= __CLASS__;?>[<?= $placeholder;?>][cats][]"
-					id="<?= __CLASS__;?>-cats-<?= $placeholder;?>-<?= $cat->term_id;?>"
-					value="<?= $cat->term_id;?>"
-					<?= $checked;?>
-				/>
-				<?= esc_html($cat->name);?> - <a href="<?= esc_url(get_category_link($cat->term_id));?>" target="<?= theme_functions::$link_target;?>"><?= urldecode($cat->slug);?></a>
-			</label>
-			<?php
-		}
-		unset($cats);
-	}
 	public static function display_backend(){
 		$opt = array_filter((array)self::get_options());
 		?>
 		<fieldset>
-			<legend><i class="fa fa-fw fa-home"></i> <?= ___('Theme home box settings');?></legend>
+			<legend><i class="fa fa-fw fa-home"></i> <?= ___('Home box settings');?></legend>
 			<div id="<?= __CLASS__;?>-container" data-tpl="<?= esc_attr(self::get_home_box_tpl());?>">
 				<?php
 				if(!$opt){
@@ -205,7 +181,15 @@ class theme_custom_homebox{
 		<tr>
 			<th><?= ___('Categories');?></th>
 			<td>
-				<?php self::cat_checkbox_tpl($placeholder);?>
+				<div class="categorydiv"><div class="tabs-panel"><ul class="categorychecklist form-no-clear">
+					<?php 
+					$selected_cat_ids = isset(self::get_options($placeholder)['cats']) ? (array)self::get_options($placeholder)['cats'] : [];
+					theme_features::cat_checkbox_list(
+						__CLASS__ . '-cats-' . $placeholder, 
+						__CLASS__ . '[boxes][' . $placeholder . '][cats][]',
+						$selected_cat_ids
+					);?>
+				</ul></div></div>
 			</td>
 		</tr>
 		<tr>

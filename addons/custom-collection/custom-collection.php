@@ -81,7 +81,14 @@ class theme_custom_collection{
 				<tr>
 					<th><?= ___('Which categories will be added after submit?');?></th>
 					<td>
-						<?php theme_features::cat_checkbox_list(__CLASS__,'cats');?>
+						<div class="categorydiv"><div class="tabs-panel"><ul class="categorychecklist form-no-clear">
+							<?php 
+							theme_features::cat_checkbox_list(
+								__CLASS__ . '-cats', 
+								__CLASS__ . '[cats][]',
+								self::get_cat_ids()
+							);?>
+						</ul></div></div>
 					</td>
 				</tr>
 				<tr>

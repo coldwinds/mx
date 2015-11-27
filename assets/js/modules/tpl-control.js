@@ -49,7 +49,7 @@ module.exports = function(){
 			});
 		}else{
 			$target.style.borderWidth = '2px';
-			$target.style.borderColor = '#d54e2';
+			$target.style.borderColor = '#d54e21';
 			setTimeout(function(){
 				$target.parentNode.removeChild($target);
 			}, 1000);

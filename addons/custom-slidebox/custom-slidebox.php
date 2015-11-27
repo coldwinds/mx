@@ -14,6 +14,7 @@ class theme_custom_slidebox{
 		if(theme_cache::is_ajax()){
 			add_action('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 			add_filter('theme_options_save', __CLASS__ . '::options_save');
+		}else{
 			if(theme_options::is_options_page()){
 				add_action('backend_js_config', __CLASS__ . '::backend_js_config');
 				add_action('page_settings', __CLASS__ . '::display_backend');
@@ -35,42 +36,6 @@ class theme_custom_slidebox{
 			$opts[__CLASS__] = $_POST[__CLASS__];
 		}
 		return $opts;
-	}
-	private static function get_cat_checkbox_list($name,$id,$selected_cat_ids = []){
-		$cats = theme_cache::get_categories(array(
-			'hide_empty' => false,
-		));
-		
-		ob_start();
-		if($cats){
-			foreach($cats as $cat){
-				if(in_array($cat->term_id,(array)$selected_cat_ids)){
-					$checked = ' checked="checked" ';
-					$selected_class = ' button-primary ';
-				}else{
-					$checked = null;
-					$selected_class = null;
-				}
-			?>
-			<label for="<?= $id;?>-<?= $cat->term_id;?>" class="button <?= $selected_class;?>">
-				<input 
-					type="checkbox" 
-					id="<?= $id;?>-<?= $cat->term_id;?>" 
-					name="<?= $name;?>[]" 
-					value="<?= $cat->term_id;?>"
-					<?= $checked;?>
-				/>
-				<?= esc_html($cat->name);?>
-			</label>
-			<?php 
-			}
-			unset($cats);
-		}else{ ?>
-			<p><?= ___('No category, pleass go to add some categories.');?></p>
-		<?php }
-		$content = ob_get_contents();
-		ob_end_clean();
-		return $content;
 	}
 	public static function get_options($key = null){
 		$caches = null;
@@ -156,10 +121,15 @@ class theme_custom_slidebox{
 		<tr>
 			<th><label for="<?= __CLASS__;?>-cat-<?= $placeholder;?>"><?= ___('Categories (optional)');?></label></th>
 			<td>
-				<?php
-				$selected_cat_ids = isset($boxes[$placeholder]['catids']) ? (array)$boxes[$placeholder]['catids'] : [];
-				echo self::get_cat_checkbox_list(__CLASS__ . "[boxes][$placeholder][catids]",__CLASS__ . "-catids-$placeholder",$selected_cat_ids);
-				?>
+				<div class="categorydiv"><div class="tabs-panel"><ul class="categorychecklist form-no-clear">
+					<?php 
+					$selected_cat_ids = isset($boxes[$placeholder]['catids']) ? (array)$boxes[$placeholder]['catids'] : [];
+					theme_features::cat_checkbox_list(
+						__CLASS__ . '-catids-' . $placeholder, 
+						__CLASS__ . '[boxes][' . $placeholder . '][catids][]',
+						$selected_cat_ids
+					);?>
+				</ul></div></div>
 			</td>
 		</tr>
 		<tr>
@@ -238,6 +208,7 @@ class theme_custom_slidebox{
 			<legend><i class="fa fa-fw fa-tv"></i> <?= ___('Slide-box settings');?></legend>
 			<p class="description">
 				<?= sprintf(___('Slide-box will display on homepage. You can select style type and set images and links for slide-box. Image size is %s&times;%s px. Remember save your settings when all done.'),self::$image_size[0] === 999 ? ___('unlimited') : self::$image_size[0],self::$image_size[1] === 999 ? ___('unlimited') : self::$image_size[1]);?>
+				<?= ___('It recommends setting 5-6 boxes.');?>
 			</p>
 			<table class="form-table">
 			<tbody>
@@ -317,7 +288,6 @@ class theme_custom_slidebox{
 			unset($cache);
 			return;
 		}
-		
 		ob_start();
 		$type = 'display_frontend_' . $type;
 		self::$type();

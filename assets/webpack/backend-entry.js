@@ -20,3 +20,4 @@ require('addons/setting-import/assets/js/backend')();
 require('addons/clean-up/assets/js/backend')();
 require('addons/help/assets/js/backend')();
 require('addons/custom-report/assets/js/backend')();
+require('addons/super-search/assets/js/backend')();

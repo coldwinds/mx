@@ -21,12 +21,8 @@
 			width: 20rem;
 			background: $nav-main-bg-color;
 			box-shadow: $nav-main-sub-menu-shadow;
-			visibility: collapse;
-			z-index: 10;
-			
-			@include transition-duration($nav-main-duration);
-			@include scale3d(1,0,1);
-			@include transform-origin(top);
+			z-index: -1000;
+			@extend %slide-fade-out;
 			
 			li{
 				float: left;
@@ -49,8 +45,8 @@
 		}
 		&:hover .box,
 		&.hover .box{
-			visibility: visible;
-			@include scale3d(1,1,1);
+			z-index: 100;
+			@extend %slide-fade-in;
 		}
 	}
 	.tool-points:hover:after,

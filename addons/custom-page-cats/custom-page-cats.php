@@ -47,7 +47,7 @@ class theme_page_cats{
 					<tr>
 						<th><?= ___('Index Categories');?></th>
 						<td>
-							<?= theme_features::cat_checkbox_list(__CLASS__,'cats');?>
+							<?= theme_features::cat_checkbox_item(__CLASS__,'cats');?>
 						</td>
 					</tr>
 					<tr>

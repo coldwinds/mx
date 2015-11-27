@@ -2,7 +2,6 @@ var ready = require('modules/ready');
 var ajax_loading_tip = require('modules/ajax-loading-tip');
 var array_merge = require('modules/array-merge');
 var uploader = require('modules/uploader');
-var paseHTML = require('modules/parse-html');
 var tpl_control = require('modules/tpl-control');
 
 module.exports = function(){
@@ -51,7 +50,10 @@ module.exports = function(){
 				if(data && data.status === 'success'){
 					args.$url.value = data.url;
 					if(args.$item){
-						args.$item.querySelector('.img-preview').src = data.url;
+						var $preview = args.$item.querySelector('.img-preview');
+						if($preview){
+							$preview.src = data.url;
+						}
 					}
 					ajax_loading_tip('success',data.msg,3);
 				}else if(data && data.status === 'error'){

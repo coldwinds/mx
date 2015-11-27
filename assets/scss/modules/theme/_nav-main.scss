@@ -37,7 +37,7 @@
 	line-height: $nav-main-height;
 	color: $excerpt-color;
 	box-shadow: $nav-main-shadow;
-	z-index: 10;
+	z-index: 100;
 	text-shadow: 0 1px 0 rgba(#fff,.5);
 	@extend %text-nowrap;
 	
@@ -62,11 +62,12 @@
 			&:active,
 			&.active{
 				& > a{
+					z-index: 10;
 					@extend %nav-main-menu-hover;
 				}
 				& > .sub-menu{
-					visibility: visible;
-					@include scale3d(1,1,1);
+					@extend %slide-fade-in;
+					z-index: 10;
 				}
 				
 			}
@@ -118,20 +119,15 @@
 		top: 100%;
 		left: 0;
 		box-shadow: $nav-main-sub-menu-shadow;
-		@include transform-origin(top);
-		@include scale3d(1,0,1);
-		@include transition-duration($nav-main-duration);
-		z-index: 10;
+		@extend %slide-fade-out;
+		z-index: -100;
 		.sub-menu{
 			left: 100%;
 			top: 0;
-			@include transform-origin(left);
-			@include scale3d(0,1,1);
 		}
 		& > li{
 			&:hover > .sub-menu{
-				visibility: visible;
-				@include scale3d(1,1,1);
+				//@extend %fade-in;
 			}
 		}
 		li {

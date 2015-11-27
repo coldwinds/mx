@@ -83,8 +83,8 @@ module.exports = function(config){
 		};
 		xhr.upload.onprogress = function(e){
 			if (e.lengthComputable) {
-				var percent = (e.loaded * cache.file_index) / (e.total * cache.file_count) * 100;
-				config.onprogress(percent,i,file,file_count);
+				var percent = (e.loaded * file_index) / (e.total * file_count) * 100;
+				config.onprogress(percent,file_index,file,file_count);
 			}
 		};
 	}

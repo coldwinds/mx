@@ -21,7 +21,7 @@
 						<?php
 					}
 					?>
-					<?php theme_functions::the_related_posts();?>
+					<?= theme_functions::get_related_posts();?>
 					<?php comments_template();?>
 				</div>
 				<?php include __DIR__ . '/sidebar-post.php';?>

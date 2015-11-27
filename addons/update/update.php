@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme_update
 Feature URI:	http://www.inn-studio.com
-Version:		3.0.1
+Version:		3.0.2
 Description:	theme_update
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -11,9 +11,8 @@ class theme_update{
 	private static $checker_url;
 	private static $last_theme;
 	public static function init(){
-		if(!theme_cache::current_user_can('manage_options'))
+		if(theme_cache::is_ajax() || !theme_cache::current_user_can('manage_options') || !theme_cache::is_admin())
 			return;
-		
 		self::$checker_url = ___('http://update.inn-studio.com') . '/?action=get_update&host=' . $_SERVER['HTTP_HOST'] . '&slug=' . theme_functions::$iden;
 		
 		add_filter('site_transient_update_themes', __CLASS__ . '::check_for_update');

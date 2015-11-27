@@ -39,6 +39,9 @@
 					content: '/';
 					color: $panel-border-color;
 					vertical-align: middle;
+					@include view-phone{
+						padding: 0 .1rem;
+					}
 				}
 				&:last-child:after{
 					display: none;

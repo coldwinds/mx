@@ -1,0 +1,74 @@
+%ss-no-float-phone{
+	@include view-phone{
+		float: none;
+		width: 100%;
+	}
+}
+#fm-search-page{
+	.form-group{
+		position: relative;
+	}
+	label[for="search-page-s"]{
+		position: absolute;
+		top: 0;
+		left: .5rem;
+		padding: .5rem;
+		color: $excerpt-color;
+		font-size: 2rem;
+		line-height: 2rem;
+	}
+}
+#search-page-s{
+	background: $card-bg-color-hover;
+	padding: .5rem .5rem .5rem 4rem;
+	font-size: 2rem;
+	line-height: 2rem;
+	border-radius: 10rem;
+	border: 2px solid darken($card-bg-color-hover,10%);
+	&:hover,
+	&.hover,
+	&:focus,
+	&.focus{
+		background: #fff;
+	}
+}
+.search-cat{
+	white-space: nowrap;
+	overflow: hidden;
+	overflow-x: auto;
+}
+.condition-label{
+	.tx{
+		display: inline-block;
+		padding: .1rem .5rem;
+		margin-bottom: .1rem;
+	}
+	input:checked + .tx{
+		color: #fff;
+		background: $accent-color;
+		border-radius: 10rem;
+	}
+}
+.ss-group{
+	@extend .clearfix;
+	margin-bottom: .1rem;
+	.ss-group-title{
+		float: left;
+		width: 7%;
+		color: $excerpt-color;
+		font-weight: bold;
+		margin-bottom: .1rem;
+		@include view-phone{
+			float: none;
+			width: 100%;
+		}
+	}
+	.ss-condition-container{
+		float: left;
+		width: 93%;
+		@include view-phone{
+			float: none;
+			width: 100%;
+		}
+	}
+}

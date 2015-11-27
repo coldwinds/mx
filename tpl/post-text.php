@@ -21,7 +21,7 @@
 					}
 					?>
 					<?php comments_template();?>
-					<?php theme_functions::the_related_posts();?>
+					<?= theme_functions::get_related_posts();?>
 				</div>
 			<?php 
 			}
