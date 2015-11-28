@@ -1,11 +1,11 @@
 <?php
 /**
- * @version 1.0.1
+ * @version 1.0.2
  */
 class theme_custom_pm{
 	public static $page_slug = 'account';
 	public static $metas = [];
-	public static $comet_timeout = 30;	
+	public static $comet_timeout = 60;	
 	public static $cache_expire = 2505600;
 	//public static $cache_group_id = [
 	//	'latest-pm-id' => 'latest-pm-id'
@@ -13,15 +13,15 @@ class theme_custom_pm{
 	public static $table;
 	public static $db_version = '1.0.0';
 	public static function init(){
+		global $wpdb;
+		self::$table = $wpdb->prefix . 'pm';
+		
 		if(theme_cache::is_ajax()){
 			add_filter('wp_ajax_' . __CLASS__, __CLASS__ . '::process');
 			add_filter('dynamic_request_process', __CLASS__ . '::dynamic_request_process');
 			add_action('theme_options_save', __CLASS__ . '::options_save');
 		}else{
 			if(theme_options::is_options_page()){
-				global $wpdb;
-
-				self::$table = $wpdb->prefix . 'pm';
 				
 				if(!self::get_db_version()){
 					self::create_db_table();
@@ -545,6 +545,7 @@ class theme_custom_pm{
 			]
 		);
 		$pm_id = $wpdb->insert_id;
+		
 		if($pm_id){
 			self::setup_pmdata(self::get_pm($pm_id));
 			
