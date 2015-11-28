@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.1
+ * @version 1.0.2
  */
 class theme_custom_dashboard{
 	public static $page_slug = 'account';
@@ -8,14 +8,15 @@ class theme_custom_dashboard{
 	public static function init(){	
 		if(!theme_cache::is_ajax()){
 			add_filter('wp_title',				__CLASS__ . '::wp_title',10,2);
+		}
+		if(!theme_cache::is_admin()){
 			include __DIR__ . '/dashboards.php';
+			foreach(self::get_tabs() as $k => $v){
+				$nav_fn = 'filter_nav_' . $k; 
+				add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
+			}
 		}
 		
-		foreach(self::get_tabs() as $k => $v){
-			$nav_fn = 'filter_nav_' . $k; 
-			add_filter('account_navs',__CLASS__ . "::$nav_fn",$v['filter_priority']);
-		}
-
 	}
 	public static function wp_title($title, $sep){
 		if(!self::is_page()) 

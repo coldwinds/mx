@@ -2,7 +2,7 @@
 /*
 Feature Name:	theme_tinymce_plus
 Feature URI:	http://www.inn-studio.com
-Version:		1.0.4
+Version:		1.0.5
 Description:	add more futures for wp editor
 Author:			INN STUDIO
 Author URI:		http://www.inn-studio.com
@@ -27,7 +27,6 @@ class theme_tinymce_plus{
 		return $buttons;
 	}
 	public static function html(){
-		
 		?>
 	    <script>
 		QTags.addButton('nextpage','nextpage',bolo_QTnextpage_arg1,'','n','<?= ___('Next Page');?>', 121);
@@ -38,5 +37,7 @@ class theme_tinymce_plus{
 	    <?php
 	}
 }
-theme_tinymce_plus::init();
-?>
+add_filter('theme_addons',function($fns){
+	$fns[] = 'theme_tinymce_plus::init';
+	return $fns;
+});

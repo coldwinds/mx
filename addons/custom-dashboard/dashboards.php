@@ -4,12 +4,13 @@
  */
 class theme_dashboards{
 	public static function init(){
-
-		add_action('account_dashboard_left',__CLASS__ . '::my_statistics');
-		add_action('account_dashboard_left',__CLASS__ . '::my_point');
-		
-		add_action('account_dashboard_right',__CLASS__ . '::recent_comments_4_my_posts');
-		add_action('account_dashboard_right',__CLASS__ . '::recent_posts');
+		if(!theme_cache::is_admin()){
+			add_action('account_dashboard_left',__CLASS__ . '::my_statistics');
+			add_action('account_dashboard_left',__CLASS__ . '::my_point');
+			
+			add_action('account_dashboard_right',__CLASS__ . '::recent_comments_4_my_posts');
+			add_action('account_dashboard_right',__CLASS__ . '::recent_posts');
+		}
 		
 	}
 	public static function my_point(){
