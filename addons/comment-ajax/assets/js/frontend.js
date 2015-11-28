@@ -2,7 +2,7 @@ var array_merge = require('modules/array-merge');
 var ready = require('modules/ready');
 var ajax_loading_tip = require('modules/ajax-loading-tip');
 var parseHTML = require('modules/parse-html');
-
+var click_handle = require('modules/click-handle');
 module.exports = function(){
 	'use strict';
 	
@@ -191,7 +191,7 @@ module.exports = function(){
 		function create_prev(){
 			var prev_class = _that.cpage <= 1 ? 'disabled' : '',
 				attrs = {
-					'class' : 'prev btn btn-success ' + prev_class,
+					'class' : 'prev btn btn-default ' + prev_class,
 					'href' : 'javascript:;'
 				};
 			_cache.$prev = document.createElement('a');
