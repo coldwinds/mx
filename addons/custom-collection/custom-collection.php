@@ -58,13 +58,12 @@ class theme_custom_collection{
 		return $navs;
 	}
 	public static function get_cat_ids(){
-		return self::get_options('cats');
+		return array_filter((array)self::get_options('cats'));
 	}
 	public static function is_enabled(){
 		return self::get_options('enabled') == 1;
 	}
 	public static function display_backend(){
-		$opt = (array)self::get_options();
 		?>
 		<fieldset>
 			<legend><i class="fa fa-fw fa-leanpub"></i> <?= ___('Collection settings');?></legend>
